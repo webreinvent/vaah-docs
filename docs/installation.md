@@ -3,7 +3,7 @@ title: Installation
 editLink: true
 ---
 
-## Installation
+## Installation v2
 
 ### Concept
 ```html
