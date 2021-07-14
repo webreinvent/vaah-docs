@@ -1,6 +1,7 @@
 module.exports = {
     title: 'VaahCMS',
     description: 'VaahCMS Documentation',
+    base: "/vaahcms-docs/",
     themeConfig:{
         nav:[
             {
