@@ -1,27 +1,35 @@
+const vaahcms_sidebar = [
+    {text: 'VaahCMS', 'link': '/vaahcms/'},
+    {text: 'Installation', 'link': '/vaahcms/installation'},
+];
+
+const vaahcli_sidebar = [
+    {text: 'VaahCLI', 'link': '/vaahcli/'},
+    {text: 'Installation', 'link': '/vaahcli/installation'}
+];
+
+
 module.exports = {
-    title: 'VaahCMS',
-    description: 'VaahCMS Documentation',
+    title: 'Vaah.dev',
+    description: 'Vaah Documentation',
     base: "/vaahcms-docs/",
+    markdown: {
+        //lineNumbers: true
+    },
     themeConfig:{
         nav:[
             {
-                text: "Home",
-                link: '/'
+                text: "VaahCMS",
+                link: '/vaahcms/'
             },
             {
-                text: "Docs",
-                link: '/'
+                text: "VaahCLI",
+                link: '/vaahcli/'
             }
         ],
-        sidebar:[
-            {
-                text: "Introduction",
-                link: "/"
-            },
-            {
-                text: "Installation",
-                link: "/installation"
-            }
-        ]
+        sidebar:{
+            '/vaahcms/': vaahcms_sidebar,
+            '/vaahcli/': vaahcli_sidebar,
+        }
     }
 }
