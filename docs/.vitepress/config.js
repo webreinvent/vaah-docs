@@ -12,7 +12,7 @@ const vaahcli_sidebar = [
 module.exports = {
     title: 'Vaah.dev',
     description: 'Vaah Documentation',
-    base: "/vaah-docs/",
+    base: "/",
     markdown: {
         //lineNumbers: true
     },
