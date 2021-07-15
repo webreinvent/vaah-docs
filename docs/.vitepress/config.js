@@ -19,7 +19,8 @@ module.exports = {
     themeConfig:{
         repo: 'webreinvent/vaah-docs',
         docsDir: 'docs',
-        docsBranch: 'develop',
+        docsBranch: 'master',
+        editLinks: true,
         editLinkText: 'Edit',
         nav:[
             {
