@@ -12,11 +12,15 @@ const vaahcli_sidebar = [
 module.exports = {
     title: 'Vaah.dev',
     description: 'Vaah Documentation',
-    base: "/vaahcms-docs/",
+    base: "/vaah-docs/",
     markdown: {
         //lineNumbers: true
     },
     themeConfig:{
+        repo: 'webreinvent/vaah-docs',
+        docsDir: 'docs',
+        docsBranch: 'develop',
+        editLinkText: 'Edit',
         nav:[
             {
                 text: "VaahCMS",
