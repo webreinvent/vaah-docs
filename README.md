@@ -1,4 +1,4 @@
 # vaahcms-docs
-VaahCMS Documentations
+Vaah Open Source Project's Documentations
 
 
