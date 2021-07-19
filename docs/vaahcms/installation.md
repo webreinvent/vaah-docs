@@ -1,10 +1,6 @@
----
-title: Installation
-editLink: true
-
----
-
 # Installation
+
+[[toc]]
 
 ## Install via VaahCLI
 

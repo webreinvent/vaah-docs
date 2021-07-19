@@ -1,10 +1,4 @@
----
-title: Installation
-editLink: true
-sidebar: true
----
-
-# Installation
+# VaahCMS
 
 [[toc]]
 
