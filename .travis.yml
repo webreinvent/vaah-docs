@@ -4,11 +4,11 @@ node_js:
 install:
   - yarn install # npm ci
 script:
-  - yarn docs:build # npm run docs:build
+  - yarn vuepress build docs --clean-cache # npm run docs:build
 deploy:
   provider: pages
   skip_cleanup: true
-  local_dir: docs/.vitepress/dist
+  local_dir: docs/.vuepress/dist
   # A token generated on GitHub allowing Travis to push code on you repository.
   # Set in the Travis settings page of your repository, as a secure variable.
   github_token: $DEPLOY_VAAHCMS_TOKEN
