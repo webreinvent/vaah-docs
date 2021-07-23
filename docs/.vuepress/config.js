@@ -3,7 +3,7 @@ const vaahcli = require("./vaahcli");
 
 module.exports = {
     lang: 'en-US',
-    title: 'Vaah.dev Docs',
+    title: 'Vaah.dev',
     description: 'Documentation of Vaah Products',
     base: "/",
     plugins: [
@@ -15,7 +15,11 @@ module.exports = {
         docsBranch: 'master',
         editLinks: true,
         editLinkText: 'Edit',
-        logo: 'https://vaah.dev/images/logo.svg',
+        logo: 'https://vaah.dev/images/logo-device.svg',
+        search: true,
+        searchMaxSuggestions: 10,
+        searchPlaceholder: 'Search...',
+        smoothScroll: true,
         navbar: [
             {
                 text: "VaahCMS",
