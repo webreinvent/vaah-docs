@@ -14,7 +14,7 @@ Let check the `Vue/store/modules/contents.js`
 
 
 
-```
+```js
 import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
 
 //---------Variables
@@ -105,7 +105,7 @@ Now this file will be import in `Vue/store/store.js` which is shown below.
 
 
 
-```
+```js
 import Vue from 'vue';
 import Vuex from 'vuex';
 

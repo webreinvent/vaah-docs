@@ -10,7 +10,7 @@ An access control list (ACL) contains rules that grant or deny access to certain
 
 VaahCms provide a method in Controller to check the User's access. You can call this method before execute an action.
 
-```
+```php
 public function getList(Request $request)
     {
 
@@ -35,7 +35,7 @@ public function getList(Request $request)
 
 You can call the Controller method inside view file
 
-```
+```php
 @section('content')
 
 
@@ -63,7 +63,7 @@ There is a function in `root.js` at `VaahCms/..../Vue/store/modules/` of name `g
 
 root.js
 
-```
+```js
 import Vue from 'vue';
 import { ToastProgrammatic as Toast } from 'buefy'
 import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
@@ -174,13 +174,13 @@ Now, you can call this function in `Vue Route Middleware` or in `Vue Component`
 
 ##### Vue Route Middleware
 
-```
+```js
 GetBackendAssets.js` file located at `VaahCms/..../Vue/routes/middleware/
 ```
 
 GetBackendAssets.js
 
-```
+```js
 import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
 export default async function GetBackendAssets ({ to, from, next, store }){
 
@@ -203,7 +203,7 @@ export default async function GetBackendAssets ({ to, from, next, store }){
 
 routes.js
 
-```
+```js
 let routes;
 let routes_list=[];
 
@@ -242,7 +242,7 @@ export default routes;
 
 ##### Vue Component
 
-```
+```js
         //---------------------------------------------------------------------
         async getPermissions() {
             await this.$store.dispatch(namespace+'/getPermissions');
@@ -253,7 +253,7 @@ export default routes;
 
 In Controller, you have to write this code to get permissions list.
 
-```
+```php
     public function getPermissions(Request $request)
     {
 
@@ -278,7 +278,7 @@ In Controller, you have to write this code to get permissions list.
 
 In Vue, there is a [VaahHelper](https://nuxt.getdemo.dev:48300/cms/docs/vaahvue/helpers) function that is used to check `User` access.
 
-```
+```js
         //---------------------------------------------------------------------
         hasPermission: function(slug)
         {
@@ -291,3 +291,4 @@ In Vue, there is a [VaahHelper](https://nuxt.getdemo.dev:48300/cms/docs/vaahvue/
 To know about `VaahHelper`.
 
 [Read Documentation](https://nuxt.getdemo.dev:48300/cms/docs/vaahvue/helpers)
+

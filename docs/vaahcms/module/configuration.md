@@ -8,7 +8,7 @@
 
 All of the configuration/Information of Vaahcms's `Modules` are stored in the `config.php` file, which is in the `VaahCms\Modules\Articles\Config\` directory.
 
-```
+```php
 <?php
 
 return [

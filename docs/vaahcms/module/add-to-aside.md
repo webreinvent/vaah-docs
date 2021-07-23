@@ -13,7 +13,7 @@ To extend the sidebar, we need to edit `AsideMenu.vue`:
 
 
 
-```
+```vue
 <template>
 
     <b-menu class="is-light">
@@ -61,3 +61,4 @@ export default {
 }
 </script>
 ```
+

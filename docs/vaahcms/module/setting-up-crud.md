@@ -20,7 +20,7 @@ Now we are going to create a model for a table. Models typically live in the `ap
 
 The easiest way to create a model instance is using the make:model Artisan command:
 
-```
+```php
 vaah cms:m-make model Articles Content
 ```
 
@@ -28,7 +28,7 @@ vaah cms:m-make model Articles Content
 This will generate a model file at `VaahCms/Modules/Articles/Entities/`. Let's edit the model file to following:
 
 
-```
+```php
 <?php namespace VaahCms\Modules\Articles\Entities;
 
 use Illuminate\Database\Eloquent\Model;
@@ -70,7 +70,7 @@ Let check the `VaahCms/Modules/Articles/Routes/backend.php`
 
 
 
-```
+```php
 Route::group(
     [
         'prefix' => 'backend/articles/contents',
@@ -105,7 +105,7 @@ Controller acts as a directing traffic between Views and Models. In this applica
 
 The easiest way to create a controller instance is using the make:controller Artisan command:
 
-```
+```php
 vaah cms:m-make controller Articles Content
 ```
 
@@ -114,7 +114,7 @@ This will generate a Controller file at `VaahCms/Modules/Articles/Http/Controlle
 
 
 
-```
+```php
 <?php namespace VaahCms\Modules\Articles\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;

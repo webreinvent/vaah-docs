@@ -103,7 +103,7 @@ In the simplest form, assets means JavaScript, CSS, and images which lie directl
 
 Laravel provides a helper function, `asset()`, which generates a URL for your assets. You can use this in blade syntax, e.g.
 
-```
+```html
 <script type='text/javascript' src='{ { asset('js/jquery.js') } }'></script>
 ```
 
@@ -120,7 +120,7 @@ A mix is a configuration layer on top of Webpack, so to run the Mix tasks you on
 
 
 
-```
+```js
 // Run all Mix tasks...
 npm run dev
 OR
@@ -131,7 +131,7 @@ It will compile our CSS and JS files and put the build inside a public folder.
 
 
 
-```
+```js
 // Run all Mix tasks and minify output...
 npm run production
 ```
@@ -144,7 +144,7 @@ We then include this CSS and JS files inside our master blade file. You can see 
 
 
 
-```
+```js
 const mix = require('laravel-mix');
 var fs = require('fs');
 const fs_extra = require('fs-extra');

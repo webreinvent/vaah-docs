@@ -10,7 +10,7 @@ All of the configuration/Information of Vaahcms's `Themes` are stored in the `co
 
 
 
-```
+```php
 <?php
 
 return [

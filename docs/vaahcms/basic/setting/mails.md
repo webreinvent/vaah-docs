@@ -31,7 +31,7 @@ VaahMail::dispatch($mail, $to, $priority)
 
 - `$to` is the array of recipient:
 
-  ```
+  ```php
   $inputs = [
     ['email' => 'email@example.com', 'name' => 'name'],
     ['email' => 'email2@example.com', 'name' => 'name 2'],
@@ -44,7 +44,7 @@ VaahMail::dispatch($mail, $to, $priority)
 
 **To send mail to a user you can use following code:**
 
-```
+```php
 VaahMail::dispatchToUser($mail, $user, $priority)
 ```
 
@@ -60,7 +60,7 @@ VaahMail::dispatchToUser($mail, $user, $priority)
 
 **To send a generic mail to a user you can use following code:**
 
-```
+```php
 VaahMail::dispatchGenericMail($content, $user, $priority)
 ```
 
@@ -77,7 +77,7 @@ VaahMail::dispatchGenericMail($content, $user, $priority)
 
 If you want to send the notification without laravel queues, you can use following code
 
-```
+```php
 VaahMail::send($notification, $user, $inputs)
 ```
 
@@ -91,11 +91,11 @@ VaahMail::send($notification, $user, $inputs)
 
 To customize the default laravel mail & notification template you must publish the asset, using following commands:
 
-```
+```php
 php artisan vendor:publish --tag=laravel-mail
 ```
 
-```
+```php
 php artisan vendor:publish --tag=laravel-notifications
 ```
 

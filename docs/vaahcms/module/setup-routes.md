@@ -15,7 +15,7 @@ Add this route to `VaahCms/Modules/Articles/Vue/routes/routes.js`
 
 
 
-```
+```js
 import ContentsList from "./../pages/contents/List";
 import ContentsCreate from "./../pages/contents/Create";
 import ContentsView from "./../pages/contents/View";

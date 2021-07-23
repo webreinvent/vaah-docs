@@ -12,7 +12,7 @@ At `VaahCms/Themes/BlogTheme/Http/Controllers/Frontend/FrontendController.php` f
 
 
 
-```
+```php
 <?php namespace VaahCms\Themes\BlogTheme\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
@@ -40,7 +40,7 @@ Now, you also need to update `home.blade.php` file.
 
 
 
-```
+```php+HTML
 @extends("blogtheme::frontend.layouts.default")
 
 @section('vaahcms_extend_frontend_head')

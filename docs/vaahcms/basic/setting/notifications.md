@@ -38,6 +38,7 @@ Notification::dispatch($notification, $user, $inputs, $priority)
 
 If you want to send the notification without laravel queues, you can use following code
 
-```
+```php
 Notification::send($notification, $user, $inputs)
 ```
+

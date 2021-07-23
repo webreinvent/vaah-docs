@@ -98,4 +98,3 @@ In `VaahHelper.js`, there are functions that can be used anywhere in `Vue` Compo
 |      | getClipboardValue           |                                                              | Component to show Success messages in list.                  |
 |      | getNonReactiveObject        | `obj`                                                        | Component to show Success messages in list.                  |
 
-https://nuxt.getdemo.dev:48300/cms/docs/vaahvue/helpers)

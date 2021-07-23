@@ -27,7 +27,7 @@ You can add while doing a fresh setup of Project. For that you just create follo
 **menus.json**
 
 
-```
+```json
 [
     {
         "name": "Blog 1",
@@ -44,7 +44,7 @@ You can add while doing a fresh setup of Project. For that you just create follo
 **blocks.json**
 
 
-```
+```json
 [
     {
         "name": "Logo",
@@ -57,7 +57,7 @@ You can add while doing a fresh setup of Project. For that you just create follo
 **content_types.json**
 
 
-```
+```json
 [
     {
         "content": {
@@ -103,7 +103,7 @@ You can add while doing a fresh setup of Project. For that you just create follo
 **blogs.json**
 
 
-```
+```json
 [
     {
         "name": "Blog 1",
@@ -127,7 +127,7 @@ To run this seed, you have to add some code in `SampleDataTableSeeder.php` and `
 This seeder file will be called whenever you will activate the module from the backend of the VaahCMS.
 
 
-```
+```php
 <?php
 namespace VaahCms\Themes\BlogTheme\Database\Seeds;
 
@@ -166,7 +166,7 @@ class DatabaseTableSeeder extends Seeder
 This seeder file will be called whenever you will click on "Import Sample Data" button of the module.
 
 
-```
+```php
 <?php
 namespace VaahCms\Themes\BlogTheme\Database\Seeds;
 

@@ -10,7 +10,7 @@ For creating block, you need to follow some steps:
 
 Create a json file of name `theme_locations.json` at `VaahCms/Themes/BlogTheme/Database/Seeds/json/` this directory.
 
-```
+```json
 [
     
     {
@@ -36,7 +36,7 @@ To run this seed, you have to add some code in `DatabaseTableSeeder.php` file.
 
 
 
-```
+```php
 <?php
 namespace VaahCms\Themes\BlogTheme\Database\Seeds;
 
@@ -104,7 +104,7 @@ Blocks will be fetched on frontend by two Codes:
 
 ##### By Block slug
 
-```
+```php+HTML
 {!! vh_block('logo') !!}
 ```
 
@@ -112,7 +112,7 @@ Blocks will be fetched on frontend by two Codes:
 
 ##### By Location name
 
-```
+```php+HTML
 {!! vh_location_blocks('top') !!}
 ```
 
@@ -123,7 +123,7 @@ You have to paste these codes in Web Pages.
 Now, you can copy this code and paste it in home blade file. Remove hard code of logo.
 
 
-```repl
+```php+HTML
 <a class="navbar-item" href="../">
                             
                             {{--<img src="http://bulma.io/images/bulma-type-white.png" alt="Logo">--}}

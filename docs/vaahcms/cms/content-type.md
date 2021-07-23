@@ -125,16 +125,17 @@ Contents will be fetch on frontend by two Codes:
 
 ##### By Content Field
 
-```
+```php+HTML
 {!! get_field($data, 'title') !!}
 ```
 
 
 ##### By Template name
 
-```
+```php+HTML
 {!! get_field($data, 'title', 'header', 'template') !!}
 ```
 
 
 You have to paste these codes in Web Pages.
+

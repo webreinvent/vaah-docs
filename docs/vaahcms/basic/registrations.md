@@ -40,7 +40,7 @@ You can create a `Registration` by call the `postCreate()`method of `Registratio
 
 RegistrationController.php
 
-```
+```php
 <?php
 
 namespace WebReinvent\VaahCms\Http\Controllers;
@@ -91,3 +91,4 @@ class RegistrationsController extends Controller
 ```
 
 ------
+

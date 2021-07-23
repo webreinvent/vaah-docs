@@ -43,14 +43,14 @@ Visit following url you will see the `Localization` section:
 
 ##### Retrieve Code
 
-```
+```php
 trans('messages.welcome')
 ```
 
 
 If you are using the Blade templating engine, you may use the `{!! !!}` echo syntax to display the translation string:
 
-```
+```php
 {!! trans('messages.welcome') !!}
 ```
 

@@ -160,14 +160,14 @@ To know about `Relationships`, see [Laravel Documentation](https://laravel.com/d
 | getAvatarById        | `$id`                                | The `getAvatarById` method find users only by the `id` and return avatar url. |
 | getUsersForAssets    |                                      | The `getUsersForAssets` method return list of `active` users with following columns: `id`, `first_name`, `middle_name`, `last_name` |
 
-- create
-- postStore
-- validation
-- getList
-- getItem
-- getItemRoles
-- bulkStatusChange
-- bulkTrash
+- [# create](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-create)
+- [# postStore](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-post-store)
+- [# validation](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-validation)
+- [# getList](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-get-list)
+- [# getItem](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-get-item)
+- [# getItemRoles](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-get-item-roles)
+- [# bulkStatusChange](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-bulk-status-change)
+- [# bulkTrash](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-bulk-trash)
 
 ------
 
@@ -177,7 +177,7 @@ To know about `Relationships`, see [Laravel Documentation](https://laravel.com/d
 
 **Parameters:** `$request`
 
-```
+```php
 $request =  new Request(
             [
                 'new_item' => [
@@ -218,7 +218,7 @@ Creates a new user for the database on which the method is run. `\WebReinvent\Va
 
 **Parameters:** `$request`
 
-```
+```php
 $request =  new Request(
             [
                 'new_item' => [
@@ -260,7 +260,7 @@ Update an existing user in the database. `\WebReinvent\VaahCms\Entities\User::po
 
 **Parameters:** `$inputs`
 
-```
+```php
 $input =  [
                     'email'                 => null,    // required
                     'first_name'            => null,    // required
@@ -279,7 +279,7 @@ This is a method for validate user's following columns: `email`, `first_name`, `
 
 **Parameters:** `$request`
 
-```
+```php
 $request =  new Request(
             [
                 'new_item' => [
@@ -324,7 +324,7 @@ This `getItem` method find user only by the `id` and relation with `createdByUse
 
 **Parameters:** `$request`, `$id`
 
-```
+```php
 $request =  new Request(
             [
                 'page'          => null,        // 1,2,3,4.....
@@ -346,7 +346,7 @@ This `getItemRoles` method find user by the `id` and get the list of their assoc
 
 **Parameters:** `$request`
 
-```
+```php
  $request =  new Request(
             [
                 "inputs" =>  [
@@ -374,7 +374,7 @@ This method is used to change the status of Users. There is one parameter `$requ
 
 **Parameters:** `$request`
 
-```
+```php
  $request =  new Request(
             [
                 "inputs" =>  [
@@ -402,7 +402,7 @@ This method is used to soft delete the Users. There is one parameter `$request` 
 
 **Parameters:** `$request`
 
-```
+```php
  $request =  new Request(
             [
                 "inputs" =>  [
@@ -430,7 +430,7 @@ This method is used to restore the Users. There is one parameter `$request` whic
 
 **Parameters:** `$request`
 
-```
+```php
  $request =  new Request(
             [
                 "inputs" =>  [

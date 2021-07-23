@@ -76,7 +76,7 @@ User can create a permission through seeds. Create a json file of name `permissi
 
 permissions.json
 
-```
+```json
 [
 
     {
@@ -120,8 +120,6 @@ permissions.json
     .........
     .........
     .........
-    .........
-    .........
 ]
 ```
 
@@ -131,7 +129,7 @@ To run this seed, you have to add some code in `DatabaseTableSeeder.php` at `...
 
 DatabaseTableSeeder.php
 
-```
+```php
 <?php
 namespace VaahCms\Modules\{module_name}\Database\Seeds;
 
@@ -219,7 +217,7 @@ You can add permissions in a role in `Permissions` section. By clicking on `Role
 
 VaahCms provide a method to check the User's permission.
 
-```
+```php
 \Auth::user()->hasPermission('has-access-of-users-section')
 ```
 

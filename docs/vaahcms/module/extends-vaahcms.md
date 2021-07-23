@@ -13,7 +13,7 @@ At `VaahCms/Modules/Articles/Http/Controllers/Backend` folder you will find thre
 To extend the sidebar, we need to edit `ExtendController.php`:
 
 
-```
+```php
 <?php  namespace VaahCms\Modules\Articles\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
@@ -72,7 +72,7 @@ Now, you actually activate the module by visiting following url:
 
 Once, the module is activated, you will be able to see the "Articles" menu item in the `Sidebar`. You can click on the menu item and you will see the view generated from the following `blade` file:
 
-```
+```php+HTML
 VaahCms/Modules/Articles/Resources/views/backend/pages/dashboard.blade.php
 ```
 

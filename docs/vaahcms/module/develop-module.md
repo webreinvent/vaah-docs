@@ -18,7 +18,7 @@ Steps to install VaahCMS is available at [Getting Started > Installation](https:
 
 Install NodeJs package `VaahCLI` globally, instructions are available at [VaahCLI](https://www.npmjs.com/package/vaah).
 
-```
+```js
 npm i vaah -g
 ```
 
@@ -34,7 +34,7 @@ You can effectively use the tool with `Command Generator` at [Generators](https:
 
 Lets call the module as `Articles`. Open the command line tool & navigate to the project root folder or in PHPStorm open `Terminal` and to generate scaffolding for the module, use following command:
 
-```
+```js
 vaah cms:m
 ```
 

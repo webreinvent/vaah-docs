@@ -36,13 +36,13 @@ User can create a role through seeds. Create a json file of name `roles.json` at
 
 roles.json
 
-```
+```json
 [
 
     {
         "name": "Administrator",
-        "details": "Users who have admin roles has all the permission access and manage the data."
-                       Somebody who has access to all the administration features within a single site"
+        "details": "Users who have admin roles has all the permission access and manage the data, Somebody who has access to all the administration features within a single site"
+                
     },
     {
         "name": "Manager",
@@ -60,7 +60,7 @@ To run this seed, you have to add some code in `DatabaseTableSeeder.php` at `...
 
 DatabaseTableSeeder.php
 
-```
+```php
 <?php
 namespace VaahCms\Modules\{module_name}\Database\Seeds;
 
@@ -134,6 +134,8 @@ class DatabaseTableSeeder extends Seeder
 }
 ```
 
+
+
 ------
 
 
@@ -158,6 +160,6 @@ You can add permissions in a role in `Roles` section. By clicking on `Permission
 
 VaahCms provide a method to check the User's permission.
 
-```
+```php
 \Auth::user()->hasRole('administrator')
 ```

@@ -13,7 +13,7 @@ For creating Content, you need to follow some steps:
 Create a json file of name `templates.json` at `VaahCms/Themes/BlogTheme/Database/Seeds/json/` this directory.
 
 
-```
+```json
 [
     {
         "template": {
@@ -66,7 +66,7 @@ You have to set `blade file` path in a template.json file. The content link retu
 To run this seed, you have to add some code in `DatabaseTableSeeder.php` file.
 
 
-```
+```php
 <?php
 namespace VaahCms\Themes\BlogTheme\Database\Seeds;
 
@@ -120,7 +120,7 @@ In Templates, You can add some fields that means that fields are template specif
 **Example:-**
 
 
-```
+```json
 {
         "template": {
             "name": "Services",
@@ -166,7 +166,7 @@ You can also add an author for this content.
 Now, you need to copy the code by a click on copy icon and paste it in a blade file. Remove the Hard Code from blade file and paste the CMS code in place of their. You can see the difference below.
 
 
-```
+```php+HTML
 {{--<div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="title">

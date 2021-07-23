@@ -31,14 +31,14 @@ Blocks will be fetched on frontend by two codes:
 
 ##### By Block slug
 
-```
+```php
 {!! vh_block('header-button') !!}
 ```
 
 
 ##### By Location name
 
-```
+```php
 {!! vh_location_blocks('top') !!}
 ```
 
@@ -46,3 +46,4 @@ Blocks will be fetched on frontend by two codes:
 You have to paste these codes in Web Pages.
 
 ------
+

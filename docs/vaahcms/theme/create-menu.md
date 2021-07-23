@@ -12,7 +12,7 @@ Create a json file of name `theme_locations.json` at `VaahCms/Themes/BlogTheme/D
 
 
 
-```
+```json
 [
 
     {
@@ -38,7 +38,7 @@ To run this seed, you have to add some code in `DatabaseTableSeeder.php` file.
 
 
 
-```
+```php
 <?php
 namespace VaahCms\Themes\BlogTheme\Database\Seeds;
 
@@ -101,7 +101,7 @@ To create Menu, visit this url:
 
 <img :src="$withBase('/images/create-menu-2.png')" alt="create-menu-2">
 
-```
+```php+HTML
 {!! vh_location('top', true) !!}
 ```
 
@@ -110,7 +110,7 @@ To create Menu, visit this url:
 Now, you can copy this code and paste it in home blade file. Remove hard code of menu.
 
 
-```
+```php+HTML
 <div class="tabs is-right">
                                 {{--<ul>
                                     <li class="is-active"><a>Home</a></li>

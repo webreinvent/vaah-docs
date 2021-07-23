@@ -8,7 +8,7 @@ Let's assume there is only one table required for this module which is `art_arti
 
 To generate migration use following command:
 
-```
+```php
 vaah cms:m-make migration Articles art_articles
 ```
 
@@ -16,7 +16,7 @@ vaah cms:m-make migration Articles art_articles
 
 This will generate a migration file at `VaahCms/Modules/Articles/Database/Migrations/`. Let's edit the migration file to following:
 
-```
+```php
 <?php
 
 use Illuminate\Support\Facades\Schema;
@@ -67,7 +67,7 @@ Seeds are used to generate necessary data or sample data for the module. At `Vaa
 
 In this tutorial, let's assume that we want to add 15 articles by default whenever the module is activated, hence we'll be editing `DatabaseTableSeeder.php` file.
 
-```
+```php
 <?php
 namespace VaahCms\Modules\Articles\Database\Seeds;
 
@@ -119,3 +119,4 @@ class DatabaseTableSeeder extends Seeder
     }
 }
 ```
+

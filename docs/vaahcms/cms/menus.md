@@ -51,10 +51,11 @@ In Custom, There are two menu items: 1. Internal link 2. External link
 
 You have to paste this code in Web Pages and it will fetch according to their location name.
 
-```
+```php+HTML
 {!! vh_location('top', true) !!}
 ```
 
 
 
 ------
+

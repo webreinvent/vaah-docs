@@ -81,7 +81,7 @@ In component, we have used [Bulma](https://bulma.io/) and [Buefy](https://buefy.
 
 
 
-```
+```vue
 <script src="./ListJs.js"></script>
 <template>
     <div class="form-page-v1-layout">
@@ -174,7 +174,7 @@ In component, we have used [Bulma](https://bulma.io/) and [Buefy](https://buefy.
 
 `List.js`
 
-```
+```js
 import ListLargeView from './partials/ListLargeView';
 import ListSmallView from './partials/ListSmallView';
 
@@ -294,7 +294,7 @@ In List.js, we have import two component for showing list.
 
 `ListLargeView.vue`
 
-```
+```vue
 <script src="./ListLargeViewJs.js"></script>
 <template>
     <div>
@@ -373,10 +373,10 @@ In List.js, we have import two component for showing list.
 </template>
 ```
 
-`ListLargeViewJs.vue`
+`ListLargeViewJs.js`
 
 
-```
+```js
 let namespace = 'contents';
 export default {
     computed: {
@@ -469,7 +469,7 @@ export default {
 
 `ListSmallView.vue`
 
-```
+```vue
 <script src="./ListSmallViewJs.js"></script>
 <template>
     <div>
@@ -527,10 +527,9 @@ export default {
 </template>
 ```
 
+`ListSmallViewJs.js`
 
-`ListSmallViewJs.vue`
-
-```
+```js
 let namespace = 'contents';
 export default {
     computed: {
@@ -597,7 +596,7 @@ export default {
 
 `Create.vue`
 
-```
+```vue
 <script src="./CreateJs.js"></script>
 <template>
     <div class="column" >
@@ -676,9 +675,9 @@ export default {
 </template>
 ```
 
-`CreateJs.vue`
+`CreateJs.js`
 
-```
+```js
 let namespace = 'contents';
 
 export default {
@@ -799,7 +798,7 @@ export default {
 
 `View.vue`
 
-```
+```vue
 <script src="./ViewJs.js"></script>
 <template>
     <div class="column">
@@ -890,9 +889,9 @@ export default {
 </template>
 ```
 
-`ViewJs.vue`
+`ViewJs.js`
 
-```
+```js
 let namespace = 'contents';
 
 export default {
@@ -1000,10 +999,9 @@ export default {
 }
 ```
 
-
 `Edit.vue`
 
-```
+```vue
 <script src="./EditJs.js"></script>
 <template>
     <div class="column" v-if="item && page">
@@ -1117,9 +1115,9 @@ export default {
 </template>
 ```
 
-`EditJs.vue`
+`EditJs.js`
 
-```
+```js
 let namespace = 'contents';
 
 export default {

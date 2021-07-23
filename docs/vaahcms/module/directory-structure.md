@@ -120,7 +120,7 @@ In the simplest form, assets means JavaScript, CSS, and images which lie directl
 
 Laravel provides a helper function, `asset()`, which generates a URL for your assets. You can use this in blade syntax, e.g.
 
-```
+```js
 <script type='text/javascript' src='{ { asset('js/jquery.js') } }'></script>
 ```
 
@@ -134,7 +134,7 @@ Laravel provides a helper function, `asset()`, which generates a URL for your as
 
 A mix is a configuration layer on top of Webpack, so to run the Mix tasks you only need to execute one of the NPM scripts that are included with the default Laravel `package.json` file.
 
-```
+```js
 // Run all Mix tasks...
 npm run dev
 OR
@@ -143,7 +143,7 @@ npm run watch
 
 It will compile our CSS and JS files and put the build inside a public folder.
 
-```
+```js
 // Run all Mix tasks and minify output...
 npm run production
 ```
@@ -154,7 +154,7 @@ In VaahCms, Publish path for assets is different from `npm run dev` & `npm run w
 
 We then include this CSS and JS files inside our master blade file. You can see the code inside the file webpack.mix.js file. The webpack.mix.js file resides in the `Module` and `Theme` folder.
 
-```
+```js
 const mix = require('laravel-mix');
 var fs = require('fs');
 const fs_extra = require('fs-extra');

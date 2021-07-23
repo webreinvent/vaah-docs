@@ -22,26 +22,26 @@ sidebar = [
         text: 'THE BASICS',
         //link: '/vaahcms/directory-structure.md',
         children: [
-            {text: 'The Concept', link: '/vaahcms/the-concept.md'},
-            {text: 'Routing', link: '/vaahcms/routing.md'},
-            {text: 'Permission', link: '/vaahcms/permission.md'},
-            {text: 'Roles', link: '/vaahcms/roles.md'},
-            {text: 'Registration', link: '/vaahcms/registrations.md'},
-            {text: 'Users', link: '/vaahcms/users.md'},
-            {text: 'Access Control List (ACL)', link: '/vaahcms/acl.md'},
-            {text: 'Modules', link: '/vaahcms/modules.md'},
-            {text: 'Themes', link: '/vaahcms/themes.md'},
-            {text: 'Media', link: '/vaahcms/media.md'},
+            {text: 'The Concept',               link: '/vaahcms/basic/the-concept.md'},
+            {text: 'Routing',                   link: '/vaahcms/basic/routing.md'},
+            {text: 'Permission',                link: '/vaahcms/basic/permission.md'},
+            {text: 'Roles',                     link: '/vaahcms/basic/roles.md'},
+            {text: 'Registration',              link: '/vaahcms/basic/registrations.md'},
+            {text: 'Users',                     link: '/vaahcms/basic/users.md'},
+            {text: 'Access Control List (ACL)', link: '/vaahcms/basic/acl.md'},
+            {text: 'Modules',                   link: '/vaahcms/basic/modules.md'},
+            {text: 'Themes',                    link: '/vaahcms/basic/themes.md'},
+            {text: 'Media',                     link: '/vaahcms/basic/media.md'},
             {
                 text: 'SETTING',
                 //link: '/vaahcms/directory-structure.md',
                 children: [
-                    {text: 'General', link: '/vaahcms/setting/general.md'},
-                    {text: 'Manage Env Variables', link: '/vaahcms/setting/manage-env.md'},
-                    {text: 'Localization', link: '/vaahcms/setting/localization.md'},
-                    {text: 'Notifications', link: '/vaahcms/setting/notifications.md'},
-                    {text: 'Mails', link: '/vaahcms/setting/mails.md'},
-                    {text: 'Reset Application', link: '/vaahcms/setting/reset-application.md'},
+                    {text: 'General',               link: '/vaahcms/basic/setting/general.md'},
+                    {text: 'Manage Env Variables',  link: '/vaahcms/basic/setting/manage-env.md'},
+                    {text: 'Localization',          link: '/vaahcms/basic/setting/localization.md'},
+                    {text: 'Notifications',         link: '/vaahcms/basic/setting/notifications.md'},
+                    {text: 'Mails',                 link: '/vaahcms/basic/setting/mails.md'},
+                    {text: 'Reset Application',     link: '/vaahcms/basic/setting/reset-application.md'},
                 ]
             },
         ]
@@ -50,8 +50,8 @@ sidebar = [
         text: 'VAAHVUE',
         //link: '/vaahcms/directory-structure.md',
         children: [
-            {text: 'Helpers', link: '/vaahcms/helpers.md'},
-            {text: 'Reusable', link: '/vaahcms/reusable.md'},
+            {text: 'Helpers', link: '/vaahcms/vaahvue/helpers.md'},
+            {text: 'Reusable', link: '/vaahcms/vaahvue/reusable.md'},
         ]
     },
     {

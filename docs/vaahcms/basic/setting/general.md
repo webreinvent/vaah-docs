@@ -135,7 +135,7 @@ Create a json file of name `settings.json` at `.../Database/Seeds/json/` this di
 
 settings.json
 
-```
+```json
 [
 
     {
@@ -154,7 +154,7 @@ settings.json
 
 To run this seed, you have to create `seedSetting()` method in DatabaseTableSeeder.php file.
 
-```
+```php
 public function seedSettings()
     {
 

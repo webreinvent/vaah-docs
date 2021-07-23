@@ -8,7 +8,7 @@ We now need to implement the logic for each of these in a model at `VaahCms/Modu
 
 
 
-```
+```php
     public static function postCreate($request)
     {
 
@@ -39,7 +39,7 @@ We now need to implement the logic for each of these in a model at `VaahCms/Modu
 
 
 
-```
+```php
     public static function getList($request)
     {
         $list = static::orderBy('id', 'desc');
@@ -68,7 +68,7 @@ We now need to implement the logic for each of these in a model at `VaahCms/Modu
 
 
 
-```
+```php
  public static function postStore($request,$id)
     {
 
@@ -106,7 +106,7 @@ We now need to implement the logic for each of these in a model at `VaahCms/Modu
 
 
 
-```
+```php
     public static function postDestroy($id)
     {
 
@@ -127,7 +127,7 @@ We now need to implement the logic for each of these in a model at `VaahCms/Modu
 
 
 
-```
+```php
     public static function validation($request)
     {
         $rules = array(
@@ -153,3 +153,4 @@ We now need to implement the logic for each of these in a model at `VaahCms/Modu
 ```
 
 ------
+

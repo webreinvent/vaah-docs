@@ -32,7 +32,7 @@ Blocks will be fetch on frontend by two Codes:
 
 ##### By Block slug
 
-```
+```php+HTML
 {!! vh_block('header-button') !!}
 ```
 
@@ -40,7 +40,7 @@ Blocks will be fetch on frontend by two Codes:
 
 ##### By Location name
 
-```
+```php+HTML
 {!! vh_location_blocks('top') !!}
 ```
 

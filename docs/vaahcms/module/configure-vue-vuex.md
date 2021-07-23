@@ -8,7 +8,7 @@ At `VaahCms/Modules/Articles/Http/Controllers/Backend/BackendController.php` fil
 
 
 
-```
+```php
 <?php namespace VaahCms\Modules\Articles\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
@@ -45,14 +45,14 @@ class BackendController extends Controller
 
 Now, you also need to install the Vue.js dependencies at `VaahCms/Modules/Articles` from npm using the following command:
 
-```
+```js
 npm install
 ```
 
 
 You should have node and npm installed in your system. You can use the following NPM command to track the changes in your application and compile the components and other required files.
 
-```
+```js
 npm run watch-poll
 ```
 
@@ -63,7 +63,7 @@ Let check the `Vue/layouts/Backend.vue`
 
 
 
-```
+```js
 <script src="./BackendJs.js"></script>
 
 <template>
