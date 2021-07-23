@@ -1,0 +1,50 @@
+# VaahCms Theme
+
+
+
+##### What is a Theme?
+
+A theme is a set of files that define the visual look and feel of your site. The modules that run on your site determine which content (including HTML text and other data stored in the database, uploaded images, and any other asset files) is displayed on the pages of your site. The theme determines the HTML markup and CSS styling that wraps the content.
+
+------
+
+
+
+##### VaahCms Theme
+
+VaahCms provide a `framework` for `Theme`. This framework has largely been designed over the last several years and will all be good choices for building sites.
+
+We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS exist.
+
+------
+
+
+
+##### Development Environment
+
+You will need to make sure your server meets the following requirements:
+
+- PHP >= 7.4.0
+- BCMath PHP Extension
+- Ctype PHP Extension
+- JSON PHP Extension
+- Mbstring PHP Extension
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
+
+This is tutorial is for windows machine but steps will remain for other OS too. Following software, tools & libraries are used in this tutorial:
+
+- [Composer](https://getcomposer.org/)
+- [Xampp](https://www.apachefriends.org/index.html)
+- [PHPStorm](https://www.jetbrains.com/phpstorm/)
+- [NodeJs](https://nodejs.org/en/)
+- [Vue](https://vuejs.org/)
+- [Vuex](https://vuex.vuejs.org/)
+
+
+
+
+
+------

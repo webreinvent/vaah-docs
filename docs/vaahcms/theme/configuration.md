@@ -1,0 +1,42 @@
+# Configuration
+
+- Introduction
+
+
+
+#### Introduction
+
+All of the configuration/Information of Vaahcms's `Themes` are stored in the `config.php` file, which is in the `VaahCms/Themes/BlogTheme/Config/` directory.
+
+
+
+```
+<?php
+
+return [
+    "name"=> "BlogTheme",
+    "title"=> "Theme for Blog",
+    "slug"=> "blogtheme",
+    "thumbnail"=> "https://placehold.jp/300x160.png",
+    "excerpt"=> "Blog",
+    "description"=> "Blog",
+    "download_link"=> "",
+    "author_name"=> "blogtheme",
+    "author_website"=> "https://vaah.dev",
+    "version"=> "v0.0.1",
+    "is_migratable"=> true,
+    "is_sample_data_available"=> true,
+    "db_table_prefix"=> "vh_blogtheme_",
+    "providers"=> [
+        "\\VaahCms\\Themes\\BlogTheme\\Providers\\BlogThemeServiceProvider"
+    ],
+    "aside-menu-order"=> null
+];
+```
+
+- Allow them to update their Name, Title, Slug, Description.
+- Allow them to update their version.
+- Allow them to upload their own logo.
+- Allow them to enable or disable the `is_migratable` features.
+- Allow them to enable or disable the `is_sample_data_available` features. This features allows you to import sample data through seeds.
+

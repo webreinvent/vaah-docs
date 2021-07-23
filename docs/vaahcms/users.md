@@ -1,4 +1,4 @@
-# General Setting
+# Users
 
 User Management is a system for authenticating users and storing user data. As of now, VaahCms has two Login option: `Login via Password` and `Login via OTP`. In `VaahCms`, you can manage all aspects of your user accounts such as changing user properties, reset passwords, enable or disable users, and more.
 

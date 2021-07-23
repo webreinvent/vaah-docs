@@ -11,7 +11,6 @@ Follow the following steps:
 3. Run or setup cron job for `php artisan queue:work --queue=high,medium,low,default --env=env_filename`
 
 
-
 If you make any changes in code of your `Job` class, then must restart the `queue:work` command.
 
 

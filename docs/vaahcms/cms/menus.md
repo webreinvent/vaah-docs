@@ -1,0 +1,60 @@
+# Menus
+
+This section provides information about the `Menus` in `CMS` modules
+
+Menus are a collection of links (menu items) used to navigate a website. Menus are primarily displayed as a hierarchical list of links using Backdrop blocks. Each menu automatically creates a block of the same name.
+
+Menus can be "flat" or may be hierarchical (multilevel) A multilevel menu has one or more “leaf” menu items.
+
+
+
+##### Menu structure in the CMS
+
+<br/>
+<img :src="$withBase('/images/cms-menu-1.png')" alt="cms-menu-1">
+
+
+1. Menu will visible to the selected Theme.
+2. Location determine the position of menu in Web Pages. Eg:- Top, Bottom etc
+3. You can select a existing Menu or create a new menu
+
+------
+
+
+
+##### Adding a content item to a menu as a new link
+
+
+
+Say you are creating a new "About Us" page and wish to have a menu item in your main menu so that visitor can click this link to find out all about you.
+
+<img :src="$withBase('/images/cms-menu-2.png')" alt="cms-menu-2">
+
+You could drag a `Content` of `About Us` Page to Menu Block. You can update the link title.
+
+By `dragging` the Content or Custom fields to Menu Block, you can arrange the menu according to your order. You can also add as a Sub-Menu by drag below the menu.
+
+They are of two Types:
+
+- Content
+- Custom
+
+In Content, There are the list of content that created in Content Types. you can directly add in to menu.
+
+In Custom, There are two menu items: 1. Internal link 2. External link
+
+------
+
+
+
+##### Code
+
+You have to paste this code in Web Pages and it will fetch according to their location name.
+
+```
+{!! vh_location('top', true) !!}
+```
+
+
+
+------

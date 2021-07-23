@@ -1,0 +1,155 @@
+# Define Method in Model
+
+------
+
+We now need to implement the logic for each of these in a model at `VaahCms/Modules/Articles/Entities/Content.php`:
+
+`Create. `This method allows users to create or insert a new record in the database
+
+
+
+```
+    public static function postCreate($request)
+    {
+
+        $validation = static::validation($request);
+        if(isset($validation['status']) && $validation['status'] == 'failed')
+        {
+            return $validation;
+        }
+
+        $inputs = $request->all();
+
+
+        $item = new static();
+
+        $item->fill($inputs);
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['data']['item'] =$item;
+        $response['messages'][] = 'Saved';
+
+        return $response;
+
+    }
+```
+
+`Read. `This method allows users to search and retrieve specific records in the table and their values.
+
+
+
+```
+    public static function getList($request)
+    {
+        $list = static::orderBy('id', 'desc');
+        $data['list'] = $list->paginate(config('vaahcms.per_page'));
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function getItem($id)
+    {
+        $item = static::where('id', $id)
+            ->withTrashed()
+            ->first();
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+        return $response;
+
+    }
+```
+
+`Update. `This method is used to modify existing records that exist in the database.
+
+
+
+```
+ public static function postStore($request,$id)
+    {
+
+        $validation = static::validation($request);
+        if(isset($validation['status']) && $validation['status'] == 'failed')
+        {
+            return $validation;
+        }
+
+        $title_exist = static::where('id','!=',$request['id'])->where('title',$request['title'])->first();
+
+        if($title_exist)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This title is already exist.";
+            return $response;
+        }
+
+        $inputs = $request->all();
+
+        $item = static::where('id',$id)->withTrashed()->first();
+
+        $item->fill($inputs);
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Data updated.';
+        return $response;
+
+    }
+```
+
+`Delete. `This method allows user to remove records from a database that is no longer needed.
+
+
+
+```
+    public static function postDestroy($id)
+    {
+
+        $item = static::where('id',$id)->withTrashed()->first();
+
+        $item->delete();
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Deleted Successfully.';
+
+        return $response;
+
+    }
+```
+
+`Validation. `It is the most important aspect while designing an application. It validates the incoming data.
+
+
+
+```
+    public static function validation($request)
+    {
+        $rules = array(
+            'title' => 'required|max:255',
+            'content' => 'required|max:255',
+            'is_published' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+        
+        $response['status'] = 'success';
+
+        return $response;
+
+    }
+```
+
+------
