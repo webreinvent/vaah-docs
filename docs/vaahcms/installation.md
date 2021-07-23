@@ -20,13 +20,15 @@ vaah cms:install
 
 
 
-## Manual Download
+## Manual Download & Installation
+
+### Download VaahCMS
 
 You can manually download the setup files, from following link:
 
 [Download VaahCMS](https://github.com/webreinvent/vaahcms-ready/archive/master.zip)
 
-## Install Dependencies
+### Install Dependencies
 
 VaahCMS utilizes [Composer](https://getcomposer.org/) to manage its dependencies. So, before using Laravel, make sure you have Composer installed on your machine.
 
@@ -42,16 +44,17 @@ VaahCMS utilizes [Composer](https://getcomposer.org/) to manage its dependencies
 
    
 
-## Setup & Configuration
+### Setup & Configuration
 
-Once the dependencies are downloaded, you need to publish the assets of VaahCMS via following command:
+Once the dependencies are downloaded, you need to publish the assets & config of VaahCMS via following commands:
 
 ```sh
 php artisan vendor:publish --provider='WebReinvent\VaahCms\VaahCmsServiceProvider' --tag=assets --force
 ```
 
-
-or
+```sh
+php artisan vendor:publish --provider='WebReinvent\VaahCms\VaahCmsServiceProvider' --tag=config --force
+```
 
 If you get this error: `Unable to locate publishable resources`.
 

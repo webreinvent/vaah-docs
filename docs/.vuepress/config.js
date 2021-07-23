@@ -20,6 +20,7 @@ module.exports = {
         searchMaxSuggestions: 10,
         searchPlaceholder: 'Search...',
         smoothScroll: true,
+        contributors: false,
         navbar: [
             {
                 text: "VaahCMS",
