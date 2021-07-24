@@ -2,7 +2,7 @@
 
 ------
 
-Blocks are the boxes of content that are displayed in Layout Regions (such as footer or sidebar) on your page. For more details, see CMS Blocks's [documentation](https://nuxt.getdemo.dev:48300/cms/docs/cms/blocks)
+Blocks are the boxes of content that are displayed in Layout Regions (such as footer or sidebar) on your page. For more details, see CMS Blocks's [documentation](/vaahcms/cms/blocks.md)
 
 For creating block, you need to follow some steps:
 

@@ -276,7 +276,7 @@ In Controller, you have to write this code to get permissions list.
     //----------------------------------------------------------
 ```
 
-In Vue, there is a [VaahHelper](https://nuxt.getdemo.dev:48300/cms/docs/vaahvue/helpers) function that is used to check `User` access.
+In Vue, there is a [VaahHelper](/vaahcms/vaahvue/helpers.md) function that is used to check `User` access.
 
 ```js
         //---------------------------------------------------------------------
@@ -290,5 +290,5 @@ In Vue, there is a [VaahHelper](https://nuxt.getdemo.dev:48300/cms/docs/vaahvue/
 
 To know about `VaahHelper`.
 
-[Read Documentation](https://nuxt.getdemo.dev:48300/cms/docs/vaahvue/helpers)
+[Read Documentation](/vaahcms/vaahvue/helpers.md)
 

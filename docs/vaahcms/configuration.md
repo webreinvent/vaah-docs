@@ -5,7 +5,6 @@
 ## Introduction
 
 
-
 It is often found that applications are required to be configured for multiple environments and VaahCMS makes it easy to keep the configures for all the environments. By default, VaahCMS inspires from `gitflow` naming convention for the environments. During the setup of VaahCMS you need to choose the `Env` which represent environment for which you're setting up the application. It has following options:
 
 1. `Custom (Features branch)`: If multiple developer are developing features, in that case they can have their own `.env` file.

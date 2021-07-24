@@ -12,4 +12,4 @@ VaahCms provide a `framework` for `Module`. This framework have largely been des
 
 We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS exist.
 
-[Read Documentation](https://nuxt.getdemo.dev:48300/cms/docs/module/introduction)
+[Read Documentation](/vaahcms/module/introduction.md)

@@ -12,7 +12,7 @@ The purpose of this tutorial is to develop a VaahCMS Theme for the management of
 
 ##### Step 1: Install VaahCMS
 
-Steps to install VaahCMS is available at [Getting Started > Installation](https://nuxt.getdemo.dev:48300/cms/docs/installation)
+Steps to install VaahCMS is available at [Getting Started > Installation](/vaahcms/installation.md)
 
 
 
@@ -28,7 +28,7 @@ npm i vaah -g
 
 VaahCLI will help you to quickly generate `Module` & `Theme` scaffolding.
 
-You can effectively use the tool with `Command Generator` at [Generators](https://nuxt.getdemo.dev:48300/cms/docs/generators).
+You can effectively use the tool with `Command Generator` at [Generators](/vaahcms/generators.md).
 
 
 

@@ -7,7 +7,7 @@ module.exports = {
     description: 'Documentation of Vaah Products',
     base: "/",
     plugins: [
-
+        ['tabs', true]
     ],
     themeConfig: {
         repo: 'webreinvent/vaah-docs',

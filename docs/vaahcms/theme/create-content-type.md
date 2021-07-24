@@ -2,7 +2,7 @@
 
 ------
 
-Content Type is the structure or blueprint of a page, or a section that your Web Page will display. For more details, see CMS Content Type's [documentation](https://nuxt.getdemo.dev:48300/cms/docs/cms/content-types)
+Content Type is the structure or blueprint of a page, or a section that your Web Page will display. For more details, see CMS Content Type's [documentation](/vaahcms/cms/content-type.md#adding-fields-to-a-content-type)
 
 First, You should create a content type before defining `Content Structure`.
 
@@ -19,7 +19,7 @@ This will open a content structure page. There are two section.
 
 You can drag the blocks from `Content Fields` to `Content Structure` and place according to your order. You can set the field name also.
 
-For more details about content fields, see CMS Content Type's [documentation](https://nuxt.getdemo.dev:48300/cms/docs/cms/content-types#adding-field)
+For more details about content fields, see CMS Content Type's [documentation](/vaahcms/cms/content-type.md)
 
 <img :src="$withBase('/images/create-content-type-3.png')" alt="create-content-type-3">
 

@@ -14,7 +14,7 @@ In summary, we will:
 
 #####  Set up a database and model
 
-In [Step 4](https://nuxt.getdemo.dev:48300/cms/docs/module/setting-crud#generate-migrations), we already generate migration and set up a database.
+In [Step 4](/vaahcms/module/migration-and-seed.md#generate-migrations), we already generate migration and set up a database.
 
 Now we are going to create a model for a table. Models typically live in the `app\Models` directory, but you are free to place them anywhere that can be auto-loaded according to your composer.json file. All Eloquent models `extend Illuminate\Database\Eloquent\Model` class.
 

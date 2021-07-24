@@ -1,6 +1,6 @@
 # Directory Structure
 
-- [# Introduction](https://nuxt.getdemo.dev:48300/cms/docs/module/directory-structure#introduction)
+- [# Introduction](#introduction)
 
 
 

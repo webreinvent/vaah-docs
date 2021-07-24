@@ -10,6 +10,11 @@ sidebar = [
         ]
     },
     {
+        text: 'GENERATORS',
+        link: '/vaahcms/generators.md'
+
+    },
+    {
         text: 'GETTING STARTED',
         //link: '/vaahcms/directory-structure.md',
         children: [

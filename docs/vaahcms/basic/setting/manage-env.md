@@ -6,7 +6,7 @@ The `.env` file stores configuration variables for your application and `.env.ex
 
 The `.env` file also contains your app key which is used for encryption in your app. In Laravel, you can maintain separate configuration from your application. For example:- Your local dev environment has different database credentials than production environment. For more detail, view Laravel Documentation.
 
-[Read Documentation](https://laravel.com/docs/5.6/configuration#environment-configuration)
+[Read Documentation](https://laravel.com/docs/8.x/configuration#environment-configuration)
 
 ------
 

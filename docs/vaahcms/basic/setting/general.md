@@ -15,11 +15,11 @@ Visit following url you will see the Setting section:
 
 Settings are divided into 5 section.
 
-- [# Site Settings](https://nuxt.getdemo.dev:48300/cms/docs/basic/settings/general#site-settings)
-- [# Date & Time](https://nuxt.getdemo.dev:48300/cms/docs/basic/settings/general#date-and-time)
-- [# Social Media & Links](https://nuxt.getdemo.dev:48300/cms/docs/basic/settings/general#social-media-and-links)
-- [# Scripts](https://nuxt.getdemo.dev:48300/cms/docs/basic/settings/general#scripts)
-- [# Meta Tags](https://nuxt.getdemo.dev:48300/cms/docs/basic/settings/general#meta-tags)
+- [# Site Settings](#site-settings)
+- [# Date & Time](#date-time)
+- [# Social Media & Links](#social-media-links)
+- [# Scripts](#scripts)
+- [# Meta Tags](#meta-tags)
 
 **Note:** `Most of the Setting will work only when you put Setting Code in Project.`
 

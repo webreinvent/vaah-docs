@@ -2,7 +2,7 @@
 
 ------
 
-Menus are a collection of links (menu items) used to navigate a website. For more details, see CMS Menus's [documentation](https://nuxt.getdemo.dev:48300/cms/docs/cms/menus)
+Menus are a collection of links (menu items) used to navigate a website. For more details, see CMS Menus's [documentation](/vaahcms/cms/menus.md)
 
 For creating menu, you need to follow some steps:
 

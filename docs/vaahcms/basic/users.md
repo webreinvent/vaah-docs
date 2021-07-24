@@ -160,14 +160,14 @@ To know about `Relationships`, see [Laravel Documentation](https://laravel.com/d
 | getAvatarById        | `$id`                                | The `getAvatarById` method find users only by the `id` and return avatar url. |
 | getUsersForAssets    |                                      | The `getUsersForAssets` method return list of `active` users with following columns: `id`, `first_name`, `middle_name`, `last_name` |
 
-- [# create](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-create)
-- [# postStore](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-post-store)
-- [# validation](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-validation)
-- [# getList](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-get-list)
-- [# getItem](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-get-item)
-- [# getItemRoles](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-get-item-roles)
-- [# bulkStatusChange](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-bulk-status-change)
-- [# bulkTrash](https://nuxt.getdemo.dev:48300/cms/docs/basic/users#method-bulk-trash)
+- [# create](#create)
+- [# postStore](#poststore)
+- [# validation](#validation)
+- [# getList](#getlist)
+- [# getItem](#getitem)
+- [# getItemRoles](#getitemroles)
+- [# bulkStatusChange](#bulkstatuschange)
+- [# bulkTrash](#bulktrash)
 
 ------
 

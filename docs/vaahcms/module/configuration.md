@@ -1,6 +1,6 @@
 # Configuration
 
-- [# Introduction](https://nuxt.getdemo.dev:48300/cms/docs/module/configuration#introduction)
+- [# Introduction](#introduction)
 
 
 

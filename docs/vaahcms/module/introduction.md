@@ -35,7 +35,7 @@ You will need to make sure your server meets the following requirements:
 This is tutorial is for windows machine but steps will remain for other OS too. Following software, tools & libraries are used in this tutorial:
 
 - [Composer](https://getcomposer.org/)
-- [Xampp](https://www.apachefriends.org/index.html)
+- [XAMPP](https://www.apachefriends.org/index.html)
 - [PHPStorm](https://www.jetbrains.com/phpstorm/)
 - [NodeJs](https://nodejs.org/en/)
 - [Vue](https://vuejs.org/)
