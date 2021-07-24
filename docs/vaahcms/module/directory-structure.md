@@ -92,11 +92,7 @@
       package.json
       package-lock.json
       README.md
-      webpack.mix.js
-
-
-      
-    
+      webpack.mix.js  
 ```
 
 ------

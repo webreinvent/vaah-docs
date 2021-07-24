@@ -33,12 +33,8 @@
       VaahCms/
       ├── Modules/
       ├── Themes/
-
-
 ```
-
-
-​      
+ 
 
 ​    
 
@@ -52,7 +48,6 @@ Read more about Laravel Directory Structure. The only differences are following:
       VaahCms/
       ├── Modules/
       ├── Themes/
-
 ```
 
 
@@ -61,7 +56,7 @@ Read more about Laravel Directory Structure. The only differences are following:
 
 VaahCms folder contains two more sub folders Modules & Themes. As the name suggests, Modules folder will have files and folders of VaahCMS Modules which extend the functionality of VaahCMS, majorly the backend control panel. While, Themes folder will contain files and folders of VaahCMS Themes which extends the public (frontend) section of the application.
 
-Each Module and Theme will have it's own directory structure which will be discussed in respective topics in the documentation.
+Each Module and Theme will have its own directory structure which will be discussed in respective topics in the documentation.
 
 ## Environment Detection
 bootstrap / environment.php file is responsible to detect the environment from vaahcms.json file based on APP URL and apply respective .env file.
