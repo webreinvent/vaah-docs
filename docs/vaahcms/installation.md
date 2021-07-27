@@ -6,7 +6,7 @@
 
 To install VaahCMS via VaahCLI, first you need to install VaahCLI, via following command:
 
-```sh
+```js
 npm install vaah -g
 ```
 
@@ -14,19 +14,21 @@ npm install vaah -g
 
 Then run following command to install VaahCMS:
 
-```sh
+```php
 vaah cms:install
 ```
 
 
 
-## Manual Download
+## Manual Download & Installation
+
+### Download VaahCMS
 
 You can manually download the setup files, from following link:
 
 [Download VaahCMS](https://github.com/webreinvent/vaahcms-ready/archive/master.zip)
 
-## Install Dependencies
+### Install Dependencies
 
 VaahCMS utilizes [Composer](https://getcomposer.org/) to manage its dependencies. So, before using Laravel, make sure you have Composer installed on your machine.
 
@@ -36,28 +38,29 @@ VaahCMS utilizes [Composer](https://getcomposer.org/) to manage its dependencies
 
 3. Run following command to install the dependencies:
 
-   ```sh
-   composer install
-   ```
+```php
+composer install
+```
 
    
 
-## Setup & Configuration
+### Setup & Configuration
 
-Once the dependencies are downloaded, you need to publish the assets of VaahCMS via following command:
+Once the dependencies are downloaded, you need to publish the assets & config of VaahCMS via following commands:
 
-```sh
+```php
 php artisan vendor:publish --provider='WebReinvent\VaahCms\VaahCmsServiceProvider' --tag=assets --force
 ```
 
-
-or
+```php
+php artisan vendor:publish --provider='WebReinvent\VaahCms\VaahCmsServiceProvider' --tag=config --force
+```
 
 If you get this error: `Unable to locate publishable resources`.
 
 Then just run publish command and choose the class that you want to publish.
 
-```sh
+```php
 php artisan vendor:publish
 ```
 
@@ -66,7 +69,7 @@ php artisan vendor:publish
 
 If you're using XAMPP or WAMP, visit following url to begin the setup:
 
-```sh
+```
 <project-url>/vaahcms/setup
 ```
 
@@ -74,7 +77,7 @@ or
 
 If you have PHP installed locally and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at `http://localhost:8000`. Run following command to start the serving the application:
 
-```sh
+```php
 php artisan serve
 ```
 
