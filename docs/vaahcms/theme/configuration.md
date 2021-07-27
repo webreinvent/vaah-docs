@@ -17,7 +17,7 @@ return [
     "name"=> "BlogTheme",
     "title"=> "Theme for Blog",
     "slug"=> "blogtheme",
-    "thumbnail"=> "https://placehold.jp/300x160.png",
+    "thumbnail"=> "https://img.site/p/300/160",
     "excerpt"=> "Blog",
     "description"=> "Blog",
     "download_link"=> "",

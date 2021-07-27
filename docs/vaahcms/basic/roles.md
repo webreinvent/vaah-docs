@@ -30,29 +30,23 @@ User can create a role directly from the Role Section in User & Access.
 
 <img :src="$withBase('/images/role-1.png')" alt="role1">
 
-##### Seeds:
+##### Create a Roles via VaahSeeder
 
 User can create a role through seeds. Create a json file of name `roles.json` at `.../VaahCms/Modules/{module_name}>/Database/Seeds/json/` this directory.
 
-roles.json
+`roles.json`
 
 ```json
 [
 
     {
-        "name": "Administrator",
-        "details": "Users who have admin roles has all the permission access and manage the data, Somebody who has access to all the administration features within a single site"
-                
+        "name": "Clients",
+        "details": "Can login to backend dashboard"       
     },
     {
-        "name": "Manager",
-        "details": "Users who have manage roles can assign a role to user."
-    },
-    {
-        "name": "Registered",
-        "details": "Users who have registered roles can access only public website."
+        "name": "Customers",
+        "details": "Frontend user to manage account"
     }
-
 ]
 ```
 
@@ -68,6 +62,7 @@ namespace VaahCms\Modules\{module_name}\Database\Seeds;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Libraries\VaahSeeder;
 
 class DatabaseTableSeeder extends Seeder
 {
@@ -78,58 +73,8 @@ class DatabaseTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->seedRoles();
+        VaahSeeder::roles(__DIR__.'/json/roles.json');
     }
-    //---------------------------------------------------------------
-    public function getListFromJson($json_file_name)
-    {
-        $json_file = __DIR__."/json/".$json_file_name;
-        $jsonString = file_get_contents($json_file);
-        $list = json_decode($jsonString, true);
-        return $list;
-    }
-    //---------------------------------------------------------------
-    public function seedPermissions()
-    {
-        $list = $this->getListFromJson("roles.json");
-        $this->storeSeedsWithUuid('vh_roles', $list);
-    }
-    //---------------------------------------------------------------
-    public function storeSeedsWithUuid($table, 
-                                       $list,
-                                       $has_active=true, 
-                                       $primary_key='slug', 
-                                       $create_slug=true, 
-                                       $create_slug_from='name')
-    {
-        foreach ($list as $item)
-        {
-            if($create_slug)
-            {
-                $item['slug'] = Str::slug($item[$create_slug_from]);
-            }
-
-            $item['uuid'] = Str::uuid();
-
-            if($has_active){
-                $item['is_active'] = 1;
-            }
-
-            $record = DB::table($table)
-                ->where($primary_key, $item[$primary_key])
-                ->first();
-
-
-            if(!$record)
-            {
-                DB::table($table)->insert($item);
-            } else{
-                DB::table($table)->where($primary_key, $item[$primary_key])
-                    ->update($item);
-            }
-        }
-    }
-
 
 }
 ```
@@ -161,5 +106,7 @@ You can add permissions in a role in `Roles` section. By clicking on `Permission
 VaahCms provide a method to check the User's permission.
 
 ```php
-\Auth::user()->hasRole('administrator')
+if(\Auth::user()->hasRole('administrator')){
+
+}
 ```

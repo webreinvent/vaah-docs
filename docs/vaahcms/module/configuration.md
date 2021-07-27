@@ -15,7 +15,7 @@ return [
     "name"=> "Articles",
     "title"=> "Module for Articles Management",
     "slug"=> "articles",
-    "thumbnail"=> "https://placehold.jp/300x160.png",
+    "thumbnail"=> "https://img.site/p/300/160",
     "excerpt"=> "Manage Articles",
     "description"=> "Manage Articles",
     "download_link"=> "",

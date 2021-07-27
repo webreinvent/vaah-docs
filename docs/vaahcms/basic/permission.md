@@ -68,57 +68,29 @@ These permissions are created through seeds while setup a project.
 
 
 
-##### Create a Permission
+##### Create a Permission via VaahSeeder
 
 User can create a permission through seeds. Create a json file of name `permissions.json` at `.../VaahCms/Modules/{module_name}>/Database/Seeds/json/` this directory.
 
 
 
-permissions.json
+`permissions.json`
 
 ```json
 [
 
     {
         "name": "Has Access of Dashboard",
-        "module": "vaahcms",
-        "section": "dashboard",
+        "module": "<module_name>",
+        "section": "<module_section_name>",
         "details": "This will allow user to see the link of dashboard."
     },
-
     {
         "name": "Has Access of Setting Section",
         "module": "vaahcms",
         "section": "Setting",
         "details": "This will allow user to see the link of setting section."
     },
-
-    {
-        "name": "Can Login In Backend",
-        "module": "vaahcms",
-        "section": "backend",
-        "details": "This will allow user to login in the backend."
-    },
-    {
-        "name": "Has Access Of Users Section",
-        "module": "vaahcms",
-        "section": "user",
-        "details": "This will allow user to see the link of user section."
-    },
-    {
-        "name": "Can Create Users",
-        "module": "vaahcms",
-        "section": "user",
-        "details": "This will allow user to add anything in the user section."
-    },
-    {
-        "name": "Can Read Users",
-        "module": "vaahcms",
-        "section": "user",
-        "details": "This will allow user to view anything in the user section."
-    },
-    .........
-    .........
     .........
 ]
 ```
@@ -131,12 +103,13 @@ DatabaseTableSeeder.php
 
 ```php
 <?php
-namespace VaahCms\Modules\{module_name}\Database\Seeds;
+namespace VaahCms\Modules\<module_name>\Database\Seeds;
 
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Libraries\VaahSeeder;
 
 class DatabaseTableSeeder extends Seeder
 {
@@ -147,58 +120,8 @@ class DatabaseTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->seedPermissions();
+        VaahSeeder::permissions(__DIR__.'/json/permissions.json');
     }
-    //---------------------------------------------------------------
-    public function getListFromJson($json_file_name)
-    {
-        $json_file = __DIR__."/json/".$json_file_name;
-        $jsonString = file_get_contents($json_file);
-        $list = json_decode($jsonString, true);
-        return $list;
-    }
-    //---------------------------------------------------------------
-    public function seedPermissions()
-    {
-        $list = $this->getListFromJson("permissions.json");
-        $this->storeSeedsWithUuid('vh_permissions', $list);
-    }
-    //---------------------------------------------------------------
-    public function storeSeedsWithUuid($table, 
-                                       $list,
-                                       $has_active=true, 
-                                       $primary_key='slug', 
-                                       $create_slug=true, 
-                                       $create_slug_from='name')
-    {
-        foreach ($list as $item)
-        {
-            if($create_slug)
-            {
-                $item['slug'] = Str::slug($item[$create_slug_from]);
-            }
-
-            $item['uuid'] = Str::uuid();
-
-            if($has_active){
-                $item['is_active'] = 1;
-            }
-
-            $record = DB::table($table)
-                ->where($primary_key, $item[$primary_key])
-                ->first();
-
-
-            if(!$record)
-            {
-                DB::table($table)->insert($item);
-            } else{
-                DB::table($table)->where($primary_key, $item[$primary_key])
-                    ->update($item);
-            }
-        }
-    }
-
 
 }
 ```
@@ -207,18 +130,29 @@ class DatabaseTableSeeder extends Seeder
 
 
 
-#####  Manage Roles
+#####  Assign permission to roles
 
-You can add permissions in a role in `Permissions` section. By clicking on `Role` column, a page will open that contain list of Roles along with `Yes/NO` Button.
+You can add permissions to a role in `Permissions` section. By clicking on `Role` column, a page will open that contain list of Roles along with `Yes/NO` Button.
 
 <img :src="$withBase('/images/permissions.png')" alt="permission">
 
 ------
 
+#####  How to check if a user has permission?
+
 VaahCms provide a method to check the User's permission.
 
 ```php
-\Auth::user()->hasPermission('has-access-of-users-section')
+if(\Auth::user()->hasPermission('<permission_slug>'))
+{
+}
+```
+eg:
+```php
+if(\Auth::user()->hasPermission('has-access-of-users-section'))
+{
+    //user has "has-access-of-users-section" permission
+}
 ```
 
 

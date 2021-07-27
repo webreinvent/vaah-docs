@@ -7,7 +7,7 @@ module.exports = {
     description: 'Documentation of Vaah Products',
     base: "/",
     plugins: [
-        ['tabs', true]
+        //['tabs', true]
     ],
     themeConfig: {
         repo: 'webreinvent/vaah-docs',
@@ -26,10 +26,10 @@ module.exports = {
                 text: "VaahCMS",
                 link: "/vaahcms/",
             },
-            {
+            /*{
                 text: "VaahCLI",
                 link: "/vaahcli/",
-            }
+            }*/
         ],
         sidebar:{
             '/vaahcms/': vaahcms.sidebar,
