@@ -21,6 +21,7 @@ sidebar = [
             {text: 'Installation', link: '/vaahcms/installation.md'},
             {text: 'Configuration', link: '/vaahcms/configuration.md'},
             {text: 'Directory Structure', link: '/vaahcms/directory-structure.md'},
+            {text: 'Database', link: '/vaahcms/database.md'},
         ]
     },
     {
