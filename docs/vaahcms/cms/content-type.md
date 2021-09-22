@@ -137,6 +137,16 @@ This feature is visible in Relation Field. You can add options in type field fro
 
 <img :src="$withBase('/images/content-types-structure-9.png')" alt="content-types-structure-9">
 
+##### Tags
+These tags are used to show the field's content within these tags. There are four tag field:
+                                                                
+- Opening Tag
+- Closing Tag
+- Container opening Tag
+- Container closing Tag
+
+<img :src="$withBase('/images/content-types-structure-10.png')" alt="content-types-structure-10">
+
 ##### Terminologies
 
 - **Entry**: After you define a content type, you can add data to your content type by creating an entry.
