@@ -38,6 +38,7 @@ sidebar = [
             {text: 'Modules',                   link: '/vaahcms/basic/modules.md'},
             {text: 'Themes',                    link: '/vaahcms/basic/themes.md'},
             {text: 'Media',                     link: '/vaahcms/basic/media.md'},
+            {text: 'Taxonomies',                     link: '/vaahcms/basic/taxonomies.md'},
             {
                 text: 'SETTING',
                 //link: '/vaahcms/directory-structure.md',
