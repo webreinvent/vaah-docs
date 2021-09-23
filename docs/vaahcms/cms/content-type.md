@@ -37,22 +37,22 @@ In the field type list, select one of the following types:
 | Address       | Has seven text fields (Address Line 1, Address Line 2, Landmark, City, State, Country, Zip Code) |
 | Boolean       | Has one of two values (for example: "yes/no" or "true/false") |
 | Currency Code | Has dropdown contain currency code                           |
-| Date          | A date                                                       |
-| Date Time     | A date with time                                             |
-| Editor        | Long text with html tag                                      |
-| Email         | Input Field of type email                                    |
+| Date          | Choose a date using the calendar                                                       |
+| Date Time     | Choose a datetime using the calendar                                             |
+| Editor        | Write a Long text with html tag                                      |
+| Email         | Write a complete and valid email address.                                    |
 | Facebook Card | Social meta fields                                           |
 | Image         | Add image file such as GIF, JPG, PNG                         |
 | Image Group   | Add multiple image file such as GIF, JPG, PNG                |
-| Json          | Text in json format                                          |
+| Json          | Write your content, in JSON format, in the code textbox.                                       |
 | List          | Add text in list format                                      |
 | Markdown      | Add text in markdown format                                  |
 | Media         | Add file                                                     |
 | Number        | A number that allows exact decimal values; often used for price or cost |
-| Password      | Input Field of type Password                                 |
-| Phone Number  | Input Field of type Number                                   |
+| Password      | Write a password. Click the eye icon, displayed on the right of the box, to show the password.                                 |
+| Phone Number  | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                   |
 | Price         | A number that allows exact decimal values; often used for price or cost |
-| Relation      | Relation between two field                                   |
+| Relation      | Relation with Table                                  |
 | Slug          | Slug text (no space)                                         |
 | SEO Meta tags | SEO meta field                                               |
 | Select        | Select Field (Add Option in Field Option)                    |
@@ -62,12 +62,90 @@ In the field type list, select one of the following types:
 | Time          | A Time field                                                 |
 | Title         | Short text such as a name (limited to 255 characters)        |
 | Twitter Card  | Twitter meta fields                                          |
-| UUID          | Unique code field                                            |
+| UUID          | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows to automatically generate a UUID .                                |
 | Visual Editor | Visual Editor                                                |
 
 ------
 
+##### Configuring fields
 
+##### Is Repeatable
+This feature is used for both fields and groups. Is Repeatable allow you to repeat a `field` and `group of custom fields` as many times as needed.
+
+Content Type :
+
+<img :src="$withBase('/images/content-types-structure-4.png')" alt="content-types-structure-4">
+
+Content :
+
+<img :src="$withBase('/images/content-types-structure-5.png')" alt="content-types-structure-5">
+
+##### Is Searchable
+This feature is enable allow you to search that field's content by Helper Method.
+
+<img :src="$withBase('/images/content-types-structure-7.png')" alt="content-types-structure-7">
+
+##### Is Multiple
+This feature is visible in Select and Relation Field. It Enable the multiple attributes or you can select multiple options. 
+
+<img :src="$withBase('/images/content-types-structure-8.png')" alt="content-types-structure-8">
+
+##### Is Hidden
+You can hide fields from appearing in Frontend
+
+<img :src="$withBase('/images/content-types-structure-6.png')" alt="content-types-structure-6">
+
+##### Type
+This feature is visible in Relation Field. You can add options in type field from extend method `getCmsContentRelations` in `ExtendController`.
+
+```php
+
+    //----------------------------------------------------------
+    public static function getCmsContentRelations()
+    {
+
+        $arr = [
+            [
+                "name" => "Taxonomy",
+                "namespace" => "WebReinvent\\VaahCms\\Entities\\Taxonomy",
+                "options" => TaxonomyType::getListInTreeFormat(),
+                "filter_by" => 'vh_taxonomy_type_id',
+                "add_url" => route('vh.backend')."#/vaah/manage/taxonomies/create",
+                "has_children" => true
+            ],
+            [
+                "name" => "Role",
+                "namespace" => "WebReinvent\\VaahCms\\Entities\\Role",
+                "display_column" => 'name',
+                "filters" => [
+                    [
+                        "query" => 'where',
+                        "column" => 'is_active',
+                        "condition" => '=',
+                        "value" => 1,
+                    ],
+                ],
+
+            ]
+        ];
+
+
+        return $arr;
+
+    }
+```
+
+<img :src="$withBase('/images/content-types-structure-9.png')" alt="content-types-structure-9">
+
+##### Tags
+These tags are used to show the field's content within these tags. There are four tag field:
+                                                                
+- Opening Tag
+- Closing Tag
+- Container opening Tag
+- Container closing Tag
+
+<img :src="$withBase('/images/content-types-structure-10.png')" alt="content-types-structure-10">
 
 ##### Terminologies
 
@@ -118,24 +196,119 @@ Templates can be used to specify which Content Types will be allowed in differen
 In Pages, they have a different different structures, and we can't create different content types for each page. So in that case, we use other groups of field called Templates. Templates can be create through seeds.
 
 
+## Helper Methods
 
-##### Code
+##### Content
+```blade
+{!! get_content($data) !!}                      //   return HTML format
 
-Contents will be fetch on frontend by two Codes:
-
-##### By Content Field
-
-```php+HTML
-{!! get_field($data, 'title') !!}
+{!! get_the_content($data) !!}                  //   return DATA format
 ```
 
+```php
+get_content(Content $content, $type=null)
 
-##### By Template name
-
-```php+HTML
-{!! get_field($data, 'title', 'header', 'template') !!}
+$type = content/template;
 ```
 
+##### Content List
+```blade
+{!! get_contents('page') !!}                      //   return HTML format
 
-You have to paste these codes in Web Pages.
+{!! get_the_contents('page') !!}                  //   return DATA format
+```
+
+```php
+get_contents($content_type_slug='pages', array $args = null,$has_pagination = true)
+
+$args = [
+
+    'q'                         => 'search_item', 
+    'per_page'                  => 5,                                       // default = 20
+    'include_groups'            => [],                                      // group_slug
+    'exclude_groups'            => [],                                      // group_slug   
+    'order'                     => 'name',                                  // default = id      
+    'order_by'                  => 'asc',                                   // default = desc      asc/desc/ASC/DESC
+    'container_opening_tag'     => '<div class="columns is-multiline">',
+    'container_closing_tag'     => '</div>',
+    'content_opening_tag'       => '<div class="column is-4">',
+    'content_closing_tag'       => '</div>'               
+
+];
+```
+
+##### Field
+```blade
+{!! get_field($data, 'title', 'default') !!}        //   return HTML format
+
+{!! get_the_field($data, 'title', 'default') !!}    //   return DATA format
+```
+
+```php
+get_field(Content $content, $field_slug,
+         $group_slug='default', $type='content',
+         $group_index = 0 , $field_index = null)
+
+$type = content/template;
+
+$group_index = 0/1/2/3/4/.....
+$field_index = 0/1/2/3/4/.....
+```
+
+##### Group
+```blade
+{!! get_group($data ,'default' ) !!}            //   return HTML format
+
+{!! get_the_group($data ,'default' ) !!}        //   return DATA format
+```
+
+```php
+get_group(Content $content, $group_slug='default', 
+            $type='content, $group_index = null)
+
+$type = content/template;
+
+$group_index = 0/1/2/3/4/.....
+```
+
+## API
+
+##### Content
+```php
+parameter = [
+
+    'q'                         => 'search_item', 
+    'per_page'                  => 5,                                       // default = 20
+    'include_groups'            => [],                                      // group_slug
+    'exclude_groups'            => [],                                      // group_slug
+    'order'                     => 'name',                                  // default = id      
+    'order_by'                  => 'asc',                                   // default = desc      asc/desc/ASC/DESC              
+
+];
+
+<public-url>/api/cms/contents/{plural_slug}
+```
+
+```php
+<public-url>/api/cms/contents/{singular_slug}/{content_slug}
+```
+
+##### Content Type
+```php
+<public-url>/api/cms/contents-types
+
+<public-url>/api/cms/contents-types/{slug}
+```
+
+##### Frontend Routes
+
+```php
+<public-url>/{permalink}
+
+<public-url>/{content_type}/{permalink}
+
+<public-url>/taxonomies/{taxonomy_type_slug}/{taxonomy_slug}
+
+<public-url>/search
+```
 
