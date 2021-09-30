@@ -11,6 +11,48 @@ One of the key phrases that developers love using is Don’t Repeat Yourself (DR
 
 ## Components
 
+### AutoComplete
+
+Extended input that provide suggestions while the user types. Use with Field to access all functionalities
+
+```vue
+<AutoComplete @options="options"
+              :selected_value="value">
+
+</AutoComplete>
+```
+
+
+```js
+"options" = {
+    [
+      'id': 1,        
+      'name': 'XYZ',        
+      'slug': 'xyz'
+    ],
+    [
+      'id': 2,  
+      'name': 'ABC',         
+      'slug': 'abc'
+    ]
+},
+
+"value" = 'XYZ'
+
+```
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| options | Options / suggestions | Array, Object | Required |
+| field_name | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option | String | name |
+| search_fields | Fields that are searchable | Array | ["name"] |
+| icon | Icon name to be added | String | search |
+| open_on_focus | Open dropdown list on focus | Boolean | false |
+| selected_value | Binding value | String, Number |
+| placeholder | Field placeholder, displayed when there's no value. | String | Search
+
+
+
 ### AutoCompleteUsers
 
 Extended input that provide suggestions while the user types. Use with Field to access all functionalities
@@ -84,6 +126,101 @@ It supports user interaction through mouse or touch events and performs re-order
 | ajax_delete_url | Url to delete | String |
 
 
+### ClickToCopy
+
+Component that can upload anything you throw at it, optimizes images for faster uploads, and offers a great, accessible, silky smooth user experience.
+
+```vue
+<DatePicker :selected_value="value"></DatePicker>
+```
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| text | Laravel Pagination Object | Array | calendar-alt |
+| data | Laravel Pagination Object | String |
+
+
+### DatePicker
+
+Component that can upload anything you throw at it, optimizes images for faster uploads, and offers a great, accessible, silky smooth user experience.
+
+```vue
+<DatePicker :selected_value="value"></DatePicker>
+```
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| icon | Laravel Pagination Object | Array | calendar-alt |
+| selected_value | Laravel Pagination Object | String |
+| placeholder | Laravel Pagination Object | String | Type or select a date... |
+
+
+### FileUploader
+
+Component that can upload anything you throw at it, optimizes images for faster uploads, and offers a great, accessible, silky smooth user experience.
+
+```vue
+<FileUploader></FileUploader>
+```
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| value | Laravel Pagination Object | Array |
+| upload_url | Laravel Pagination Object | String |
+| folder_path | Laravel Pagination Object | String | public/media |
+| file_input_name | Laravel Pagination Object | String | file |
+| file_name | Laravel Pagination Object | String |
+| uid | Laravel Pagination Object | String | uid-image-group-current-date |
+| custom_class | Laravel Pagination Object | String | is-primary |
+| label | Laravel Pagination Object | String | Drop your image here or click to upload. |
+| icon | Laravel Pagination Object | String | search |
+| aspect_ratio | Laravel Pagination Object | String |
+| allow_multiple | Laravel Pagination Object | Boolean | true |
+| allowed_types | Laravel Pagination Object | String | image/jpeg, image/png, image/gif |
+| max_size | Laravel Pagination Object | String | 2MB |
+| remove_after_upload | Laravel Pagination Object | Boolean | true |
+| show_allowed_types | Laravel Pagination Object | Boolean | true |
+| instant_upload | Laravel Pagination Object | Boolean | true |
+| app_url | Laravel Pagination Object | String |
+
+### Loader
+
+This component to create placeholder loading, like Facebook cards loading.
+
+```vue
+<Loader></Loader>
+```
+
+### Pagination
+
+This component is responsive and flexible pagination.
+
+```vue
+<Pagination :list="list">
+</Pagination>
+```
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| list | Laravel Pagination Object | 
+
+
+### TableTrActedBy
+
+This component can be used to show `User name` in tabular format.
+
+```vue
+<TableTrActedBy :label="label" 
+                 :value="value">
+</TableTrActedBy>
+```
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| label | Table Heading | 
+| value | Table Data |
+
+
 ### TableTrDateTime
 
 This component can be used to show `Date Time` in tabular format.
@@ -100,6 +237,21 @@ This component can be used to show `Date Time` in tabular format.
 | label | Table Heading | 
 | value | Table Data |
 | is_upper_case | Whether to show value in Uppercase format |
+
+### TableTrActedBy
+
+This component can be used to show `User name` in tabular format.
+
+```vue
+<TableTrDateTime :label="label" 
+                 :value="value">
+</TableTrDateTime>
+```
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| label | Table Heading | 
+| value | Table Data |
 
 
 ### TableTrMeta
@@ -221,7 +373,7 @@ This component can be used to visualize form fields in tabular format.
 ```json
 "table_data":{
     [
-      'type': 'text',         // text, password, textarea, select_with_ids, date
+      'type': 'text',         // text, password, textarea, select, select_with_ids, date
       'label': 'name',
       'name': 'XYZ'
     ]
