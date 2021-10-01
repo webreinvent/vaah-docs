@@ -16,17 +16,18 @@ One of the key phrases that developers love using is Don’t Repeat Yourself (DR
 Extended input that provide suggestions while the user types. Use with Field to access all functionalities
 
 ```vue
-<AutoComplete @options="options"
+<AutoComplete :options="options"
               :selected_value="value">
 
 </AutoComplete>
 ```
 
+Data Format : 
 
-```js
+```
 "options" = {
     [
-      'id': 1,        
+      'id': 1,                
       'name': 'XYZ',        
       'slug': 'xyz'
     ],
@@ -43,19 +44,59 @@ Extended input that provide suggestions while the user types. Use with Field to 
 
 | Name | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
-| options | Options / suggestions | Array, Object | Required |
+| selected_value | Value of that `field_name` passes in Options | String, Number |
+| options | Options / suggestions | Array, Object | `Required` |
 | field_name | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option | String | name |
 | search_fields | Fields that are searchable | Array | ["name"] |
 | icon | Icon name to be added | String | search |
 | open_on_focus | Open dropdown list on focus | Boolean | false |
-| selected_value | Binding value | String, Number |
 | placeholder | Field placeholder, displayed when there's no value. | String | Search
 
+
+### AutoCompleteAjax
+
+Extended input that provide suggestions while the user types. The options/suggestions will be fetch from ajax url.
+
+```vue
+<AutoCompleteAjax :options="options"
+              :ajax_url="ajax_url"
+              :selected_value="value">
+
+</AutoCompleteAjax>
+```
+
+Data Format : 
+
+```
+"options" = {
+    [
+      'id': 1,                
+      'name': 'XYZ',        
+      'slug': 'xyz'
+    ],
+    [
+      'id': 2,  
+      'name': 'ABC',         
+      'slug': 'abc'
+    ]
+},
+
+"value" = 'XYZ'
+
+```
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| selected_value | Value of that `display_column` passes in Options | String |
+| label | Options / suggestions | String | Search |
+| ajax_url | Ajax Url | String | `Required`
+| display_column | Fields that are searchable | String | name |
+| unique_column | Column's value display in field option's modal | String | id |
 
 
 ### AutoCompleteUsers
 
-Extended input that provide suggestions while the user types. Use with Field to access all functionalities
+Extended input that provide suggestions of `VaahCms Users` while the user types. Use with Field to access all functionalities
 
 ```vue
 <AutoCompleteUsers @onSelect="setUser"
@@ -64,7 +105,7 @@ Extended input that provide suggestions while the user types. Use with Field to 
 </AutoCompleteUsers>
 ```
 
-```js
+```
 setUser: function (user){
    // ----------
    // ----------
@@ -77,72 +118,38 @@ setUser: function (user){
 | selected_value | Binding value | String, Number |
 
 
-### TreeSelect
+### ButtonMeta
 
-TreeSelect is a multi-select component with hierarchical options support for Vue.js.
+Button to show Classic modal overlay to include any content you may need
 
 ```vue
- <TreeSelect v-model="type_id"
-             placeholder="Select a Type"
-             :is_clearable="false"
-             :is_multiple="false" 
-             :options="options" >
-
-</TreeSelect>
+<ButtonMeta :value="value"></ButtonMeta>
 ```
-
 
 | Name | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
-| v-model | The value of the control. Should be id or node object when `:is_multiple="false"`, or an array of id or node object when `:multiple="true"`.  | String, Number, Array, Object |
-| options | Array of available options. | Array, Object |
-| ajax_url | Ajax Url | String, Number |
-| custom_class | Field classes | String |
-| label | Field label | String |
-| labelPosition | Field label position | String |
-| placeholder | Field placeholder, displayed when there's no value. | String |
-| is_multiple | Set true to allow selecting multiple options (a.k.a., multi-select mode). | Boolean | false |
-| is_clearable | Whether to show an "×" button that resets value. | Boolean | false |
-| show_count | Whether to show a children count next to the label of each branch node. | Boolean | true |
-
-
-### TreeView
-
-The TreeView displays hierarchical data in a traditional tree structure.
-
-It supports user interaction through mouse or touch events and performs re-ordering operations by using the drag-and-drop functionality.
-
-```vue
-<TreeView :options="options">
-
-</TreeView>
-```
-
-
-| Name | Description                                                  | Type            | Default              |
-| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
-| ajax_list_url | Url to get list of options | String |
-| options | Binding options | Array, Object |
-| ajax_delete_url | Url to delete | String |
+| type | Type (color) of the button	 | String | is-default |
+| label | Button label | String | View |
+| value | Modal Content | Object, String |
 
 
 ### ClickToCopy
 
-Component that can upload anything you throw at it, optimizes images for faster uploads, and offers a great, accessible, silky smooth user experience.
+Click To Copy Vue.js component
 
 ```vue
-<DatePicker :selected_value="value"></DatePicker>
+<ClickToCopy :text="label" :data="value"></ClickToCopy>
 ```
 
 | Name | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
-| text | Laravel Pagination Object | Array | calendar-alt |
-| data | Laravel Pagination Object | String |
+| text | Text to display | String |
+| data | Data to be copied | String |
 
 
 ### DatePicker
 
-Component that can upload anything you throw at it, optimizes images for faster uploads, and offers a great, accessible, silky smooth user experience.
+An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
 
 ```vue
 <DatePicker :selected_value="value"></DatePicker>
@@ -150,7 +157,7 @@ Component that can upload anything you throw at it, optimizes images for faster 
 
 | Name | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
-| icon | Laravel Pagination Object | Array | calendar-alt |
+| icon | Icon name to be added | Array | calendar-alt |
 | selected_value | Laravel Pagination Object | String |
 | placeholder | Laravel Pagination Object | String | Type or select a date... |
 
@@ -173,7 +180,7 @@ Component that can upload anything you throw at it, optimizes images for faster 
 | uid | Laravel Pagination Object | String | uid-image-group-current-date |
 | custom_class | Laravel Pagination Object | String | is-primary |
 | label | Laravel Pagination Object | String | Drop your image here or click to upload. |
-| icon | Laravel Pagination Object | String | search |
+| icon | Icon name to be added | String | search |
 | aspect_ratio | Laravel Pagination Object | String |
 | allow_multiple | Laravel Pagination Object | Boolean | true |
 | allowed_types | Laravel Pagination Object | String | image/jpeg, image/png, image/gif |
@@ -360,40 +367,39 @@ This component can be used to visualize `Boolean` value in tabular format.
 | label | Table Heading | 
 | value | Table Data |
 
-### TableViewGenerator
-
-This component can be used to visualize form fields in tabular format.
-
-```vue
-<TableViewGenerator :columns="table_data">
-
-</TableViewGenerator>
-```
-
-```json
-"table_data":{
-    [
-      'type': 'text',         // text, password, textarea, select, select_with_ids, date
-      'label': 'name',
-      'name': 'XYZ'
-    ]
-}
-```
-
-
-| Name | Description                                                  | Type            | Default              |
-| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
-| columns | Array of available table data. | Array |
-
 
 ### TagInputs
 
 A simple tag input field that can have autocomplete functionality
 
 ```vue
-<TagInputs :content="content">
+<TagInputs :selected_value="value" :options="options">
 
 </TagInputs>
+```
+
+```
+"options" = {
+    [
+      'id': 1,                
+      'name': 'XYZ',        
+      'slug': 'xyz'
+    ],
+    [
+      'id': 2,  
+      'name': 'ABC',         
+      'slug': 'abc'
+    ]
+},
+
+"value" = {
+    [
+        'id': 1,                
+         'name': 'XYZ',        
+         'slug': 'xyz'
+    ]
+}
+
 ```
 
 
@@ -402,11 +408,117 @@ A simple tag input field that can have autocomplete functionality
 | selected_value | Binding value | Array |
 | options | Array of available options. | Array |
 | field_name | Property of the object (if data is array of objects) to use as display text | String | name |
-| search_fields | Array that accept keys of options | Array | ["name", "slug"] |
-| icon | Field Icon, displayed in Input box | String | search |
+| search_fields | Fields that are searchable | Array | ["name", "slug"] |
+| icon | Icon name to be added | String | search |
 | open_on_focus | Opens a dropdown with choices when the input field is focused | Boolean | false |
 | allow_new | When autocomplete, it allow to add new tags | Boolean | false |
 | placeholder | Field placeholder, displayed when there's no value. | String | Search |
+
+
+
+### TreeSelect
+
+TreeSelect is a multi-select component with hierarchical options support for Vue.js.
+
+```vue
+ <TreeSelect v-model="type_id"
+             placeholder="Select a Type"
+             :is_clearable="false"
+             :is_multiple="false" 
+             :options="options" >
+
+</TreeSelect>
+```
+
+```
+options: [ 
+            {
+               id: 'a',
+               name: 'a',
+               children: [ 
+                   {
+                      id: 'aa',
+                      name: 'aa',
+                   }, 
+                   {
+                      id: 'ab',
+                      name: 'ab',
+                   } 
+               ],
+            }, 
+            {
+               id: 'b',
+               name: 'b',
+            }, 
+            {
+               id: 'c',
+               name: 'c',
+            } 
+         ],
+```
+
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| v-model | The value of the control. Should be id or node object when `:is_multiple="false"`, or an array of id or node object when `:multiple="true"`.  | String, Number, Array, Object |
+| options | Array of available options. | Array, Object |
+| ajax_url | Ajax Url | String, Number |
+| custom_class | Field classes | String |
+| label | Field label | String |
+| labelPosition | Field label position | String |
+| placeholder | Field placeholder, displayed when there's no value. | String |
+| is_multiple | Set true to allow selecting multiple options (a.k.a., multi-select mode). | Boolean | false |
+| is_clearable | Whether to show an "×" button that resets value. | Boolean | false |
+| show_count | Whether to show a children count next to the label of each branch node. | Boolean | true |
+
+
+### TreeView
+
+The TreeView displays hierarchical data in a traditional tree structure.
+
+It supports user interaction through mouse or touch events and performs re-ordering operations by using the drag-and-drop functionality.
+
+```vue
+<TreeView :options="options">
+
+</TreeView>
+```
+
+```
+ data: [
+          {
+            name: 'Node 1',
+            id: 1,
+            pid: 0,
+            children: [
+              {
+                name: 'Node 1-2',
+                id: 2,
+                isLeaf: true,
+                pid: 1
+              }
+            ]
+          },
+          {
+            name: 'Node 2',
+            id: 3,
+            pid: 0,
+            disabled: true
+          },
+          {
+            name: 'Node 3',
+            id: 4,
+            pid: 0
+          }
+        ]
+```
+
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| ajax_list_url | Url to get list of options | String |
+| options | Binding options | Array, Object |
+| ajax_delete_url | Url to delete | String |
 
 
 
@@ -437,6 +549,12 @@ The component to display single error message or multiple error messages to user
 </VueErrors>
 ```
 
+```
+"list":[
+    'Error Message 1',
+    'Error Message 2'
+]
+```
 
 | Name | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
@@ -453,7 +571,51 @@ The component to display single message or multiple messages to user.
 </VueMessages>
 ```
 
+```
+"list":[
+    'Message 1',
+    'Message 2'
+]
+```
 
 | Name | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | list | Array of Messages | Array, Object |
+
+
+### Content Fields
+
+```
+<ContentFieldAll :label="label"
+     :field_slug="field_slug"    // text, slug, textarea, number, phone-number, boolean, 
+                                 editor, code-mirror, select, date, time, date-time, 
+                                 user, email, password, uuid, currency-code, list, image,
+                                  media, image-group, phone-number, address, relation, 
+                                 tags, json, seo-meta-tags, twitter-card, facebook-card, 
+     :meta="meta"
+     :placeholder="placeholder"
+     :labelPosition="label_position"
+     v-model="value">
+</ContentFieldAll>
+```
+
+
+| Name | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| field_slug | Array of Messages | String |
+| value | Binding Value | String, Number, Array, Object |
+| type | Type (color) of the field | String |
+| size | Size (color) of the field | String |
+| custom_class | Field classes | String |
+| label | Field label | String |
+| labelPosition | Field label position | String |
+| placeholder | Field placeholder, displayed when there's no value. | String |
+| ajax_url | Ajax Url | String |
+| app_url | Url to get Relation's Options  | String |
+| upload_url | Url to upload a file | String |
+| currency_options | Options for Currency Code | Array |
+| meta | Meta value | Array, Object |
+| display_column | Fields that are searchable / visible in field | String | name |
+| unique_column | Column's value display in tag input's modal | String | email |
+| is_simple | Set `true` to visible all features / buttons | Boolean | false |
+
