@@ -42,7 +42,7 @@ Data Format :
 
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | selected_value | Value of that `field_name` passes in Options | String, Number |
 | options | Options / suggestions | Array, Object | `Required` |
@@ -85,14 +85,17 @@ Data Format :
 
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | selected_value | Value of that `display_column` passes in Options | String |
-| label | Options / suggestions | String | Search |
+| label | Field Label | String | Search |
 | ajax_url | Ajax Url | String | `Required`
 | display_column | Fields that are searchable | String | name |
 | unique_column | Column's value display in field option's modal | String | id |
 
+| Events | Description                                                  | Parameters            |
+| ---- | ------------------------------------------------------------ | --------------- |
+| onSelect | Triggers when an option is selected or unset | option: String|Number|Object, event: $event |
 
 ### AutoCompleteUsers
 
@@ -113,9 +116,14 @@ setUser: function (user){
 ```
 
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | selected_value | Binding value | String, Number |
+
+
+| Events | Description                                                  | Parameters            |
+| ---- | ------------------------------------------------------------ | --------------- |
+| onSelect | Triggers when an option is selected or unset | option: String|Number|Object, event: $event |
 
 
 ### ButtonMeta
@@ -126,7 +134,7 @@ Button to show Classic modal overlay to include any content you may need
 <ButtonMeta :value="value"></ButtonMeta>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | type | Type (color) of the button	 | String | is-default |
 | label | Button label | String | View |
@@ -141,7 +149,7 @@ Click To Copy Vue.js component
 <ClickToCopy :text="label" :data="value"></ClickToCopy>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | text | Text to display | String |
 | data | Data to be copied | String |
@@ -155,40 +163,52 @@ An input with a simple dropdown/modal for selecting a date, uses native datepick
 <DatePicker :selected_value="value"></DatePicker>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | icon | Icon name to be added | Array | calendar-alt |
-| selected_value | Laravel Pagination Object | String |
-| placeholder | Laravel Pagination Object | String | Type or select a date... |
+| selected_value | Binding Value | String |
+| placeholder | Field placeholder, displayed when there's no value. | String | Type or select a date... |
 
+| Events | Description                                                  | Parameters            |
+| ---- | ------------------------------------------------------------ | --------------- |
+| onSelect | Triggers when an date is selected | option: Object, event: $event |
 
 ### FileUploader
 
 Component that can upload anything you throw at it, optimizes images for faster uploads, and offers a great, accessible, silky smooth user experience.
 
 ```vue
-<FileUploader></FileUploader>
+<FileUploader max_size="200KB"
+              label="Upload user avatar"
+              aspect_ratio="1:1"
+              :allow_multiple="false"
+              :upload_url="upload_url">
+</FileUploader>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
-| value | Laravel Pagination Object | Array |
-| upload_url | Laravel Pagination Object | String |
-| folder_path | Laravel Pagination Object | String | public/media |
-| file_input_name | Laravel Pagination Object | String | file |
-| file_name | Laravel Pagination Object | String |
-| uid | Laravel Pagination Object | String | uid-image-group-current-date |
-| custom_class | Laravel Pagination Object | String | is-primary |
-| label | Laravel Pagination Object | String | Drop your image here or click to upload. |
+| value | Binding Value | Array |
+| upload_url | Url to upload a file | String |
+| folder_path | Path of Folder where to upload files | String | public/media |
+| file_input_name | The input field name to use | String | file |
+| file_name | File Name append in ajax request  | String |
+| uid | Unique Id for files | String | uid-image-group-current-date |
+| custom_class | Field Class | String | is-primary |
+| label | Field Label | String | Drop your image here or click to upload. |
 | icon | Icon name to be added | String | search |
-| aspect_ratio | Laravel Pagination Object | String |
-| allow_multiple | Laravel Pagination Object | Boolean | true |
-| allowed_types | Laravel Pagination Object | String | image/jpeg, image/png, image/gif |
-| max_size | Laravel Pagination Object | String | 2MB |
-| remove_after_upload | Laravel Pagination Object | Boolean | true |
-| show_allowed_types | Laravel Pagination Object | Boolean | true |
-| instant_upload | Laravel Pagination Object | Boolean | true |
-| app_url | Laravel Pagination Object | String |
+| aspect_ratio | Image Crop Aspect Ratio - Set a forced aspect ratio for the FilePond drop area. Useful to make the drop area take up a fixed amount of space.  | String |
+| allow_multiple | Enable or disable adding multiple files | Boolean | true |
+| allowed_types | File types that allowed for upload | String | image/jpeg, image/png, image/gif |
+| max_size | The maximum size of a uploaded file | String | 2MB |
+| remove_after_upload | Set `true` to remove file after upload | Boolean | true |
+| show_allowed_types | Set `true` to show File Type Hint | Boolean | true |
+| instant_upload | Immediately upload new files | Boolean | true |
+
+| Events | Description                                                  | Parameters            |
+| ---- | ------------------------------------------------------------ | --------------- |
+| afterUpload | Triggers when an file is uploaded | option: Object, event: $event |
+
 
 ### Loader
 
@@ -207,7 +227,31 @@ This component is responsive and flexible pagination.
 </Pagination>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+```
+{
+   "total": 50,
+   "per_page": 15,
+   "current_page": 1,
+   "last_page": 4,
+   "first_page_url": "http://laravel.app?page=1",
+   "last_page_url": "http://laravel.app?page=4",
+   "next_page_url": "http://laravel.app?page=2",
+   "prev_page_url": null,
+   "path": "http://laravel.app",
+   "from": 1,
+   "to": 15,
+   "data":[
+        {
+            // Record...
+        },
+        {
+            // Record...
+        }
+   ]
+}
+```
+
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | list | Laravel Pagination Object | 
 
@@ -222,7 +266,7 @@ This component can be used to show `User name` in tabular format.
 </TableTrActedBy>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -239,7 +283,7 @@ This component can be used to show `Date Time` in tabular format.
 </TableTrDateTime>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -255,7 +299,7 @@ This component can be used to show `User name` in tabular format.
 </TableTrDateTime>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -271,7 +315,7 @@ This component can be used to visualize `view` button to show Object or Array da
 </TableTrMeta>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -287,7 +331,7 @@ This component can be used to show value as `status` in tabular format.
 </TableTrStatus>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -305,7 +349,7 @@ This component can be used to show value as `tag` in tabular format.
 </TableTrTag>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -324,7 +368,7 @@ This component can be used to visualize Url in tabular format. “URL link” co
 </TableTrUrl>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -343,7 +387,7 @@ This component can be used to visualize data value in tabular format.
 </TableTrView>
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -362,7 +406,7 @@ This component can be used to visualize `Boolean` value in tabular format.
 ```
 
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | label | Table Heading | 
 | value | Table Data |
@@ -403,7 +447,7 @@ A simple tag input field that can have autocomplete functionality
 ```
 
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | selected_value | Binding value | Array |
 | options | Array of available options. | Array |
@@ -458,7 +502,7 @@ options: [
 ```
 
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | v-model | The value of the control. Should be id or node object when `:is_multiple="false"`, or an array of id or node object when `:multiple="true"`.  | String, Number, Array, Object |
 | options | Array of available options. | Array, Object |
@@ -514,7 +558,7 @@ It supports user interaction through mouse or touch events and performs re-order
 ```
 
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | ajax_list_url | Url to get list of options | String |
 | options | Binding options | Array, Object |
@@ -533,7 +577,7 @@ This is a `TipTap` Editor. Tiptap gives you full control about every single aspe
 ```
 
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | content | Content or Data property you wish to bind it to |
 
@@ -556,7 +600,7 @@ The component to display single error message or multiple error messages to user
 ]
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | list | Array of Messages | Array, Object |
 
@@ -578,7 +622,7 @@ The component to display single message or multiple messages to user.
 ]
 ```
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | list | Array of Messages | Array, Object |
 
@@ -600,7 +644,7 @@ The component to display single message or multiple messages to user.
 ```
 
 
-| Name | Description                                                  | Type            | Default              |
+| Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | field_slug | Array of Messages | String |
 | value | Binding Value | String, Number, Array, Object |
@@ -619,3 +663,10 @@ The component to display single message or multiple messages to user.
 | unique_column | Column's value display in tag input's modal | String | email |
 | is_simple | Set `true` to visible all features / buttons | Boolean | false |
 
+
+| Events | Description                                                  | Parameters            |
+| ---- | ------------------------------------------------------------ | --------------- |
+| onInput | Triggers when value is changed |Number|Object |
+| onChange | Triggers when an option is selected or unset | option: String|Number|Object, event: $event |
+| onBlur | Triggers when input has lost focus | event: $event |
+| onFocus | Triggers when input has received focus | event: $event |
