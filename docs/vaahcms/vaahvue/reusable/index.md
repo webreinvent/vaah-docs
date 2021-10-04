@@ -22,8 +22,6 @@ Extended input that provide suggestions while the user types. Use with Field to 
 </AutoComplete>
 ```
 
-Data Format : 
-
 ```
 "options" = {
     [
