@@ -843,6 +843,7 @@ meta : {
     is_multiple: true / false
 }
 
+```
 
 ##### Image / Image Group / Media
 
