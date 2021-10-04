@@ -629,6 +629,12 @@ The component to display single message or multiple messages to user.
 
 ### Content Fields
 
+One component applicable to multiple elements. This component is basically use for Cms module but you can use it as an other reusable component. 
+
+```
+import ContentFieldAll from '../../../vaahvue/reusable/content-fields/All'
+```
+
 ```
 <ContentFieldAll :label="label"
      :field_slug="field_slug"    // text, slug, textarea, number, phone-number, boolean, 
@@ -643,13 +649,220 @@ The component to display single message or multiple messages to user.
 </ContentFieldAll>
 ```
 
+#### Value Structure
+
+##### Common Attributes
+
+```
+value: null
+
+type: null
+
+size: null                        
+
+custom_class : null                 // Field classes
+
+label : null                        // Field label
+
+labelPosition : null                // Field label position
+
+```
+
+##### Seo Meta Tags
+
+```
+value:{
+    seo_description: {
+        content: null
+        maxlength: 200
+        message: "Description of content (maximum 200 characters)"
+        name: "SEO Meta Description"
+        type: "textarea"
+    }
+    seo_keywords: {
+        content: null
+        maxlength: 200
+        name: "SEO Meta Keywords"
+        type: "textarea"
+    }
+    seo_title: {
+        content: null
+        maxlength: 70
+        name: "SEO Title"
+        type: "text"
+    }
+}
+```
+
+##### Twitter Card
+
+```
+value:{
+    "twitter_site":{
+        name: "twitter:site",
+        message: "@username of website. Either twitter:site or twitter:site:id is required.",
+        maxlength: 70,
+        type: 'text',
+        content: null
+    },
+    "twitter_title":{
+        name: "twitter:title",
+        type: 'text',
+        message: "Title of content (max 70 characters).",
+        maxlength: 70,
+        content: null
+    },
+    "twitter_description":{
+        name: "twitter:description",
+        type: 'textarea',
+        message: "Description of content (maximum 200 characters)",
+        maxlength: 200,
+        content: null
+    },
+    "twitter_image":{
+        name: "twitter:image",
+        type: 'text',
+        message: "URL of image to use in the card. Images must be less than 5MB in size. JPG, PNG, WEBP and GIF formats are supported.",
+        maxlength: 200,
+        content: null
+    }
+}
+```
+
+##### Facebook Card
+
+```
+value:{
+    "og_title":{
+        name: "og:title",
+        type: 'text',
+        message: "Title of content (max 70 characters).",
+        maxlength: 70,
+        content: null
+    },
+    "og_description":{
+        name: "og:description",
+        type: 'textarea',
+        message: "Description of content (maximum 200 characters)",
+        maxlength: 200,
+        content: null
+    },
+    "og_image":{
+        name: "og:image",
+        type: 'text',
+        message: "URL of image to use in the card. Images must be less than 5MB in size. JPG, PNG, WEBP and GIF formats are supported.",
+        maxlength: 200,
+        content: null
+    }
+}
+```
+
+##### Address
+
+```
+value:{
+    "address_line_1": {
+        name: "Address Line 1",
+        type: 'text',
+        maxlength: 50,
+        content: null
+    },
+    "address_line_2":{
+        name: "Address Line 2",
+        type: 'text',
+        maxlength: 50,
+        content: null
+    },
+    "landmark":{
+        name: "Landmark",
+        type: 'text',
+        maxlength: 50,
+        content: null
+    },
+    "city":{
+        name: "City",
+        type: 'text',
+        maxlength: 50,
+        content: null
+    },
+    "state":{
+        name: "State",
+        type: 'text',
+        maxlength: 50,
+        content: null
+    },
+    "country":{
+        name: "Country",
+        type: 'text',
+        maxlength: 20,
+        content: null
+    },
+    "zip_code": {
+        name: "Zip Code",
+        type: 'text',
+        maxlength: 20,
+        content: null
+    }
+}
+```
+
+##### Code Mirror
+
+```
+
+type: "text/html"               // mode of code mirror
+
+```
+
+##### Select
+
+```
+meta : {
+    option: {}                 // array , object
+    is_multiple: true / false
+}
+
+```
+
+##### Tags
+
+```
+ajax_url  : null               //     Ajax Url
+
+display_column : "name"        // Fields that are searchable	
+
+unique_column : "email"        // Column's value display in field option's modal	
+
+```
+
+##### Relation
+
+```
+
+app_url  : null               
+
+meta : {
+    is_multiple: true / false
+}
+
+
+##### Image / Image Group / Media
+
+```
+
+app_url  : null       // Base Url      
+
+upload_url : null     // Url to upload a file	
+
+```
+
 
 | Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | field_slug | Array of Messages | String |
 | value | Binding Value | String, Number, Array, Object |
 | type | Type (color) of the field | String |
-| size | Size (color) of the field | String |
+| size | Size of the field | String |
 | custom_class | Field classes | String |
 | label | Field label | String |
 | labelPosition | Field label position | String |
