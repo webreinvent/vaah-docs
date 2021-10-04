@@ -58,7 +58,7 @@ sidebar = [
         //link: '/vaahcms/directory-structure.md',
         children: [
             {text: 'Helpers', link: '/vaahcms/vaahvue/helpers.md'},
-            {text: 'Reusable', link: '/vaahcms/vaahvue/reusable.md'},
+            {text: 'Reusable', link: '/vaahcms/vaahvue/reusable/'},
         ]
     },
     {
