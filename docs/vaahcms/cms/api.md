@@ -45,13 +45,15 @@ This method supports some of the query parameters to help customize the response
 | order_by | Direction of the sort and may be either `asc` or `desc` | String | desc |
 | filters | Column name passes as a `key` and Value passes as a `key's value`. Columns: `is_published`, `is_commentable` | Array |
 
-##### Request samples
+##### URL
+
 ```
 GET <public-url>/api/cms/contents-types?page=1&per_page=1&
 q=pag&order=asc&order_by=updated_at&filters[is_published]=0
+```
 
----------------------------------------------------------------
-
+##### Request samples
+```
 POST <public-url>/api/cms/contents-types
  
 $param = [
@@ -63,7 +65,6 @@ $param = [
        'is_published'          => 1  
    ]
 ];
-   
 
 ```
 
@@ -119,7 +120,7 @@ This will retrieves a `Content Type` by `slug` value, and returns all the proper
 
 Column can be `id`, `uuid`, `name`, `slug`, `plural_slug`, `singular_slug` and their value.
 
-##### Request samples
+##### URL
 ```
 <public-url>/api/cms/contents-types/slug/blog
 ```
@@ -183,13 +184,17 @@ This method supports some of the query parameters to help customize the response
 | include_groups | Input `Group slugs` that you want to include | Array |
 | exclude_groups | Input `Group slugs` that you want to exclude | Array |
 
-##### Request samples
+
+##### URL
+
 ```
 GET <public-url>/api/cms/contents/blogs?page=1&per_page=20&
 exclude_groups=header&include_groups=default&api_token=fsfsfsfsfsfsdfsfsdfsdfsdf
+```
 
----------------------------------------------------------------
+##### Request samples
 
+```
 POST <public-url>/api/cms/contents/blogs
  
 $param = [
@@ -200,8 +205,6 @@ $param = [
    'include_groups'            => ['default'],                  // group_slug
    'exclude_groups'            => ['header'],                   // group_slug
 ];
-   
-
 ```
 
 ##### Response samples
@@ -263,20 +266,21 @@ This will retrieves a `Content` by two params:
 ###### HTTP request
 `GET/POST <public-url>/api/cms/contents/{singular_slug}/{content_slug}` 
 
-##### Request samples
+##### URL
+
 ```
 GET <public-url>/api/cms/contents/blogs/xxxxxxxxxxxx
 ?include_groups=default&exclude_groups=header
+```
 
---------------------------------------------------------
-
+##### Request samples
+```
 POST <public-url>/api/cms/contents/blogs/xxxxxxxxxxxx
  
 $param = [             
    'include_groups'            => ['default'],                  // group_slug
    'exclude_groups'            => ['header'],                   // group_slug
 ];
-
 ```
 
 ##### Response samples
