@@ -88,6 +88,7 @@ sidebar = [
             {text: 'Content Type', link: '/vaahcms/cms/content-type.md'},
             {text: 'Menus',        link: '/vaahcms/cms/menus.md'},
             {text: 'Blocks',       link: '/vaahcms/cms/blocks.md'},
+            {text: 'API',          link: '/vaahcms/cms/api.md'},
         ]
     },
     {

@@ -271,36 +271,7 @@ $type = content/template;
 $group_index = 0/1/2/3/4/.....
 ```
 
-## API
-
-##### Content
-```php
-parameter = [
-
-    'q'                         => 'search_item', 
-    'per_page'                  => 5,                                       // default = 20
-    'include_groups'            => [],                                      // group_slug
-    'exclude_groups'            => [],                                      // group_slug
-    'order'                     => 'name',                                  // default = id      
-    'order_by'                  => 'asc',                                   // default = desc      asc/desc/ASC/DESC              
-
-];
-
-<public-url>/api/cms/contents/{plural_slug}
-```
-
-```php
-<public-url>/api/cms/contents/{singular_slug}/{content_slug}
-```
-
-##### Content Type
-```php
-<public-url>/api/cms/contents-types
-
-<public-url>/api/cms/contents-types/{slug}
-```
-
-##### Frontend Routes
+## Frontend Routes
 
 ```php
 <public-url>/{permalink}
