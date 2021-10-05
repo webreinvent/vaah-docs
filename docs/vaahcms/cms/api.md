@@ -62,7 +62,7 @@ $param = [
    'filters'                   => [
        'is_published'          => 1  
    ]
-]
+];
    
 
 ```
@@ -74,7 +74,10 @@ $param = [
     "status": "success",
     "data": {
         "current_page": 1,
-        "data": [],
+        "data": [
+            ``````````
+            ``````````
+        ],
         "first_page_url": "<public-url>/api/cms/contents-types?page=1",
         "from": null,
         "last_page": 1,
@@ -180,6 +183,74 @@ This method supports some of the query parameters to help customize the response
 | include_groups | Input `Group slugs` that you want to include | Array |
 | exclude_groups | Input `Group slugs` that you want to exclude | Array |
 
+##### Request samples
+```
+GET <public-url>/api/cms/contents/blogs?page=1&per_page=20&
+exclude_groups=header&include_groups=default&api_token=fsfsfsfsfsfsdfsfsdfsdfsdf
+
+---------------------------------------------------------------
+
+POST <public-url>/api/cms/contents/blogs
+ 
+$param = [
+   'q'                         => 'search_item', 
+   'per_page'                  => 5,               
+   'order'                     => 'name',                  
+   'order_by'                  => 'asc',              
+   'include_groups'            => ['default'],                  // group_slug
+   'exclude_groups'            => ['header'],                   // group_slug
+];
+   
+
+```
+
+##### Response samples
+
+```
+{
+    "status": "success",
+    "data": {
+        "current_page": 1,
+        "data": [],
+        "first_page_url": "<public-url>/api/cms/contents-types?page=1",
+        "from": null,
+        "last_page": 1,
+        "last_page_url": "<public-url>/api/cms/contents-types?page=1",
+        "links": [
+            {
+   {
+       "status": "success",
+       "data": {
+           "current_page": 1,
+           "data": [
+               ``````````
+               ``````````
+           ],
+           "first_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/cms/contents/blogs?page=1",
+           "from": 1,
+           "last_page": 2964,
+           "last_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/cms/contents/blogs?page=2964",
+           "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "http://localhost/vikram/vaahcms-dev-env/public/api/cms/contents/blogs?page=2",
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+           ],
+           "next_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/cms/contents/blogs?page=2",
+           "path": "http://localhost/vikram/vaahcms-dev-env/public/api/cms/contents/blogs",
+           "per_page": 20,
+           "prev_page_url": null,
+           "to": 20,
+           "total": 59268
+        }
+    }
+```
 
 #### Get Content Type
 
@@ -192,7 +263,56 @@ This will retrieves a `Content` by two params:
 ###### HTTP request
 `GET/POST <public-url>/api/cms/contents/{singular_slug}/{content_slug}` 
 
+##### Request samples
+```
+GET <public-url>/api/cms/contents/blogs/xxxxxxxxxxxx
+?include_groups=default&exclude_groups=header
 
+--------------------------------------------------------
+
+POST <public-url>/api/cms/contents/blogs/xxxxxxxxxxxx
+ 
+$param = [             
+   'include_groups'            => ['default'],                  // group_slug
+   'exclude_groups'            => ['header'],                   // group_slug
+];
+
+```
+
+##### Response samples
+
+```
+{
+    "status": "success",
+    "data": {
+        "id": 100,
+        "uuid": "09047dab-e1bc-4f3c-a35b-2a881b488d7b",
+        "parent_id": null,
+        "vh_cms_content_type_id": 1,
+        "vh_theme_id": 2,
+        "vh_theme_template_id": 5,
+        "name": "xxxxxxxxxxxx",
+        "slug": "xxxxxxxxxxxx",
+        "permalink": "xxxxxxxxxxxx",
+        "author": null,
+        "is_published_at": "2021-08-27 12:52:04",
+        "status": "published",
+        "total_comments": null,
+        "meta": null,
+        "created_by": 1,
+        "updated_by": 1,
+        "deleted_by": null,
+        "created_at": "2021-08-27 12:52:04",
+        "updated_at": "2021-08-27 12:52:04",
+        "deleted_at": null,
+        "content_fields": {},
+        "template_fields": {},
+        "link_prefix": "http://localhost/vikram/vaahcms-dev-env/public/blog/",
+        "link": "http://localhost/vikram/vaahcms-dev-env/public/blog/xxxxxxxxxxxx",
+        "content_type": {}
+    }
+}
+```
 
 
 ------
