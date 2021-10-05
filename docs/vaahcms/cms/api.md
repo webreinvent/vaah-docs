@@ -1,8 +1,13 @@
 # API
 
-An API content management system (CMS) is an evolution to the traditional CMS. 
+This is known as a `headless CMS`, is a relatively new approach to content 
+management with many advantages, allow you to build websites and apps that are decoupled from their 
+content management tools and integrated via API. This gives you the flexibility to build your front-end using 
+your preferred tools.
 
-API CMS allows you to manage and access content from your applications using an API. Unlike a traditional CMS, with an API CMS you have full control of the presentation of your content with your own code. 
+An API-based approach can save a team significant time and 
+ money in the initial implementation as well as ongoing maintenance.
+ With an API you have full control of the presentation of your content with your own code. 
 
 
 ### Authentication
