@@ -1,6 +1,6 @@
 # API
 
-This is known as a `headless CMS`, is a relatively new approach to content 
+An API-based CMS, also known as a `headless CMS`, is a relatively new approach to content 
 management with many advantages, allow you to build websites and apps that are decoupled from their 
 content management tools and integrated via API. This gives you the flexibility to build your front-end using 
 your preferred tools.
@@ -70,40 +70,40 @@ $param = [
 ##### Response samples
 
 ```
-    {
-        "status": "success",
-        "data": {
-            "current_page": 1,
-            "data": [],
-            "first_page_url": "<public-url>/api/cms/contents-types?page=1",
-            "from": null,
-            "last_page": 1,
-            "last_page_url": "<public-url>/api/cms/contents-types?page=1",
-            "links": [
-                {
-                    "url": null,
-                    "label": "&laquo; Previous",
-                    "active": false
-                },
-                {
-                    "url": "<public-url>/api/cms/contents-types?page=1",
-                    "label": "1",
-                    "active": true
-                },
-                {
-                    "url": null,
-                    "label": "Next &raquo;",
-                    "active": false
-                }
-            ],
-            "next_page_url": null,
-            "path": "<public-url>/api/cms/contents-types",
-            "per_page": 20,
-            "prev_page_url": null,
-            "to": null,
-            "total": 0
-        }
+{
+    "status": "success",
+    "data": {
+        "current_page": 1,
+        "data": [],
+        "first_page_url": "<public-url>/api/cms/contents-types?page=1",
+        "from": null,
+        "last_page": 1,
+        "last_page_url": "<public-url>/api/cms/contents-types?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "<public-url>/api/cms/contents-types?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "<public-url>/api/cms/contents-types",
+        "per_page": 20,
+        "prev_page_url": null,
+        "to": null,
+        "total": 0
     }
+}
 ```
 
 #### Get Content Type
@@ -112,8 +112,50 @@ Get a Item of the `Content Type` objects and relationships of a Content Type obj
 This will retrieves a `Content Type` by `slug` value, and returns all the properties / Field Structure of Content Type.
 
 ###### HTTP request
-`GET <public-url>/api/cms/contents-types/{column}/{value}` 
+`GET/POST <public-url>/api/cms/contents-types/{column}/{value}` 
 
+Column can be `id`, `uuid`, `name`, `slug`, `plural_slug`, `singular_slug` and their value.
+
+##### Request samples
+```
+<public-url>/api/cms/contents-types/slug/blog
+```
+
+##### Response samples
+
+```
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "uuid": "1ee83ff4-892d-44eb-b236-acbbc44fbcb3",
+        "name": "Blog",
+        "slug": "blog",
+        "plural": "Blogs",
+        "plural_slug": "blogs",
+        "singular": "Blog",
+        "singular_slug": "blog",
+        "excerpt": "Simple blog",
+        "is_published": 1,
+        "is_commentable": 1,
+        "content_statuses": [
+            "draft",
+            "published"
+        ],
+        "total_records": null,
+        "published_records": null,
+        "total_comments": null,
+        "meta": null,
+        "created_by": null,
+        "updated_by": 1,
+        "deleted_by": null,
+        "created_at": null,
+        "updated_at": "2021-08-17 12:06:40",
+        "deleted_at": null,
+        "groups": {}
+    }
+}
+```
 
 ### Contents
 
@@ -123,7 +165,7 @@ Get a list of the `Content` objects and their properties in a list.
 This API retrieves a specific field of `Content`, and returns all the properties of the Contents with `Pagination`.
 
 ###### HTTP request
-`GET <public-url>/api/cms/contents/{plural_slug}` 
+`GET/POST <public-url>/api/cms/contents/{plural_slug}` 
 
 This will retrieves a list of `Content` by `plural_slug` of `Content Type` , and returns all the `Groups` and their `Fields` of Contents.
 
@@ -148,7 +190,7 @@ This will retrieves a `Content` by two params:
 - content_slug : `slug` value of Content
 
 ###### HTTP request
-`GET <public-url>/api/cms/contents/{singular_slug}/{content_slug}` 
+`GET/POST <public-url>/api/cms/contents/{singular_slug}/{content_slug}` 
 
 
 
