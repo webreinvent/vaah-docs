@@ -51,6 +51,7 @@ sidebar = [
                     {text: 'Reset Application',     link: '/vaahcms/basic/setting/reset-application.md'},
                 ]
             },
+            {text: 'API',          link: '/vaahcms/basic/api.md'},
         ]
     },
     {
