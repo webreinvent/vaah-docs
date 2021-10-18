@@ -27,45 +27,63 @@ You can ask to Admin for assigning you a `API Token`.
 
 ### Users
 
-Content Type is the structure or blueprint of a page or a section that your Web Page will display.
+The [User](/vaahcms/basic/users.md) API provides operations to manage users in your organization.
 
-#### Get a List of Users
+#### Create user
 
-Get a list of the `Content Type` objects and their properties in a list.
-This API retrieves a specific field of `Content Types`, and returns all the properties of the Content Types with `Pagination`.
+Get a list of the `User` objects and their properties in a list with `Pagination`.
 
 ###### HTTP request
-`GET/POST <public-url>/api/cms/contents-types` 
+`GET/POST <public-url>/api/users/create` 
 
 This method supports some of the query parameters to help customize the response.
-
-| Parameter | Description                                                  | Type            | Default              |
-| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
-| q | Value to be search in `Name`, `Slug`, `Plural Slug` and `Singular Slug` Column | String |
-| per_page | `N` Item Per Page | Number | 20 |
-| order | Sort the results of the list by a given column | String | id |
-| order_by | Direction of the sort and may be either `asc` or `desc` | String | desc |
-| filters | Column name passes as a `key` and Value passes as a `key's value`. Columns: `is_published`, `is_commentable` | Array |
 
 ##### URL
 
 ```
-GET <public-url>/api/cms/contents-types?page=1&per_page=1&
-q=pag&order=asc&order_by=updated_at&filters[is_published]=0
+GET <public-url>/api/users/create?api_token=xxxxxxxxxxx
 ```
 
 ##### Request samples
 ```
-POST <public-url>/api/cms/contents-types
+POST <public-url>/api/users/create
  
-$param = [
-   'q'                         => 'search_item', 
-   'per_page'                  => 5,               
-   'order'                     => 'name',                  
-   'order_by'                  => 'asc',              
-   'filters'                   => [
-       'is_published'          => 1  
-   ]
+param = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    "email",                    // required
+    "username",
+    "password",                 // required
+    "display_name",
+    "title",
+    "designation",
+    "first_name",               // required
+    "middle_name",
+    "last_name",
+    "gender",                   // m for male , f for female , o for Other 
+    "country_calling_code",
+    "phone", 
+    "bio",
+    "timezone",
+    "alternate_email",
+    "avatar_url",
+    "birth", 
+    "country",
+    "country_code",
+    "is_active",                // required       true , false
+    "status",                   // required       active , in-active
+    "activation_code",
+    "activation_code_sent_at",
+    "activated_ip",
+    "invited_by",
+    "invited_at",
+    "invited_for_key", 
+    "invited_for_value", 
+    "user_id",
+    "user_created_at", 
+    "created_ip",
+    "registration_id", 
+    "meta"                     // json format
 ];
 
 ```
@@ -76,38 +94,101 @@ $param = [
 {
     "status": "success",
     "data": {
-        "current_page": 1,
-        "data": [
-            ``````````
-            ``````````
-        ],
-        "first_page_url": "<public-url>/api/cms/contents-types?page=1",
-        "from": null,
-        "last_page": 1,
-        "last_page_url": "<public-url>/api/cms/contents-types?page=1",
-        "links": [
-            {
-                "url": null,
-                "label": "&laquo; Previous",
-                "active": false
-            },
-            {
-                "url": "<public-url>/api/cms/contents-types?page=1",
-                "label": "1",
-                "active": true
-            },
-            {
-                "url": null,
-                "label": "Next &raquo;",
-                "active": false
-            }
-        ],
-        "next_page_url": null,
-        "path": "<public-url>/api/cms/contents-types",
-        "per_page": 20,
-        "prev_page_url": null,
-        "to": null,
-        "total": 0
+        "item": {
+           ..........
+           ..........
+           ..........
+        }
+    },
+    "messages": [
+        "Saved successfully."
+    ]
+}
+```
+
+#### Get a List of Users
+
+Get a list of the `User` objects and their properties in a list with `Pagination`.
+
+###### HTTP request
+`GET/POST <public-url>/api/users` 
+
+This method supports some of the query parameters to help customize the response.
+
+| Parameter | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | ------------------ | -------------------- |
+| q | Value to be search in `first_name`, `middle_name`, `last_name`, `display_name`, `email` and `id` Column | String |
+| per_page | `N` Item Per Page | Number | 20 |
+| from | Initial Date  | String<br />(Y-m-d) |
+| to | Final Date | String<br />(Y-m-d) |
+| status | Status of User and may be either `active` or `inactive`| String |
+| trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
+
+##### URL
+
+```
+GET <public-url>/api/users?api_token=xxxxxxxxxxx
+```
+
+##### Request samples
+```
+POST <public-url>/api/users
+ 
+param = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    'q'                         => 'search_item', 
+    'from'                      =>  Y-m-d, 
+    'to'                        =>  Y-m-d, 
+    'status'                    => 'active / inactive', 
+    'per_page'                  =>  20,
+    'trashed'                   =>  false,          // true, false        
+];
+
+```
+
+##### Response samples
+
+```
+{
+    "status": "success",
+    "data": {
+        "list": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "<public-url>/api/users?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "<public-url>/api/users?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "<public-url>/api/users?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "<public-url>/api/users",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 2,
+            "total": 2
+        }
     }
 }
 ```
