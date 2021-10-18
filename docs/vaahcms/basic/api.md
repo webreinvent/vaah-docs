@@ -96,6 +96,15 @@ Get a list of the Registration objects and their properties in a list with Pagin
 
 This method supports some of the query parameters to help customize the response.
 
+| Parameter | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | ------------------ | -------------------- |
+| q | Value to be search in `first_name`, `middle_name`, `last_name`, `display_name`, `email` and `id` Column | String |
+| per_page | `N` Item Per Page | Number | 20 |
+| from | Initial Date  | String<br />(Y-m-d) |
+| to | Final Date | String<br />(Y-m-d) |
+| status | Status of Registration and may be either `email-verification-vending`, `email-verified` or `user-created`| String |
+| trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
+
 ##### URL
 ```php
 GET/POST <public-url>/api/registrations
@@ -107,11 +116,11 @@ parameter = [
 
     'api_token'                 => 'xxxxxxxxxxx',  // for authentication
     'q'                         => 'search_item', 
-    'from'                      => 'search_item', 
-    'to'                        => 'search_item', 
-    'status'                    => 'search_item', 
-    'per_page'                  => 20,
-    'trashed'                   => false,          // true, false        
+    'from'                      =>  Y-m-d, 
+    'to'                        =>  Y-m-d, 
+    'status'                    => 'email-verification-vending / email-verified / user-created', 
+    'per_page'                  =>  20,
+    'trashed'                   =>  false,          // true, false           
 ];
 ```
 
@@ -811,6 +820,15 @@ Get a list of the Role objects and their properties in a list with Pagination.
 
 This method supports some of the query parameters to help customize the response.
 
+| Parameter | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | ------------------ | -------------------- |
+| q | Value to be search in `name` and `slug` Column | String |
+| per_page | `N` Item Per Page | Number | 20 |
+| from | Initial Date  | String<br />(Y-m-d) |
+| to | Final Date | String<br />(Y-m-d) |
+| filter | Status of Role and may be either `active`, `inactive`, `frontend` or `backend`| String |
+| trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
+
 ##### URL
 ```php
 GET/POST <public-url>/api/roles
@@ -1112,6 +1130,16 @@ Get a list of the Permission objects and their properties in a list with Paginat
 
 This method supports some of the query parameters to help customize the response.
 
+| Parameter | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | ------------------ | -------------------- |
+| q | Value to be search in `name` and `slug` Column | String |
+| per_page | `N` Item Per Page | Number | 20 |
+| from | Initial Date  | String<br />(Y-m-d) |
+| to | Final Date | String<br />(Y-m-d) |
+| filter | Status of Permission and may be either `active`, `inactive` or `{module_name}`| String |
+| section | if filter = {module_name} | String |
+| trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
+
 ##### URL
 ```php
 GET/POST <public-url>/api/permissions
@@ -1411,6 +1439,15 @@ Get a list of the Taxonomy objects and their properties in a list with Paginatio
 
 This method supports some of the query parameters to help customize the response.
 
+| Parameter | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | ------------------ | -------------------- |
+| q | Value to be search in `name` and `slug` Column | String |
+| per_page | `N` Item Per Page | Number | 20 |
+| from | Initial Date  | String<br />(Y-m-d) |
+| to | Final Date | String<br />(Y-m-d) |
+| status | Status of taxonomy and may be either `active` or `inactive`| String |
+| trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
+
 ##### URL
 ```php
 GET/POST <public-url>/api/taxonomies
@@ -1610,6 +1647,15 @@ parameter = [
 Get a list of the Taxonomy Type objects and their properties in a list with Pagination.
 
 This method supports some of the query parameters to help customize the response.
+
+| Parameter | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | ------------------ | -------------------- |
+| q | Value to be search in `name` and `slug` Column | String |
+| per_page | `N` Item Per Page | Number | 20 |
+| from | Initial Date  | String<br />(Y-m-d) |
+| to | Final Date | String<br />(Y-m-d) |
+| with_children | When true, get Response with children attribute | Boolean | false
+| trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
 
 ##### URL
 ```php
