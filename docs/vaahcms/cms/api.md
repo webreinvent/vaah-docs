@@ -183,6 +183,10 @@ This method supports some of the query parameters to help customize the response
 | order_by | Direction of the sort and may be either `asc` or `desc` | String | desc |
 | include_groups | Input `Group slugs` that you want to include | Array |
 | exclude_groups | Input `Group slugs` that you want to exclude | Array |
+| status | Status of Content and may be either all, draft , published and so on	 | String | published
+| has_pagination | Set `false` to get data with out Pagination | Boolean | true
+| has_simple_paginate | Set `true` to get data with `Simple Paginate` | Boolean | false
+| take | No of Records, will work when `has_pagination = false` | Number |
 
 
 ##### URL
@@ -202,8 +206,12 @@ $param = [
    'per_page'                  => 5,               
    'order'                     => 'name',                  
    'order_by'                  => 'asc',              
-   'include_groups'            => ['default'],                  // group_slug
-   'exclude_groups'            => ['header'],                   // group_slug
+   'include_groups'            => ['default'],      // group_slug
+   'exclude_groups'            => ['header'],       // group_slug
+   'status'                    => 'all',            // default = published    all/draft
+   'has_pagination'            => true/false/0/1,   // default = true
+   'has_simple_paginate'       => true/false/0/1,   // default = false
+   'take'                      => 1,2,3,4, ..... n,
 ];
 ```
 

@@ -224,11 +224,15 @@ get_contents($content_type_slug='pages', array $args = null,$has_pagination = tr
 $args = [
 
     'q'                         => 'search_item', 
-    'per_page'                  => 5,                                       // default = 20
-    'include_groups'            => [],                                      // group_slug
-    'exclude_groups'            => [],                                      // group_slug   
-    'order'                     => 'name',                                  // default = id      
-    'order_by'                  => 'asc',                                   // default = desc      asc/desc/ASC/DESC
+    'per_page'                  => 20,           // default = 20
+    'include_groups'            => [],           // group_slug
+    'exclude_groups'            => [],           // group_slug   
+    'order'                     => 'name',       // default = id      
+    'order_by'                  => 'asc',        // default = desc    asc/desc/ASC/DESC
+    'status'                    => 'all',        // default = published    all/draft
+    'has_pagination'            => true / false,  // default = true
+    'has_simple_paginate'       => false,
+    'take'                      => 1,2,3,4, ..... n,
     'container_opening_tag'     => '<div class="columns is-multiline">',
     'container_closing_tag'     => '</div>',
     'content_opening_tag'       => '<div class="column is-4">',
