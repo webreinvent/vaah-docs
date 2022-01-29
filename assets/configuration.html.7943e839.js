@@ -1,0 +1,1 @@
+const t={key:"v-1d654235",path:"/vaahcms/module/configuration.html",title:"Configuration",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627366396e3},filePathRelative:"vaahcms/module/configuration.md"};export{t as data};

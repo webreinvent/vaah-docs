@@ -1,0 +1,1 @@
+const e={key:"v-ff5ea534",path:"/vaahcms/theme/activate-cms-module.html",title:"Activate CMS Module",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627122338e3},filePathRelative:"vaahcms/theme/activate-cms-module.md"};export{e as data};
