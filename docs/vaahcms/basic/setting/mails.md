@@ -2,30 +2,35 @@
 
 [[toc]]
 
-
-### Setup Mails with queues
+### Setup Notifications with queues
 
 Follow the following steps:
 
 1. Set `QUEUE_CONNECTION` to `database` in your active `env` file
+
 2. Visit `Setting > General > Site Settings > Laravel Queues` in your `backend dashboard` and enable it.
-3. Run or setup cron job for `php artisan queue:work --queue=high,medium,low,default --env=env_filename`
+
+3. Run or setup cron job for 
+   ```php artisan queue:work --queue=high,medium,low,default --env=env_filename```
+
+   If you want to run without cache use following command:
+   ```php artisan queue:listen --queue=high,medium,low,default --env=env_filename```
+   eg: `php artisan queue:listen --queue=high,medium,low,default --env=develop`
+
+
+If you make any changes in code of your `Job` class, then you must restart the `queue:work` command.
 
 
 
-If you make any changes in code of your `Job` class, then must restart the `queue:work` command.
-
-
-
-### Sending Mails
+### Send mails with Laravel Queues
 
 By default `VaahCMS` does not use laravel queues/jobs to schedule the mail. Hence, mails will be send immediately.
 
 **To send mail you can use following code:**
 
+```php
 VaahMail::dispatch($mail, $to, $priority)
-
-
+```
 
 - `$mail` should an instance of Laravel Mail class.
 
@@ -45,12 +50,9 @@ VaahMail::dispatch($mail, $to, $priority)
 **To send mail to a user you can use following code:**
 
 ```php
+$user = User::find(1);
 VaahMail::dispatchToUser($mail, $user, $priority)
 ```
-
-
-
-
 
 - `$user` is an instance of `WebReinvent\VaahCms\Entities\User`
 
@@ -64,32 +66,24 @@ VaahMail::dispatchToUser($mail, $user, $priority)
 VaahMail::dispatchGenericMail($content, $user, $priority)
 ```
 
-
-
-
-
 - `$content` is the html code you want to send to the user
 - `$user` is an instance of `WebReinvent\VaahCms\Entities\User`
 
 
 
-### Sending Without Queues
+### Send mails without Laravel Queues
 
-If you want to send the notification without laravel queues, you can use following code
+If you want to send the mails without Laravel queues, you can use following code
 
 ```php
-VaahMail::send($notification, $user, $inputs)
+VaahMail::send($mail, $user, $inputs)
 ```
-
-
-
-
 
 
 
 ### Customizing The Templates
 
-To customize the default laravel mail & notification template you must publish the asset, using following commands:
+To customize the default Laravel mail & notification template you must publish the asset, using following commands:
 
 ```php
 php artisan vendor:publish --tag=laravel-mail
@@ -98,8 +92,6 @@ php artisan vendor:publish --tag=laravel-mail
 ```php
 php artisan vendor:publish --tag=laravel-notifications
 ```
-
-
 
 
 
