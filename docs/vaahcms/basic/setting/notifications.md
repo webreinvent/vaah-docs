@@ -11,11 +11,15 @@ Follow the following steps:
 2. Visit `Setting > General > Site Settings > Laravel Queues` in your `backend dashboard` and enable it.
 
 3. Run or setup cron job for 
+   
    ```php artisan queue:work --queue=high,medium,low,default --env=env_filename```
-
+   
    If you want to run without cache use following command:
+   
    ```php artisan queue:listen --queue=high,medium,low,default --env=env_filename```
-   eg: `php artisan queue:listen --queue=high,medium,low,default --env=develop`
+   eg:
+   
+    `php artisan queue:listen --queue=high,medium,low,default --env=develop`
 
 
 If you make any changes in code of your `Job` class, then you must restart the `queue:work` command.
