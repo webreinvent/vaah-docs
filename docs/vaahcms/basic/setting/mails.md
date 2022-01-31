@@ -10,7 +10,7 @@ Follow the following steps:
 
 2. Visit `Setting > General > Site Settings > Laravel Queues` in your `backend dashboard` and enable it.
 
-3. Run or setup cron job for 
+3. Run or setup `cron/daemon` job for 
 
    ```php artisan queue:work --queue=high,medium,low,default --env=env_filename```
 
@@ -24,30 +24,54 @@ Follow the following steps:
 
 If you make any changes in code of your `Job` class, then you must restart the `queue:work` command.
 
-
+---
 
 ### Send mails with Laravel Queues
 
-By default `VaahCMS` does not use laravel queues/jobs to schedule the mail. Hence, mails will be send immediately.
+By default `VaahCMS` does not use Laravel queues/jobs to schedule the mail. Hence, mails will be send immediately.
 
-**To send mail you can use following code:**
+**Send a generic mail:**
 
 ```php
-VaahMail::dispatch($mail, $to, $priority)
+VaahMail::dispatchGenericMail($subject, $message, $to, $from_email, $from_name, $cc, $bcc, $priority);
 ```
 
-- `$mail` should an instance of Laravel Mail class.
+
+
+| Name          | Description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| `$subject`    | Subject of the email                                         |
+| `$message`    | Content of the message, it can have `html` tags              |
+| `$to`         | List of recipients in array format.                          |
+| `$from_email` | From email, if it's not set, then it will try to get the `domain` from `APP_URL` and add `noreply`. Eg: `noreply@<domain>` |
+| `$from_name`  | From name, if it's not set, the name will be taken from `APP_NAME` |
+| `$cc`         | List of `cc` recipients in array format.                     |
+| `$bcc`        | List of `bcc` recipients in array format.                    |
+
+Eg: An example of `$to` , `$cc` and `$bcc` is following:
+
+```php
+$contacts = [
+  ['email' => 'email@example.com', 'name' => 'name'],
+  ['email' => 'email2@example.com'],
+]
+```
+
+
+
+---
+
+**To send Laravel Mails **
+
+```php
+VaahMail::dispatch($mail, $to, $cc, $bcc, $priority);
+```
+
+- `$mail` should an instance of Laravel Mail `Illuminate\Mail\Mailable` class.
 
 - `$to` is the array of recipient:
 
-  ```php
-  $inputs = [
-    ['email' => 'email@example.com', 'name' => 'name'],
-    ['email' => 'email2@example.com', 'name' => 'name 2'],
-  ]
-  ```
-
-- `$priority` it is the order of execution of the jobs. You can provide following values high medium low default
+- `$priority` it is the order of execution of the jobs. You can provide following values `high`, `medium` `low` & `default`
 
 ------
 
@@ -55,32 +79,29 @@ VaahMail::dispatch($mail, $to, $priority)
 
 ```php
 $user = User::find(1);
-VaahMail::dispatchToUser($mail, $user, $priority)
+VaahMail::dispatchToUser($mail, $user, $cc, $bcc, $priority);
 ```
 
 - `$user` is an instance of `WebReinvent\VaahCms\Entities\User`
 
+---
 
-
-------
-
-**To send a generic mail to a user you can use following code:**
+**To send Mails to Super Administrators **
 
 ```php
-VaahMail::dispatchGenericMail($content, $user, $priority)
+User::notifySuperAdmins($subject, $message);
 ```
 
-- `$content` is the html code you want to send to the user
-- `$user` is an instance of `WebReinvent\VaahCms\Entities\User`
 
 
+---
 
 ### Send mails without Laravel Queues
 
 If you want to send the mails without Laravel queues, you can use following code
 
 ```php
-VaahMail::send($mail, $user, $inputs)
+VaahMail::send($mail, $to, $cc, $bcc);
 ```
 
 
