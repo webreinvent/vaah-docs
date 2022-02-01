@@ -60,7 +60,7 @@ $contacts = [
 
 ---
 
-### To send Laravel Mails 
+### Send Laravel mails 
 
 ```php
 VaahMail::dispatch($mail, $to, $cc, $bcc, $priority);
@@ -74,7 +74,7 @@ VaahMail::dispatch($mail, $to, $cc, $bcc, $priority);
 
 ------
 
-### To send mail to a user you can use following code:
+### Send mail to a user:
 
 ```php
 $user = User::find(1);
@@ -85,7 +85,7 @@ VaahMail::dispatchToUser($mail, $user, $cc, $bcc, $priority);
 
 ---
 
-### To send Mails to Super Administrators 
+### Send a mail to Super Administrators 
 
 ```php
 User::notifySuperAdmins($subject, $message);
