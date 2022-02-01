@@ -2,7 +2,7 @@
 
 [[toc]]
 
-### Setup Laravel Queues for VaahCMS
+## Setup Laravel Queues for VaahCMS
 
 Follow the following steps:
 
@@ -26,17 +26,16 @@ If you make any changes in code of your `Job` class, then you must restart the `
 
 ---
 
-### Send mails with Laravel Queues
+## Send mails with Laravel Queues
 
 By default `VaahCMS` does not use Laravel queues/jobs to schedule the mail. Hence, mails will be send immediately.
 
-**Send a generic mail:**
+### Send a generic mail:
 
 ```php
-VaahMail::dispatchGenericMail($subject, $message, $to, $from_email, $from_name, $cc, $bcc, $priority);
+VaahMail::dispatchGenericMail($subject, $message, $to, $from_email, 
+                              $from_name, $cc, $bcc, $priority);
 ```
-
-
 
 | Name          | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
@@ -61,7 +60,7 @@ $contacts = [
 
 ---
 
-**To send Laravel Mails **
+### To send Laravel Mails 
 
 ```php
 VaahMail::dispatch($mail, $to, $cc, $bcc, $priority);
@@ -75,7 +74,7 @@ VaahMail::dispatch($mail, $to, $cc, $bcc, $priority);
 
 ------
 
-**To send mail to a user you can use following code:**
+### To send mail to a user you can use following code:
 
 ```php
 $user = User::find(1);
@@ -86,7 +85,7 @@ VaahMail::dispatchToUser($mail, $user, $cc, $bcc, $priority);
 
 ---
 
-**To send Mails to Super Administrators **
+### To send Mails to Super Administrators 
 
 ```php
 User::notifySuperAdmins($subject, $message);
@@ -106,7 +105,7 @@ VaahMail::send($mail, $to, $cc, $bcc);
 
 
 
-### Customizing The Templates
+## Customizing The Templates
 
 To customize the default Laravel mail & notification template you must publish the asset, using following commands:
 
@@ -121,7 +120,7 @@ php artisan vendor:publish --tag=laravel-notifications
 
 
 
-This will publish files under `resources/views/vendor/mail` directory. To affect the VaahCMS `Mails`, you can edit following file:
+This will publish files under `resources/views/vendor/mail` directory. To update the UI of the VaahCMS `Mails`, you can edit following file:
 
 ```
 resources/views/vendor/mail/html/header.blade.php
