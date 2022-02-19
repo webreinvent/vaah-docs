@@ -2,94 +2,112 @@
 
 [[toc]]
 
-
-### Setup Mails with queues
+## Setup Laravel Queues for VaahCMS
 
 Follow the following steps:
 
 1. Set `QUEUE_CONNECTION` to `database` in your active `env` file
+
 2. Visit `Setting > General > Site Settings > Laravel Queues` in your `backend dashboard` and enable it.
-3. Run or setup cron job for `php artisan queue:work --queue=high,medium,low,default --env=env_filename`
+
+3. Run or setup `cron/daemon` job for 
+
+   ```php artisan queue:work --queue=high,medium,low,default --env=env_filename```
+
+   If you want to run without cache use following command:
+
+   ```php artisan queue:listen --queue=high,medium,low,default --env=env_filename```
+   eg:
+
+    `php artisan queue:listen --queue=high,medium,low,default --env=develop`
+
+
+If you make any changes in code of your `Job` class, then you must restart the `queue:work` command.
+
+---
+
+## Send mails with Laravel Queues
+
+By default `VaahCMS` does not use Laravel queues/jobs to schedule the mail. Hence, mails will be send immediately.
+
+### Send a generic mail:
+
+```php
+VaahMail::dispatchGenericMail($subject, $message, $to, $from_email, 
+                              $from_name, $cc, $bcc, $priority);
+```
+
+| Name          | Description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| `$subject`    | Subject of the email                                         |
+| `$message`    | Content of the message, it can have `html` tags              |
+| `$to`         | List of recipients in array format.                          |
+| `$from_email` | From email, if it's not set, then it will try to get the `domain` from `APP_URL` and add `noreply`. Eg: `noreply@<domain>` |
+| `$from_name`  | From name, if it's not set, the name will be taken from `APP_NAME` |
+| `$cc`         | List of `cc` recipients in array format.                     |
+| `$bcc`        | List of `bcc` recipients in array format.                    |
+
+Eg: An example of `$to` , `$cc` and `$bcc` is following:
+
+```php
+$contacts = [
+  ['email' => 'email@example.com', 'name' => 'name'],
+  ['email' => 'email2@example.com'],
+]
+```
 
 
 
-If you make any changes in code of your `Job` class, then must restart the `queue:work` command.
+---
 
+### Send Laravel mails 
 
+```php
+VaahMail::dispatch($mail, $to, $cc, $bcc, $priority);
+```
 
-### Sending Mails
-
-By default `VaahCMS` does not use laravel queues/jobs to schedule the mail. Hence, mails will be send immediately.
-
-**To send mail you can use following code:**
-
-VaahMail::dispatch($mail, $to, $priority)
-
-
-
-- `$mail` should an instance of Laravel Mail class.
+- `$mail` should an instance of Laravel Mail `Illuminate\Mail\Mailable` class.
 
 - `$to` is the array of recipient:
 
-  ```php
-  $inputs = [
-    ['email' => 'email@example.com', 'name' => 'name'],
-    ['email' => 'email2@example.com', 'name' => 'name 2'],
-  ]
-  ```
-
-- `$priority` it is the order of execution of the jobs. You can provide following values high medium low default
+- `$priority` it is the order of execution of the jobs. You can provide following values `high`, `medium` `low` & `default`
 
 ------
 
-**To send mail to a user you can use following code:**
+### Send mail to a user:
 
 ```php
-VaahMail::dispatchToUser($mail, $user, $priority)
+$user = User::find(1);
+VaahMail::dispatchToUser($mail, $user, $cc, $bcc, $priority);
 ```
-
-
-
-
 
 - `$user` is an instance of `WebReinvent\VaahCms\Entities\User`
 
+---
 
-
-------
-
-**To send a generic mail to a user you can use following code:**
+### Send a mail to Super Administrators 
 
 ```php
-VaahMail::dispatchGenericMail($content, $user, $priority)
+User::notifySuperAdmins($subject, $message);
 ```
 
 
 
+---
 
+### Send mails without Laravel Queues
 
-- `$content` is the html code you want to send to the user
-- `$user` is an instance of `WebReinvent\VaahCms\Entities\User`
-
-
-
-### Sending Without Queues
-
-If you want to send the notification without laravel queues, you can use following code
+If you want to send the mails without Laravel queues, you can use following code
 
 ```php
-VaahMail::send($notification, $user, $inputs)
+VaahMail::send($mail, $to, $cc, $bcc);
 ```
 
 
 
+## Customizing The Templates
 
-
-
-
-### Customizing The Templates
-
-To customize the default laravel mail & notification template you must publish the asset, using following commands:
+To customize the default Laravel mail & notification template you must publish the asset, using following commands:
 
 ```php
 php artisan vendor:publish --tag=laravel-mail
@@ -102,9 +120,7 @@ php artisan vendor:publish --tag=laravel-notifications
 
 
 
-
-
-This will publish files under `resources/views/vendor/mail` directory. To affect the VaahCMS `Mails`, you can edit following file:
+This will publish files under `resources/views/vendor/mail` directory. To update the UI of the VaahCMS `Mails`, you can edit following file:
 
 ```
 resources/views/vendor/mail/html/header.blade.php
