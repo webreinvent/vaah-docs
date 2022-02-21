@@ -1,3 +1,4 @@
+const guide = require("./guide");
 const vaahcms = require("./vaahcms");
 const vaahcli = require("./vaahcli");
 
@@ -22,9 +23,14 @@ module.exports = {
         smoothScroll: true,
         contributors: false,
         navbar: [
+
             {
                 text: "VaahCMS",
                 link: "/vaahcms/",
+            },
+            {
+                text: "Guide",
+                link: "/guide/",
             },
             /*{
                 text: "VaahCLI",
@@ -33,6 +39,7 @@ module.exports = {
         ],
         sidebar:{
             '/vaahcms/': vaahcms.sidebar,
+            '/guide/': guide.sidebar,
             '/vaahcli/': vaahcli.sidebar,
         }
     },
