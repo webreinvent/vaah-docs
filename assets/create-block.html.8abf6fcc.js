@@ -1,0 +1,62 @@
+import{r as t,o,c as l,a as s,b as c,w as r,F as i,d as a,e}from"./app.22e0285e.js";import{_ as u}from"./plugin-vue_export-helper.21dcd24c.js";const b={},k=s("h1",{id:"create-block",tabindex:"-1"},[s("a",{class:"header-anchor",href:"#create-block","aria-hidden":"true"},"#"),a(" Create Block")],-1),d=s("hr",null,null,-1),m=a("Blocks are the boxes of content that are displayed in Layout Regions (such as footer or sidebar) on your page. For more details, see CMS Blocks's "),h=a("documentation"),g=e(`<p>For creating block, you need to follow some steps:</p><p><strong>1. Create Location through seeds.</strong></p><p>Create a json file of name <code>theme_locations.json</code> at <code>VaahCms/Themes/BlogTheme/Database/Seeds/json/</code> this directory.</p><div class="language-json ext-json line-numbers-mode"><pre class="language-json"><code><span class="token punctuation">[</span>
+    
+    <span class="token punctuation">{</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;block&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Top&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;excerpt&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Top of every page&quot;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+      \u251C\u2500\u2500 BlogTheme
+          \u251C\u2500\u2500 Database/
+              \u251C\u2500\u2500 Seeds/
+                  \u251C\u2500\u2500 DatabaseTableSeeder.php
+                  \u251C\u2500\u2500 SampleDataTableSeeder.php
+                  \u251C\u2500\u2500 json/
+                      \u251C\u2500\u2500 theme_locations.json
+
+
+      
+    
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>To run this seed, you have to add some code in <code>DatabaseTableSeeder.php</code> file.</p><div class="language-php ext-php line-numbers-mode"><pre class="language-php"><code><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">namespace</span> <span class="token package">VaahCms<span class="token punctuation">\\</span>Themes<span class="token punctuation">\\</span>BlogTheme<span class="token punctuation">\\</span>Database<span class="token punctuation">\\</span>Seeds</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">use</span> <span class="token package">Illuminate<span class="token punctuation">\\</span>Database<span class="token punctuation">\\</span>Seeder</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">VaahCms<span class="token punctuation">\\</span>Modules<span class="token punctuation">\\</span>Cms<span class="token punctuation">\\</span>Libraries<span class="token punctuation">\\</span>CmsSeeder</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">DatabaseTableSeeder</span> <span class="token keyword">extends</span> <span class="token class-name">Seeder</span>
+<span class="token punctuation">{</span>
+    <span class="token doc-comment comment">/**
+     * Run the database seeds.
+     *
+     * <span class="token keyword">@return</span> <span class="token class-name"><span class="token keyword">void</span></span>
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$theme_slug</span> <span class="token operator">=</span> <span class="token string single-quoted-string">&#39;blogtheme&#39;</span><span class="token punctuation">;</span>
+
+
+        <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token constant">__DIR__</span><span class="token operator">.</span><span class="token string single-quoted-string">&#39;/json/theme_locations.json&#39;</span><span class="token punctuation">;</span>
+        <span class="token class-name static-context">CmsSeeder</span><span class="token operator">::</span><span class="token function">themeLocations</span><span class="token punctuation">(</span><span class="token variable">$theme_slug</span><span class="token punctuation">,</span> <span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token doc-comment comment">/**
+     * Run the database seeds.
+     *
+     * <span class="token keyword">@return</span> <span class="token class-name"><span class="token keyword">void</span></span>
+     */</span>
+
+
+<span class="token punctuation">}</span>
+</span></code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br></div></div><p>Now, you just need to reactivate the theme by visiting this url:</p><div class="language-text ext-text line-numbers-mode"><pre class="language-text"><code>&lt;project-url&gt;/backend#/vaah/themes/
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br></div></div><p>Once, the theme is activated, Location will also be created.</p><p><strong>2. Create a Block.</strong></p><p>To create Block, visit this url:</p><div class="language-text ext-text line-numbers-mode"><pre class="language-text"><code>&lt;project-url&gt;/backend/cms#/blocks/
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br></div></div>`,12),v=["src"],_=s("ul",null,[s("li",null,"Enter the name"),s("li",null,"Select Theme"),s("li",null,"Select Location"),s("li",null,"Enter Sort in number, this will work when you call blocks by location name."),s("li",null,"Enter content in Editor. You can edit in HTML Editor also."),s("li",null,"Click on Save button.")],-1),y=["src"],f=e(`<p>Blocks will be fetched on frontend by two Codes:</p><h5 id="by-block-slug" tabindex="-1"><a class="header-anchor" href="#by-block-slug" aria-hidden="true">#</a> By Block slug</h5><div class="language-php ext-php line-numbers-mode"><pre class="language-php"><code><span class="token punctuation">{</span><span class="token operator">!</span><span class="token operator">!</span> <span class="token function">vh_block</span><span class="token punctuation">(</span><span class="token string single-quoted-string">&#39;logo&#39;</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">!</span><span class="token punctuation">}</span>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br></div></div><h5 id="by-location-name" tabindex="-1"><a class="header-anchor" href="#by-location-name" aria-hidden="true">#</a> By Location name</h5><div class="language-php ext-php line-numbers-mode"><pre class="language-php"><code><span class="token punctuation">{</span><span class="token operator">!</span><span class="token operator">!</span> <span class="token function">vh_location_blocks</span><span class="token punctuation">(</span><span class="token string single-quoted-string">&#39;top&#39;</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">!</span><span class="token punctuation">}</span>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br></div></div><p>You have to paste these codes in Web Pages.</p>`,6),q=["src"],w=e(`<p>Now, you can copy this code and paste it in home blade file. Remove hard code of logo.</p><div class="language-php ext-php line-numbers-mode"><pre class="language-php"><code><span class="token operator">&lt;</span>a <span class="token keyword">class</span><span class="token operator">=</span><span class="token string double-quoted-string">&quot;navbar-item&quot;</span> href<span class="token operator">=</span><span class="token string double-quoted-string">&quot;../&quot;</span><span class="token operator">&gt;</span>
+                            
+                            <span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token operator">--</span><span class="token operator">&lt;</span>img src<span class="token operator">=</span><span class="token string double-quoted-string">&quot;http://bulma.io/images/bulma-type-white.png&quot;</span> alt<span class="token operator">=</span><span class="token string double-quoted-string">&quot;Logo&quot;</span><span class="token operator">&gt;</span><span class="token operator">--</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
+                            
+                            <span class="token punctuation">{</span><span class="token operator">!</span><span class="token operator">!</span> <span class="token function">vh_block</span><span class="token punctuation">(</span><span class="token string single-quoted-string">&#39;logo&#39;</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">!</span><span class="token punctuation">}</span>
+                            
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">&gt;</span>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>Now, You can see the Cms Block.</p>`,3),x=["src"];function B(n,S){const p=t("RouterLink");return o(),l(i,null,[k,d,s("p",null,[m,c(p,{to:"/vaahcms/cms/blocks.html"},{default:r(()=>[h]),_:1})]),g,s("img",{src:n.$withBase("/images/create-block-1.png"),alt:"create-block-1"},null,8,v),_,s("img",{src:n.$withBase("/images/create-block-2.png"),alt:"create-block-2"},null,8,y),f,s("img",{src:n.$withBase("/images/create-block-3.png"),alt:"create-block-3"},null,8,q),w,s("img",{src:n.$withBase("/images/create-block-4.png"),alt:"create-block-4"},null,8,x)],64)}var j=u(b,[["render",B]]);export{j as default};
