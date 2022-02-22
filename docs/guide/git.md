@@ -52,3 +52,5 @@ Where `type` can have following values:
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+Read more at [https://keepachangelog.com/en/1.0.0/](https://keepachangelog.com/en/1.0.0/)
+
