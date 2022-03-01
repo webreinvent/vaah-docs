@@ -7,7 +7,7 @@
 This is a guide to maintain a consistent and industry stand code in Laravel.
 
 
-### Laravel Routes
+## Laravel Routes
 
 - Meaningful / Predictable
 - All small letter
@@ -15,9 +15,9 @@ This is a guide to maintain a consistent and industry stand code in Laravel.
 
 This is an example of for `articles`
 
-##### CRUD Routes
+## CRUD Routes
 
-###### To show html page with listing of database records of blog
+### HTML listing page
 
 ```http request
 GET /articles/index
@@ -26,23 +26,12 @@ Controller-Method: ArticleController@index
 Model-Method: ""
 ```
 
-###### To show html page with listing of database records of blog
+### Listing
 ```http request
 GET /articles
 Content-Type: application/json
 Controller-Method: ArticleController@getList
 Model-Method: Article::getList
-```
-
-
-
-
-###### Fetch specific record
-```http request
-GET /articles/1
-Content-Type: application/json
-Controller-Method: ArticleController@getItem
-Model-Method: Article::getItem
 ```
 
 ###### Create a record
@@ -53,15 +42,25 @@ Controller-Method: ArticleController@createItem
 Model-Method: Article::createItem
 ```
 
-###### Update a record
+
+### Read a record
+```http request
+GET /articles/1
+Content-Type: application/json
+Controller-Method: ArticleController@getItem
+Model-Method: Article::getItem
+```
+
+### Update a record
 ```http request
 PUT /articles/1
+PATCH /articles/1
 Content-Type: application/json
 Controller-Method: ArticleController@updateItem
 Model-Method: Article::updateItem
 ```
 
-###### Delete a record
+### Delete a record
 ```http request
 DELETE /articles/1
 Content-Type: application/json
@@ -69,7 +68,7 @@ Controller-Method: ArticleController@deteleItem
 Model-Method: Article::deteleItem
 ```
 
-###### Fetch a relation of a record
+### Fetch a relation of a record
 ```http request
 GET /articles/1/relationships/author
 Content-Type: application/json
@@ -77,15 +76,24 @@ Controller-Method: ArticleController@getItemAuthor
 Model-Method: Article::getItemAuthor
 ```
 
-###### Update a record's relationship
+### Attach a relation to a record
 ```http request
+POST /articles/1/relationships/author
+Content-Type: application/json
+Controller-Method: ArticleController@attachItemAuthor
+Model-Method: Article::attachItemAuthor
+```
+
+### Update a relation to a record
+```http request
+PUT /articles/1/relationships/author
 PATCH /articles/1/relationships/author
 Content-Type: application/json
 Controller-Method: ArticleController@updateItemAuthor
 Model-Method: Article::updateItemAuthor
 ```
 
-###### Delete a record's relationship
+### Delete a relation to a record
 ```http request
 DELETE /articles/1/relationships/author
 Content-Type: application/json
@@ -93,7 +101,7 @@ Controller-Method: ArticleController@deleteItemAuthor
 Model-Method: Article::deleteItemAuthor
 ```
 
-###### Fetch relations list of a record
+### Fetch list of relations
 ```http request
 GET /articles/1/relationships/comments
 Content-Type: application/json
@@ -101,15 +109,16 @@ Controller-Method: ArticleController@getItemComments
 Model-Method: Article::getItemComments
 ```
 
-###### Update many relations of a record
+### Update list of relations
 ```http request
+PUT /articles/1/relationships/comments
 PATCH /articles/1/relationships/comments
 Content-Type: application/json
 Controller-Method: ArticleController@updateItemComments
 Model-Method: Article::updateItemComments
 ```
 
-###### Delete many relations of a record
+### Delete list of relations
 ```http request
 DELETE /articles/1/relationships/comments
 Content-Type: application/json
@@ -117,75 +126,173 @@ Controller-Method: ArticleController@deleteItemComments
 Model-Method: Article::deleteItemComments
 ```
 
-###### Include a relation with a record
+### Include relations
 ```http request
-GET /articles/1?include=comments
+GET /articles?include=comments
 Content-Type: application/json
 Controller-Method: ArticleController@getList
 Model-Method: Article::getList
 ```
 
-###### Include a relation's relation with a record
+### Include relation's relations
 ```http request
-GET /articles/1?include=comments.created_by
+GET /articles?include=comments.created_by
 Content-Type: application/json
 Controller-Method: ArticleController@getList
 Model-Method: Article::getList
 ```
 
-###### Sorting
+### Sorting
 ```http request
-GET /articles/1?sort=title,created_by
+GET /articles?sort=title,created_by
 Content-Type: application/json
 Controller-Method: ArticleController@getList
 Model-Method: Article::getList
 ```
 
-###### Sorting in descending order of `created_by`, use minus `-` in front of parameter
+###### Sorting in descending order of `created_by`, use `:desc` in front of parameter
 ```http request
-GET /articles/1?sort=title,-created_by
+GET /articles?sort=title,created_by:desc
 Content-Type: application/json
 Controller-Method: ArticleController@getList
 Model-Method: Article::getList
 ```
 
-##### API Routes
+
+## Query Operators
+
+|MySql Operator| Query Parameter | Purpose |
+|--|--|--|
+|=|eq| Equal to
+|!=|not| Not equal to
+|<|lt| Less than
+|<=|lte| Less than or equal to
+|>|gt| Greater than
+|>=|gte| Greater than or equal to
+|like|like|  Like search query
+|between|btw|  Between
+
+## API Routes
+
+#### Get list of articles with pagination
 ```http request
+
 GET /api/articles
+```
 
-//----------------------------------------------
+### Specify page number
 
+```http request
+GET /api/articles?page=5
+```
+
+### Limit the results
+```http request
+GET /api/articles?limit=10
+```
+
+
+### Sort By ascending order of title then created_by
+```http request
+GET /api/articles?sort=title,created_by
+```
+
+### Sort By in ascending order of title then descending order created_by
+```http request
+GET /api/articles?sort=title,created_by:desc,price
+```
+
+### Include comment in the article (relationship)
+```http request
+GET /api/articles?include=comments
+```
+
+### Include comment with created_by relationship
+```http request
+GET /api/articles?include=comments.created_by
+```
+
+### Examples of filters with operators
+```http request
+GET /api/articles?filter[is_active]=true
+GET /api/articles?filter[created_by]=eq:5
+GET /api/articles?filter[title]=like:hello
+GET /api/articles?filter[price]=gt:5
+GET /api/articles?filter[date]=btw:5|7
+
+GET /api/articles?filter[is_active]=true&filter[created_by]=eq:5&filter[date]=btw:5|7
+```
+
+
+### Multiple operators
+```http request
+GET /api/articles?filter[price]=gt:5|AND|lt:10
+```
+
+
+### Get single record of article
+```http request
 GET /api/articles/1
+```
 
+### To create single article
+```http request
+POST /api/articles
+```
+
+### Update single record of article
+```http request
+PUT /api/articles/1
 PATCH /api/articles/1
+```
 
+### Delete single record of article
+```http request
 DELETE /api/articles/1
+```
 
-//----------------------------------------------
 
+### Get single record of article with it's author
+```http request
 GET /api/articles/1/relationships/author
+```
 
+### Attach author (relationship) to the article
+```http request
+POST /api/articles/1/relationships/author
+```
+
+### Update author (relationship)
+```http request
+PUT /api/articles/1/relationships/author
 PATCH /api/articles/1/relationships/author
+```
 
+### Delete author (relationship)
+```http request
 DELETE /api/articles/1/relationships/author
+```
 
-//----------------------------------------------
 
+
+### Get article with multiple comments (relationships)
+```http request
 GET /api/articles/1/relationships/comments
+```
 
+### Create/Attach comments (relationships)
+```http request
+POST /api/articles/1/relationships/comments
+```
+
+### Update article with multiple comments (relationships)
+```http request
+PUT /api/articles/1/relationships/comments
 PATCH /api/articles/1/relationships/comments
+```
 
+### Delete multiples comments (relationships)
+```http request
 DELETE /api/articles/1/relationships/comments
-
-//----------------------------------------------
-
-GET /api/articles/1?include=comments
-
-GET /api/articles/1?include=comments.created_by
-
-GET /api/articles/1?sort=title,created_by
-
-GET /api/articles/1?sort=title,-created_by
-
 ```
 
