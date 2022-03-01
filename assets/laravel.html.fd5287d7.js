@@ -1,1 +1,0 @@
-const e={key:"v-3318d8ac",path:"/guide/laravel.html",title:"Laravel",lang:"en-US",frontmatter:{},excerpt:"",headers:[{level:2,title:"Introduction",slug:"introduction",children:[{level:3,title:"Laravel Routes",slug:"laravel-routes",children:[]}]}],git:{updatedTime:1645452425e3},filePathRelative:"guide/laravel.md"};export{e as data};
