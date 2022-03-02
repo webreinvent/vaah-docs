@@ -34,6 +34,31 @@ Controller-Method: ArticleController@getList
 Model-Method: Article::getList
 ```
 
+### Bulk Create
+```http request
+POST /articles
+Content-Type: application/json
+Controller-Method: ArticleController@createItems
+Model-Method: Article::createItems
+```
+
+### Bulk Update (status change)
+```http request
+PUT /articles
+PATCH /articles
+Content-Type: application/json
+Controller-Method: ArticleController@updateItems
+Model-Method: Article::updateItems
+```
+
+### Bulk Delete
+```http request
+DELETE /articles
+Content-Type: application/json
+Controller-Method: ArticleController@deteleItems
+Model-Method: Article::deteleItems
+```
+
 ###### Create a record
 ```http request
 POST /articles/1
@@ -51,7 +76,7 @@ Controller-Method: ArticleController@getItem
 Model-Method: Article::getItem
 ```
 
-### Update a record
+### Update a record (update, soft delete, status change etc)
 ```http request
 PUT /articles/1
 PATCH /articles/1
@@ -60,7 +85,7 @@ Controller-Method: ArticleController@updateItem
 Model-Method: Article::updateItem
 ```
 
-### Delete a record
+### Delete a record (hard deleted)
 ```http request
 DELETE /articles/1
 Content-Type: application/json
