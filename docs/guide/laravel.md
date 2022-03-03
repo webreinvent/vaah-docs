@@ -34,38 +34,60 @@ Controller-Method: ArticleController@getList
 Model-Method: Article::getList
 ```
 
-### Bulk Create
+### Create one or many records
 ```http request
 POST /articles
 Content-Type: application/json
-Controller-Method: ArticleController@createItems
-Model-Method: Article::createItems
+Controller-Method: ArticleController@createList
+Model-Method: Article::createList
 ```
 
-### Bulk Update (status change)
+If an array is passed, multiple records will be created or else single record will be
+created.
+
+Eg: Single Record
+```php
+$inputs = [
+  "first_name" => 'John'
+  "last_name" => 'Leo'
+]
+```
+
+Eg: Multiple Records
+
+```php
+$inputs = [
+  [
+  "first_name" => 'John'
+  "last_name" => 'Leo'
+  ],
+  [
+  "first_name" => 'David'
+  "last_name" => 'Leo'
+  ]
+]
+```
+
+
+
+### Bulk Update (eg: bulk status change)
 ```http request
 PUT /articles
 PATCH /articles
 Content-Type: application/json
-Controller-Method: ArticleController@updateItems
-Model-Method: Article::updateItems
+Controller-Method: ArticleController@updateList
+Model-Method: Article::updateList
 ```
 
 ### Bulk Delete
 ```http request
 DELETE /articles
 Content-Type: application/json
-Controller-Method: ArticleController@deteleItems
-Model-Method: Article::deteleItems
+Controller-Method: ArticleController@deteleList
+Model-Method: Article::deteleList
 ```
 
-###### Create a record
-```http request
-POST /articles/1
-Content-Type: application/json
-Controller-Method: ArticleController@createItem
-Model-Method: Article::createItem
-```
+
 
 
 ### Read a record
