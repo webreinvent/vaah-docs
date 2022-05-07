@@ -178,6 +178,83 @@ public function seedNotificationContent()
 
 
 
+### How to show notification variables?
+
+If you want to show variables name in notification sidebar.
+
+<img :src="$withBase('/images/notification-1.png')" alt="localization-1">
+
+You need to add `getNotificationVariables` method in `ExtendController` of your `Theme` or `Module`.
+
+```php
+
+public function getNotificationVariables()
+{
+    
+    $list = [
+        [
+            'name'=>'#!USER:NAME!#',
+            'details'=>'Will be replaced with name.',
+        ],
+        [
+            'name'=>'#!USER:DISPLAY_NAME!#',
+            'details'=>'Will be replaced with display name.',
+        ],
+        [
+            'name'=>'#!USER:EMAIL!#',
+            'details'=>'Will be replaced with email.',
+        ],
+        [
+            'name'=>'#!USER:PHONE!#',
+            'details'=>'Will be replaced with phone.',
+        ]
+    ];
+
+    $response['status'] = 'success';
+    $response['data'] = $list;
+
+    return $response;
+}
+
+```
+
+
+### How to add notification actions?
+
+If you want to add action variables in notification.
+
+<img :src="$withBase('/images/notification-2.png')" alt="notification-2">
+
+You need to add `getNotificationActions` method in `ExtendController` of your `Theme` or `Module`.
+
+```php
+
+public function getNotificationActions()
+{
+    
+    $list = [
+        [
+            'name'=>'#!ROUTE:VH.LOGIN!#'
+        ],
+        [
+            'name'=>'#!ROUTE:VH.REGISTER!#'
+        ],
+        [
+            'name'=>'#!ROUTE:VH.RESET!#'
+        ],
+        [
+            'name'=>'#!ROUTE:VH.VERIFICATION!#'
+        ]
+    ];
+
+    $response['status'] = 'success';
+    $response['data'] = $list;
+
+    return $response;
+}
+
+```
+
 ### Sending without Laravel Queues
 
 If you want to send the notification without Laravel queues, you can use following code
@@ -216,6 +293,6 @@ if($notification)
 | --------------- | ------------------------------------------------------------ |
 | `$notification` | is the instance of `WebReinvent\VaahCms\Entities\Notification` |
 | `$user`         | is the instance of `WebReinvent\VaahCms\Entities\User`       |
-| `$inputs`       | is the a data array contain values of strings. <br />Eg. If the notification contains `#!USER:NAME!#` string and then the `$input` array must be:  <code>$inputs = [  "user" => [    "name" => "John"  ] ]</code> This will replace the string with value provided in the inputs. |
+| `$inputs`       | is the a data array contain values of strings. `user_id` and `notification_id` are required params. <br />Eg. <br />1. If the notification contains `#!PARAM:NAME!#` string and then the `$input` array must be:  <code>$inputs =  [ "name" => "John" ]</code> This will replace the string with value provided in the inputs. <br />2. If the notification contains `#!USER:NAME!#` string and then the `$input` array must be:  <code>$inputs =  [ "user_id" => X ]</code> This will replace the string with value provided in the `User` Entity. |
 | `$priority`     | it is the order of execution of the jobs. You can provide following values: `high` ,`medium`, `low`, & `default` |
 
