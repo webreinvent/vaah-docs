@@ -1393,7 +1393,7 @@ parameter = [
 }
 ```
 
-#### Taxonomy : -
+### Taxonomy : -
 
 #### Create
 
@@ -1603,7 +1603,7 @@ GET/POST <public-url>/api/taxonomies/{column}/{value}/delete
 }
 ```
 
-#### Taxonomy Type : -
+### Taxonomy Type : -
 
 #### Create
 
