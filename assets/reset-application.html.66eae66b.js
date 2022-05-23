@@ -1,0 +1,1 @@
+const t={key:"v-5f3d2378",path:"/vaahcms/basic/setting/reset-application.html",title:"Reset Application",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:1}]},filePathRelative:"vaahcms/basic/setting/reset-application.md"};export{t as data};

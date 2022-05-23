@@ -1,0 +1,1 @@
+const e={key:"v-1fc4194b",path:"/vaahcms/module/creating-application.html",title:"Creating Vue.js Application",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:2}]},filePathRelative:"vaahcms/module/creating-application.md"};export{e as data};

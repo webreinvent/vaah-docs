@@ -1,0 +1,1 @@
+const e={key:"v-5d1a95ba",path:"/vaahcms/theme/configuration.html",title:"Configuration",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627366396e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:3},{name:"Pradeep",email:"webreinvent@gmail.com",commits:1}]},filePathRelative:"vaahcms/theme/configuration.md"};export{e as data};

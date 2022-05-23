@@ -1,0 +1,1 @@
+const e={key:"v-e32667d0",path:"/vaahcms/module/define-method.html",title:"Define Method in Model",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:2}]},filePathRelative:"vaahcms/module/define-method.md"};export{e as data};

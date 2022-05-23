@@ -1,0 +1,1 @@
+const t={key:"v-2f53b20f",path:"/vaahcms/basic/setting/localization.html",title:"Localization",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:1}]},filePathRelative:"vaahcms/basic/setting/localization.md"};export{t as data};

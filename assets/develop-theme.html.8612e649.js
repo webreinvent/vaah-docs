@@ -1,1 +1,0 @@
-const e={key:"v-d6383b92",path:"/vaahcms/theme/develop-theme.html",title:"Develop Theme",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627122338e3},filePathRelative:"vaahcms/theme/develop-theme.md"};export{e as data};

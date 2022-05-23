@@ -1,0 +1,1 @@
+const e={key:"v-d70f0ca6",path:"/vaahcms/module/setup-routes.html",title:"Set up Vue Routes",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:2}]},filePathRelative:"vaahcms/module/setup-routes.md"};export{e as data};

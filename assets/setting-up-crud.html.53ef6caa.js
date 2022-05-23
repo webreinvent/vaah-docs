@@ -1,1 +1,0 @@
-const t={key:"v-192f5fd0",path:"/vaahcms/module/setting-up-crud.html",title:"Setting up CRUD in the Backend",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627122338e3},filePathRelative:"vaahcms/module/setting-up-crud.md"};export{t as data};
