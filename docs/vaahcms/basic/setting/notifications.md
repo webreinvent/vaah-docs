@@ -35,7 +35,11 @@ There are two way to create notifications:
 
 Login to `Backend Administrator Control Panel` (`<public-url`/backend), then navigate to `Settings > Notifications`. 
 
+<img :src="$withBase('/images/notification-5.png')" alt="notification-5">
+
 Here you will be able create new `notifications` which can be used in your code.
+
+<img :src="$withBase('/images/notification-6.png')" alt="notification-6">
 
 #### 2. Create notification via Seeds
 
@@ -104,7 +108,7 @@ In this file `slug` is coming from the `<notification-name>` and each `{}` objec
         "meta": {
             "action":"#!ROUTE:VH.VERIFICATION!#"
         }
-    },
+    }
 ]
 ```
 
@@ -178,6 +182,111 @@ public function seedNotificationContent()
 
 
 
+### How to show notification variables?
+
+If you want to show variables name in notification sidebar.
+
+<img :src="$withBase('/images/notification-1.png')" alt="notification-1">
+
+You need to add `getNotificationVariables` method in `ExtendController` of your `Theme` or `Module`.
+
+```php
+
+public function getNotificationVariables()
+{
+    
+    $list = [
+        [
+            'name'=>'#!USER:NAME!#',
+            'details'=>'Will be replaced with name.',
+        ],
+        [
+            'name'=>'#!USER:DISPLAY_NAME!#',
+            'details'=>'Will be replaced with display name.',
+        ],
+        [
+            'name'=>'#!USER:EMAIL!#',
+            'details'=>'Will be replaced with email.',
+        ],
+        [
+            'name'=>'#!USER:PHONE!#',
+            'details'=>'Will be replaced with phone.',
+        ]
+    ];
+
+    $response['status'] = 'success';
+    $response['data'] = $list;
+
+    return $response;
+}
+
+```
+
+
+### How to add notification actions?
+
+If you want to add action variables in notification.
+
+<img :src="$withBase('/images/notification-2.png')" alt="notification-2">
+
+You need to add `getNotificationActions` method in `ExtendController` of your `Theme` or `Module`.
+
+```php
+
+public function getNotificationActions()
+{
+    
+    $list = [
+        [
+            'name'=>'#!ROUTE:VH.LOGIN!#'
+        ],
+        [
+            'name'=>'#!ROUTE:VH.REGISTER!#'
+        ],
+        [
+            'name'=>'#!ROUTE:VH.RESET!#'
+        ],
+        [
+            'name'=>'#!ROUTE:VH.VERIFICATION!#'
+        ]
+    ];
+
+    $response['status'] = 'success';
+    $response['data'] = $list;
+
+    return $response;
+}
+
+```
+
+### How to use variable strings?
+
+There are three types of variable strings.
+
+1. `#!USER:VARIABLE_NAME!#` : If the notification contains #!USER:NAME!# string and then the $input array must be: $inputs = [ "user_id" => X ]. This will replace the string with value provided in the User Entity.
+
+2. `#!PARAM:VARIABLE_NAME!#` : If the notification contains #!PARAM:NAME!# string and then the $input array must be: $inputs = [ "name" => "John" ]. This will replace the string with value provided in the inputs.
+
+3. `#!ROUTE:VARIABLE_NAME!#` :  If the notification contains #!ROUTE:VH.LOGIN!# string. This will replace the string with `url` of that `route name` provided in the `PHP Routes`.
+
+```php
+$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "<notification-slug>")->first();
+
+if($notification)
+{
+    
+    $inputs = [
+            "user_id" => xxx,
+            "notification_id" => xxx,
+        ];
+
+    WebReinvent\VaahCms\Entities\Notification::send(
+    	$notification, $user, $inputs
+	);
+}
+
+```
+
 ### Sending without Laravel Queues
 
 If you want to send the notification without Laravel queues, you can use following code
@@ -187,6 +296,12 @@ $notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "<notif
 
 if($notification)
 {
+    
+    $inputs = [
+            "user_id" => xxx,
+            "notification_id" => xxx,
+        ];
+    
     WebReinvent\VaahCms\Entities\Notification::send(
     	$notification, $user, $inputs
 	);
@@ -205,6 +320,12 @@ $notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "<notif
 
 if($notification)
 {
+
+    $inputs = [
+            "user_id" => xxx,
+            "notification_id" => xxx,
+        ];
+
     WebReinvent\VaahCms\Entities\Notification::dispatch(
     	$notification, $user, $inputs, $priority
 	);
@@ -216,6 +337,36 @@ if($notification)
 | --------------- | ------------------------------------------------------------ |
 | `$notification` | is the instance of `WebReinvent\VaahCms\Entities\Notification` |
 | `$user`         | is the instance of `WebReinvent\VaahCms\Entities\User`       |
-| `$inputs`       | is the a data array contain values of strings. <br />Eg. If the notification contains `#!USER:NAME!#` string and then the `$input` array must be:  <code>$inputs = [  "user" => [    "name" => "John"  ] ]</code> This will replace the string with value provided in the inputs. |
+| `$inputs`       | is the a data array contain values of strings. `user_id` and `notification_id` are required params. <br />Eg. <br />1. If the notification contains `#!PARAM:NAME!#` string and then the `$input` array must be:  <code>$inputs =  [ "name" => "John" ]</code> This will replace the string with value provided in the inputs. <br />2. If the notification contains `#!USER:NAME!#` string and then the `$input` array must be:  <code>$inputs =  [ "user_id" => X ]</code> This will replace the string with value provided in the `User` Entity. |
 | `$priority`     | it is the order of execution of the jobs. You can provide following values: `high` ,`medium`, `low`, & `default` |
 
+### Example
+
+In this example, we register a greeting, a line of text, a call to action, and then another line of text. 
+
+<img :src="$withBase('/images/notification-3.png')" alt="notification-3">
+
+Use following code to send a Notification.
+
+```php
+$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "send-welcome-email")->first();
+
+if($notification)
+{
+    
+    $inputs = [
+            "user_id" => xxx,
+            "notification_id" => xxx,
+        ];
+    
+    WebReinvent\VaahCms\Entities\Notification::send(
+    	$notification, $user, $inputs
+	);
+}
+```
+
+The notification channel will then translate the message components into a beautiful, responsive HTML email template with a plain-text counterpart. Here is an example of an email generated by the notification:
+
+<img :src="$withBase('/images/notification-4.png')" alt="notification-4">
+
+**Note:** When sending notifications, be sure to set the `APP_NAME` in your `env` file. This value will be used in the `header` and `footer` of your mail notification messages.
