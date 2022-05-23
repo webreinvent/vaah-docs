@@ -1,3 +1,4 @@
+const { defaultTheme } = require('@vuepress/theme-default');
 const guide = require("./guide");
 const vaahcms = require("./vaahcms");
 const vaahcli = require("./vaahcli");
@@ -10,7 +11,7 @@ module.exports = {
     plugins: [
         //['tabs', true]
     ],
-    themeConfig: {
+    theme: defaultTheme({
         repo: 'webreinvent/vaah-docs',
         docsDir: 'docs',
         docsBranch: 'master',
@@ -42,6 +43,6 @@ module.exports = {
             '/guide/': guide.sidebar,
             '/vaahcli/': vaahcli.sidebar,
         }
-    },
+    }),
 
-}
+};
