@@ -1,1 +1,0 @@
-const e={key:"v-7cae0008",path:"/vaahcms/module/extends-vaahcms.html",title:"Extend VaahCMS Sidebar",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:2}]},filePathRelative:"vaahcms/module/extends-vaahcms.md"};export{e as data};

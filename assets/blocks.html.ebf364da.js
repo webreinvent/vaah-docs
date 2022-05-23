@@ -1,1 +1,0 @@
-const e={key:"v-088e13c8",path:"/vaahcms/cms/blocks.html",title:"Blocks",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:2}]},filePathRelative:"vaahcms/cms/blocks.md"};export{e as data};

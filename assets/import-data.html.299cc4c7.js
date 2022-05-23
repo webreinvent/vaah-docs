@@ -1,0 +1,1 @@
+const t={key:"v-a3eeddc4",path:"/vaahcms/theme/import-data.html",title:"Import Sample Data",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3},filePathRelative:"vaahcms/theme/import-data.md"};export{t as data};

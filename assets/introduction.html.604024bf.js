@@ -1,1 +1,0 @@
-const t={key:"v-51b48570",path:"/vaahcms/cms/introduction.html",title:"CMS Module",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627041252e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:1}]},filePathRelative:"vaahcms/cms/introduction.md"};export{t as data};

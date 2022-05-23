@@ -1,1 +1,0 @@
-const t={key:"v-5a8f16e5",path:"/vaahcms/basic/routing.html",title:"Routing",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:1}]},filePathRelative:"vaahcms/basic/routing.md"};export{t as data};

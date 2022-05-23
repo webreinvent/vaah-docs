@@ -1,1 +1,0 @@
-const e={key:"v-4b763d7d",path:"/vaahcms/theme/directory-structure.html",title:"Directory Structure",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627125539e3,contributors:[{name:"Yogi",email:"yogesh.m001@webreinvent.com",commits:4}]},filePathRelative:"vaahcms/theme/directory-structure.md"};export{e as data};

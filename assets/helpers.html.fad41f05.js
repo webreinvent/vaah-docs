@@ -1,0 +1,1 @@
+const e={key:"v-53f31200",path:"/vaahcms/vaahvue/helpers.html",title:"Helpers",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3},filePathRelative:"vaahcms/vaahvue/helpers.md"};export{e as data};
