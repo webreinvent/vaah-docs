@@ -163,4 +163,8 @@ getListAfter: function (data, res) {
 |      | fileExtensionFromUrl        | `url`                                                        | Get File extension from URL.|
 |      | getClipboardValue           |                                                              | Component to show Success messages in list.|
 |      | getNonReactiveObject        | `obj`                                                        | Convert Reactive Object to Non Reactive Object.|
+|      | pluck                       | `array`  `key`                                               | Return value of specified key from array object.|
+|      | pusherAuth                  | `pusher_auth_url`  `pusher_key`  `pusher_cluster`  `params=null`| Convert Reactive Object to Non Reactive Object.|
+|      | pusherSubscribe             | `pusher_instance`  `channel_name`  `callback=null`           | Convert Reactive Object to Non Reactive Object.|
+|      | pusherListenEvent           | `channel_instance`  `event_name`  `callback=null`           | Convert Reactive Object to Non Reactive Object.|
 
