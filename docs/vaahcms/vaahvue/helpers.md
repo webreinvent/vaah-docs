@@ -7,11 +7,14 @@ There are 2 file in `Helpers` directory.
 - GlobalComponents.js
 - VaahHelper.js
 
-------
+
+## How to use Helpers?
+First you have to check that your `Module` or `Theme` has helpers at `VaahCms/Themes/BlogTheme/Vue/vaahvue/helpers`.
+
+If not found then download it from [here](https://github.com/webreinvent/vaahvue).
 
 
-
-##### GlobalComponents
+## GlobalComponents
 
 In `GlobalComponents.js`, there are components that can be used anywhere in an application, including within other components.
 
@@ -22,13 +25,76 @@ In `GlobalComponents.js`, there are components that can be used anywhere in an a
 | VueErrors      | Component to show Error messages in list.                    |
 | VueMessages    | Component to show Success messages in list.                  |
 
-------
+##### Loader
+This component to create placeholder loading, like Facebook cards loading.
+
+```vue
+<Loader></Loader>
+```
+##### ClickToCopy
+Click To Copy Vue.js component
+
+```vue
+<ClickToCopy text="ClickToCopy" :data="value"></ClickToCopy>
+```
+
+| Properties | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| text | Text to display | String |
+| data | Data to be copied | String |
 
 
+##### VueErrors
+The component to display single error message or multiple error messages to user.
 
-##### Vaah Helper
+```vue
+<VueErrors :list="list"></VueErrors>
+```
+
+```
+"list":[
+    'Error Message 1',
+    'Error Message 2'
+]
+```
+##### VueMessages
+The component to display single message or multiple messages to user.
+
+```vue
+<VueMessages :list="list"></VueMessages>
+```
+
+```
+"list":[
+    'Message 1',
+    'Message 2'
+]
+```
+
+
+## Vaah Helper
 
 In `VaahHelper.js`, there are functions that can be used anywhere in `Vue` Components.
+
+Example:
+
+```
+//---------------------------------------------------------------------
+getList: function () {
+    let url = this.ajax_url + '/list';
+    let params = {
+        q:'search'
+    };
+    // ajaxGet(url, params, callback)
+    this.$vaah.ajaxGet(url, params, this.getListAfter);
+},
+//---------------------------------------------------------------------
+getListAfter: function (data, res) {
+
+},
+//---------------------------------------------------------------------
+```
+
 
 |      | Function Name               | Parameter                                                    | Description                                                  |
 | ---- | --------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
