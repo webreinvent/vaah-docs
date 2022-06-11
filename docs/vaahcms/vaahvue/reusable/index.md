@@ -9,6 +9,38 @@ One of the key phrases that developers love using is Don’t Repeat Yourself (DR
 
 
 
+## How to use reusable component?
+First you have to check that your `Module` or `Theme` has reusable Components at `VaahCms/Themes/BlogTheme/Vue/vaahvue/reusable`.
+
+If not found then download it from [here](https://github.com/webreinvent/vaahvue).
+
+
+Now, you need to import and register your Components in `Script` before use.
+
+Example:
+```js
+import AutoComplete from "../../vaahvue/reusable/AutoComplete";
+
+export default {
+    computed: {
+
+    },
+    components: {
+        AutoComplete
+    },
+    data() {
+        return {
+            namespace: namespace,
+        }
+    },
+    watch: {
+        
+    }
+}
+   
+```
+
+
 ## Components
 
 ### AutoComplete
