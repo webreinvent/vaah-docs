@@ -29,6 +29,14 @@ Authorization: Bearer <api-token>
 
 You can ask to Admin for assigning you a `API Token`.
 
+The following is a curl example using the HTTP Authorization 
+header using the Bearer schema with a line break and spaces for readability.
+
+```
+curl -H 'Authorization: Bearer <api-token>' \
+     <public-url>/api/users
+ ```
+
 ### Registration : -
 
 #### Create
