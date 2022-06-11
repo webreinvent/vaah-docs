@@ -16,10 +16,15 @@ control over the JSON serialization of your models and their relationships.
 
 VaahCms supports [API authentication](https://laravel.com/docs/5.8/api-authentication). 
 This allows you to protect the URLs on your web server so that only you can access them. 
-In order to authenticate with HTTP, you may provide a `API Token` with the following URL format:
+In order to authenticate with HTTP, you may provide a `API Token` in Header. 
+
+The most common way of accessing OAuth 2.0 APIs is using a “Bearer Token”. 
+This is a single string which acts as the authentication of the API request,
+ sent in an HTTP “Authorization” header. The string is meaningless to clients using it, 
+ and may be of varying lengths.
 
 ```
-<public-url>/api/users?api_token=XXXXXXXXXXXX
+Authorization: Bearer <api-token>
 ```
 
 You can ask to Admin for assigning you a `API Token`.
