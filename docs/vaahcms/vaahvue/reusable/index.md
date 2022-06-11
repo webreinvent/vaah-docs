@@ -657,6 +657,25 @@ The component to display single message or multiple messages to user.
 | list | Array of Messages | Array, Object |
 
 
+### VvJoditEditor
+
+This is a `Jodit` Editor. An excellent WYSIWYG editor written in pure TypeScript 
+without the use of additional libraries. Its file editor and image editor.
+
+```vue
+<VvJoditEditor :content="content">
+
+</VvJoditEditor>
+```
+
+| Properties | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| content | Content or Data property you wish to bind it to |
+| label | Field label |
+| labelPosition | Position of label |
+| is_simple | Set `true` to show limited options of Editor |
+
+
 ### Content Fields
 
 One component applicable to multiple elements. This component is basically use for Cms module but you can use it as an other reusable component. 
