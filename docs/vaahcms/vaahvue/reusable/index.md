@@ -30,7 +30,7 @@ export default {
     },
     data() {
         return {
-            namespace: namespace,
+            
         }
     },
     watch: {
@@ -55,20 +55,34 @@ Extended input that provide suggestions while the user types. Use with Field to 
 ```
 
 ```
-"options" = {
-    [
-      'id': 1,                
-      'name': 'XYZ',        
-      'slug': 'xyz'
-    ],
-    [
-      'id': 2,  
-      'name': 'ABC',         
-      'slug': 'abc'
-    ]
-},
+import AutoComplete from "../../vaahvue/reusable/AutoComplete";
 
-"value" = 'XYZ'
+export default {
+    components:{
+        AutoComplete
+    },
+    data()
+    {
+        return {
+            "options" : [
+                {
+                    'id': 1,
+                    'name': 'XYZ',
+                    'slug': 'xyz'
+                },
+                {
+                    'id': 2,
+                    'name': 'ABC',
+                    'slug': 'abc'
+                }
+            ],
+
+            "value" : 'XYZ'
+        }
+    },
+    
+}
+
 
 ```
 
