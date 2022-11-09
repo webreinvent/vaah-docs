@@ -34,11 +34,9 @@ You can effectively use the tool with `Command Generator` at [Generators](/vaahc
 
 Lets call the module as `Articles`. Open the command line tool & navigate to the project root folder or in PHPStorm open `Terminal` and to generate scaffolding for the module, use following command:
 
-```js
-vaah cms:m
 ```
-
-
+vaah cms:m or npx vaah cms:m
+```
 
 It will ask you following questions, answers also mentioned in `red` color:
 

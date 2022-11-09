@@ -15,7 +15,7 @@ npm install vaah -g
 Then run following command to install VaahCMS:
 
 ```php
-vaah cms:install
+vaah cms:install or npx vaah cms:install
 ```
 
 
