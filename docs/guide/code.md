@@ -146,8 +146,15 @@ Each `function` or `method` or `api` must return response in following format:
 #### Fail
 ```json
 {
-  "failed": true,
-  "messages": ["Something went wrong", "Try again"],
+  "success": false,
+  "errors": ["Something went wrong", "Try again"],
+
+}
+```
+
+#### Optional Response Variables
+```json
+{
   "hint": "Details to debug the response. Eg: role with slug 'admin' does note exist ",
   "code": 404,
   "meta": {}
