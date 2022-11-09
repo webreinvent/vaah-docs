@@ -9,6 +9,38 @@ One of the key phrases that developers love using is Don’t Repeat Yourself (DR
 
 
 
+## How to use reusable component?
+First you have to check that your `Module` or `Theme` has reusable Components at `VaahCms/Themes/BlogTheme/Vue/vaahvue/reusable`.
+
+If not found then download it from [here](https://github.com/webreinvent/vaahvue).
+
+
+Now, you need to import and register your Components in `Script` before use.
+
+Example:
+```js
+import AutoComplete from "../../vaahvue/reusable/AutoComplete";
+
+export default {
+    computed: {
+
+    },
+    components: {
+        AutoComplete
+    },
+    data() {
+        return {
+            
+        }
+    },
+    watch: {
+        
+    }
+}
+   
+```
+
+
 ## Components
 
 ### AutoComplete
@@ -23,20 +55,34 @@ Extended input that provide suggestions while the user types. Use with Field to 
 ```
 
 ```
-"options" = {
-    [
-      'id': 1,                
-      'name': 'XYZ',        
-      'slug': 'xyz'
-    ],
-    [
-      'id': 2,  
-      'name': 'ABC',         
-      'slug': 'abc'
-    ]
-},
+import AutoComplete from "../../vaahvue/reusable/AutoComplete";
 
-"value" = 'XYZ'
+export default {
+    components:{
+        AutoComplete
+    },
+    data()
+    {
+        return {
+            "options" : [
+                {
+                    'id': 1,
+                    'name': 'XYZ',
+                    'slug': 'xyz'
+                },
+                {
+                    'id': 2,
+                    'name': 'ABC',
+                    'slug': 'abc'
+                }
+            ],
+
+            "value" : 'XYZ'
+        }
+    },
+    
+}
+
 
 ```
 
@@ -623,6 +669,25 @@ The component to display single message or multiple messages to user.
 | Properties | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | --------------- | -------------------- |
 | list | Array of Messages | Array, Object |
+
+
+### VvJoditEditor
+
+This is a `Jodit` Editor. An excellent WYSIWYG editor written in pure TypeScript 
+without the use of additional libraries. Its file editor and image editor.
+
+```vue
+<VvJoditEditor :content="content">
+
+</VvJoditEditor>
+```
+
+| Properties | Description                                                  | Type            | Default              |
+| ---- | ------------------------------------------------------------ | --------------- | -------------------- |
+| content | Content or Data property you wish to bind it to |
+| label | Field label |
+| labelPosition | Position of label |
+| is_simple | Set `true` to show limited options of Editor |
 
 
 ### Content Fields

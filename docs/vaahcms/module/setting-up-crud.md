@@ -2,6 +2,121 @@
 
 ------
 
+## Setup via VaahCLI
+
+To Generate `CRUD` files via `VaahCLI`, first you need to install VaahCLI, via following command:
+
+```
+npm install vaah -g
+```
+
+Then run following command to generate CRUD files:
+
+```
+vaah cms:crud or npx vaah cms:crud
+```
+
+It will ask you following questions, answers also mentioned in `BOLD`:
+
+- For which you want to create CRUD: **Module**
+- Enter the Module/Theme folder name: **Articles**
+- Enter the section name (Backend | Frontend or Folder name): **Backend**
+- Vue folder name: **Vue**
+- Enter your database table name: **ar_blogs**
+- Do you want to generate migration file (true/false): **true**
+- Enter your model name (singular): **Blog**
+- Enter your controller name (plural): **Blogs**
+
+Once this step is complete, it will generate CRUD files at `VaahCMS > Modules > Articles`
+
+##### Steps to include CRUD files
+
+- Re-activate module to run migrations
+
+ Visit following url you will see the module:
+ 
+ ```
+ <project-url>/backend#/vaah/modules/
+ ```
+
+- Include the laravel router file in the module's route file
+
+ `VaahCms/Modules/Articles/Routes/backend.php`
+ 
+ Add this code in above path
+ 
+ ```
+ require_once('backend/routes-blogs.php');
+ ```
+
+- Include the vue router file
+
+ `VaahCms/Modules/Articles/Vue/routes/routes.js`
+ 
+ Add this code in above path
+ 
+ ```
+ import blogs from "./vue-routes-blogs";
+    
+ routes = routes.concat(blogs);
+ ```
+
+- Include the vue store file
+
+ `VaahCms/Modules/Articles/Vue/store/store.js`
+ 
+ Add this code in above path
+ 
+ ```
+ import blogs from "./modules/store-blogs";
+ 
+ export const store = new Vuex.Store({
+ 
+     modules: {
+ 
+         .........
+         .........
+         blogs: blogs,
+ 
+     }
+ 
+ });
+ ```
+
+- Add vue router link to your menu
+
+ `VaahCms/Modules/Articles/Http/Controllers/Backend/ExtendController.php`
+ 
+ Add this code in `sidebarMenu` method at above path
+ 
+ 
+ ```
+ public static function sidebarMenu()
+     {
+         $links = [];
+         $links[0] = [
+             'link' => route('vh.backend').'/articles#/blogs',
+             'icon' => 'flag',
+             'label' => 'Blogs'
+         ];
+        
+         $response['status'] = 'success';
+         $response['data'] = $links;
+         return $response;
+     }
+ ```
+ 
+ - Visit following url you will see the blog CRUD:
+ 
+ ```
+ <project-url>/backend/articles#/blogs
+ ```
+ 
+ **Note** : Run `npm run watch-poll` command to track the changes in your application 
+ and compile the components and other required files.
+
+## Manual Setup
+
 We'll begin the tutorial with the VaahCMS backend where the CRUD operations are fulfilled. I'll keep this part brief as CRUD is a topic covered extensively elsewhere and I assume you are already familiar with the basics of Laravel.
 
 In summary, we will:

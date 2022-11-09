@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Setup Laravel Queues for VaahCMS
+### Setup Laravel Queues for VaahCMS
 
 Follow the following steps:
 
@@ -23,6 +23,8 @@ Follow the following steps:
 
 
 If you make any changes in code of your `Job` class, then you must restart the `queue:work` command.
+
+**Note:** When sending notifications, be sure to set the `MAIL_FROM_ADDRESS` and `MAIL_FROM_NAME` in your `env` file. This value will be used as the `sender` of the `email` and `name` of your mail notification messages.
 
 ### How to create new notification?
 
@@ -287,6 +289,52 @@ if($notification)
 
 ```
 
+### How to add Custom Url?
+
+To add custom url, you need to add `param string` of custom url: `#!PARAM:CUSTOM_URL!#`.
+
+You can add this param string in `Notification Actions`.
+
+```php
+
+public function getNotificationActions()
+{
+    
+    $list = [
+        [
+            'name'=>'#!PARAM:CUSTOM_URL!#'
+        ]
+    ];
+
+    $response['status'] = 'success';
+    $response['data'] = $list;
+
+    return $response;
+}
+
+```
+
+This is how you can add custom url in method.
+
+```php
+$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "<notification-slug>")->first();
+
+if($notification)
+{
+    
+    $inputs = [
+            "user_id" => xxx,
+            "notification_id" => xxx,
+            "custom_url" => 'https://custom-url',
+        ];
+
+    WebReinvent\VaahCms\Entities\Notification::send(
+    	$notification, $user, $inputs
+	);
+}
+
+```
+
 ### Sending without Laravel Queues
 
 If you want to send the notification without Laravel queues, you can use following code
@@ -345,6 +393,89 @@ if($notification)
 In this example, we register a greeting, a line of text, a call to action, and then another line of text. 
 
 <img :src="$withBase('/images/notification-3.png')" alt="notification-3">
+
+#### Notification Seeds
+
+`notifications.json`
+
+```json
+
+[
+    {
+        "name": "Send Welcome Email",
+        "via_mail": 1,
+        "via_sms": 0,
+        "via_push": 0,
+        "via_backend": 1,
+        "via_frontend": 0
+    }
+]
+
+```
+
+`notification_contents.json`
+
+```json
+
+[
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 0,
+        "key": "subject",
+        "value": "Welcome Email"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 1,
+        "key": "from",
+        "meta": {
+            "name": "#!ENV:MAIL_FROM_NAME!#"
+        },
+        "value": "#!ENV:MAIL_FROM_ADDRESS!#"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 2,
+        "key": "line",
+        "value": "Hello #!USER:NAME!#"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 3,
+        "key": "greetings",
+        "value": "Welcome to #!ENV:APP_NAME!#"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 4,
+        "key": "line",
+        "value": "Thank you for signing up for #!ENV:APP_NAME!# services"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 5,
+        "key": "action",
+        "value": "Click to Login",
+        "meta": {
+            "action":"#!ROUTE:VH.LOGIN!#"
+        }
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 6,
+        "key": "line",
+        "value": "If your have any queries please contact this #!ENV:MAIL_FROM_ADDRESS!#"
+    }
+]
+
+```
 
 Use following code to send a Notification.
 
