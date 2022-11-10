@@ -1,1 +1,0 @@
-const e={key:"v-3f065e3c",path:"/vaahcms/cms/menus.html",title:"Menus",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627055118e3},filePathRelative:"vaahcms/cms/menus.md"};export{e as data};

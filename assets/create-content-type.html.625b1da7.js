@@ -1,1 +1,0 @@
-const e={key:"v-960a745e",path:"/vaahcms/theme/create-content-type.html",title:"Create Content Types",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1627122338e3},filePathRelative:"vaahcms/theme/create-content-type.md"};export{e as data};

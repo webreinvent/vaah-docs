@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-2f0e2635","path":"/vaahcms/module/add-to-aside.html","title":"Add to Aside Menu","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1627055118000},"filePathRelative":"vaahcms/module/add-to-aside.md"}');export{e as data};
