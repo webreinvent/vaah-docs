@@ -114,11 +114,11 @@ function User(){};
 function Role(){};
 ```
 
-### Response
+## HTTP Request - JSON Response
 
 Each `function` or `method` or `api` must return response in following format:
 
-#### Success
+#### Success Response
 
 ```json
 {
@@ -143,7 +143,7 @@ Each `function` or `method` or `api` must return response in following format:
 }
 ```
 
-#### Fail
+#### Fail Response
 ```json
 {
   "success": false,

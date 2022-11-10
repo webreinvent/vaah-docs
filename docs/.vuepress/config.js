@@ -1,4 +1,4 @@
-const { defaultTheme } = require('@vuepress/theme-default');
+import { defaultTheme } from '@vuepress/theme-default'
 const guide = require("./guide");
 const vaahcms = require("./vaahcms");
 const vaahcli = require("./vaahcli");
