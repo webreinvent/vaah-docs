@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Purpose & Features
+## Purpose 
 <!-- 
 REMOVE THIS COMMENT
 1. Write why we need this page?
@@ -10,10 +10,21 @@ REMOVE THIS COMMENT
 3. List the features of the page
 -->
 
-## Demo
+## Features & Demos
 <!-- 
 REMOVE THIS COMMENT
 Create a video demo of all features.
+
+Examples:
+#### Create roles
+**Demo Video**
+
+####  Assign permission to roles
+**Demo Video**
+
+####  Send Activation Email to User
+**Demo Video**
+
 -->
 
 ## Permissions
