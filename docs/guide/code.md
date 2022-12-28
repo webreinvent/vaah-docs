@@ -41,8 +41,9 @@ $total = 800;
 ### Constants
 
 - Constants must be `short`,  `meaningful`,  `descriptive` and in `SCREAMING_SNAKE_CASE`
-  - All capital letters
-  - 2 letter much be joined with `underscore` (`_`)
+  - SCREAMING_SNAKE_CASE:
+    - `snake_case` but with all capital letters
+    - 2 words are joined with `underscore` (`_`)
 
 **Wrong Examples:**
 
@@ -63,7 +64,7 @@ define('DB_NAME', 'db_app');
 
 ### Functions
 
-Function/Method names must be `short`, `meaningful`,  `predictable` and `camelCased`
+- Function/Method names must be `short`, `meaningful`,  `predictable` and `camelCased`
 
 **Wrong Examples:**
 
@@ -90,7 +91,7 @@ function storeName(){};
 
 ### Classes
 
-Class manes must be `meaningful`, `singlular` and `PascalCased`.
+- Class manes must be `meaningful`, `singlular` and `PascalCased`.
 
 **Wrong Examples:**
 
@@ -145,7 +146,7 @@ CustomerRoles
 CustomerRole
 ```
 #### Table
-Table name must be `snake_case` and `plural`.
+- Table name must be `snake_case` and `plural`.
 
 **Bad Examples**
 ```php
@@ -159,7 +160,7 @@ article_comments
 ```
 
 #### Table Column names
-Table Column names must be `snake_case` without model name
+- Table Column names must be `snake_case` without model name
 
 **Bad Examples**
 ```text

@@ -347,7 +347,7 @@ DELETE /api/articles/1/relationships/comments
 
 #### Shorter and readable syntax
 
-Use shorter and more readable syntax where possible
+- Use shorter and more readable syntax where possible
 
 **Bad Examples**
 ```php
