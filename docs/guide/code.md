@@ -10,9 +10,7 @@ This is a guide to maintain a consistent and industry stand coding practices.
 
 ### Variables
 
-- Meaningful / Predictable
-- Small letters
-- 2 letter much be joined with `underscore` (`_`)
+- Variable names must be short, descriptive, predictable and `snake_cased`
 
 **Wrong Examples:**
 
@@ -42,9 +40,10 @@ $total = 800;
 
 ### Constants
 
-- Meaningful / Predictable
-- All capital letters
-- 2 letter much be joined with `underscore` (`_`)
+- Constants must be `short`,  `meaningful`,  `descriptive` and in `SCREAMING_SNAKE_CASE`
+  - SCREAMING_SNAKE_CASE:
+    - `snake_case` but with all capital letters
+    - 2 words are joined with `underscore` (`_`)
 
 **Wrong Examples:**
 
@@ -65,9 +64,7 @@ define('DB_NAME', 'db_app');
 
 ### Functions
 
-- Meaningful / Predictable
-- Camel Cased
-- Naming `<action><entity>` eg: `deleteUser`
+- Function/Method names must be `short`, `meaningful`,  `predictable` and `camelCased`
 
 **Wrong Examples:**
 
@@ -94,8 +91,7 @@ function storeName(){};
 
 ### Classes
 
-- Meaningful / Predictable
-- Studly Caps / PascalCase
+- Class manes must be `meaningful`, `singlular` and `PascalCased`.
 
 **Wrong Examples:**
 
@@ -112,6 +108,69 @@ function Cart_total(){};
 function CartTotal(){};
 function User(){};
 function Role(){};
+```
+
+#### Controllers
+
+- Controller names must be `meaningful`, `singular` and have `Controller` suffix.
+- Controllers for page must be named after the page
+- Controllers for resources must be named after the page
+
+**Bad Examples**
+```php
+ArticlePageController.php
+ArticlesController.php
+article.php
+```
+
+
+**Correct Example**
+```php
+ArticleController.php
+```
+
+
+#### Model
+- A model name should be 'singular` , `PascalCase/CapitalCase` and should describe the table it is representing.
+
+**Bad Examples**
+```php
+customer_roles
+customerRoles
+CustomerRoles
+```
+
+
+**Correct Example**
+```php
+CustomerRole
+```
+#### Table
+- Table name must be `snake_case` and `plural`.
+
+**Bad Examples**
+```php
+article_comment, 
+articleComments
+```
+
+**Correct Example**
+```php
+article_comments
+```
+
+#### Table Column names
+- Table Column names must be `snake_case` without model name
+
+**Bad Examples**
+```text
+MetaTitle 
+article_meta_title
+```
+
+**Correct Examples**
+```text
+meta_title
 ```
 
 ## HTTP Request - JSON Response
