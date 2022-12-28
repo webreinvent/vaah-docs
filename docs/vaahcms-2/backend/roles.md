@@ -6,75 +6,69 @@
 A role is a group of permissions that allow a user who has been given the role to carry out specific tasks. For instance, the system administrator, who can be regarded as the system's owner, is permitted to carry out all tasks in the system. He or she can add users, remove or edit, and do other things.
 
 ## Features & Demos
-<!-- 
-REMOVE THIS COMMENT
-Create a video demo of all features.
 
-Examples:
-#### Create roles
-**Demo Video**
+#### Create Roles
+To learn how to create a new role, see the video that is included below.
 
-####  Assign permission to roles
-**Demo Video**
+<figure class="video_container">
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_qDABg3eqi2.mp4" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
 
-####  Send Activation Email to User
-**Demo Video**
+https://img-v4.getdemo.dev/screenshot/chrome_qDABg3eqi2.mp4
 
--->
+####  Assign Permission to Roles
+You can view the video attached below to learn how to add permission to a role.
+
+<figure class="video_container">
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_S5yeP8t3QQ.mp4" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
+
+https://img-v4.getdemo.dev/screenshot/chrome_S5yeP8t3QQ.mp4
+
+####  Assign Roles to User
+You can view the video attached below to learn how to give a role to a User.
+
+<figure class="video_container">
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_EiAGS8V1Y5.mp4" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
 
 ## Permissions
-<!-- 
-REMOVE THIS COMMENT
-List the permissions & details for this page in table format 
--->
+
+The following permissions are necessary for role management in order to carry out certain actions.
+
+ - Can Manage Roles
+ - Can Delete Roles
+ - Can Update Roles
+ - Can Read Roles
+ - Can Create Roles
+ - Has Access Of Roles Section
 
 ## Files
-<!-- 
+
 REMOVE THIS COMMENT
 List of all the files responsible for this pages
 
-- Laravel Route: `routes/backend/route-example.php`
-- Laravel Controller: 
-- Laravel Model: 
-- Vue Route: 
-- Vue Store: 
-- Vue Page Director: 
-
--->
-
-## Packages
-<!-- 
-REMOVE THIS COMMENT
-
-### Laravel Packages
-
-- `creativeorange/gravatar`: Write purpose of the package
-
-
-### Vue Packages
-- `laravel-mix`: To build assets
-
--->
-
+- Laravel Route: `vaahcms/routes/backend/route-roles.php`
+- Laravel Controller: `vaahcms/Http/Controllers/Backend/RolesController.php`
+- Laravel Model: `vaahcms/Models/Role.php`
+- Vue Route: `vaahcms/Vue/routes/vue-routes-roles.js`
+- Vue Store: `vaahcms/Vue/stores/store-roles.js`
+- Vue Page Director: `vaahcms/Vue/pages/roles`
 
 ## Methods
-<!-- 
-REMOVE THIS COMMENT
-List important methods which can be reused. 
+Some reusable methods mention bellowed.
 
-Eg:
+`Role::getRolePermission($request, $id)`
+
+`Role::getRoleUser($request, $id)`
+
+VaahCms provide a method to check the User's Role.
+
+```php
+if (Auth::user()->hasRole('administrator')) {
+    //write your logic here
+}
 ```
-User::addRole();
-```
-
--->
-
-## Events
-<!-- 
-REMOVE THIS COMMENT
-List events for this section in table format 
--->
-
 
 ## API
 <!-- 
