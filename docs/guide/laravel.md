@@ -343,3 +343,160 @@ PATCH /api/articles/1/relationships/comments
 DELETE /api/articles/1/relationships/comments
 ```
 
+### Laravel Community Guidelines for Good Coding Practices
+
+#### Shorter and readable syntax
+
+Use shorter and more readable syntax where possible
+
+**Bad Examples**
+```php
+$request->session()->get('cart');
+$request->input('name');
+```
+
+**Good Example**
+```php 
+session('cart');
+$request->name;
+```
+
+**More Examples**    
+|Common syntax | Shorter and more readable syntax |  
+|:--|:--|  
+|Session::get('cart') | session('cart') |  
+|$request->session()->get('cart') |  session('cart') |
+|Session::put('cart', $data)  |  session(['cart' => $data]) |  
+|$request->input('name'), Request::get('name') | $request->name, request('name') |
+|return Redirect::back()  |  return back() |
+|is_null($object->relation) ? null : $object->relation->id | optional($object->relation)->id |  
+|return view('index')->with('title', $title)->with('client', $client) |  return view('index', compact('title', 'client')) |  
+|$request->has('value') ? $request->value : 'default'; | $request->get('value', 'default') |
+|Carbon::now(), Carbon::today() | now(), today() |
+|App::make('Class') | app('Class') |
+|->where('column', '=', 1) | ->where('column', 1) |
+|->orderBy('created_at', 'desc')  |  ->latest() |  
+|->orderBy('age', 'desc')  | ->latest('age') |
+|->orderBy('created_at', 'asc') | ->oldest() |
+|->select('id', 'name')->get() | ->get(['id', 'name']) |
+|->first()->name  |  ->value('name') |
+
+#### Avoid Fat Methods
+- Avoid fat controllers and write frequent queries in model.
+- DB related logic should be in `Eloquent models` or in `Repository`/`Helper` classes.
+- Do not include business logic in Controllers. They should be in `Repository`/`Helper` classes.
+- Methods and Classes should adhere to the `Single Responsibility Principle`.
+- Don't use extensive if-else nesting. Instead, check for negative conditions first.
+- Do not keep commented code in methods or classes.
+
+**Bad Examples**
+```php 
+public static function getItem($id)
+{
+    
+    if(!Auth::user()->hasPermission('hrc-can-read-customers')
+        && !EqCustomerUser::hasPermission(\Auth::user(),'hrc-can-read-customers')) // check Permissions
+    {
+        if(Auth::user()){
+            $item = self::where('id', $id)
+            ->withTrashed()
+            ->first();
+    
+    
+            $response['status'] = 'success';
+            $response['data'] = $item;
+        
+            return $response;
+        }
+        else{
+            $response['status'] = 'failed';
+            $response['errors'][] = 'User not found';
+    
+            return $response;
+        }
+    }
+    else{
+        $response['status'] = 'failed';
+        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        return $response;
+    }
+    
+    // $user = Auth::user();
+    // if(!$user) {
+    //    $response['status'] = 'failed';
+    //    $response['errors'][] = 'User not found';
+    //
+    //    return $response;
+    // }
+
+}
+
+```
+
+
+**Good Examples**
+```php 
+// Add this method to Helper/Repository class
+public static checkPermission($permission_slug){
+    if(!Auth::user()->hasPermission('hrc-can-read-customers')){
+        $response['status'] = 'failed';
+        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        return $response;
+    }
+    
+    $response['status'] = 'success';
+    $response['messages'][] = 'Action is successful';
+}
+
+
+// this code will be in model
+public static function getItem($id)
+{
+    $permission_response = Helper::checkPermission('hrc-can-read-customers');
+    if($permission_response['status'] !== 'success') return $permission_response;
+    
+    $user = Auth::user();
+    if(!$user) {
+        $response['status'] = 'failed';
+        $response['errors'][] = 'User not found';
+
+        return $response;
+    }
+
+    $item = self::where('id', $id)
+        ->withTrashed()
+        ->first();
+
+    $response['status'] = 'success';
+    $response['data'] = $item;
+    return $response;
+}
+```
+
+#### Prefer to use Eloquent over raw SQL queries
+
+- Prefer to use Eloquent over using Query Builder and raw SQL queries. Prefer collections to arrays.
+- Eloquent allows you to write readable and maintainable code. Also, Eloquent has great built-in tools like soft deletes, events, scopes etc.
+
+**Bad Example**
+
+```php 
+SELECT *
+FROM `articles`
+WHERE EXISTS (SELECT *
+FROM `users`
+WHERE `articles`.`user_id` = `users`.`id`
+AND EXISTS (SELECT *
+FROM `profiles`
+WHERE `profiles`.`user_id` = `users`.`id`)
+AND `users`.`deleted_at` IS NULL)
+AND `verified` = '1'
+AND `active` = '1'
+ORDER BY `created_at` DESC
+```
+
+**Good Example**
+
+```php 
+Article::has('user.profile')->verified()->latest()->get();
+```
