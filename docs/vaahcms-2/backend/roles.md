@@ -48,7 +48,7 @@ The following permissions are necessary for role management in order to carry ou
 REMOVE THIS COMMENT
 List of all the files responsible for this pages
 
-- Laravel Route: `vaahcms/Routes/backend/route-roles.php`
+- Laravel Route: `vaahcms/routes/backend/route-roles.php`
 - Laravel Controller: `vaahcms/Http/Controllers/Backend/RolesController.php`
 - Laravel Model: `vaahcms/Models/Role.php`
 - Vue Route: `vaahcms/Vue/routes/vue-routes-roles.js`
@@ -69,12 +69,6 @@ if (Auth::user()->hasRole('administrator')) {
     //write your logic here
 }
 ```
-
-# API
-
-VaahCms has APIs for every method, allowing you to interact with NuxJS or other frameworks.
-
-You can access APIs method from `vaachms/Http/Controllers/Api/RolesController.php` and routes from `vaahcms/Routes/api/api-routes-roles.php`
 
 We mention one method bellow which help you to understand the structure.
 
