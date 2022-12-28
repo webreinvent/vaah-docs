@@ -48,7 +48,7 @@ The following permissions are necessary for role management in order to carry ou
 REMOVE THIS COMMENT
 List of all the files responsible for this pages
 
-- Laravel Route: `vaahcms/routes/backend/route-roles.php`
+- Laravel Route: `vaahcms/Routes/backend/route-roles.php`
 - Laravel Controller: `vaahcms/Http/Controllers/Backend/RolesController.php`
 - Laravel Model: `vaahcms/Models/Role.php`
 - Vue Route: `vaahcms/Vue/routes/vue-routes-roles.js`
@@ -70,19 +70,43 @@ if (Auth::user()->hasRole('administrator')) {
 }
 ```
 
-## API
-<!-- 
-REMOVE THIS COMMENT
+# API
 
-Example
+VaahCms has APIs for every method, allowing you to interact with NuxJS or other frameworks.
 
-### Create permission
+You can access APIs method from `vaachms/Http/Controllers/Api/RolesController.php` and routes from `vaahcms/Routes/api/api-routes-roles.php`
 
-##### Method: `post`
-##### URL: `<public-url>/api/permission/create`
-##### Request Parameters
-List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
-##### Response Parameters
+We mention one method bellow which help you to understand the structure.
+
+#### Create Role
+
+##### Method: `POST`
+##### URL: `<public-url>/api/role/rolese/`
+
 ##### Sample Request
+```php 
+parameter = [
+    'name',           //required
+    'slug',           //required
+    'detalis',        //required
+    'is_active'       //required
+];
+```
+
 ##### Sample Response
--->
+
+```json
+{
+  "data": {
+    "item": {
+      .............
+      .............
+    }
+  },
+  "messages": [
+    "Saved successfully."
+  ],
+  "success": "true"
+}
+```
+
