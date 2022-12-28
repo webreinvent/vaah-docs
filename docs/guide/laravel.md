@@ -343,9 +343,9 @@ PATCH /api/articles/1/relationships/comments
 DELETE /api/articles/1/relationships/comments
 ```
 
-### Laravel Community Guidelines for Good Coding Practices
+## Laravel Community Guidelines for Good Coding Practices
 
-#### Shorter and readable syntax
+### Shorter and readable syntax
 
 - Use shorter and more readable syntax where possible
 
@@ -381,7 +381,7 @@ $request->name;
 |->select('id', 'name')->get() | ->get(['id', 'name']) |
 |->first()->name  |  ->value('name') |
 
-#### Avoid Fat Methods
+### Avoid Fat Methods
 - Avoid fat controllers and write frequent queries in model.
 - DB related logic should be in `Eloquent models` or in `Repository`/`Helper` classes.
 - Do not include business logic in Controllers. They should be in `Repository`/`Helper` classes.
@@ -473,7 +473,7 @@ public static function getItem($id)
 }
 ```
 
-#### Prefer to use Eloquent over raw SQL queries
+### Prefer to use Eloquent over raw SQL queries
 
 - Prefer to use Eloquent over using Query Builder and raw SQL queries. Prefer collections to arrays.
 - Eloquent allows you to write readable and maintainable code. Also, Eloquent has great built-in tools like soft deletes, events, scopes etc.
