@@ -1,5 +1,6 @@
 import { defaultTheme } from '@vuepress/theme-default'
 const guide = require("./guide");
+const vaahcms2 = require("./vaahcms-2");
 const vaahcms = require("./vaahcms");
 const vaahcli = require("./vaahcli");
 
@@ -24,9 +25,12 @@ module.exports = {
         smoothScroll: true,
         contributors: false,
         navbar: [
-
             {
-                text: "VaahCMS",
+                text: "VaahCMS 2.x",
+                link: "/vaahcms-2/",
+            },
+            {
+                text: "VaahCMS 1.x",
                 link: "/vaahcms/",
             },
             {
@@ -39,6 +43,7 @@ module.exports = {
             }*/
         ],
         sidebar:{
+            '/vaahcms-2/': vaahcms2.sidebar,
             '/vaahcms/': vaahcms.sidebar,
             '/guide/': guide.sidebar,
             '/vaahcli/': vaahcli.sidebar,
