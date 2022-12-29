@@ -72,9 +72,49 @@ The following permissions are necessary for role management in order to carry ou
 
 Some reusable methods mention bellowed.
 
-`Role::getRolePermission($request, $id)`
+**getActiveRoles()**
 
-`Role::getRoleUser($request, $id)`
+You can use this method for fetching all active roles of the application.
+
+```php
+use WebReinvent\VaahCms\Models\Role;  // Import Role class at the top
+
+$active_roles = Role::getActiveRoles();
+```
+---
+
+**countUsers($id)**
+
+You can use this method for count users of a role.
+
+```php
+use WebReinvent\VaahCms\Models\Role;  // Import Role class at the top
+
+$count_users = Role::countUsers($id);  // you have pass user's id as params
+```
+---
+
+**countPermissions($id)**
+
+You can use this method for count permissions of a role.
+
+```php
+use WebReinvent\VaahCms\Models\Role;  // Import Role class at the top
+
+$count_permissions = Role::countPermissions($id);  // you have pass role's id as params
+```
+---
+
+**syncRolesWithUsers()**
+
+You can use this method for sync roles with users.
+
+```php
+use WebReinvent\VaahCms\Models\Role;  // Import Role class at the top
+
+Role::syncRolesWithUsers(); 
+```
+---
 
 VaahCMS provide a method to check the User's Role.
 
