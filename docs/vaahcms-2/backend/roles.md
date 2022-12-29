@@ -9,12 +9,12 @@ A role is a group of permissions that allow a user who has been given the role t
 
 #### Default Roles 
 
-VaahCms gave you a few default roles that it built during application setup using seeds.
+VaahCMS gave you a few default roles that it built during application setup using seeds.
 
 | Field Name    | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
-| Super Administrator | The application's owner is Super Administrator. Users with Super Administrator privileges have full access to and control over the dat |
-| Administrator | Users who have administration roles has all the permissions access and manage the data.Somebody who has access to all the administration features within a single site |
+| Super Administrator | The application's owner is Super Administrator. Users with Super Administrator privileges have full access to and control over the data and application. |
+| Administrator | Users who have administration roles has all the permissions access and manage the data. Somebody who has access to all the administration features within application. |
 | Manager       | Users who have manage roles can assign a role to user. |
 | Editor | Somebody who can publish and manage posts including the posts of other users. |
 | Contributor | Somebody who can write and manage their own posts but cannot publish them.|
@@ -55,9 +55,9 @@ The following permissions are necessary for role management in order to carry ou
 | Can Manage Roles | This permission grants Roles access to manage Roles. |
 | Can Delete Roles | This permission grants Roles access to Delete a Role. |
 | Can Update Roles | This permission grants Roles to Update details of a Role. |
-| Can Read Roles   | This permission grants Roles to  read all listed Roles of the project. |
-| Can Create Roles | This permission grant Roles to create a new Role for the project. |
-| Has Access Of Roles Section | This permission grant Roles to access of the Roles Section in the side nav bar of the project. |
+| Can Read Roles   | This permission grants Roles to  read all listed Roles of the application. |
+| Can Create Roles | This permission grant Roles to create a new Role for the application. |
+| Has Access Of Roles Section | This permission grant Roles to access of the Roles Section in the side nav bar of the application. |
 
 ## Files
 
@@ -66,16 +66,17 @@ The following permissions are necessary for role management in order to carry ou
 - Laravel Model: `vaahcms/Models/Role.php`
 - Vue Route: `vaahcms/Vue/routes/vue-routes-roles.js`
 - Vue Store: `vaahcms/Vue/stores/store-roles.js`
-- Vue Page Director: `vaahcms/Vue/pages/roles`
+- Vue Page Directory: `vaahcms/Vue/pages/roles`
 
 ## Methods
+
 Some reusable methods mention bellowed.
 
 `Role::getRolePermission($request, $id)`
 
 `Role::getRoleUser($request, $id)`
 
-VaahCms provide a method to check the User's Role.
+VaahCMS provide a method to check the User's Role.
 
 ```php
 if (Auth::user()->hasRole('administrator')) {
@@ -83,9 +84,9 @@ if (Auth::user()->hasRole('administrator')) {
 }
 ```
 
-# API
+## API
 
-VaahCms has APIs for every method, allowing you to interact with NuxJS or other frameworks.
+VaahCMS has APIs for every method, allowing you to interact with NuxJS or other frameworks.
 
 You can access APIs method from `vaachms/Http/Controllers/Api/RolesController.php` and routes from `vaahcms/Routes/api/api-routes-roles.php`
 
