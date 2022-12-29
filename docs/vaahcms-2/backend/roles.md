@@ -199,3 +199,22 @@ parameter = [
 }
 ```
 ---
+
+#### Delete Role
+
+###### Method: `DELETE`
+###### Action: `delete`
+###### URL: `<public-url>/api/role/rolese/{id}`
+
+##### Sample Response
+
+```json
+{
+  "data": {},
+  "message" : [
+    "vaahcms-general.action_successful"
+  ],
+  "success": "true"
+}
+```
+---
