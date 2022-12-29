@@ -50,39 +50,16 @@ You can view the video attached below to learn how to give a role to a User.
 
 The following permissions are necessary for role management in order to carry out certain actions.
 
- - **Can Manage Roles**
- 
-   - This permission grants Roles access to manage Roles.
-     <br>
-     <br>
- - **Can Delete Roles**
-
-   - This permission grants Roles access to Delete a Role.
-     <br>
-     <br>
- - **Can Update Roles**
-
-    - This permission grants Roles to Update details of a Role.
-      <br>
-      <br>
- - **Can Read Roles**
-
-   - This permission grants Roles to  read all listed Roles of the project.
-     <br>
-     <br>
- - **Can Create Roles**
-
-   - This permission grant Roles to create a new Role for the project
-     <br>
-     <br>
- - **Has Access Of Roles Section**
-   
-   - This permission grant Roles to access of the Roles Section in the side nav bar of the project. 
+| Permissions          | Description                                           |
+| ------------- | ------------------------------------------------------------ |
+| Can Manage Roles | This permission grants Roles access to manage Roles. |
+| Can Delete Roles | This permission grants Roles access to Delete a Role. |
+| Can Update Roles | This permission grants Roles to Update details of a Role. |
+| Can Read Roles   | This permission grants Roles to  read all listed Roles of the project. |
+| Can Create Roles | This permission grant Roles to create a new Role for the project. |
+| Has Access Of Roles Section | This permission grant Roles to access of the Roles Section in the side nav bar of the project. |
 
 ## Files
-
-REMOVE THIS COMMENT
-List of all the files responsible for this pages
 
 - Laravel Route: `vaahcms/Routes/backend/route-roles.php`
 - Laravel Controller: `vaahcms/Http/Controllers/Backend/RolesController.php`
