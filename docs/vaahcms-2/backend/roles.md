@@ -52,7 +52,7 @@ The following permissions are necessary for role management in order to carry ou
 
 | Permissions          | Description                                           |
 | ------------- | ------------------------------------------------------------ |
-| Can Manage Roles | This permission grants Roles access to manage Roles. |
+| Can Manage Roles | This permission enables Roles to manage other Roles. The user can activate, deactivate, update or delete a role with this access. |
 | Can Delete Roles | This permission grants Roles access to Delete a Role. |
 | Can Update Roles | This permission grants Roles to Update details of a Role. |
 | Can Read Roles   | This permission grants Roles to  read all listed Roles of the application. |
@@ -136,7 +136,7 @@ We mention some methods bellow which help you to understand the structure.
 
 ##### Method: `POST`
 ##### Action: `creatItem`
-##### URL: `<public-url>/api/role/rolese/`
+##### URL: `<public-url>/api/role/roles/`
 
 ##### Sample Request
 ```php 
@@ -170,7 +170,7 @@ parameter = [
 
 ###### Method: `GET`
 ###### Action: `getList`
-###### URL: `<public-url>/api/role/rolese/`
+###### URL: `<public-url>/api/role/roles/`
 
 ##### Sample Request
 ```php 
@@ -203,7 +203,7 @@ parameter = [
 
 ###### Method: `GET`
 ###### Action: `getItem($id)`
-###### URL: `<public-url>/api/role/rolese/{id}`
+###### URL: `<public-url>/api/role/roles/{id}`
 
 ##### Sample Response
 
@@ -222,7 +222,7 @@ parameter = [
 
 ###### Method: `DELETE`
 ###### Action: `delete`
-###### URL: `<public-url>/api/role/rolese/{id}`
+###### URL: `<public-url>/api/role/roles/{id}`
 
 ##### Sample Response
 
