@@ -13,13 +13,13 @@ VaahCMS gave you a few default roles that it built during application setup usin
 
 | Field Name    | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
-| Super Administrator | The application's owner is Super Administrator. Users with Super Administrator privileges have full access to and control over the data and application. |
-| Administrator | Users who have administration roles has all the permissions access and manage the data. Somebody who has access to all the administration features within application. |
+| Super Administrator | The application's owner is Super Administrator. Users with Super Administrator privileges have full access and control over the data and application. |
+| Administrator | Users who have administration roles has all the permissions access and manage the data. Somebody who has access to all the administration features within the application. |
 | Manager       | Users who have manage roles can assign a role to user. |
-| Editor | Somebody who can publish and manage posts including the posts of other users. |
+| Editor | Somebody who can publish and manage posts from CMS the section including the posts of other users. |
 | Contributor | Somebody who can write and manage their own posts but cannot publish them.|
-| Registered    | Users who have registered roles can access only public website. |
-| Guest | Users who have guest roles can access only public website. |
+| Registered    | Users who have registered roles can access only public pages. |
+| Guest | Users who have guest roles can access only public pages. |
 
 ------
 
