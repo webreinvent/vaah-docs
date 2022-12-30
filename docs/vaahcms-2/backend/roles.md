@@ -178,7 +178,7 @@ parameter = [
     'filter' => [
         'q'            // for search queary (optionl)
         'trashed'      // for include or exclude trashed data (optionl)
-        'is_active'    // for fetching ony active or inactive data (optionl)
+        'is_active'    // for fetching only active or inactive data (optionl)
         'sort'         // for sorting the data (optionl)
     ];  
 ];
