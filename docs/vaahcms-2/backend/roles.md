@@ -126,7 +126,7 @@ if (Auth::user()->hasRole('administrator')) {
 
 ## API
 
-VaahCMS has APIs for every method, allowing you to interact with NuxJS or other frameworks.
+VaahCMS has APIs for every method, allowing you to interact with `NuxJS` or other frameworks.
 
 You can access APIs method from `vaachms/Http/Controllers/Api/RolesController.php` and routes from `vaahcms/Routes/api/api-routes-roles.php`
 
