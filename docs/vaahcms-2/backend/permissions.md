@@ -130,72 +130,74 @@ You can add permissions to a role in Permissions section. By clicking on Role co
 ------
 
 ## Permissions
-<!-- 
-REMOVE THIS COMMENT
-List the permissions & details for this page in table format 
--->
+The following permissions are necessary for permissions management in order to carry out certain actions.
+
+| Permissions          | Description                                           |
+| ------------- | ------------------------------------------------------------ |
+| Has Access Of Permissions Section | This will enable users to access the permission section link in the application's left navigation bar. |
+| Can Read Permissions | This will allow user to view anything in the permission section. |
+| Can Update Permissions | This will allow user to edit anything in the permission section. |
+| Can Manage Permissions | This will allow user to manage anything in the permission section. |
 
 ## Files
-<!-- 
-REMOVE THIS COMMENT
-List of all the files responsible for this pages
 
-- Laravel Route: `routes/backend/route-example.php`
-- Laravel Controller: 
-- Laravel Model: 
-- Vue Route: 
-- Vue Store: 
-- Vue Page Director: 
-
--->
-
-## Packages
-<!-- 
-REMOVE THIS COMMENT
-
-### Laravel Packages
-
-- `creativeorange/gravatar`: Write purpose of the package
-
-
-### Vue Packages
-- `laravel-mix`: To build assets
-
--->
-
+- Laravel Route: `vaahcms/Routes/backend/route-permissions.php`
+- Laravel Controller: `vaahcms/Http/Controllers/Backend/PermissionsController.php`
+- Laravel Model: `vaahcms/Models/Permission.php`
+- Vue Route: `vaahcms/Vue/routes/vue-routes-permissions.js`
+- Vue Store: `vaahcms/Vue/stores/store-permissions.js`
+- Vue Page Directory: `vaahcms/Vue/pages/permissions`
 
 ## Methods
-<!-- 
-REMOVE THIS COMMENT
-List important methods which can be reused. 
 
-Eg:
+Some reusable methods mention bellowed.
+
+**getActiveItems()**
+
+You can use this method for fetching all active permissions of the application.
+
+```php 
+use WebReinvent\VaahCms\Models\Permission;    // Import permission class at top
+
+$active_permissions = Permission::getActiveItems();
 ```
-User::addRole();
+---
+
+**syncRolesWithUsers()**
+
+You can use this method for sync permissions with roles. After creating a new permission you have to call this method to sync permissions count with roles.
+
+```php
+use WebReinvent\VaahCms\Models\Permission;  // Import Role class at the top
+
+Permission::syncPermissionsWithRoles(); 
 ```
+---
 
--->
+**getPermissionRoles($id)**
 
-## Events
-<!-- 
-REMOVE THIS COMMENT
-List events for this section in table format 
--->
+You can use this method fetch roles which has this permission attached.
 
+```php
+use WebReinvent\VaahCms\Models\Permission;  // Import Role class at the top
+
+Permission::getPermissionRoles($id);        // Permission ID must be provided as parameters.
+```
+---
 
 ## API
-<!-- 
+
 REMOVE THIS COMMENT
 
 Example
 
-### Create permission
+### Fetch Permissions
 
-##### Method: `post`
-##### URL: `<public-url>/api/permission/create`
+##### Method: `GET`
+##### URL: `<public-url>/api/vaah/permissions/`
 ##### Request Parameters
 List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
 ##### Response Parameters
 ##### Sample Request
 ##### Sample Response
--->
+
