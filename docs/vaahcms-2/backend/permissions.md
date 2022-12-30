@@ -1,4 +1,4 @@
-# Sample
+# Permissions
 
 [[toc]]
 
@@ -121,13 +121,13 @@ class DatabaseTableSeeder extends Seeder
 
 #### Assign Permissions to Role
 
-You can add permissions to a role in Permissions section. By clicking on Role column, a page will open that contain list of Roles along with Yes/NO Button.
+You can add permissions to a role in permissions section. By clicking on role column, a page will open that contain list of roles along with `Yes/NO` button.
 
 
 <figure>
   <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_aORDueFf3G.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
-------
+
 
 ## Permissions
 The following permissions are necessary for permissions management in order to carry out certain actions.
@@ -176,28 +176,87 @@ Permission::syncPermissionsWithRoles();
 
 **getPermissionRoles($id)**
 
-You can use this method fetch roles which has this permission attached.
+You can use this method to retrieve roles that are associated with this permission.
 
 ```php
 use WebReinvent\VaahCms\Models\Permission;  // Import Role class at the top
 
 Permission::getPermissionRoles($id);        // Permission ID must be provided as parameters.
 ```
----
 
 ## API
 
-REMOVE THIS COMMENT
+VaahCMS has APIs for every method, allowing you to interact with `NuxJS` or other frameworks.
 
-Example
+You can access APIs method from `vaachms/Http/Controllers/Api/PermissionsController.php` and routes from `vaahcms/Routes/api/api-routes-permissions.php`
 
-### Fetch Permissions
+We mention some methods bellow which help you to understand the structure.
+
+#### Fetch Permissions
 
 ##### Method: `GET`
 ##### URL: `<public-url>/api/vaah/permissions/`
-##### Request Parameters
-List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
-##### Response Parameters
+
 ##### Sample Request
+```php 
+parameter = [
+    'filter' => [
+        'q'            // for search queary (optionl)
+        'trashed'      // for include or exclude trashed data (optionl)
+        'is_active'    // for fetching only active or inactive data (optionl)
+        'sort'         // for sorting the data (optionl)
+    ];  
+];
+```
+
 ##### Sample Response
 
+```json
+{
+  "data": {
+      .............
+      .............
+  },
+  "success": "true",
+  "total_roles" : "// count of total roles of the application ",
+  "total_users" : "// count of total users of the application "
+}
+```
+---
+
+#### Delete Permission
+
+###### Method: `DELETE`
+###### Action: `deleteItem`
+###### URL: `<public-url>/api/vaah/permissions/{id}`
+
+##### Sample Response
+
+```json
+{
+  "data": {},
+  "message" : [
+    "vaahcms-general.action_successful"
+  ],
+  "success": "true"
+}
+```
+---
+
+#### Fetch single Permission
+
+###### Method: `GET`
+###### Action: `getItem($id)`
+###### URL: `<public-url>/api/vaah/permissions/{id}`
+
+##### Sample Response
+
+```json
+{
+  "data": {
+      .............
+      .............
+  },
+  "success": "true"
+}
+```
