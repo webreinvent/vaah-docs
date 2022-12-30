@@ -19,6 +19,10 @@ sidebar = [
         text: 'Laravel',
         link: '/guide/laravel.md',
     },
+    {
+        text: 'Generate Module',
+        link: '/guide/generate-module.md',
+    },
 
 ];
 
