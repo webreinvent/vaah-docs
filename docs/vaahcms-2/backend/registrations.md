@@ -428,6 +428,42 @@ parameter = [
 ##### Method: `PUT`
 ##### URL: `<public-url>/api/registrations/{id}`
 ##### Request Parameters
+| Parameter                         | Description                                       | Type            |
+| --------------------------------- | --------------------------------------------------| ----------------|
+| id| User's id  | Boolean |
+| api_token| for authentication  |  |
+| email | required  |  |
+| username|   |  |
+| id| required  | Number |
+| password| required  | String  |
+| display_name|   | Number |
+| title|   |  |
+| designation|   |  |
+| first_name|   |  |
+| middle_name|   |  |
+| last_name|   |  |
+| gender| m for male , f for female , o for Other   |  |
+| country_calling_code|   |  |
+| bio|   |  |
+| timezone|   |  |
+| alternate_email|   |  |
+| avatar_url|   |  |
+| birth|   |  |
+| country|   |  |
+| country_code|   |  |
+| status| required - user-created , email-verified , email-verification-pending  |  |
+| activation_code|   |  |
+| activation_code_sent_at|   |  |
+| activated_ip|   |  |
+| invited_by|   |  |
+| invited_at|   |  |
+| invited_for_key|   |  |
+| invited_for_value|   |  |
+| user_id|   |  |
+| user_created_at|   |  |
+| created_ip|   |  |
+| registration_id|   |  |
+| meta|   | Json |
 ##### Response Parameters
 ##### Sample Request
 ```php
