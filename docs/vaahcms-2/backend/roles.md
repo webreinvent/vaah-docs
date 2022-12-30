@@ -3,7 +3,7 @@
 [[toc]]
 
 ## Purpose
-A role is a group of permissions that allow a user who has been given the role to carry out specific tasks. For instance, the system administrator, who can be regarded as the system's owner, is permitted to carry out all tasks in the system. He or she can add users, remove or edit, and do other things.
+A role is a group of permissions that allow a user who has been given the role to carry out specific tasks. For instance, the super administrator, who can be regarded as the application's owner, is permitted to carry out all tasks in the application. He or she can add users, remove or edit, and do other things.
 
 ## Features & Demos
 
@@ -16,7 +16,7 @@ VaahCMS gave you a few default roles that it built during application setup usin
 | Super Administrator | The application's owner is Super Administrator. Users with Super Administrator privileges have full access and control over the data and application. |
 | Administrator | Users who have administration roles has all the permissions access and manage the data. Somebody who has access to all the administration features within the application. |
 | Manager       | Users who have manage roles can assign a role to user. |
-| Editor | Somebody who can publish and manage posts from CMS the section including the posts of other users. |
+| Editor | Somebody who can publish and manage posts from the CMS section including the posts of other users. |
 | Contributor | Somebody who can write and manage their own posts but cannot publish them.|
 | Registered    | Users who have registered roles can access only public pages. |
 | Guest | Users who have guest roles can access only public pages. |
@@ -24,8 +24,8 @@ VaahCMS gave you a few default roles that it built during application setup usin
 ------
 
 
-#### Create Roles
-To learn how to create a new role, see the video that is included below.
+#### Create New Role
+You can view the video attached below to learn how to create a new role.
 
 <figure class="video_container">
   <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_qDABg3eqi2.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
@@ -40,7 +40,7 @@ You can view the video attached below to learn how to add permission to a role.
 </figure>
 
 ####  Assign Roles to User
-You can view the video attached below to learn how to give a role to a User.
+You can view the video attached below to learn how to give a role to a user.
 
 <figure class="video_container">
   <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_EiAGS8V1Y5.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
@@ -90,7 +90,7 @@ You can use this method for count users of a role.
 ```php
 use WebReinvent\VaahCms\Models\Role;  // Import Role class at the top
 
-$count_users = Role::countUsers($id);  // you have pass user's id as params
+$count_users = Role::countUsers($id);  // Role ID must be provided as parameters.
 ```
 ---
 
@@ -101,13 +101,13 @@ You can use this method for count permissions of a role.
 ```php
 use WebReinvent\VaahCms\Models\Role;  // Import Role class at the top
 
-$count_permissions = Role::countPermissions($id);  // you have pass role's id as params
+$count_permissions = Role::countPermissions($id);  // Role ID must be provided as parameters.
 ```
 ---
 
 **syncRolesWithUsers()**
 
-You can use this method for sync roles with users.
+You can use this method for sync roles with users. After creating a new role you have to call this method to sync role count with users.
 
 ```php
 use WebReinvent\VaahCms\Models\Role;  // Import Role class at the top
