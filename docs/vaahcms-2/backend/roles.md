@@ -11,12 +11,12 @@ A role is a group of permissions that allow a user who has been given the role t
 
 VaahCMS gave you a few default roles that it built during application setup using seeds.
 
-| Field Name    | Description                                                  |
+| Roles    | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
-| Super Administrator | The application's owner is Super Administrator. Users with Super Administrator privileges have full access and control over the data and application. |
+| Super Administrator | The application's owner is super administrator. Users with super administrator privileges have full access and control over the data and application. |
 | Administrator | Users who have administration roles has all the permissions access and manage the data. Somebody who has access to all the administration features within the application. |
 | Manager       | Users who have manage roles can assign a role to user. |
-| Editor | Somebody who can publish and manage posts from the CMS section including the posts of other users. |
+| Editor | Somebody who can publish and manage posts from the `CMS` section including the posts of other users. |
 | Contributor | Somebody who can write and manage their own posts but cannot publish them.|
 | Registered    | Users who have registered roles can access only public pages. |
 | Guest | Users who have guest roles can access only public pages. |
@@ -52,12 +52,12 @@ The following permissions are necessary for role management in order to carry ou
 
 | Permissions          | Description                                           |
 | ------------- | ------------------------------------------------------------ |
-| Can Manage Roles | This permission enables Roles to manage other Roles. The user can activate, deactivate, update or delete a role with this access. |
-| Can Delete Roles | This permission grants Roles access to Delete a Role. |
-| Can Update Roles | This permission grants Roles to Update details of a Role. |
-| Can Read Roles   | This permission grants Roles to  read all listed Roles of the application. |
-| Can Create Roles | This permission grant Roles to create a new Role for the application. |
-| Has Access Of Roles Section | This permission grant Roles to access of the Roles Section in the side nav bar of the application. |
+| Can Manage Roles | This permission enables roles to manage other roles. The user can activate, deactivate, update or delete a role with this access. |
+| Can Delete Roles | This permission grants roles access to delete a role. |
+| Can Update Roles | This permission grants roles to update details of a role. |
+| Can Read Roles   | This permission grants roles to  read all listed roles of the application. |
+| Can Create Roles | This permission grant roles to create a new role for the application. |
+| Has Access Of Roles Section | This permission grant roles to access of the roles section in the side nav bar of the application. |
 
 ## Files
 
@@ -116,7 +116,7 @@ Role::syncRolesWithUsers();
 ```
 ---
 
-VaahCMS provide a method to check the User's Role.
+VaahCMS provide a method to check the user's role.
 
 ```php
 if (Auth::user()->hasRole('administrator')) {
