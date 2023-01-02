@@ -209,82 +209,69 @@ List events for this section in table format
  
 ## API
 
-REMOVE THIS COMMENT
-
-Example
-
-### Create Permission
-
-##### Method: `post`
-##### URL: `<base-url>/public/api/vaah/registrations/form`
-##### Request Parameters
-List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
-
-##### Response Parameters
-##### Sample Request
-##### Sample Response
-
-----
-
 ### Create User
 
 ##### Method: `post`
 ##### URL: `<public-url>/api/vaah/registrations/form`
 ##### Request Parameters
-```php
-parameter = [
-
-    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
-    "email",                    // required
-    "username",
-    "password",                 // required
-    "display_name",
-    "title",
-    "designation",
-    "first_name",               // required
-    "middle_name",
-    "last_name",
-    "gender",                   // m for male , f for female , o for Other 
-    "country_calling_code",
-    "phone", 
-    "bio",
-    "timezone",
-    "alternate_email",
-    "avatar_url",
-    "birth", 
-    "country",
-    "country_code",
-    "status",                  // user-created , email-verified , email-verification-pending
-    "activation_code",
-    "activation_code_sent_at",
-    "activated_ip",
-    "invited_by",
-    "invited_at",
-    "invited_for_key", 
-    "invited_for_value", 
-    "user_id",
-    "user_created_at", 
-    "created_ip",
-    "registration_id", 
-    "meta"                     // json format
-];
-```
+| Parameter                         | Description |Type    |Dafault |
+| --------------------------------- | ------------|--------|--------|
+|api_token|  for authentication|  | |
+|avatar_url| | Image | |
+|bio| |  String | |
+|birth| | Date | |
+|country| | String | |
+|country_calling_code| |  Number| |
+|country_code| | String | |
+|created_by| | Number | |
+|deleted_by| | Number | |
+|designation| | String | |
+|display_name| |  String| |
+|email|required | String | |
+|first_name|required | String | |
+|gender|  m for male , f for female , o for Other | String |  |
+|last_name| | String | |
+|middle_name| | String | |
+|password|required | String | |
+|phone| | Number | |
+|status|  user-created , email-verified , email-verification-pending | String | |
+|timezone| | String | |
+|title| |  String| |
+|updated_by| | String | |
+|username| | String | |
+|uuid| | String | |
 ##### Response Parameters
 | Parameter | Description    | Type            |
 | --------- | ---------------| ----------------|
 | success| Set true if list accessible |Boolean|
 | data| data that get stored successfully | Object |
 | message| message on successfully date saved | Text |
-
 ##### Sample Request
-```json
-{
-  "alternate_email": "meggie08@gmail.com",
-  "bio": "Aut maxime cumque quo porro. Quis illo est et quis qui.",
-  "country": "India",
-  .............
-  .............
-}
+```php
+    "alternate_email": "vfunk@yahoo.com"
+    "avatar_url": "Minus ea sint quia est."
+    "bio": "Cum iusto at corporis."
+    "birth": "2023-01-01T18:30:00.000Z"
+    "country": "India"
+    "country_calling_code": "91"
+    "country_code": "IN"
+    "created_by": null
+    "deleted_by": null
+    "designation": "Autem voluptas omnis et."
+    "display_name": "solon.hickle"
+    "email": "liliane17@tillman.biz"
+    "first_name": "Hailey"
+    "gender": "m"
+    "last_name": "Pollich"
+    "middle_name": "Dach"
+    "password": "&FJmi.Z,zup\"/hv"
+    "phone": "8222282222"
+    "status": "email-verification-pending"
+    "timezone": "Pacific/Midway"
+    "title": "Mr"
+    "updated_by": null
+    "username": "grace24"
+    "uuid": null
 
 ```
 ##### Sample Response
@@ -303,6 +290,7 @@ parameter = [
 }
 ```
 ----
+
 ### Get a List
 
 ##### Method: `get`
@@ -430,116 +418,225 @@ parameter = [
 ##### Request Parameters
 | Parameter                         | Description                                       | Type            |
 | --------------------------------- | --------------------------------------------------| ----------------|
-| id| User's id  | Boolean |
-| api_token| for authentication  |  |
-| email | required  |  |
-| username|   |  |
+| api_token| for authentication  | String |
+| email | required  |String  |
+| username|    | String |
 | id| required  | Number |
 | password| required  | String  |
 | display_name|   | Number |
-| title|   |  |
-| designation|   |  |
-| first_name|   |  |
-| middle_name|   |  |
-| last_name|   |  |
-| gender| m for male , f for female , o for Other   |  |
-| country_calling_code|   |  |
-| bio|   |  |
-| timezone|   |  |
-| alternate_email|   |  |
-| avatar_url|   |  |
-| birth|   |  |
-| country|   |  |
-| country_code|   |  |
-| status| required - user-created , email-verified , email-verification-pending  |  |
-| activation_code|   |  |
-| activation_code_sent_at|   |  |
-| activated_ip|   |  |
-| invited_by|   |  |
-| invited_at|   |  |
-| invited_for_key|   |  |
-| invited_for_value|   |  |
-| user_id|   |  |
-| user_created_at|   |  |
-| created_ip|   |  |
-| registration_id|   |  |
+| title|   | String  |
+| designation|   | String | 
+| first_name|   |String  |
+| middle_name|   | String |
+| last_name|   |String  |
+| gender| m for male , f for female , o for Other   |String  |
+| country_calling_code|   | Number |
+| bio|   |String  |
+| timezone|   |String  |
+| alternate_email|   |String  |
+| avatar_url|   | String |
+| birth|   | Date  |
+| country|   |String  |
+| country_code|   |Number |
+| status| required - user-created , email-verified , email-verification-pending  | String |
+| activation_code|   |String  |
+| activation_code_sent_at|   |String  |
+| activated_ip|   |String  |
+| invited_by|   |String  |
+| invited_at|   | Date |
+| invited_for_key|   | String  |
+| invited_for_value|   | String  |
+| user_id|   | Number |
+| user_created_at|   | Date |
+| created_ip|   | String |
+| vh_user_id|   | Number  |
 | meta|   | Json |
 ##### Response Parameters
+| Parameter                         | Description                                       | Type            |
+| --------------------------------- | --------------------------------------------------| ----------------|
+| Success| response type  | Boolean |
+| data | all requested  parameters with some value inside data object |Object  |
+| messages| response type message   | String |
 ##### Sample Request
 ```php
 parameter = [
 
-    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
-    "email",                    // required
-    "username",
-    "id",
-    "password",                 // required
-    "display_name",
-    "title",
-    "designation",
-    "first_name",               // required
-    "middle_name",
-    "last_name",
-    "gender",                   // m for male , f for female , o for Other 
-    "country_calling_code",
-    "phone", 
-    "bio",
-    "timezone",
-    "alternate_email",
-    "avatar_url",
-    "birth", 
-    "country",
-    "country_code",
-    "status",                  // required - user-created , email-verified , email-verification-pending
-    "activation_code",
-    "activation_code_sent_at",
-    "activated_ip",
-    "invited_by",
-    "invited_at",
-    "invited_for_key", 
-    "invited_for_value", 
-    "user_id",
-    "user_created_at", 
-    "created_ip",
-    "registration_id", 
-    "meta"                     // json format
+    "activated_at": null
+    "activated_ip": null
+    "activation_code": null
+    "activation_code_sent_at": null
+    "alternate_email": "grobel@dicki.com"
+    "avatar_url": "Sunt sunt qui accusamus."
+    "belong_id": null
+    "belong_type": null
+    "bio": "Omnis suscipit qui tenetur nisi."
+    "birth": "2022-12-28"
+    "country": "India"
+    "country_calling_code": "91"
+    "country_code": "Ea ut reprehenderit a."
+    "created_at": "2022-12-28 18:33:53"
+    "created_by": 1
+    "created_by_user":
+          {
+            "id": 1,
+            "uuid": "034d5c4b-0a0d-4ec6-a20c-5d69b70889e1",
+            "first_name": "Webreinvent",
+            "last_name": "Team",
+             …………………
+             …………………
+             …………………
+      }
+    "email": "we@webreinvent.com"
+    "first_name": "Webreinvent"id: 1
+    "last_name": "Team"
+    "name": "Webreinvent Team"
+    "uuid": "034d5c4b-0a0d-4ec6-a20c-5d69b70889e1"
+    "created_ip": null
+    "deleted_at": null
+    "deleted_by": null
+    "deleted_by_user": null
+    "designation": "Ad quia quo ipsa."
+    "display_name": "kovacek.ursula"
+    "email": "jammie12@hotmail.com"
+    "first_name": "Edward"
+    "gender": "m"
+    "id": 88
+    "invited_at": null
+    "invited_by": null
+    "invited_for_key": null
+    "invited_for_value": null
+    "last_name": "Witting"
+    "meta": {}
+    "middle_name": "Hyatt"
+    "phone": "8585858585"
+    "status": "user-created"
+    "timezone": "Atlantic/Madeira"
+    "title": "Dolor et natus ut."
+    "updated_at": "2023-01-02 19:08:59"
+    "updated_by": 1
+    "updated_by_user":
+       {
+        "id": 1,
+        "uuid": "034d5c4b-0a0d-4ec6-a20c-5d69b70889e1",
+        "first_name": "Webreinvent",
+        "last_name": "Team",
+         …………………
+         …………………
+         …………………
+      }
+    "email": "we@webreinvent.com"
+    "first_name": "Webreinvent"
+    "id": 1
+    "last_name": "Team"
+    "name": "Webreinvent Team"
+    "uuid": "034d5c4b-0a0d-4ec6-a20c-5d69b70889e1"
+    "user_created_at": null
+    "username": "destiney72"
+    "uuid": "416b81fc-f273-4dd0-8f18-e301f5c677dd"
+    "vh_user_id": null        // json format
 ];
 ```
 ##### Sample Response
 ```php
 {
-    "status": "success",
-    "messages": [
-        "Saved"
-    ],
-    "data": {
-        ...........
-        ...........
-        ...........
+  "success": true,
+  "data": {
+    "item": {
+      "id": 88,
+      "uuid": "416b81fc-f273-4dd0-8f18-e301f5c677dd",
+      "email": "jammie12@hotmail.com",
+      "username": "destiney72",
+      "display_name": "kovacek.ursula",
+      "title": "Dolor et natus ut.",
+      "designation": "Ad quia quo ipsa.",
+      "first_name": "Edward",
+      "middle_name": "Hyatt",
+      "last_name": "Witting",
+      "gender": "m",
+      "country_calling_code": "",
+      "phone": null,
+      "bio": "Omnis suscipit qui tenetur nisi.",
+      "timezone": "Atlantic\/Madeira",
+      "alternate_email": "grobel@dicki.com",
+      "avatar_url": "Sunt sunt qui accusamus.",
+      "birth": "2022-12-28",
+      "country": "Quis odio velit tenetur.",
+      "country_code": "Ea ut reprehenderit a.",
+      "status": "user-created",
+      "activation_code": null,
+      "activation_code_sent_at": null,
+      "activated_at": null,
+      "activated_ip": null,
+      "invited_by": null,
+      "invited_at": null,
+      "invited_for_key": null,
+      "invited_for_value": null,
+      "belong_type": null,
+      "belong_id": null,
+      "vh_user_id": null,
+      "user_created_at": null,
+      "meta": {
+        
+      },
+      "created_ip": null,
+      "created_by": 1,
+      "updated_by": 1,
+      "deleted_by": null,
+      "created_at": "2022-12-28 18:33:53",
+      "updated_at": "2023-01-02 19:09:10",
+      "deleted_at": null,
+      "created_by_user": {
+        "id": 1,
+        "uuid": "034d5c4b-0a0d-4ec6-a20c-5d69b70889e1",
+        "first_name": "Webreinvent",
+        "last_name": "Team",
+        "email": "we@webreinvent.com",
+        "name": "Webreinvent Team"
+      },
+      "updated_by_user": {
+        "id": 1,
+        "uuid": "034d5c4b-0a0d-4ec6-a20c-5d69b70889e1",
+        "first_name": "Webreinvent",
+        "last_name": "Team",
+        "email": "we@webreinvent.com",
+        "name": "Webreinvent Team"
+      },
+      "deleted_by_user": null
     }
+  },
+  "messages": [
+    "Saved successfully."
+  ]
 }
 ```
 ----
-### Create permission
-
-##### Method: `post`
-##### URL: `<public-url>/api/permission/create`
-##### Request Parameters
-List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
-##### Response Parameters
-##### Sample Request
-##### Sample Response
 
 ----
-### Create permission
+### Delete
 
-##### Method: `post`
-##### URL: `<public-url>/api/permission/create`
-##### Request Parameters
-List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
+##### Method: `delete`
+##### URL: `<public-url>/api/registrations/{id}`
 ##### Response Parameters
-##### Sample Request
+| Parameter                         | Description                                       | Type            |
+| --------------------------------- | --------------------------------------------------| ----------------|
+| success| response type | Boolean |
+| data | null  |   |
+| messages | response message   |String  |
 ##### Sample Response
+```php
+{
+  "success": true,
+  "data": [
+    
+  ],
+  "messages": [
+    "Record has been deleted"
+  ]
+}
+```
 
-----
+
+
+
+
 
