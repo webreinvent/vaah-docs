@@ -233,37 +233,8 @@ It improves the speed of data retrieval.
  We shouldn't call Eloquent relationships method in loop. 
  First convert model object in to collection and then pass in to loop.
  
- 
- **Wrong Examples:**
- 
- ```php
-public function category()
-    {
-        return $this->belongsTo(Category::class,
-             'catgeory_id', 'id'
-        );
-    }
- 
- 
-public function getList()
-    {
- 
-    $products = Product::with(['catgory'])->all();
-    
-    foreach ($products as $key => $product)
-        {
-    
-            if($product && $product->category){
-            
-            }
-        
-        }
-    
-    }
-    
- ```
- 
- **Correct Examples:**
+  
+ **Example:**
  ```php
  
  
@@ -307,7 +278,7 @@ JOIN elimination is one of the many techniques to achieve efficient query plans.
 You can split a single query into several separate queries which can later be joined, 
 and thus remove unnecessary joins, subqueries, tables, etc.
 
-- **Use SELECT fields instead of SELECT :**
+- **Use SELECT fields instead of retrieve all data:**
 
 The SELECT statement is used to retrieve data from the database. 
 In the case of large databases, it is not recommended to retrieve all data 
@@ -324,7 +295,7 @@ User::get();
  ```
  
  Instead, you can specify the exact columns you need to get data from, thus, 
- saving database resources. In this case, SQL Server will retreive only the 
+ saving database resources. In this case, SQL Server will retrieve only the 
  required data, and the query will have lower cost.
  
   ```php
