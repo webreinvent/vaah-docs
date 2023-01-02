@@ -248,9 +248,9 @@ public function category()
 public function getList()
 {
 
-$products = Product::with(['catgory'])->all();
+    $products = Product::with(['catgory'])->all();
 
-foreach ($products as $key => $product)
+    foreach ($products as $key => $product)
     {
 
         if($product && $product->category){
