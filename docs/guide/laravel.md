@@ -331,8 +331,7 @@ User::get();
  
   ```php
   
- User::select('first_name','last_name'
-                  ,'email')->get();
+ User::select('first_name','last_name','email')->get();
      
   ```
 
@@ -360,7 +359,7 @@ And if you only want to check
  ```php
  
 if (User::where('email', '=', Input::get('email'))->count() > 0) {
-   // user found
+    // user found
 }
     
  ```
