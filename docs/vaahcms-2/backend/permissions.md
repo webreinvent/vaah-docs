@@ -65,7 +65,7 @@ These permissions are created through seeds while set up the application.
 | Can Read Theme                        | Theme        | This will allow user to read a theme.                        |
 | Has Access Of Advanced Section        | Advanced     | This will allow user see the link of advanced section.       |
 
-##### Create a Permission via VaahSeeder
+## Create a Permission via VaahSeeder
 
 Through seeds, you can generate permissions. Make a json file called `permissions.json` in the directory .`../VaahCms/Modules/{module_name}/Database/Seeds/json/`.
 
@@ -135,7 +135,7 @@ You can add permissions to a role in permissions section. By clicking on role co
 </figure>
 
 
-## Permissions
+## Required User Permissions To Access This Section
 The following permissions are necessary for permissions management in order to carry out certain actions.
 
 | Permissions          | Description                                           |
