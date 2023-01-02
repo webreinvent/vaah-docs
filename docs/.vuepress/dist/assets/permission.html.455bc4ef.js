@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-10572fd0","path":"/vaahcms/basic/permission.html","title":"Permission","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1627366396000},"filePathRelative":"vaahcms/basic/permission.md"}');export{e as data};
