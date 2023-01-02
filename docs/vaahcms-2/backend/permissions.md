@@ -119,6 +119,12 @@ class DatabaseTableSeeder extends Seeder
 }
 ```
 
+You need to reactivate the `Module` in order to run Seeder. Watched attached video for more information.
+
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_ZrgTJAsPgb.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
 #### Assign Permissions to Role
 
 You can add permissions to a role in permissions section. By clicking on role column, a page will open that contain list of roles along with `Yes/NO` button.
