@@ -234,9 +234,9 @@ It improves the speed of data retrieval.
  First convert model object in to collection and then pass in to loop.
  
   
- **Wrong Examples:**
- 
- ```php
+**Wrong Examples:**
+
+```php
 public function category()
 {
     return $this->belongsTo(Category::class,
@@ -261,12 +261,11 @@ public function getList()
 
 }
     
- ```
+```
  
- **Correct Examples:**
- ```php
- 
- 
+**Correct Examples:**
+```php
+
 public function category()
 {
     return $this->belongsTo(Category::class,
@@ -292,7 +291,7 @@ public function getList()
 
 } 
 
- ```
+```
  
 
 #### Avoid too many JOINs:
