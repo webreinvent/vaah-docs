@@ -21,7 +21,7 @@ sidebar = [
     },
     {
         text: 'Generate CRUD',
-        link: '/guide/generate_crud.md',
+        link: '/guide/generate-crud.md',
     },
 
 ];
