@@ -218,13 +218,13 @@ maintained or if queries can be rewritten more efficiently.
 
 Following Query optimization tips for better performance
 
-- **Apply Index On Necessary Columns:**
+#### Apply Index On Necessary Columns:
 
 Table indexes in databases help retrieve information faster and more efficiently.
 An index creates a unique data column without overlapping each other. 
 It improves the speed of data retrieval.
 
-- **Avoid Query In A Loop:**
+#### Avoid Query In A Loop:
  
  If sometimes we need to execute the same query multiple times like if 
  we need to insert 10 records in any table at that time don’t use 
@@ -234,39 +234,68 @@ It improves the speed of data retrieval.
  First convert model object in to collection and then pass in to loop.
  
   
- **Example:**
+ **Wrong Examples:**
+ 
+ ```php
+public function category()
+{
+    return $this->belongsTo(Category::class,
+         'catgeory_id', 'id'
+    );
+}
+ 
+ 
+public function getList()
+{
+
+$products = Product::with(['catgory'])->all();
+
+foreach ($products as $key => $product)
+    {
+
+        if($product && $product->category){
+        
+        }
+    
+    }
+
+}
+    
+ ```
+ 
+ **Correct Examples:**
  ```php
  
  
- public function category()
-     {
-         return $this->belongsTo(Category::class,
-             'catgeory_id', 'id'
-         );
-     }
+public function category()
+{
+    return $this->belongsTo(Category::class,
+        'catgeory_id', 'id'
+    );
+}
      
- public function getList()
-     {
-  
-     $products = Product::with(['catgory'])->all();
-     
-     $collect_products = collect($products);
-     
-     foreach ($collect_products as $key => $product)
-        {
-     
-             if($product && $product->category){
-             
-             }
+public function getList()
+{
+
+    $products = Product::with(['catgory'])->all();
+    
+    $collect_products = collect($products);
+    
+    foreach ($collect_products as $key => $product)
+    {
+    
+         if($product && $product->category){
          
-        }
-        
-     } 
+         }
+     
+    }
+
+} 
 
  ```
  
 
-- **Avoid too many JOINs:**
+#### Avoid too many JOINs:
 
 When you add multiple tables to a query and join them, you may overload it. 
 In addition, a large number of tables to retrieve data from may result in an 
@@ -278,15 +307,18 @@ JOIN elimination is one of the many techniques to achieve efficient query plans.
 You can split a single query into several separate queries which can later be joined, 
 and thus remove unnecessary joins, subqueries, tables, etc.
 
-- **Use SELECT fields instead of retrieve all data:**
+#### Use SELECT fields instead of retrieve all data:
 
 The SELECT statement is used to retrieve data from the database. 
 In the case of large databases, it is not recommended to retrieve all data 
 because this will take more resources on querying a huge volume of data.
 
+
 If we execute the following query, we will retrieve all data from the Users table, 
 including, for example, users’ avatar pictures. The result table will contain 
 lots of data and will take too much memory and CPU usage.
+
+**BAD CODE**
 
  ```php
  
@@ -298,6 +330,8 @@ User::get();
  saving database resources. In this case, SQL Server will retrieve only the 
  required data, and the query will have lower cost.
  
+ **GOOD CODE**
+ 
   ```php
   
  User::select('first_name','last_name'
@@ -305,7 +339,7 @@ User::get();
      
   ```
 
-- **Use Exists instead of First or Count in condition :**
+#### Use Exists instead of First or Count in condition :
 
 Instead of using the count method to determine if any records exist that 
 match your query's constraints, you may use the `exists` and `doesntExist` methods.
