@@ -254,7 +254,7 @@ public function getList()
     {
 
         if($product && $product->category){
-        
+
         }
     
     }
@@ -282,14 +282,12 @@ public function getList()
     
     foreach ($collect_products as $key => $product)
     {
-    
-         if($product && $product->category){
-         
-         }
-     
+        if($product && $product->category){
+
+        }
     }
 
-} 
+}
 
 ```
  
