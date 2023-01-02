@@ -1,1 +1,0 @@
-const a=JSON.parse('{"key":"v-2f53b20f","path":"/vaahcms/basic/setting/localization.html","title":"Localization","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1627055118000},"filePathRelative":"vaahcms/basic/setting/localization.md"}');export{a as data};
