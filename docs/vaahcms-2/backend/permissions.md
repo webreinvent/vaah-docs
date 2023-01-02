@@ -223,9 +223,7 @@ parameter = [
       .............
       .............
   },
-  "success": "true",
-  "total_roles" : "count of total roles of the application.",
-  "total_users" : "count of total users of the application."
+  "success": "true"
 }
 ```
 ---
