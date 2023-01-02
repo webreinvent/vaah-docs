@@ -3,7 +3,7 @@
 [[toc]]
 
 ## Purpose
-Depending on their roles, the decisions made by the application owner and the system administrator, and other factors, permissions allow users to access particular aspects of the application. Permissions control which actions users are allowed to perform on your website, such as viewing, editing, and changing configuration. Each permission has a name (for example, View published material) and only permits a single activity or a small group of related actions.
+Depending on their roles, the decisions made by the application owner and the system administrator, and other factors, permissions allow users to access particular aspects of the application. Permissions control which actions users are allowed to perform on your application, such as viewing, editing, and changing configuration. Each permission has a name (for example, View published material) and only permits a single activity or a small group of related actions.
 
 ## Features & Demos
 
@@ -218,8 +218,8 @@ parameter = [
       .............
   },
   "success": "true",
-  "total_roles" : "// count of total roles of the application ",
-  "total_users" : "// count of total users of the application "
+  "total_roles" : "count of total roles of the application.",
+  "total_users" : "count of total users of the application."
 }
 ```
 ---
