@@ -19,10 +19,6 @@ sidebar = [
         text: 'Laravel',
         link: '/guide/laravel.md',
     },
-    {
-        text: 'Generate CRUD',
-        link: '/guide/generate-crud.md',
-    },
 
 ];
 
