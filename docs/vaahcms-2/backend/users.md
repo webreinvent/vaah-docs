@@ -50,33 +50,13 @@ You can assign roles to a user in `Users` section. By clicking on `Role` column,
 | Can See Users Contact Details         | This will allow user to view contact (email, mobile) detail in the user section. |
 
 ## Files
-<!-- 
-REMOVE THIS COMMENT
-List of all the files responsible for this pages
 
-- Laravel Route: `routes/backend/route-example.php`
-- Laravel Controller: 
-- Laravel Model: 
-- Vue Route: 
-- Vue Store: 
-- Vue Page Director: 
-
--->
-
-## Packages
-<!-- 
-REMOVE THIS COMMENT
-
-### Laravel Packages
-
-- `creativeorange/gravatar`: Write purpose of the package
-
-
-### Vue Packages
-- `laravel-mix`: To build assets
-
--->
-
+- Laravel Route: `vaahcms/Routes/backend/route-users.php`
+- Laravel Controller: `vaahcms/Http/Controllers/Backend/UsersController.php`
+- Laravel Model: `vaahcms/Models/User.php`
+- Vue Route: `vaahcms/Vue/routes/vue-routes-users.js`
+- Vue Store: `vaahcms/Vue/stores/store-users.js`
+- Vue Page Directory: `vaahcms/Vue/pages/users`
 
 ## Methods
 <!-- 
