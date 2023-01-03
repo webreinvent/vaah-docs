@@ -59,22 +59,95 @@ You can assign roles to a user in `Users` section. By clicking on `Role` column,
 - Vue Page Directory: `vaahcms/Vue/pages/users`
 
 ## Methods
-<!-- 
-REMOVE THIS COMMENT
-List important methods which can be reused. 
 
-Eg:
-```
-User::addRole();
-```
+###### Accessors
 
--->
+To know about `Accessors`, see [Laravel Documentation](https://laravel.com/docs/8.x/eloquent-mutators#defining-an-accessor)
 
-## Events
-<!-- 
-REMOVE THIS COMMENT
-List events for this section in table format 
--->
+| Method Name        | Description                                                  |
+| ------------------ | ------------------------------------------------------------ |
+| getAvatarAttribute | Get value of `avatar_url` column from database or `Gravatar` url. To know about Gravatar, [click here](https://en.gravatar.com/) |
+| getMetaAttribute   | Get value of `meta` column in JSON                           |
+| getNameAttribute   | Get value of `display_name` column or joined string of `first_name`, `middle_name` and `last_name` column from database. |
+
+
+------
+
+###### Mutators
+
+To know about `Mutators`, see [Laravel Documentation](https://laravel.com/docs/8.x/eloquent-mutators#defining-a-mutator)
+
+| Method Name            | Parameter | Description                                                  |
+| ---------------------- | --------- | ------------------------------------------------------------ |
+| setMetaAttribute       | `$value`  | Set json encoded value in `meta` column                      |
+| setFirstNameAttribute  | `$value`  | Set first character of First Name capitalized                |
+| setMiddleNameAttribute | `$value`  | Set first character of Middle Name capitalized               |
+| setLastNameAttribute   | `$value`  | Set first character of Last Name capitalized                 |
+| setPasswordAttribute   | `$value`  | Hashing of Password. `prevent_password_attr_set` This variable is defined to ignore this mutator. |
+| setLoginOtpAttribute   | `$value`  | Hashing of Login OTP code                                    |
+
+------
+
+###### Scopes
+
+To know about `Scopes`, see [Laravel Documentation](https://laravel.com/docs/8.x/eloquent#dynamic-scopes)
+
+| Method Name       | Parameter                | Description                                                  |
+| ----------------- | ------------------------ | ------------------------------------------------------------ |
+| scopeIsActive     | `$query`                 | Return Active User (is-active == 1)                          |
+| scopeBetweenDates | `$query`  `$from`  `$to` | Return User which is created between `$from` date & `$to` date |
+| scopeExclude      | `$query`  `$columns`     | The array in `$columns` parameter is exclude from select query. |
+
+------
+
+###### Relationships
+
+To know about `Relationships`, see [Laravel Documentation](https://laravel.com/docs/8.x/eloquent-relationships#defining-relationships)
+
+| Method Name   | Description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| createdByUser | Return data of `User` model that has an id which matches the `created_by` column of User. |
+| updatedByUser | Return data of `User` model that has an id which matches the `updated_by` column of User. |
+| deletedByUser | Return data of `User` model that has an id which matches the `deleted_by` column of User. |
+| roles         | Return data of `Role` model with `Pivot` that is assigned to Users. |
+
+
+
+------
+
+
+
+###### Non Static
+
+| Method Name            | Parameter                      | Description                                                  |
+| ---------------------- | ------------------------------ | ------------------------------------------------------------ |
+| getTableColumns        |                                | Get array of all columns name in User table.                 |
+| getFormFillableColumns |                                | Get array of some column name in User table.                 |
+| activeRoles            |                                | Return active Roles of User.                                 |
+| hasRole                | `$role_slug`                   | Return `true` if role in `$role_slug` is active.             |
+| isAdmin                |                                | Return `true` if `Administrator` role is active.             |
+| hasPermission          | `$permission_slug`  `$details` | Return `true` if permission in `$permission_slug` is active and their associated role is active. |
+
+
+
+------
+
+
+
+###### Static
+
+| Method Name          | Parameter                            | Description                                                  |
+| -------------------- | ------------------------------------ | ------------------------------------------------------------ |
+| findByUsername       | `$username`  `$columns = array('*')` | The `findByUsername` method find users only by the `username` and return given columns. |
+| findByEmail          | `$email`  `$columns = array('*')`    | The `findByEmail` method find users only by the `email` and return given columns. |
+| countAdministrators  |                                      | The `countAdministrators` method return number of users which has `Administrator` role. |
+| getByRoles           | `$array_role_slugs`                  | The `getByRoles` method return a list of the users which has a role exists in `$array_role_slugs`. |
+| getByRolesOnlyIds    | `$array_role_slugs`                  | The `getByRolesOnlyIds` method return only `id` of the users which has a role exists in `$array_role_slugs`. |
+| getByRolesOnlyEmails | `$array_role_slugs`                  | The `getByRolesOnlyEmails` method return only `email` of the users which has a role exists in `$array_role_slugs`. |
+| rulesAdminCreate     |                                      | The `rulesAdminCreate` method return the array of validation rules for User. |
+| isLastAdmin          |                                      | The `isLastAdmin` method return `true` if Application has only one User of Administrator role. |
+| getAvatarById        | `$id`                                | The `getAvatarById` method find users only by the `id` and return avatar url. |
+| getUsersForAssets    |                                      | The `getUsersForAssets` method return list of `active` users with following columns: `id`, `first_name`, `middle_name`, `last_name` |
 
 
 ## API
