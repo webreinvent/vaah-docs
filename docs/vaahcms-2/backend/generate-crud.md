@@ -25,26 +25,25 @@ npx vaah cms:crud
 <img :src="$withBase('/images/step-2.png')">
 
 ## Step-3
-Use following procedures to set up CRUD
+Use following procedures to set up CRUD.
 
-- For which you want to create CRUD: vue3 & PrimeVue
+- For which you want to create CRUD: vue3 & PrimeVue ```This option is to build template```
 
-- Enter the Module/Theme/Entity name: Blog
+- Enter the Module/Theme/Entity name: Blog ```Name of the module, so that it will create crud inside it```
 
-- Enter the section name (Backend | Frontend or Folder name): (For module choose backend, for theme choose frontend)
+- Enter the section name (Backend | Frontend or Folder name): Backend ```For module choose backend, for theme choose frontend```
 
-- Vue folder name/path:(vue)
+- Vue folder name/path:(vue) ```The directory name where vue files and component stored```
 
-- Enter your database table name:(Enter the table name for which you are genrating crud)
+- Enter your database table name: blog ```Enter the table name for which you are generating crud```
 
-- Do you want to generate migration file (true/false):  (true) (We have to write true so that migration file will be genrated)
+- Do you want to generate migration file (true/false):  (true) ```We have to write true so that migration file will be generated```
 
-- Enter your model name (singular): (use table name as singular for better understanding)
+- Enter your model name (singular): Blog ```It is asking name of the model. Use table name as singular for better understanding```
 
-- Enter your controller name (plural): (use table name as plular for better understanding)
+- Enter your controller name (plural): Blogs ```It is asking name of the controller. Use table name as plural for better understanding```
 
-<img :src="$withBase('/images/step-3.png')">
-
+```This video will help you to understand the generation of CRUD.```
 <figure>
   <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_T6jUDyV82j.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
@@ -55,6 +54,7 @@ Below link you can use to go module in your browser
 ```
 http://127.0.0.1:8000/backend#/vaah/modules/
 ```
+```This video will help you to understand how to re-activate module.```
 
 <figure>
   <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_j3WEb0p0h0.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
@@ -68,7 +68,7 @@ Include the laravel router file in the module's route file
 Add this code in above path
 
 ```
-require_once('backend/routes-blog.php');
+include('backend/routes-blog.php');
 ```
 <img :src="$withBase('/images/step-5.png')">
 
@@ -92,9 +92,9 @@ Include the vue router file
 
 Add this code in above path
 ```
-import Blogs from "./vue-routes-blog";
+import blog from "./vue-routes-blogs";
    
-routes = routes.concat(Blogs);
+routes = routes.concat(blog);
 ```
 <img :src="$withBase('/images/step-7.png')">
 
@@ -112,7 +112,7 @@ let ajax_url = base_url + "/backend/blog/blogs";
 <img :src="$withBase('/images/step-8.png')">
 
 ## Step-9
-Open ```.env & custom.env``` and paster below code
+Open ```.env & .env.custom``` and paster below code
 ```
 MODULE_BLOG_ENV=develop
 ```
