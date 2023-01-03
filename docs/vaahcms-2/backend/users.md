@@ -6,23 +6,37 @@
 User Management is a system for authenticating users and storing user data. As of now, `VaahCMS` has two Login option: `Login via Password` and `Login via OTP`. In VaahCMS, you can manage all aspects of your user accounts such as changing user properties, reset password, enable or disable users, and more.
 
 ## Features & Demos
-<!-- 
-REMOVE THIS COMMENT
-Create a video demo of all features.
 
-Examples:
-#### Create roles
-**Demo Video**
+#####  User Listing
 
-####  Assign permission to roles
-**Demo Video**
+Get a list of all your users, and their data in one place. The Users table contains all of your user data and the `VaahCms` puts all user management functions right at your fingertips. You have the ability to `add`, `edit`, and `delete` users. You can also `search`, `sort`, and `filter` your user data and modify user information and `roles`, all in the same place.
 
-####  Send Activation Email to User
-**Demo Video**
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/msedge_TIKvbvuNdu.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
 
--->
+---
 
-## Permissions
+##### Create a User 
+
+You can view the video attached below to learn how to create a new user.
+
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/msedge_f9KBTI8yTZ.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
+---
+
+##### Manage User Roles
+
+You can assign roles to a user in `Users` section. By clicking on `Role` column, a page will open that contain list of Roles along with `Yes/No` Button.
+
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/msedge_IUIS4wUJh0.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
+
+## Required User Permissions To Access This Section
 
 
 | Permissions          | Description                                           |
