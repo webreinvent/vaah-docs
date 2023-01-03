@@ -26,61 +26,75 @@ In VaahCms, the purpose of `Registration` is to prevent `duplicate` entries in `
 ## Features & Demos
 
 #### Create New `User`
+- New user registration  will take place by filling the field and click on `Create & New` button as shown here:
 <figure>
   <iframe src="https://img-v4.getdemo.dev/screenshot/Registration%20-%20Create%20New%20User%20.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 #### Edit/Update the details of already exists `Users`
+- To update the details of `User` by filling or replacing it with new value in the field and click on `Save` button as shown here-
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_s8gj2HwjmC.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
 #### Deleting exists `Users`
+-To deleting the `User` there are 2 way to delete `User` -
+1. from the `view/form`(edit) page
+2. from the `User` list and selecting the delete `action`
+
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_eHIo2Khroq.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
 #### Deleting temporary/Trashing already exists `Users`
+- To deleting temporary the `User` there are 2 way to temporary delete the `User` -
+1. from the `view/form`(edit) page
+2. from the `User` list and selecting the `trash` action
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_V1dankQPpv.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
 #### List All existing `Users`
+- list of the `Users` who are already exist will be shown- 
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_7pC5B37hJP.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
 #### Filtering the `Users` list by searching using different `fields`
+- Filtering the `Users` list by searching with fields like first name,middle name,last name,email id, `user's id` etc
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_t8PpwWFVQN.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
 #### Filtering the `Users` list by different status of `Users`, trashed `Users`
+- Filtering the `Users` list by `User` different status(email verification pending, user created, email verified) and by including/excluding the trashed `User`
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_QGqx9EsID8.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
 #### Sorting the `Users` with ascending/descending order
+- List can be sort in different way, like by selecting the order(Ascending/Descending) and by list's each column's different order
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_XKT1jEqHgJ.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
 #### Clone the `User` details
+- Already exist fields data can be cloned at the time of `create a new user` and `updating user` details, in order to `create a new User` with similar data.
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_OhQBlHmcg7.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
 #### Autofill the `User` field
+- Some field can be auto filled by dummy data/random data on selecting the `fill` option , at the time of `create a new user` or `updating user` details, in order to `create a fresh new user`
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_yh6ynI6gYN.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
 
-#### Autofill the `User` field
-<figure>
-    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_RvexbAkNnm.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
-</figure>
+
 
 #### Bulk Actions to status change, trash, delete
+- Bulk Action can be performed on the existing `Users` list on selecting the ` Bulk Actions` type i.e trash all, re-store all, delete all etc. and changing the `Users` status(email verified,email verification pending,user create)
+- Bulk action can also be performed on only limited or on selected `users` by and selecting `Actions` i.e trash, re-store, delete etc and changing the `Users` status(email verified,email verification pending,user create)
 <figure>
     <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_6F755WQERL.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
 </figure>
@@ -228,36 +242,38 @@ Registration::deleteItem();
 | message| message on successfully date saved | Text |
 ##### Sample Request
 ```php
-    "alternate_email": "vfunk@yahoo.com"
-    "avatar_url": "Minus ea sint quia est."
-    "bio": "Cum iusto at corporis."
-    "birth": "2023-01-01T18:30:00.000Z"
-    "country": "India"
-    "country_calling_code": "91"
-    "country_code": "IN"
-    "created_by": null
-    "deleted_by": null
-    "designation": "Autem voluptas omnis et."
-    "display_name": "solon.hickle"
-    "email": "liliane17@tillman.biz"
-    "first_name": "Hailey"
-    "gender": "m"
-    "last_name": "Pollich"
-    "middle_name": "Dach"
-    "password": "&FJmi.Z,zup\"/hv"
-    "phone": "8222282222"
-    "status": "email-verification-pending"
-    "timezone": "Pacific/Midway"
-    "title": "Mr"
-    "updated_by": null
-    "username": "grace24"
-    "uuid": null
+    {
+        "alternate_email": "vfunk@yahoo.com"
+        "avatar_url": "png.pngtree/ourmid/image_1541962.jpg"
+        "bio": "Cum iusto at corporis."
+        "birth": "2023-01-01T18:30:00.000Z"
+        "country": "India"
+        "country_calling_code": "91"
+        "country_code": "IN"
+        "created_by": null
+        "deleted_by": null
+        "designation": "Autem voluptas omnis et."
+        "display_name": "solon.hickle"
+        "email": "liliane17@tillman.biz"
+        "first_name": "Hailey"
+        "gender": "m"
+        "last_name": "Pollich"
+        "middle_name": "Dach"
+        "password": "&FJmi.Z,zup\"/hv"
+        "phone": "8222282222"
+        "status": "email-verification-pending"
+        "timezone": "Pacific/Midway"
+        "title": "Mr"
+        "updated_by": null
+        "username": "grace24"
+        "uuid": null
+    }
 
 ```
 ##### Sample Response
 ```php
 {
-    "status": "success",
+    "status": true,
     "data": {
         "item": {
             .............
@@ -314,45 +330,57 @@ parameter = [
 ##### Sample Response
 ```php
 {
-    "status": "success",
-    "data": {
-        "list": {
-            "current_page": 1,
-            "data": [
-                ..............
-                ..............
-                ..............
-                ..............
-            ],
-            "first_page_url": "<public-url>/api/registrations?page=1",
-            "from": 1,
-            "last_page": 1,
-            "last_page_url": "<public-url>/api/registrations?page=1",
-            "links": [
-                {
-                    "url": null,
-                    "label": "&laquo; Previous",
-                    "active": false
-                },
-                {
-                    "url": "<public-url>/api/registrations?page=1",
-                    "label": "1",
-                    "active": true
-                },
-                {
-                    "url": null,
-                    "label": "Next &raquo;",
-                    "active": false
-                }
-            ],
-            "next_page_url": null,
-            "path": "<public-url>/api/registrations",
-            "per_page": 20,
-            "prev_page_url": null,
-            "to": 2,
-            "total": 2
-        }
-    }
+  "success": true,
+  "data": {
+    "current_page": 1,
+    "data": [
+      {
+        "id": 1,
+        "uuid": "07052497-c12f-4e21-a119-edf20d51f3ad",
+        "email": "ekoelpin@yahoo.com",
+        "username": "ekoelpin",
+        ............
+        ............
+        ............
+      },
+      {
+        "id": 2,
+        "uuid": "a119-edf20d51f3ad-07052497-c12f-4e21",
+        "email": "lenaoe@gmail.com",
+        "username": "lenaoe",
+        ............
+        ............
+        ............
+      }
+    ],
+    "first_page_url": "<public-url>/backend\/vaah\/registrations?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "<public-url>/backend\/vaah\/registrations?page=1",
+    "links": [
+      {
+        "url": null,
+        "label": "&laquo; Previous",
+        "active": false
+      },
+      {
+        "url": "<public-url>\/backend\/vaah\/registrations?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next &raquo;",
+        "active": false
+      }
+    ],
+    "next_page_url": null,
+    "path": "<public-url>\/backend\/vaah\/registrations",
+    "per_page": 20,
+    "prev_page_url": null,
+    "to": 2
+    "total": 2
+  }
 }
 ```
 
@@ -364,12 +392,14 @@ parameter = [
 ##### Request Parameters
 | Parameter | Description               | Type            |
 | --------- | --------------------------| ----------------|
-| id| User's id  | Boolean |
+| id| User's id  | Number |
+| api_token| for authentication  | String |
+| trashed| true, false  | Boolean |
 ##### Response Parameters
 | Parameter                                 | Description               | Type            |
 | ----------------------------------------- | --------------------------| ----------------|
 | success| Set true if list accessible |Boolean|
-| data| All the matched data with request Id   | Object |
+| data| All the matched data with request used Id   | Object |
 ##### Sample Request
 ```php
 parameter = [
@@ -381,12 +411,16 @@ parameter = [
 ##### Sample Response
 ```php
 {
-    "data": {
-            .............
-            .............
-            .............
-        },
     "status": true,
+    "data": {
+        "id": 1,
+        "uuid": "07052497-c12f-4e21-a119-edf20d51f3ad",
+        "email": "lturcotte@yahoo.com",
+        "username": "ekoelpin",
+        .............
+        .............
+        .............
+        },
 }
 ```
 
@@ -418,7 +452,7 @@ parameter = [
 | birth|   | Date  |
 | country|   |String  |
 | country_code|   |Number |
-| status| required - user-created , email-verified , email-verification-pending  | String |
+| status| required - (user-created , email-verified , email-verification-pending)  | String |
 | activation_code|   |String  |
 | activation_code_sent_at|   |String  |
 | activated_ip|   |String  |
@@ -446,7 +480,7 @@ parameter = [
     "activation_code": null
     "activation_code_sent_at": null
     "alternate_email": "grobel@dicki.com"
-    "avatar_url": "Sunt sunt qui accusamus."
+    "avatar_url": "png.pngtree/ourmid/image_1541962.jpg"
     "belong_id": null
     "belong_type": null
     "bio": "Omnis suscipit qui tenetur nisi."
@@ -538,7 +572,7 @@ parameter = [
       "bio": "Omnis suscipit qui tenetur nisi.",
       "timezone": "Atlantic\/Madeira",
       "alternate_email": "grobel@dicki.com",
-      "avatar_url": "Sunt sunt qui accusamus.",
+      "avatar_url": "png.pngtree/ourmid/image_1541962.jpg"
       "birth": "2022-12-28",
       "country": "Quis odio velit tenetur.",
       "country_code": "Ea ut reprehenderit a.",
