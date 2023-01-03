@@ -25,43 +25,65 @@ In VaahCms, the purpose of `Registration` is to prevent `duplicate` entries in `
 
 ## Features & Demos
 
-
-
 #### Create New `User`
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/Registration%20-%20Create%20New%20User%20.mp4)**
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/Registration%20-%20Create%20New%20User%20.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
 
 #### Edit/Update the details of already exists `Users`
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_s8gj2HwjmC.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_s8gj2HwjmC.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Deleting exists `Users`
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_eHIo2Khroq.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_eHIo2Khroq.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Deleting temporary/Trashing already exists `Users`
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_V1dankQPpv.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_V1dankQPpv.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### List All existing `Users`
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_7pC5B37hJP.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_7pC5B37hJP.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Filtering the `Users` list by searching using different `fields`
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_t8PpwWFVQN.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_t8PpwWFVQN.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Filtering the `Users` list by different status of `Users`, trashed `Users`
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_QGqx9EsID8.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_QGqx9EsID8.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Sorting the `Users` with ascending/descending order
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_XKT1jEqHgJ.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_XKT1jEqHgJ.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Clone the `User` details
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_OhQBlHmcg7.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_OhQBlHmcg7.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Autofill the `User` field
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_yh6ynI6gYN.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_yh6ynI6gYN.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Autofill the `User` field
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_RvexbAkNnm.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_RvexbAkNnm.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 #### Bulk Actions to status change, trash, delete
-**[Demo Video](https://img-v4.getdemo.dev/screenshot/chrome_6F755WQERL.mp4)**
+<figure>
+    <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_6F755WQERL.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+</figure>
 
 
 ## Permission
