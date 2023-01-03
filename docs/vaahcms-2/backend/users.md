@@ -62,7 +62,7 @@ You can assign roles to a user in `Users` section. By clicking on `Role` column,
 
 ###### Accessors
 
-To know about `Accessors`, see [Laravel Documentation](https://laravel.com/docs/8.x/eloquent-mutators#defining-an-accessor)
+To know about `Accessors`, see [Laravel Documentation](https://laravel.com/docs/9.x/eloquent-mutators#defining-an-accessor)
 
 | Method Name        | Description                                                  |
 | ------------------ | ------------------------------------------------------------ |
@@ -75,7 +75,7 @@ To know about `Accessors`, see [Laravel Documentation](https://laravel.com/docs/
 
 ###### Mutators
 
-To know about `Mutators`, see [Laravel Documentation](https://laravel.com/docs/8.x/eloquent-mutators#defining-a-mutator)
+To know about `Mutators`, see [Laravel Documentation](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
 
 | Method Name            | Parameter | Description                                                  |
 | ---------------------- | --------- | ------------------------------------------------------------ |
@@ -90,7 +90,7 @@ To know about `Mutators`, see [Laravel Documentation](https://laravel.com/docs/8
 
 ###### Scopes
 
-To know about `Scopes`, see [Laravel Documentation](https://laravel.com/docs/8.x/eloquent#dynamic-scopes)
+To know about `Scopes`, see [Laravel Documentation](https://laravel.com/docs/9.x/eloquent#dynamic-scopes)
 
 | Method Name       | Parameter                | Description                                                  |
 | ----------------- | ------------------------ | ------------------------------------------------------------ |
@@ -102,7 +102,7 @@ To know about `Scopes`, see [Laravel Documentation](https://laravel.com/docs/8.x
 
 ###### Relationships
 
-To know about `Relationships`, see [Laravel Documentation](https://laravel.com/docs/8.x/eloquent-relationships#defining-relationships)
+To know about `Relationships`, see [Laravel Documentation](https://laravel.com/docs/9.x/eloquent-relationships#defining-relationships)
 
 | Method Name   | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
@@ -151,18 +151,111 @@ To know about `Relationships`, see [Laravel Documentation](https://laravel.com/d
 
 
 ## API
-<!-- 
-REMOVE THIS COMMENT
 
-Example
+VaahCMS has APIs for every method, allowing you to interact with `NuxJS` or other frameworks.
 
-### Create permission
+You can access APIs method from `vaachms/Http/Controllers/Api/UsersController.php` and routes from `vaahcms/Routes/api/api-routes-users.php`
 
-##### Method: `post`
-##### URL: `<public-url>/api/permission/create`
-##### Request Parameters
-List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
-##### Response Parameters
+We mention some methods bellow which help you to understand the structure.
+
+###### create
+
+##### Method: `POST`
+##### URL: `<public-url>/api/users/users/`
+
 ##### Sample Request
+
+**Parameters:** `$request`
+
+```php
+$request =  new Request([
+    'new_item' => [
+        'alternate_email'       => null,
+        'avatar_url'            => null,
+        'bio'                   => null,
+        'birth'                 => null,
+        'country'               => null,
+        'country_calling_code'  => null,
+        'country_code'          => null,
+        'designation'           => null,
+        'display_name'          => null,
+        'email'                 => null,    // required
+        'first_name'            => null,    // required
+        'gender'                => null,
+        'is_active'             => null,    // required       //true:false:0:1
+        'last_name'             => null,
+        'middle_name'           => null,
+        'password'              => null,
+        'phone'                 => null,
+        'status'                => null,    // required       //active:inactive
+        'timezone'              => null,
+        'title'                 => null,
+        'username'              => null,
+        'website'               => null
+    ]
+]);
+```
+
+Creates a new user for the database on which the method is run. `\WebReinvent\VaahCms\Models\User::create($request);` returns a duplicate user error if the email already exists in the `User` table.
+
 ##### Sample Response
--->
+
+```json
+{
+  "data":  {
+    "item": {
+      .............
+      .............
+    }
+  },
+  "messages": "vaahcms-general.saved_successfully",
+  "success": "true"
+}
+```
+
+------
+
+##### Get List
+
+##### Method: `GET`
+##### URL: `<public-url>/api/users/users/`
+
+##### Sample Request
+```php 
+parameter = [
+    'filter' => [
+        'q'            // for search queary (optionl)
+        'trashed'      // for include or exclude trashed data (optionl)
+        'is_active'    // for fetching only active or inactive data (optionl)
+        'sort'         // for sorting the data (optionl)
+    ];  
+];
+```
+
+##### Sample Response
+
+```json
+{
+  "data": {
+      .............
+      .............
+  },
+  "success": "true"
+}
+```
+---
+
+###### validation
+
+**Parameters:** `$inputs`
+
+```php 
+$inputs = [
+    'first_name' => null,    // required
+    'email'      => null,    // required
+    'is_active'  => null,    // required       //true:false:0:1
+    'status'     => null,    // required       //active:inactive
+];
+```
+
+This function uses the [Laravel Validator](https://laravel.com/docs/9.x/validation#validation-quickstart) to validate the user's following columns: `first_name`, `email`, `is_active`, and `status`.
