@@ -7,7 +7,7 @@ Registration and authentication are mandatory in any application when you have l
 
 In VaahCms, the purpose of `Registration` is to prevent `duplicate` entries in `Users` table.
 
-`Registration` page will display the all valid `Users` and a form to create and update the `Users`.
+`Registration` page will display the all valid `Users` and a form to create and update the `Users` with the following features:
 
 - Create New `User`
 - Edit/Update the details of already exists `Users`.
@@ -124,10 +124,7 @@ Permissions allow users to access certain features of a course or project site, 
 | Has Access Of Advanced Section        | Advanced     | This will allow user see the link of advanced section.       |
 
 ------
-<!-- 
-REMOVE THIS COMMENT
-List the permissions & details for this page in table format 
--->
+
 
 ## Files
 
@@ -142,46 +139,17 @@ List of all the files responsible for this pages
 - Vue Page Director: `packages/vaahcms/Vue/vaahtwo/pages/registrations`
 
 
-## Packages
-
-
-### Laravel Packages
-
-- `webreinvent/laravel-nestable`:To work with recursive logic
-- `barryvdh/laravel-dompdf`:To generate a pdf file
-- `composer/composer`:For dependency management
-- `ixudra/curl`:To perform HTTP requests
-
-
-### Vue Packages
-
-- `sass`: To converting your code to CSS
-- `sass-loader`: To compiling SCSS/Sass files
 
 ## Methods
 
 List important methods which can be reused. 
 
+```
+Registration::createItem();
+```
 
 ```
 Registration::getList();
-```
-
-```
-Registration::updateList();
-```
-
-
-```
-Registration::listAction();
-```
-
-```
-Registration::deleteList();
-```
-
-```
-Registration::createItem();
 ```
 
 ```
@@ -196,17 +164,7 @@ Registration::updateItem();
 Registration::deleteItem();
 ```
 
-```
-Registration::itemAction();
-```
 
-
-## Events
-<!-- 
-REMOVE THIS COMMENT
-List events for this section in table format 
--->
- 
 ## API
 
 ### Create User
@@ -216,30 +174,30 @@ List events for this section in table format
 ##### Request Parameters
 | Parameter                         | Description |Type    |Dafault |
 | --------------------------------- | ------------|--------|--------|
-|api_token|  for authentication|  | |
-|avatar_url| | Image | |
-|bio| |  String | |
-|birth| | Date | |
-|country| | String | |
-|country_calling_code| |  Number| |
-|country_code| | String | |
-|created_by| | Number | |
-|deleted_by| | Number | |
-|designation| | String | |
-|display_name| |  String| |
-|email|required | String | |
-|first_name|required | String | |
-|gender|  m for male , f for female , o for Other | String |  |
-|last_name| | String | |
-|middle_name| | String | |
-|password|required | String | |
-|phone| | Number | |
-|status|  user-created , email-verified , email-verification-pending | String | |
-|timezone| | String | |
-|title| |  String| |
-|updated_by| | String | |
-|username| | String | |
-|uuid| | String | |
+|api_token|  API Token id for authentication|String  | |
+|avatar_url|  User's Avtar Image URL | Image | |
+|bio|User's bio  |  String | |
+|birth|  User's Date of birth| Date | |
+|country|  User's Country| String | |
+|country_calling_code| User country's Calling code  |  Number| |
+|country_code| User's Country code | String | |
+|created_by| Admin Id | Number | |
+|deleted_by| Admin Id| Number | |
+|designation| User's designation | String | |
+|display_name|  User's Display name to be seen |  String| |
+|email|required User's | String | |
+|first_name|required User's | String | |
+|gender|  m for male , f for female , o for Other User's | String |  |
+|last_name| User's | String | |
+|middle_name|  User's| String | |
+|password|required  User's| String | |
+|phone| User's | Number | |
+|status|  user-created , email-verified , email-verification-pending  User's| String | |
+|timezone|  User's preferred area bases timezone| String  | |
+|title| User's Title i.e Mr/Mrs/Miss/Ms |  String| |
+|updated_by| Admin's Id who has updated the details| Number | |
+|username| User's | String | |
+|uuid| User's Unique Identifier ID  | String | |
 ##### Response Parameters
 | Parameter | Description    | Type            |
 | --------- | ---------------| ----------------|
