@@ -17,7 +17,6 @@ sidebar = [
             {text: 'Dashboard', link: '/vaahcms-2/backend/dashboard.md'},
             {text: 'Sample', link: '/vaahcms-2/backend/sample.md'},
             {text: 'Generate CRUD', link: '/vaahcms-2/backend/generate-crud.md'},
-
             {text: 'Generate Themes', link: '/vaahcms-2/backend/generate-themes.md'},
         ]
     },
