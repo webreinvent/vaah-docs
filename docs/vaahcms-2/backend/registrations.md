@@ -18,7 +18,7 @@ In VaahCms, the purpose of `Registration` is to prevent `duplicate` entries in `
 - Filtering the `Users` list by different status, trashed `Users`.
 - Sorting the `Users` with ascending/descending order.
 - Clone the `User` details. 
-- Autofill the `User` field.
+- Autofill the `User` field. 
 - Bulk Actions to status change,trash,delete
 
 
@@ -107,16 +107,6 @@ Permissions allow users to access certain features of a course or project site, 
 
 | Field Name                            | Section      | Description                                                  |
 | ------------------------------------- | ------------ | ------------------------------------------------------------ |
-| Has Access of Dashboard               | Dashboard    | This will allow user to see the link of dashboard.           |
-| Has Access of Setting Section         | Setting      | This will allow user to see the link of setting section.     |
-| Can Login In Backend                  | Backend      | This will allow user to login in the backend.                |
-| Has Access Of Users Section           | User         | This will allow user to see the link of user section.        |
-| Can Create Users                      | User         | This will allow user to add anything in the user section.    |
-| Can Read Users                        | User         | This will allow user to view anything in the user section.   |
-| Can Update Users                      | User         | This will allow user to edit anything in the user section.   |
-| Can Delete Users                      | User         | This will allow user to delete anything in the user section. |
-| Can Manage Users                      | User         | This will allow user to manage anything in the user section. |
-| Can See Users Contact Details         | User         | This will allow user to view contact (email, mobile) detail in the user section. |
 | Has Access Of Registrations Section   | Registration | This will allow user see the link of registration section.   |
 | Can Create Registrations              | Registration | This will allow user to add anything in the registration section. |
 | Can Create Users From Registrations   | Registration | This will allow user to add users in the registration section. |
@@ -125,39 +115,8 @@ Permissions allow users to access certain features of a course or project site, 
 | Can Delete Registrations              | Registration | This will allow user to delete anything in the registration section. |
 | Can Manage Registrations              | Registration | This will allow user to manage anything in the registration section. |
 | Can See Registrations Contact Details | Registration | This will allow user to view contact detail in the registration section. |
-| Has Access Of Roles Section           | Role         | This will allow user see the link of role section.           |
-| Can Create Roles                      | Role         | This will allow user to add anything in the role section.    |
-| Can Read Roles                        | Role         | This will allow user to view anything in the role section.   |
-| Can Update Roles                      | Role         | This will allow user to edit anything in the role section.   |
-| Can Delete Roles                      | Role         | This will allow user to delete anything in the role section. |
-| Can Manage Roles                      | Role         | This will allow user to manage anything in the role section. |
-| Has Access Of Permissions Section     | Permission   | This will allow user see the link of permission section.     |
-| Can Read Permissions                  | Permission   | This will allow user to view anything in the permission section. |
-| Can Update Permissions                | Permission   | This will allow user to edit anything in the permission section. |
-| Can Manage Permissions                | Permission   | This will allow user to manage anything in the permission section. |
-| Has Access Of Media Section           | Media        | This will allow user see the link of media section.          |
-| Can Create Media                      | Media        | This will allow user to add anything in the media section.   |
-| Can Read Media                        | Media        | This will allow user to view anything in the media section.  |
-| Can Update Media                      | Media        | This will allow user to edit anything in the media section.  |
-| Can Delete Media                      | Media        | This will allow user to delete anything in the media section. |
-| Can Manage Media                      | Media        | This will allow user to manage anything in the media section. |
-| Has Access Of Module Section          | Module       | This will allow user see the link of module section.         |
-| Can Install Module                    | Module       | This will allow user to install a module.                    |
-| Can Delete Module                     | Module       | This will allow user to delete a module.                     |
-| Can Deactivate Module                 | Module       | This will allow user to deactivate a module.                 |
-| Can Activate Module                   | Module       | This will allow user to activate a module.                   |
-| Can Import Sample Data In Module      | Module       | This will allow user to import sample data in module.        |
-| Can Update Module                     | Module       | This will allow user to update a module.                     |
-| Can Read Module                       | Module       | This will allow user to read a module.                       |
-| Has Access Of Theme Section           | Theme        | This will allow user see the link of theme section.          |
-| Can Install Theme                     | Theme        | This will allow user to install a theme.                     |
-| Can Delete Theme                      | Theme        | This will allow user to delete a theme.                      |
-| Can Deactivate Theme                  | Theme        | This will allow user to deactivate a theme.                  |
-| Can Activate Theme                    | Theme        | This will allow user to activate a theme.                    |
-| Can Import Sample Data In Theme       | Theme        | This will allow user to import sample data in theme.         |
-| Can Update Theme                      | Theme        | This will allow user to update a theme.                      |
-| Can Read Theme                        | Theme        | This will allow user to read a theme.                        |
-| Has Access Of Advanced Section        | Advanced     | This will allow user see the link of advanced section.       |
+
+
 
 ------
 
