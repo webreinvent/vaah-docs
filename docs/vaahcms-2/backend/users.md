@@ -3,13 +3,14 @@
 [[toc]]
 
 ## Purpose
-User Management is a system for authenticating users and storing user data. As of now, `VaahCMS` has two Login option: `Login via Password` and `Login via OTP`. In VaahCMS, you can manage all aspects of your user accounts such as changing user properties, reset password, enable or disable users, and more.
+
+A system for authenticating users and storing user information is called as user management. Currently, `VaahCMS` offers two login options: `Login via Password` and `Login via OTP`. You can manage every aspect of your user accounts in `VaahCMS`, including altering user properties, resetting passwords, enabling or disabling users, and more.
 
 ## Features & Demos
 
 #####  User Listing
 
-Get a list of all your users, and their data in one place. The Users table contains all of your user data and the `VaahCms` puts all user management functions right at your fingertips. You have the ability to `add`, `edit`, and `delete` users. You can also `search`, `sort`, and `filter` your user data and modify user information and `roles`, all in the same place.
+Obtain a comprehensive list of all of your users, along with their associated data. All of your users' information is contained in the Users table, and the `VaahCMS` offers all users' administration tools at your fingertips. You have the ability to `add`, `edit`,  and `remove` users. Additionally, you may alter user details and `roles` at the same location where you can `search`, `sort`, and `filters` your users' data.
 
 <figure>
   <iframe src="https://img-v4.getdemo.dev/screenshot/msedge_TIKvbvuNdu.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
