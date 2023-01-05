@@ -1,1 +1,0 @@
-import{_ as a,o as t,c,a as e,d as n}from"./app.c6d1c7b4.js";const s={},o=e("h1",{id:"vaahcli",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#vaahcli","aria-hidden":"true"},"#"),n(" VaahCLI")],-1),r=e("p",null,"Testing",-1),_=[o,r];function d(i,h){return t(),c("div",null,_)}const f=a(s,[["render",d],["__file","index.html.vue"]]);export{f as default};
