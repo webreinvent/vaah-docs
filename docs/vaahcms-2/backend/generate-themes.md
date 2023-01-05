@@ -105,3 +105,69 @@ side bar. Click on theme name to access DashBoard of the theme.
 <img :src="$withBase('/images/theme-dashboard-page.png')" alt="theme-dashboard-page">
 
 ###### Note: All migrations of that specific theme will run automatically when the theme is activated .
+
+### Step 4: Directory Structure
+
+<img :src="$withBase('/images/theme-directory-structure.png')" alt="theme-directory-structure">
+
+ - Config:
+    Config file is present here. Config file contains all the information related to theme, that was provided while creating theme, such as, name, description, `is sample data available` etc.
+    And this information can be changed in this config file.
+ 
+   <img :src="$withBase('/images/theme-config-file.png')" alt="theme-config-file">
+   
+ - Database:
+    All the Factory, Migrations and Seeds files of this theme are present in Database Folder.
+ 
+   - To generate Migration File:
+     ```terminal
+      npx vaah cms:m-make migrations <theme-folder-name> <migration-name> 
+     ```
+     <img :src="$withBase('/images/theme-migrations.png')" alt="theme-migrations"> 
+     Migration file will be generated under `Database/Migrations`.
+    
+    In order to run migrations, `deactivate` and `activate` Theme again.
+ 
+ - To generate Seeds File:
+   ```terminal
+    npx vaah cms:m-make migrations <theme-folder-name> <seeder-name>
+   ```
+
+   Seeds file will be generated under `Database/Seeders`.
+   Or
+   we can use json files to seed data into tables.
+   Example:
+        <img :src="$withBase('/images/theme-seeds1.png')" alt="theme-seeds1">
+    
+    and this json file can be used in SampleDataTableSeeder
+        <img :src="$withBase('/images/theme-sample-seeder-file.png')" alt="theme-sample-seeder-file">
+
+    and
+        <img :src="$withBase('/images/theme-sample-seeder-file1.png')" alt="theme-sample-seeder-file1">
+    
+    and to run `SampleDataTableSeeder` file, click on `import sample data` button:-
+        <img :src="$withBase('/images/theme-sample-data-seeder-button.png')" alt="theme sample data seeder button">
+
+ - Models:
+    All the models for this theme will be generated in `<theme-root>/Models` using:
+```terminal
+    npx vaah cms:t-make model <theme-root> <model-name>
+```
+- Views:
+  All the views for this theme will be generated in `<theme-root>/Resources/Views`
+    - this is the first page of the theme `welcome.balde.php`.
+    - this page can be used as homepage `home.balde.php`.
+    - this page can be used as fallback back `default.balde.php`.
+
+- Vue:
+  This folder will contain all the vue files, vuex store, vue routes related to this theme.
+  - Vue components will be present under Vue/pages.
+    <img :src="$withBase('/images/theme-vue-componentes-file.png')" alt="theme vue componentes files">
+
+  - Vue routes will be present under Vue/routes.
+    <img :src="$withBase('/images/theme-vue-routes-file.png')" alt="theme vue routes file">
+
+  - Vue store will be found under Vue/stores.
+    <img :src="$withBase('/images/theme-vue-store-file.png')" alt="theme vue store file">
+
+#### Note: Use `npm install` inside theme root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
