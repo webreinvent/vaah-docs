@@ -172,7 +172,13 @@ side bar. Click on module name to access DashBoard of the module.
   <img :src="$withBase('/images/module-sample-seeder-button.png')" alt="module-sample-seeder-button">
 
 - Http:
-  Controllers, Middelwares, Requests for this module will be generated here. 
+  All the Controllers,Middlewares,Requests file related to this module will be created here.
+  command used to create module controller is:-
+    ```terminal-command-for-controller 
+        vaah cms:t-make controller <module-folder-name> <controller-name>
+    ```
+    ```terminal-command-for-middleware
+        vaah cms:t-make middleware <module-folder-name> <middleware-name>
   #### Note: All the Controllers must be created in Http/Controllers/Backend for modules.
 
 - Models:
