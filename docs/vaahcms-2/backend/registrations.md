@@ -107,13 +107,13 @@ Permissions allow users to access certain features of a course or project site, 
 
 | Field Name                            | Section      | Description                                                  |
 | ------------------------------------- | ------------ | ------------------------------------------------------------ |
+| Can Create Registrations              | Registration | This will allow user to add new user|
+| Can Read Registrations                | Registration | This will allow user to view the registered users details |
+| Can Update Registrations              | Registration | This will allow user to edit and update the users details  |
+| Can Manage Registrations              | Registration | This will allow user to edit and update the users details   |
 | Has Access Of Registrations Section   | Registration | This will allow user see the link of registration section.   |
-| Can Create Registrations              | Registration | This will allow user to add anything in the registration section. |
 | Can Create Users From Registrations   | Registration | This will allow user to add users in the registration section. |
-| Can Read Registrations                | Registration | This will allow user to view anything in the registration section. |
-| Can Update Registrations              | Registration | This will allow user to edit anything in the registration section. |
 | Can Delete Registrations              | Registration | This will allow user to delete anything in the registration section. |
-| Can Manage Registrations              | Registration | This will allow user to manage anything in the registration section. |
 | Can See Registrations Contact Details | Registration | This will allow user to view contact detail in the registration section. |
 
 
@@ -138,23 +138,23 @@ List of all the files responsible for this pages
 ## Methods
 
  some methods which can be reused. 
-- This method can be used for particular item to action like `restore`,`trash`
+- **itemAction()** method can be used for actions like `restore`,`trash` in particular item
 
 ``` 
     packages/vaahcms/Models/Registration.php  
     
     Registration::itemAction($request,$id,$type);
 ```
-where `$request` is HTTP request,`$id` is Items's id,`$type` is action type.
+where `$request` is HTTP request,`$id` is Item's id,`$type` is action type.
 
-- This methods can be  used for different actions on a list
+- **listAction()** methods can be  used for different actions like `trash`,`restore`,`delete`,`trash all`,`delete all`,`restore all` and different status change on item's list
 
 ```
     packages/vaahcms/Models/Registration.php
     
     Registration::listAction($request,$id,$type);
 ```
-where `$request` is HTTP request,`$id` is Items's id,`$type` is action type.
+where `$request` is HTTP request,`$id` is Item's id,`$type` is action type.
 
 
 ## API
@@ -206,23 +206,19 @@ where `$request` is HTTP request,`$id` is Items's id,`$type` is action type.
         "country": "India"
         "country_calling_code": "91"
         "country_code": "IN"
-        "created_by": null
-        "deleted_by": null
-        "designation": "Autem voluptas omnis et."
+        "designation": "Autem"
         "display_name": "solon.hickle"
         "email": "liliane17@tillman.biz"
         "first_name": "Hailey"
         "gender": "m"
         "last_name": "Pollich"
         "middle_name": "Dach"
-        "password": "&FJmi.Z,zup\"/hv"
         "phone": "8222282222"
         "status": "email-verification-pending"
         "timezone": "Pacific/Midway"
         "title": "Mr"
-        "updated_by": null
         "username": "grace24"
-        "uuid": null
+        
     }
 
 ```
@@ -315,25 +311,24 @@ parameter = [
     "last_page_url": "<public-url>/backend\/vaah\/registrations?page=1",
     "links": [
       {
-        "url": null,
+        "url": "<public-url>\/backend\/vaah\/registrations?page=1",
         "label": "&laquo; Previous",
         "active": false
       },
       {
-        "url": "<public-url>\/backend\/vaah\/registrations?page=1",
+        "url": "<public-url>\/backend\/vaah\/registrations?page=2",
         "label": "1",
         "active": true
       },
       {
-        "url": null,
+        "url": "<public-url>\/backend\/vaah\/registrations?page=3",
         "label": "Next &raquo;",
         "active": false
       }
     ],
-    "next_page_url": null,
     "path": "<public-url>\/backend\/vaah\/registrations",
     "per_page": 20,
-    "prev_page_url": null,
+    "prev_page_url": "<public-url>\/backend\/vaah\/registrations?page=1",
     "to": 2
     "total": 2
   }
@@ -390,37 +385,24 @@ parameter = [
 | --------------------------------- | --------------------------------------------------| ----------------|
 | api_token| for authentication  | String |
 | email | required  |String  |
-| username|    | String |
+| username|  slug generated or user's field name  | String |
 | id| required  | Number |
 | password| required  | String  |
-| display_name|   | Number |
-| title|   | String  |
-| designation|   | String | 
-| first_name|   |String  |
-| middle_name|   | String |
-| last_name|   |String  |
+| display_name| optional  | Number |
+| title|  User Name title like (Mr,Mrs,Miss,Ms) | String  |
+| designation| Users designation  | String | 
+| first_name| required  |String  |
+| middle_name|  optional | String |
+| last_name|  optional |String  |
 | gender| m for male , f for female , o for Other   |String  |
-| country_calling_code|   | Number |
-| bio|   |String  |
-| timezone|   |String  |
-| alternate_email|   |String  |
-| avatar_url|   | String |
-| birth|   | Date  |
-| country|   |String  |
-| country_code|   |Number |
+| country_calling_code| optional  | Number |
+| bio| optional  |String  |
+| timezone| Country and states wise timezone  |String  |
+| alternate_email| optional  |String  |
+| birth| User's Date of birth  | Date  |
+| country_code| Country Name Intails Like IN for India,USA for United States of America etc  |Number |
 | status| required - (user-created , email-verified , email-verification-pending)  | String |
-| activation_code|   |String  |
-| activation_code_sent_at|   |String  |
-| activated_ip|   |String  |
-| invited_by|   |String  |
-| invited_at|   | Date |
-| invited_for_key|   | String  |
-| invited_for_value|   | String  |
-| user_id|   | Number |
-| user_created_at|   | Date |
-| created_ip|   | String |
-| vh_user_id|   | Number  |
-| meta|   | Json |
+
 ##### Response Parameters
 | Parameter                         | Description                                       | Type            |
 | --------------------------------- | --------------------------------------------------| ----------------|
@@ -431,19 +413,17 @@ parameter = [
 ```php
 parameter = [
 
-    "activated_at": null
-    "activated_ip": null
-    "activation_code": null
+    "activated_at": "2022-12-28 18:33:53"
+    "activated_ip": "xxxxxxxxxxxxx"
+    "activation_code": "xxxxxxxxxxxxxxxxxxxx"
     "activation_code_sent_at": null
     "alternate_email": "grobel@dicki.com"
     "avatar_url": "png.pngtree/ourmid/image_1541962.jpg"
-    "belong_id": null
-    "belong_type": null
     "bio": "Omnis suscipit qui tenetur nisi."
     "birth": "2022-12-28"
     "country": "India"
     "country_calling_code": "91"
-    "country_code": "Ea ut reprehenderit a."
+    "country_code": "IN"
     "created_at": "2022-12-28 18:33:53"
     "created_by": 1
     "created_by_user":
@@ -457,26 +437,17 @@ parameter = [
              …………………
       }
     "email": "we@webreinvent.com"
-    "first_name": "Webreinvent"id: 1
+    "first_name": "Webreinvent"
     "last_name": "Team"
     "name": "Webreinvent Team"
     "uuid": "034d5c4b-0a0d-4ec6-a20c-5d69b70889e1"
-    "created_ip": null
-    "deleted_at": null
-    "deleted_by": null
-    "deleted_by_user": null
     "designation": "Ad quia quo ipsa."
     "display_name": "kovacek.ursula"
     "email": "jammie12@hotmail.com"
     "first_name": "Edward"
     "gender": "m"
     "id": 88
-    "invited_at": null
-    "invited_by": null
-    "invited_for_key": null
-    "invited_for_value": null
     "last_name": "Witting"
-    "meta": {}
     "middle_name": "Hyatt"
     "phone": "8585858585"
     "status": "user-created"
@@ -500,10 +471,10 @@ parameter = [
     "last_name": "Team"
     "name": "Webreinvent Team"
     "uuid": "034d5c4b-0a0d-4ec6-a20c-5d69b70889e1"
-    "user_created_at": null
+    "user_created_at": "2023-01-02 19:08:59"
     "username": "destiney72"
     "uuid": "416b81fc-f273-4dd0-8f18-e301f5c677dd"
-    "vh_user_id": null        // json format
+    "vh_user_id": 99        // json format
 ];
 ```
 ##### Sample Response
@@ -524,34 +495,26 @@ parameter = [
       "last_name": "Witting",
       "gender": "m",
       "country_calling_code": "",
-      "phone": null,
+      "phone": "9876522222",
       "bio": "Omnis suscipit qui tenetur nisi.",
       "timezone": "Atlantic\/Madeira",
       "alternate_email": "grobel@dicki.com",
       "avatar_url": "png.pngtree/ourmid/image_1541962.jpg"
       "birth": "2022-12-28",
-      "country": "Quis odio velit tenetur.",
-      "country_code": "Ea ut reprehenderit a.",
+      "country": "91",
+      "country_code": "IN",
       "status": "user-created",
-      "activation_code": null,
-      "activation_code_sent_at": null,
-      "activated_at": null,
-      "activated_ip": null,
-      "invited_by": null,
-      "invited_at": null,
-      "invited_for_key": null,
-      "invited_for_value": null,
-      "belong_type": null,
-      "belong_id": null,
-      "vh_user_id": null,
-      "user_created_at": null,
+      "activation_code": "qrtya43cghtaqrr77saskweerrr",
+      "activation_code_sent_at": "testinf_durect@gmail.com",
+      "activated_at": "2023-01-02 19:08:59"
+      "invited_at": "2023-01-02 19:08:59",
+      "belong_id": 857,
+      "vh_user_id": 24,
+      "user_created_at": "2023-01-02 19:08:59",
       "meta": {
-        
       },
-      "created_ip": null,
       "created_by": 1,
       "updated_by": 1,
-      "deleted_by": null,
       "created_at": "2022-12-28 18:33:53",
       "updated_at": "2023-01-02 19:09:10",
       "deleted_at": null,
@@ -587,10 +550,10 @@ parameter = [
 ##### Method: `delete`
 ##### URL: `<public-url>/api/registrations/{id}`
 ##### Response Parameters
-| Parameter                         | Description                                       | Type            |
-| --------------------------------- | --------------------------------------------------| ----------------|
-| success| response type | Boolean |
-| data | null  |   |
+| Parameter   | Description         | Type            |
+| ----------- | --------------------| ----------------|
+| success | response type | Boolean |
+| data | null  | NA  |
 | messages | response message   |String  |
 ##### Sample Response
 ```php
