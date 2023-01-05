@@ -137,27 +137,24 @@ List of all the files responsible for this pages
 
 ## Methods
 
-List important methods which can be reused. 
+ some methods which can be reused. 
+- This method can be used for particular item to action like `restore`,`trash`
+
+``` 
+    packages/vaahcms/Models/Registration.php  
+    
+    Registration::itemAction($request,$id,$type);
+```
+where `$request` is HTTP request,`$id` is Items's id,`$type` is action type.
+
+- This methods can be  used for different actions on a list
 
 ```
-Registration::createItem();
+    packages/vaahcms/Models/Registration.php
+    
+    Registration::listAction($request,$id,$type);
 ```
-
-```
-Registration::getList();
-```
-
-```
-Registration::getItem();
-```
-
-```
-Registration::updateItem();
-```
-
-```
-Registration::deleteItem();
-```
+where `$request` is HTTP request,`$id` is Items's id,`$type` is action type.
 
 
 ## API
