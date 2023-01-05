@@ -92,7 +92,7 @@ select `false`.
     ```
     For Sample data seeders SampleDataTableSeeder.
 
-    ###### Note: All the Seeds files will be found in `root/VaahCms/Modules/<module-name>/Seeds` directory.
+    ###### Note: All the Seeds files will be found in `root/VaahCms/Modules/<module-name>/Database/Seeds` directory.
 
 After providing all the information, Module will generated under `project-root/Vaahcms/Modules`.
 <img :src="$withBase('/images/module_path.png')" alt="module_path">
@@ -127,3 +127,72 @@ side bar. Click on module name to access DashBoard of the module.
 <img :src="$withBase('/images/module-dashboard-page.png')" alt="module-dashboard-page">
 
 ###### Note: All migrations of that specific module will run automatically when the module is activated .
+
+
+### Step 4: Directory Structure
+
+<img :src="$withBase('/images/module-directory-structure.png')" alt="module-directory-structure">
+
+- Config:
+  Config file is present here. Config file contains all the information related to module, that was provided while creating module, such as, name, description, `is_migratable`, `is sample data available` etc.
+  And this information can be changed in this config file.
+
+  <img :src="$withBase('/images/module-config-file.png')" alt="module-config-file">
+
+- Database:
+  All the Factory, Migrations and Seeds files of this modules are present in Database Folder.
+
+  - To generate Migration File:
+    ```terminal
+     npx vaah cms:m-make migration <module-folder-name> <migration-name> 
+    ```
+      <img :src="$withBase('/images/module-migration-file.png')" alt="module-migration-file"> 
+    Migration file will be generated under `Database/Migrations`.
+
+  In order to run migrations, `deactivate` and `activate` module again.
+
+- To generate Seeds File:
+  ```terminal
+   npx vaah cms:m-make seed <module-folder-name> <seeder-name>
+  ```
+
+  Seeds file will be generated under `Database/Seeders`.
+  Or
+  we can use json files to seed data into tables.
+  Example:
+  <img :src="$withBase('/images/module-json-seed-file.png')" alt="module-json-seed-file">
+
+  and this json file can be used in SampleDataTableSeeder
+  <img :src="$withBase('/images/module-sample-seeder-file1.png')" alt="module-sample-seeder-file1">
+
+  and
+  <img :src="$withBase('/images/module-sample-seeder-file2.png')" alt="module-sample-seeder-file2">
+
+  and to run `SampleDataTableSeeder` file, click on `import sample data` button:-
+  <img :src="$withBase('/images/module-sample-seeder-button.png')" alt="module-sample-seeder-button">
+
+- Http:
+  Controllers, Middelwares, Requests for this module will be generated here. 
+  #### Note: All the Controllers must be created in Http/Controllers/Backend for modules.
+
+- Models:
+  All the models for this module will be generated in `<module-root>/Models` using:
+```terminal
+    npx vaah cms:t-make model <module-root> <model-name>
+```
+- Views:
+  All the views for this module will be generated in `<module-root>/Resources/Views/backend`
+  - this is the first page of the module `index.blade.php`.
+
+- Vue:
+  This folder will contain all the vue files, vuex store, vue routes related to this module.
+  - Vue components will be present under Vue/pages.
+    <img :src="$withBase('/images/module-vue-components-files.png')" alt="module vue componentes files">
+
+  - Vue routes will be present under Vue/routes.
+    <img :src="$withBase('/images/module-vue-routes-file.png')" alt="modules vue routes file">
+
+  - Vue store will be found under Vue/stores.
+    <img :src="$withBase('/images/module-vue-store-file.png')" alt="module vue store file">
+
+#### Note: Use `npm install` inside module root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
