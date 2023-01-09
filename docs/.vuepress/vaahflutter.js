@@ -83,6 +83,26 @@ sidebar = [
                     },
                     { text: 'environments', link: '/vaahflutter/directory_structure/vaahextendflutter/env.md' },
                     { text: 'app theme', link: '/vaahflutter/directory_structure/vaahextendflutter/apptheme.md' },
+                    {
+                        text: 'helpers',
+                        collapsible: true,
+                        children: [
+                            { text: 'console', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/console.md' },
+                            { text: 'constants', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/constants.md' },
+                            { text: 'datetime', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/datetime.md' },
+                            { text: 'input formatters', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/input-formatters.md' },
+                            { text: 'responsive', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/responsive.md' },
+                            { text: 'styles', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/styles.md' },
+                        ],
+                    },
+                    {
+                        text: 'services',
+                        collapsible: true,
+                        children: [
+                            { text: 'api', link: '/vaahflutter/directory_structure/vaahextendflutter/services/api.md' },
+                            { text: 'api self sign', link: '/vaahflutter/directory_structure/vaahextendflutter/services/self-sign.md' },
+                        ],
+                    },
                 ]
             },
         ]
