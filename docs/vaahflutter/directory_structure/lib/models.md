@@ -1,0 +1,9 @@
+# Models
+
+[[toc]]
+
+Models are data classes that you create according to your needs. And with the help of the controller, you can manipulate the model’s data.
+
+Place all your models in here like user.dart, product.dart or any other.
+
+Holds the state of the application and provides an API to access/filter/manipulate that data. Its concern is data encapsulation and management. It contains logic to structure, validate or compare different pieces of data that we call Domain Logic.
