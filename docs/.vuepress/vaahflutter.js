@@ -16,6 +16,13 @@ sidebar = [
             { text: 'Raise a PR', link: '/vaahflutter/about/raiseapr.md' },
         ]
     },
+    {
+        text: 'Essentials',
+        children: [
+            { text: 'App Configuration', link: '/vaahflutter/essentials/app.md' },
+            { text: 'Environments', link: '/vaahflutter/essentials/environments.md' },
+        ]
+    },
 ];
 
 module.exports = {
