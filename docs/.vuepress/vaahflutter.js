@@ -23,6 +23,15 @@ sidebar = [
             { text: 'Environments', link: '/vaahflutter/essentials/environments.md' },
         ]
     },
+    {
+        text: 'Core',
+        children: [
+            { text: 'Logs', link: '/vaahflutter/core/log.md' },
+            { text: 'Theme', link: '/vaahflutter/core/theme.md' },
+            { text: 'Debug Panel', link: '/vaahflutter/core/debugpanel.md' },
+            { text: 'API/ AJAX', link: '/vaahflutter/core/api.md' },
+        ]
+    },
 ];
 
 module.exports = {
