@@ -63,24 +63,62 @@ Api.ajax(url: '/api/user');
 
 Using inline function
 
-```dart{3}
-Api.ajax(
-    url: '/api/users',
-    callback: (data, response) async { Console.info('data', data); },
-);
+```dart{10-17}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> signIn(String identifier, String password) async {
+    Map<String, dynamic> user = await Api.ajax(
+      url: apiEndPoint,
+      method: 'post',
+      params: {"identifier": identifier, "password": password},
+      callback: {
+        if (data == null) {
+          showToast('Message');
+        } else {
+          rootAssetsController.user = data;
+          rootAssetsController.apiToken = data['token'];
+        }
+      },
+    );
+    return;
+  }
+}
+
+// Calling the signIn function
+User.signIn('username', 'password');
 ```
 
 Using reference
 
-```dart{3,6-8}
-Api.ajax(
-    url: '/api/users',
-    callback: usersReceived,
-);
+```dart{10,15-22}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
 
-Future<void> usersReceived(dynamic data, Response<dynamic>? response) async {
-    Console.info('data', data);    
+  static Future<void> signIn(String identifier, String password) async {
+    Map<String, dynamic> user = await Api.ajax(
+      url: apiEndPoint,
+      method: 'post',
+      params: {"identifier": identifier, "password": password},
+      callback: _signInAfter,
+    );
+    return;
+  }
+
+  static Future<void> _signInAfter(dynamic data, dynamic response) async {
+    if (data == null) {
+      showToast('Message');
+    } else {
+      rootAssetsController.user = data;
+      rootAssetsController.apiToken = data['token'];
+    }
+  }
 }
+
+// Calling the signIn function
+User.signIn('username', 'password');
 ```
 
 #### 3. Method
@@ -91,11 +129,22 @@ Future<void> usersReceived(dynamic data, Response<dynamic>? response) async {
 - possible values are: `'get', 'post', 'put', 'patch', and 'delete'`
 - Description: request type
 - Example:
-```dart{3}
-Api.ajax(
-    url: '/api/users/1',
-    method: 'delete',
-);
+
+```dart{7}
+class User {
+  static const String apiEndPoint = '/users';
+
+  static Future<void> delete(String id) async {
+    await Api.ajax(
+      url: apiEndPoint,
+      method: 'delete',
+      params: {'id': id},
+    );
+  }
+}
+
+// Calling the deleteItem function
+User.delete('id');
 ```
 
 #### 4. Query
@@ -104,17 +153,22 @@ Api.ajax(
 - Type: `Map<String, dynamic>?`
 - Description: query parameters
 - Examples:
-```dart{3}
-Api.ajax(
-    url: '/api/users/',
-    query: { 'id': 1 },
-);
-```
-```dart{3}
-Api.ajax(
-    url: '/api/users/',
-    query: { 'minimum_age': 18, name: 'ABC' },
-);
+
+
+```dart{7}
+class User {
+  static const String apiEndPoint = '/users';
+
+  static Future<List<User>> search(String name, int age) async {
+    return await Api.ajax(
+      url: '$apiEndPoint/search',
+      query: {'name': name, 'age': age},
+    );
+  }
+}
+
+// Calling the search function
+List<User> searchResults = await User.search('name', 18);
 ```
 
 #### 5. Params
@@ -123,26 +177,24 @@ Api.ajax(
 - Type: `Map<String, dynamic>?`
 - Description: params is data passed in the post, put, etc requests.
 - Examples:
-```dart{3}
-Api.ajax(
-    url: '/api/users',
-    method: 'post',
-    params: {
-        'name': 'ABC',
-        'age': 18,
-        'hobbies': ['coding', 'playing']
-    },
-);
-```
-```dart{3}
-Api.ajax(
-    url: '/api/users/1',
-    method: 'patch',
-    params: {
-        'name': 'new name',
-        'age': 19,
-    },
-);
+
+```dart{9}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> updateHobbies(User user) async {
+    Map<String, dynamic> user = await Api.ajax(
+      url: '$apiEndPoint/${user.id}',
+      method: 'patch',
+      params: {"hobbies": user.hobbies},
+    );
+    rootAssetsController.user = user;
+  }
+}
+
+// Calling the updateHobbies function
+User.updateHobbies(currentUser);
 ```
 
 #### 6. Headers
@@ -151,14 +203,22 @@ Api.ajax(
 - Type: `List<Map<String, String>>?`
 - Description: custom headers passed in requests
 - Example:
-```dart{3-6}
-Api.ajax(
-    url: '/api/users?token=abc',
-    headers: [
+
+```dart{8-11}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> getCSRFToken() async {
+    await Api.ajax(
+      url: '$apiEndPoint/csrf-token',
+      headers: [
         {'Accept': 'application/json'},
         {'X-Requested-With': 'XMLHttpRequest'},
-    ],
-);
+      ],
+    );
+  }
+}
 ```
 
 #### 7. customTimeoutLimit
@@ -168,8 +228,19 @@ Api.ajax(
 - Description: timeout for request in milliseconds (if not specified in function call then will use the default value from env)
 - Note: It is in milliseconds, so if you want to set a time limit of 10 sec you should pass 10*1000 in arguments.
 - Example:
-```dart
-Api.ajax(url: '/api/users', customTimeoutLimit: 10 * 1000);
+
+```dart{8}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> analyzeShoppingPreferences(String id) async {
+    await Api.ajax(
+      url: '$apiEndPoint/analyze-shopping-preferences/$id',
+      customTimeoutLimit: 20 * 1000,
+    );
+  }
+}
 ```
 
 #### 8. Show Alert
@@ -179,9 +250,26 @@ Api.ajax(url: '/api/users', customTimeoutLimit: 10 * 1000);
 - Description: will show an alert on success or error if the parameter is set to true.
 - Note: If set to true, then will check if toast and dialogue for success and error exist in the `REPLACE_ME.ext` file, if they don't exist then fallback alerts and toasts will be used.
 - Example:
-```dart
-Api.ajax(url: '/api/users', showAlert: true);
+
+```dart{10,15}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> signIn(String identifier, String password) async {
+    Map<String, dynamic> user = await Api.ajax(
+      url: apiEndPoint,
+      method: 'post',
+      params: {"identifier": identifier, "password": password},
+      showAlert: true,
+    );
+  }
+}
+
+// Now when we call the function and the API sends error (lets say, 401 or something) then error alert will appear, when it sends successfull response then it will show success alert
 ```
+
+TODO: Add screenshot
 
 #### 9. Alert Type
 - Parameter name: alertType
@@ -191,9 +279,27 @@ Api.ajax(url: '/api/users', showAlert: true);
 - Possible values: 'toast' and 'dialog'
 - Description: Depending on type will show toast or alert.
 - Example:
-```dart
-Api.ajax(url: '/api/users', showAlert: true, alertType: 'toast');
+
+```dart{11,16}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> signIn(String identifier, String password) async {
+    Map<String, dynamic> user = await Api.ajax(
+      url: apiEndPoint,
+      method: 'post',
+      params: {"identifier": identifier, "password": password},
+      showAlert: true,
+      alertType: 'toast'
+    );
+  }
+}
+
+// Now when we call the function and the API sends error (lets say, 401 or something) then error toast will appear, when it sends successfull response then it will show success toast
 ```
+
+TODO: Add screenshot
 
 #### 10. On Start Method
 - Parameter name: onStart
@@ -201,13 +307,24 @@ Api.ajax(url: '/api/users', showAlert: true, alertType: 'toast');
 - Type: `Future<void> Function()?`
 - Description: will be called in starting (before sending request) when the ajax method is called.
 - Example:
-```dart
-Api.ajax(
-    url: '/api/users',
-    onStart: () async {
-        Console.log('Check if has admin permissions');
-    },
-);
+
+```dart{9-13}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> signOut() async {
+    await Api.ajax(
+      url: '$apiEndPoint/logout',
+      params: {"identifier": identifier},
+      onStart: {
+        if(rootAssetsController.user == null){
+          showToast('Sign in first, no user found!');
+        }
+      }
+    );
+  }
+}
 ```
 
 #### 11. On Completed Method
@@ -216,13 +333,22 @@ Api.ajax(
 - Type: `Future<void> Function()?`
 - Description: will be called when the ajax method is completed.
 - Example:
-```dart
-Api.ajax(
-    url: '/api/users',
-    onCompleted: () async {
-        Console.log('Check if response is empty?');
-    },
-);
+
+```dart{9-11}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> signOut() async {
+    await Api.ajax(
+      url: '$apiEndPoint/logout',
+      params: {"identifier": identifier},
+      onCompleted: {
+        goToHomePage();
+      }
+    );
+  }
+}
 ```
 
 #### 11. On Error Method
@@ -231,13 +357,21 @@ Api.ajax(
 - Type: `Future<void> Function(dynamic error)?`
 - Description: will be called when the ajax method hits an error.
 - Example:
-```dart
-Api.ajax(
-    url: '/api/users',
-    onError: (dynamic err) async {
-        Console.danger(err.toString());
-    },
-);
+```dart{9-11}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> purchaseService(String id) async {
+    await Api.ajax(
+      url: '$apiEndPoint/purchase',
+      params: {"identifier": id},
+      onError: {
+        Console.danger('purchase-failed);
+      }
+    );
+  }
+}
 ```
 
 #### 12. On Finally Method
@@ -246,12 +380,23 @@ Api.ajax(
 - Type: `Future<void> Function()?`
 - Description: will be called finally when the ajax method is completed.
 - Example:
-```dart
-Api.ajax(
-    url: '/api/users',
-    onFinally: () async {
-        Console.danger('OnFinally method was called!');
-    },
-);
 
+```dart{6,10,12-14}
+class User {
+  static const String apiEndPoint = '/users';
+  static final RootAssetsController rootAssetsController = Get.find<RootAssetsController>();
+
+  static Future<void> writePDF(String endpoint) async {
+    // Logic to open the file;
+    await Api.ajax(
+      url: '$apiEndPoint/purchase',
+      params: {
+        "data": // read file data,
+      },
+      onFinally: {
+        // Logic to close the file;
+      }
+    );
+  }
+}
 ```
