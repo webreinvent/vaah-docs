@@ -113,7 +113,7 @@ const MaterialColor pink = MaterialColor(
 
 ### How to access any color property
 
-add import in your dart file
+Add import in your dart file
 ```dart
 import 'package:example/vaahextendflutter/app_theme.dart';
 ```

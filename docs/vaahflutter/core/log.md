@@ -25,7 +25,7 @@ The log will check the below variable, if it's set to false then no log will be 
 
 `EnvironmentConfig.enableConsoleLogs`
 
-for more details check [environments.md](./environments.md)
+For more details check [environments.md](./environments.md)
 :::
 
 ## Dependencies

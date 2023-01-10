@@ -24,7 +24,7 @@ The developer should not include the `/` at the end of the URL. e.g.
 ),
 ```
 
-depending on `enableApiLogs` from [EnviromentConfig](./environments), `LogInterceptor` for dio can be enabled/ disabled.
+Depending on `enableApiLogs` from [EnviromentConfig](./environments), `LogInterceptor` for dio can be enabled/ disabled.
 
 ## Initialize Api class
 
@@ -36,9 +36,9 @@ Api.init();
 
 ## Ajax method
 
-- ajax method automatically converts objects from `snake_case To lowerCamelCase` when `Receiving the response`.
+- Ajax method automatically converts objects from `snake_case To lowerCamelCase` when `Receiving the response`.
 
-- ajax method automatically converts objects from `lowerCamelCase To snake_case` when `Sending the request`.
+- Ajax method automatically converts objects from `lowerCamelCase To snake_case` when `Sending the request`.
 
 ### Parameters
 
@@ -60,11 +60,27 @@ Api.ajax(url: '/api/user');
 - Description: callback function
 - Note: returns a null value when an error occurs, otherwise returns the value for the `data` key and whole response.
 - Example:
+
+Using inline function
+
 ```dart{3}
 Api.ajax(
     url: '/api/users',
-    callback: (data, resp) async { Console.info('data', data); },
+    callback: (data, response) async { Console.info('data', data); },
 );
+```
+
+Using reference
+
+```dart{3,6-8}
+Api.ajax(
+    url: '/api/users',
+    callback: usersReceived,
+);
+
+Future<void> usersReceived(dynamic data, Response<dynamic>? response) async {
+    Console.info('data', data);    
+}
 ```
 
 #### 3. Method
