@@ -40,7 +40,7 @@ project
 | **Directory name** | **Documentation link** | **Description** |
 | --- | --- | --- |
 | models | [check this](../lib/models) | This directory is project specific and contains models for the project |
-| views | [check this](../lib/views) | This directory is also project specific and contains UI screens for the project |
+| views | [check this](../lib/views) | This directory is also project specific and contains UI screens for the project, Checkout [Atomic design methodology](#atomic-design-methodology) |
 | controllers | [check this](../lib/controllers) | This directory is also project specific and contains logic for handling actions |
 | resources | [check this](../lib/resources) | This directory contains essential resoucrces for app (e.g. stores token locally when user sign in) |
 | routes | [check this](../lib/routes/routes) | This directory contains route handler |
