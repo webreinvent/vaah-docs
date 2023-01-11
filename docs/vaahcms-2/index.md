@@ -1,4 +1,4 @@
-# VaahCMS 2.x
+# VaahCMS
 
 [[toc]]
 

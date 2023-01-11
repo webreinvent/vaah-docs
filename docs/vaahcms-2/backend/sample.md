@@ -43,7 +43,7 @@ List of all the files responsible for this pages
 - Laravel Model: 
 - Vue Route: 
 - Vue Store: 
-- Vue Page Director: 
+- Vue Page Directory: 
 
 -->
 

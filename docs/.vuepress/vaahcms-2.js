@@ -18,9 +18,13 @@ sidebar = [
             {text: 'Sample', link: '/vaahcms-2/backend/sample.md'},
             {text: 'Generate CRUD', link: '/vaahcms-2/backend/generate-crud.md'},
             {text: 'User auth', link: '/vaahcms-2/backend/user-auth.md'},
+            {text: 'Roles', link: '/vaahcms-2/backend/roles.md'},
+            {text: 'Permissions', link: '/vaahcms-2/backend/permissions.md'},
+            {text: 'Registration', link: '/vaahcms-2/backend/registrations.md'},
+            {text: 'Users', link: '/vaahcms-2/backend/users.md'},
+            {text: 'Jobs', link: '/vaahcms-2/backend/jobs.md'},
         ]
     },
-
 ];
 
 module.exports ={
