@@ -32,6 +32,28 @@ sidebar = [
             { text: 'API/ AJAX', link: '/vaahflutter/core/api.md' },
         ]
     },
+    {
+        text: 'Directory structure',
+        collapsible: true,
+        children: [
+            {
+                text: 'Root',
+                collapsible: true,
+                children: [
+                    { text: 'assets', link: '/vaahflutter/directory_structure/root/d_assets.md' },
+                    { text: 'android', link: '/vaahflutter/directory_structure/root/d_android.md' },
+                    { text: 'ios', link: '/vaahflutter/directory_structure/root/d_ios.md' },
+                    { text: 'lib', link: '/vaahflutter/directory_structure/root/d_lib.md' },
+                    { text: 'test', link: '/vaahflutter/directory_structure/root/d_test.md' },
+                    { text: '.gitignore', link: '/vaahflutter/directory_structure/root/gitignore.md' },
+                    { text: '.metadata', link: '/vaahflutter/directory_structure/root/metadata.md' },
+                    { text: 'analysis_option.yaml', link: '/vaahflutter/directory_structure/root/analysis_option.md' },
+                    { text: 'pubspec.lock', link: '/vaahflutter/directory_structure/root/pubspec.lock.md' },
+                    { text: 'pubspec.yaml', link: '/vaahflutter/directory_structure/root/pubspec.yaml.md' },
+                ]
+            },
+        ]
+    },
 ];
 
 module.exports = {
