@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-d4b21a0a","path":"/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/expansion-panel.html","title":"","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1673275973000},"filePathRelative":"vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/expansion-panel.md"}');export{t as data};

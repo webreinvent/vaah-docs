@@ -1,0 +1,1 @@
+import{_ as e,o as n,c as r}from"./app.096e9617.js";const o={};function t(c,_){return n(),r("div")}const a=e(o,[["render",t],["__file","container-with-rounded-corners.html.vue"]]);export{a as default};

@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-7f76ea08","path":"/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/date-time-input.html","title":"","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1673275973000},"filePathRelative":"vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/date-time-input.md"}');export{t as data};
