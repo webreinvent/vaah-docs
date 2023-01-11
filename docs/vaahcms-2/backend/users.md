@@ -208,7 +208,7 @@ Creates a new user for the database on which the method is run. `\WebReinvent\Va
       ...
     }
   },
-  "messages": "vaahcms-general.saved_successfully",
+  "messages": "Saved successfully.",
   "success": true
 }
 ```
