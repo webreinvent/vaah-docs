@@ -201,9 +201,34 @@ We mention some methods bellow which help you to understand the structure.
 #### Fetch Permissions
 
 ##### Method: `GET`
+##### Action: `PermissionsController@getList`
 ##### URL: `<public-url>/api/vaah/permissions/`
 
-##### Sample Request
+#### Sample Axios Request
+
+```js
+
+async getList() {
+    let options = {
+        query: vaah().clone(this.query)
+    };
+    await vaah().ajax(
+        this.ajax_url,
+        this.afterGetList,
+        options
+    );
+},
+
+async afterGetList (data, res) {
+
+    if (data) {
+        this.list = data;
+    }
+},
+
+```
+
+##### Sample Laravel Request
 ```php 
 parameter = [
     'filter' => [
@@ -230,7 +255,7 @@ parameter = [
 #### Delete Permission
 
 ###### Method: `DELETE`
-###### Action: `deleteItem`
+###### Action: `PermissionsController@deleteItem`
 ###### URL: `<public-url>/api/vaah/permissions/{id}`
 
 ##### Sample Response
@@ -239,18 +264,42 @@ parameter = [
 {
   "data": {},
   "message" : [
-    "vaahcms-general.action_successful"
+    "Action was successful."
   ],
   "success": true
 }
 ```
 ---
-
 #### Fetch single Permission
 
 ###### Method: `GET`
-###### Action: `getItem($id)`
+###### Action: `PermissionsController@getItem($id)`
 ###### URL: `<public-url>/api/vaah/permissions/{id}`
+
+#### Sample Axios Request
+
+```js
+
+ async getItem(id) {
+    if(id){
+        await vaah().ajax(
+            ajax_url+'/'+id,
+            this.getItemAfter
+        );
+    }
+},
+ 
+async getItemAfter(data, res) {
+    if (data) {
+        this.item = data;
+    } else {
+        this.$router.push({name: 'permissions.index'});
+    }
+    
+    await this.getFormMenu();
+},
+
+```
 
 ##### Sample Response
 
