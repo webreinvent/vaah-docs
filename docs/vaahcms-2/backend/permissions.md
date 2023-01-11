@@ -220,10 +220,9 @@ parameter = [
 ```json
 {
   "data": {
-      .............
-      .............
+    ...
   },
-  "success": "true"
+  "success": true
 }
 ```
 ---
@@ -242,7 +241,7 @@ parameter = [
   "message" : [
     "vaahcms-general.action_successful"
   ],
-  "success": "true"
+  "success": true
 }
 ```
 ---
@@ -258,9 +257,8 @@ parameter = [
 ```json
 {
   "data": {
-      .............
-      .............
+    ...
   },
-  "success": "true"
+  "success": true
 }
 ```
