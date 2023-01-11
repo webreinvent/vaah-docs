@@ -1,3 +1,8 @@
+::: danger VaahCMS 1.x
+Use [VaahCMS 1.x](/vaahcms) documentation for the time being.
+:::
+
+
 # VaahCMS
 
 [[toc]]
