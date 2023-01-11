@@ -3,6 +3,7 @@ const guide = require("./guide");
 const vaahcms2 = require("./vaahcms-2");
 const vaahcms = require("./vaahcms");
 const vaahcli = require("./vaahcli");
+const vaahflutter = require("./vaahflutter");
 
 module.exports = {
     lang: 'en-US',
@@ -34,6 +35,10 @@ module.exports = {
                 link: "/vaahcms/",
             },
             {
+                text: "VaahFlutter",
+                link: "/vaahflutter/",
+            },
+            {
                 text: "Guide",
                 link: "/guide/",
             },
@@ -42,11 +47,12 @@ module.exports = {
                 link: "/vaahcli/",
             }*/
         ],
-        sidebar:{
+        sidebar: {
             '/vaahcms-2/': vaahcms2.sidebar,
             '/vaahcms/': vaahcms.sidebar,
             '/guide/': guide.sidebar,
             '/vaahcli/': vaahcli.sidebar,
+            '/vaahflutter/': vaahflutter.sidebar,
         }
     }),
 
