@@ -27,7 +27,7 @@ module.exports = {
         contributors: false,
         navbar: [
             {
-                text: "VaahCMS 2.x",
+                text: "VaahCMS 2.x (Alpha)",
                 link: "/vaahcms-2/",
             },
             {

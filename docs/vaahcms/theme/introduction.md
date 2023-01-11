@@ -8,6 +8,14 @@ A theme is a set of files that define the visual look and feel of your site. The
 
 ------
 
+##### How to generate scaffolding of VaahCMS theme ?
+
+```shell
+npx vaah cms:theme
+```
+
+------
+
 
 
 ##### VaahCms Theme
@@ -24,7 +32,7 @@ We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS 
 
 You will need to make sure your server meets the following requirements:
 
-- PHP >= 7.4.0
+- PHP >= 8.0
 - BCMath PHP Extension
 - Ctype PHP Extension
 - JSON PHP Extension

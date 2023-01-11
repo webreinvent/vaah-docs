@@ -1,6 +1,15 @@
-# VaahCMS
+# VaahCMS 2.x
 
 [[toc]]
+
+::: danger NOTE
+**DO NOT USE THIS GUIDE.**
+
+We're still working on the documentation.
+
+[Checkout VaahCMS 1.x Documentation](https://docs.vaah.dev/vaahcms/)
+
+:::
 
 ## Introduction
 VaahCMS is a web application development platform shipped with headless content management system and common features required in any web application.

@@ -6,6 +6,14 @@ Module is designed with flexibility, simplicity, and re-usability in mind. A mod
 
 ------
 
+##### How to generate scaffolding of VaahCMS module ?
+
+```shell
+npx vaah cms:module
+```
+
+------
+
 
 
 ##### Vaahcms Module
@@ -22,7 +30,7 @@ We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS 
 
 You will need to make sure your server meets the following requirements:
 
-- PHP >= 7.2.5
+- PHP >= 8.0
 - BCMath PHP Extension
 - Ctype PHP Extension
 - JSON PHP Extension
