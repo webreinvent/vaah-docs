@@ -158,7 +158,7 @@ The following permissions are necessary for permissions management in order to c
 
 Some reusable methods mention bellowed.
 
-**getActiveItems()**
+#### Permission::getActiveItems()
 
 You can use this method for fetching all active permissions of the application.
 
@@ -169,7 +169,7 @@ $active_permissions = Permission::getActiveItems();
 ```
 ---
 
-**syncRolesWithUsers()**
+#### Permission::syncPermissionsWithRoles()
 
 You can use this method for sync permissions with roles. After creating a new permission you have to call this method to sync permissions count with roles.
 
@@ -180,7 +180,7 @@ Permission::syncPermissionsWithRoles();
 ```
 ---
 
-**getPermissionRoles($id)**
+#### Permission::getPermissionRoles($id)
 
 You can use this method to retrieve roles that are associated with this permission.
 
