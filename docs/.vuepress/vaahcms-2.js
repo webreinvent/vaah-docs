@@ -19,7 +19,6 @@ sidebar = [
             {text: 'Generate CRUD', link: '/vaahcms-2/backend/generate-crud.md'},
         ]
     },
-
 ];
 
 module.exports ={
