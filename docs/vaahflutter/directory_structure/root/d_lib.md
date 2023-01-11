@@ -45,3 +45,73 @@ project
 | resources | [check this](../lib/resources) | This directory contains essential resoucrces for app (e.g. stores token locally when user sign in) |
 | routes | [check this](../lib/routes/routes) | This directory contains route handler |
 | **`vaahextendflutter`** | [check this](../vaahextendflutter) | `This is the most important directory. It contains all essential code needed to use Vaah Essentials` |
+
+### Atomic design methodology
+
+For views and vaahextendflutter, we follow `Atomic design methodology`.
+
+Atomic design is a methodology composed of five distinct stages working together to create interface design systems in a more deliberate and hierarchical manner. The five stages of atomic design are:
+1. Atoms
+2. Molecules
+3. Organisms
+4. Templates
+5. Pages
+
+Atomic design is not a linear process, but rather a mental model to help us think of our user interfaces as both a cohesive whole and a collection of parts at the same time. Each of the five stages plays a key role in the hierarchy of our interface design systems. Let’s dive into each stage in a bit more detail.
+
+##### Atoms
+
+The atoms of our interfaces serve as the foundational building blocks that comprise all our user interfaces. These atoms include basic elements like form labels, inputs, buttons, etc.
+
+In the context of a pattern library, atoms demonstrate all your base styles at a glance, which can be a helpful reference to keep coming back to as you develop and maintain your design system.
+
+##### Molecules
+
+molecules are relatively simple groups of UI elements functioning together as a unit. For example, a form label, search input, and button can join together to create a search form molecule. The result is a simple, portable, reusable component that can be dropped in anywhere they are needed (e.g. search functionality).
+
+Creating simple components helps UI designers and developers adhere to the single responsibility principle, an age-old computer science precept that encourages a “do one thing and do it well” mentality. Burdening a single pattern with too much complexity makes software unwieldy. Therefore, creating simple UI molecules makes testing easier, encourages reusability, and promotes consistency throughout the interface.
+
+##### Organisms
+
+Organisms are relatively complex UI components composed of groups of molecules and/or atoms and/or other organisms. These organisms form distinct sections of an interface.
+
+The AppBar forms a standalone section of an interface, even though it contains several smaller pieces of interface with their own unique properties and functionality. AppBar organism might consist of dissimilar elements such as a logo image, primary navigation list, and search form, actions.
+
+##### Templates
+
+Templates are page-level objects that place components into a layout and articulate the design’s underlying content structure.
+
+Important characteristic of templates is that they focus on the page’s underlying content structure rather than the page’s final content. Design systems must account for the dynamic nature of content, so it’s very helpful to articulate important properties of components like image sizes and character lengths for headings and text passages.
+
+By defining a page’s skeleton we’re able to create a system that can account for a variety of dynamic content, all while providing needed guardrails for the types of content that populate certain design patterns.
+
+##### Pages
+
+Pages are specific instances of templates that show what a UI looks like with real representative content in place.
+
+### Controllers/ State Management
+
+State management is essential in Flutter app development because it allows us to centralize every UI state and control data flow in the application.
+
+App state is shared across different widgets of your app and is present across complete user sessions. For example, app state appears in the form of login info, user preferences, social app notifications, e-commerce app shopping cart, articles state (read/unread) in a news app, etc.
+
+If you look at it, then there is no one rule here to use ephemeral or App state. One can change one state to another based on the requirement. You have the power to use both setState() and App State to handle every state of your app.
+
+When you are handling a global state which is across the App, setState() is not the right type.
+If you end up using setState() across the entire app, you may face a maintenance glitch, as your state will be everywhere.
+
+You have to use setState() in the UI code’s class only. This means you can end up mixing business logic and UI, which hampers code quality.
+
+##### We prefer using GetX because
+
+GetX is a fast, stable, and light state management library in flutter. There are so many State Management libraries in flutter like MobX, BLoC, Redux, Provider, etc. GetX is also a powerful micro framework and using this, we can manage states, make routing, and can perform dependency injection.
+
+Performance: As compared to other state management libraries, GetX is best because it consumes minimum resources and provides better performance.
+
+Productivity: GetX’s syntax is easy so it is productive. It saves a lot of time for the developers and increases the speed of the app because it does not use extra resources. It uses only those resources which are currently needed and after its work is done, the resources will free automatically. If all the resources are loaded into the memory then it will not be that productive. So better to use GetX for this.
+
+Organization: GetX code is organized as View, Logic, navigation, and dependency injection. So we don’t need any more context to navigate to other screen. We can navigate to screen without using the context so we are not dependent on widget tree.
+
+[Official GetX Documentation](https://pub.dev/packages/get)
+
+We have provided more details in [controllers documentation](../lib/controllers).
