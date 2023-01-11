@@ -19,7 +19,6 @@ sidebar = [
         text: 'Laravel',
         link: '/guide/laravel.md',
     },
-
 ];
 
 module.exports ={
