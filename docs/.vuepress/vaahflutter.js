@@ -52,6 +52,23 @@ sidebar = [
                     { text: 'pubspec.yaml', link: '/vaahflutter/directory_structure/root/pubspec.yaml.md' },
                 ]
             },
+            {
+                text: 'lib',
+                collapsible: true,
+                children: [
+                    { text: 'models', link: '/vaahflutter/directory_structure/lib/models.md' },
+                    { text: 'views', link: '/vaahflutter/directory_structure/lib/views.md' },
+                    { text: 'controllers', link: '/vaahflutter/directory_structure/lib/controllers.md' },
+                    { text: 'resources', link: '/vaahflutter/directory_structure/lib/resources.md' },
+                    {
+                        text: 'routes', collapsible: true,
+                        children: [
+                            { text: 'middleware', link: '/vaahflutter/directory_structure/lib/routes/middleware.md' },
+                            { text: 'routes', link: '/vaahflutter/directory_structure/lib/routes/routes.md' },
+                        ],
+                    },
+                ]
+            },
         ]
     },
 ];
