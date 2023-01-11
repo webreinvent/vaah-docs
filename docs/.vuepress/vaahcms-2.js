@@ -21,6 +21,7 @@ sidebar = [
             {text: 'Roles', link: '/vaahcms-2/backend/roles.md'},
             {text: 'Permissions', link: '/vaahcms-2/backend/permissions.md'},
             {text: 'Users', link: '/vaahcms-2/backend/users.md'},
+            {text: 'Jobs', link: '/vaahcms-2/backend/jobs.md'},
         ]
     },
 ];
