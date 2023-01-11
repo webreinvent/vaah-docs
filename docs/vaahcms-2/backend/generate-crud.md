@@ -22,7 +22,7 @@ Use below command for that :
 ```
 npx vaah cms:crud
 ```
-<img :src="$withBase('/images/step-2.png')">
+<img :src="$withBase('/images/crud-generate-2.png')">
 
 ## Step-3
 Use following procedures to set up CRUD.
@@ -70,7 +70,7 @@ Add this code in above path
 ```
 include('backend/routes-blog.php');
 ```
-<img :src="$withBase('/images/step-5.png')">
+<img :src="$withBase('/images/crud-generate-5.png')">
 
 ## Step-6
 Go to below path
@@ -83,7 +83,7 @@ return view('blog::backend.pages.index');
 uncomment this:
 return view('blog::backend.pages.app');
 ```
-<img :src="$withBase('/images/step-6.png')">
+<img :src="$withBase('/images/crud-generate-6.png')">
 
 ## Step-7
 Include the vue router file
@@ -96,7 +96,7 @@ import blog from "./vue-routes-blogs";
    
 routes = routes.concat(blog);
 ```
-<img :src="$withBase('/images/step-7.png')">
+<img :src="$withBase('/images/crud-generate-7.png')">
 
 ## Step-8
 Import the route file of vue
@@ -109,12 +109,12 @@ Paste ```/backend```
 Make sure that code should be like this
 let ajax_url = base_url + "/backend/blog/blogs";
 ```
-<img :src="$withBase('/images/step-8.png')">
+<img :src="$withBase('/images/crud-generate-8.png')">
 
 ## Step-9
 Open ```.env & .env.custom``` and paster below code
 ```
 MODULE_BLOG_ENV=develop
 ```
-<img :src="$withBase('/images/step-9-a.png')">
-<img :src="$withBase('/images/step-9-b.png')">
+<img :src="$withBase('/images/crud-generate-9-a.png')">
+<img :src="$withBase('/images/crud-generate-9-b.png')">
