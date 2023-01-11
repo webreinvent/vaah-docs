@@ -219,7 +219,7 @@ async getList() {
     );
 },
 
-async afterGetList (data, res) {
+async getListAfter (data, res) {
 
     if (data) {
         this.list = data;
@@ -289,7 +289,7 @@ parameter = [
     }
 },
  
-async getItemAfter(data, res) {
+async afterGetItem(data, res) {
     if (data) {
         this.item = data;
     } else {
