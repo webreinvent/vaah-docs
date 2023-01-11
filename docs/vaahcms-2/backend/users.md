@@ -139,16 +139,16 @@ To know about `Relationships`, see [Laravel Documentation](https://laravel.com/d
 
 | Method Name          | Parameter                            | Description                                                  |
 | -------------------- | ------------------------------------ | ------------------------------------------------------------ |
-| findByUsername       | `$username`  `$columns = array('*')` | The `findByUsername` method find users only by the `username` and return given columns. |
-| findByEmail          | `$email`  `$columns = array('*')`    | The `findByEmail` method find users only by the `email` and return given columns. |
-| countAdministrators  |                                      | The `countAdministrators` method return number of users which has `Administrator` role. |
-| getByRoles           | `$array_role_slugs`                  | The `getByRoles` method return a list of the users which has a role exists in `$array_role_slugs`. |
-| getByRolesOnlyIds    | `$array_role_slugs`                  | The `getByRolesOnlyIds` method return only `id` of the users which has a role exists in `$array_role_slugs`. |
-| getByRolesOnlyEmails | `$array_role_slugs`                  | The `getByRolesOnlyEmails` method return only `email` of the users which has a role exists in `$array_role_slugs`. |
-| rulesAdminCreate     |                                      | The `rulesAdminCreate` method return the array of validation rules for User. |
-| isLastAdmin          |                                      | The `isLastAdmin` method return `true` if Application has only one User of Administrator role. |
-| getAvatarById        | `$id`                                | The `getAvatarById` method find users only by the `id` and return avatar url. |
-| getUsersForAssets    |                                      | The `getUsersForAssets` method return list of `active` users with following columns: `id`, `first_name`, `middle_name`, `last_name` |
+| User::findByUsername       | `$username`  `$columns = array('*')` | The `findByUsername` method find users only by the `username` and return given columns. |
+| User::findByEmail          | `$email`  `$columns = array('*')`    | The `findByEmail` method find users only by the `email` and return given columns. |
+| User::countAdministrators  |                                      | The `countAdministrators` method return number of users which has `Administrator` role. |
+| User::getByRoles           | `$array_role_slugs`                  | The `getByRoles` method return a list of the users which has a role exists in `$array_role_slugs`. |
+| User::getByRolesOnlyIds    | `$array_role_slugs`                  | The `getByRolesOnlyIds` method return only `id` of the users which has a role exists in `$array_role_slugs`. |
+| User::getByRolesOnlyEmails | `$array_role_slugs`                  | The `getByRolesOnlyEmails` method return only `email` of the users which has a role exists in `$array_role_slugs`. |
+| User::rulesAdminCreate     |                                      | The `rulesAdminCreate` method return the array of validation rules for User. |
+| User::isLastAdmin          |                                      | The `isLastAdmin` method return `true` if Application has only one User of Administrator role. |
+| User::getAvatarById        | `$id`                                | The `getAvatarById` method find users only by the `id` and return avatar url. |
+| User::getUsersForAssets    |                                      | The `getUsersForAssets` method return list of `active` users with following columns: `id`, `first_name`, `middle_name`, `last_name` |
 
 
 ## API
