@@ -3,7 +3,7 @@
 [[toc]]
 
 ## Purpose
-A role is a group of permissions that allow a user who has been given the role to carry out specific tasks. For instance, the super administrator, who can be regarded as the application's owner, is permitted to carry out all tasks in the application. He or she can add users, remove or edit, and do other things.
+A role is a group of permissions that allow a user who has been given the role to carry out specific actions. For instance, the super administrator, who can be regarded as the application's owner, is permitted to carry out all tasks in the application. They can add users, remove or edit, and do other things.
 
 ## Features & Demos
 
@@ -48,7 +48,7 @@ You can view the video attached below to learn how to give a role to a user.
 
 ## Permissions
 
-The following permissions are necessary for role management in order to carry out certain actions.
+The following permissions are necessary for roles management in order to carry out certain actions.
 
 | Permissions          | Description                                           |
 | ------------- | ------------------------------------------------------------ |
@@ -72,7 +72,7 @@ The following permissions are necessary for role management in order to carry ou
 
 Some reusable methods mention bellowed.
 
-**getActiveRoles()**
+#### Role::getActiveRoles()
 
 You can use this method for fetching all active roles of the application.
 
@@ -83,7 +83,7 @@ $active_roles = Role::getActiveRoles();
 ```
 ---
 
-**countUsers($id)**
+#### Role::countUsers($id)
 
 You can use this method for count users of a role.
 
@@ -94,7 +94,7 @@ $count_users = Role::countUsers($id);  // Role ID must be provided as parameters
 ```
 ---
 
-**countPermissions($id)**
+#### Role::countPermissions($id)
 
 You can use this method for count permissions of a role.
 
@@ -105,7 +105,7 @@ $count_permissions = Role::countPermissions($id);  // Role ID must be provided a
 ```
 ---
 
-**syncRolesWithUsers()**
+#### Role::syncRolesWithUsers();
 
 You can use this method for sync roles with users. After creating a new role you have to call this method to sync role count with users.
 
