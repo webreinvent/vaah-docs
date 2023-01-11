@@ -205,12 +205,11 @@ Creates a new user for the database on which the method is run. `\WebReinvent\Va
 {
   "data":  {
     "item": {
-      .............
-      .............
+      ...
     }
   },
   "messages": "vaahcms-general.saved_successfully",
-  "success": "true"
+  "success": true
 }
 ```
 
@@ -238,10 +237,9 @@ parameter = [
 ```json
 {
   "data": {
-      .............
-      .............
+      ...
   },
-  "success": "true"
+  "success": true
 }
 ```
 ---
