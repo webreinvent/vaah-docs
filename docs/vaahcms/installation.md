@@ -4,21 +4,34 @@
 
 ## Install via VaahCLI
 
-To install VaahCMS via VaahCLI, first you need to install VaahCLI, via following command:
+Install [VaahCLI](https://vaah.dev/cli), via following command:
 
 ```js
 npm install vaah -g
 ```
 
-
-
 Then run following command to install VaahCMS:
 
-```php
-vaah cms:install or npx vaah cms:install
+```sh
+npx vaah cms:install
 ```
 
+Then run
 
+```shell
+php artisan serve
+```
+
+And visit:
+
+```
+http://127.0.0.1:8000/vaahcms/setup
+```
+
+::: warning NOTE
+If you visit http://127.0.0.1:8000 before completing the setup then you may get few errors, you can ignore these errors and visit http://127.0.0.1:8000/vaahcms/setup to setup the VaahCMS
+
+:::
 
 ## Manual Download & Installation
 
