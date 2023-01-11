@@ -2,6 +2,8 @@
 
 [[toc]]
 
+This directory is mostly specific to project.
+
 Models are data classes that you create according to your needs. And with the help of the controller, you can manipulate the model’s data.
 
 Place all your models in here like user.dart, product.dart or any other.
