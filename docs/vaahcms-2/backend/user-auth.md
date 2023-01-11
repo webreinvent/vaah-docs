@@ -19,7 +19,7 @@ Then install theme using below command :
 npx vaah cms:t
 ```
 
-<img :src="$withBase('/images/step-1.png')">
+<img :src="$withBase('/images/user-auth-1.png')">
 
 ## Step-2
 After completing theme setup and activation we will generate authentication :
@@ -27,7 +27,6 @@ Use below command for that :
 ```
 npx vaah cms:auth
 ```
-<img :src="$withBase('/images/step-2.png')">
 
 ## Step-3
 After run this command it will ask a question :
@@ -69,7 +68,7 @@ a) <public-url>/signin
 b) <public-url>/signup
 ```
 
-<img :src="$withBase('/images/step-4.png')">
+<img :src="$withBase('/images/user-auth-4.png')">
 
 ## Step-5
 Include route auth file
@@ -81,7 +80,7 @@ Add this code in above path
 ```
 include("frontend/routes-auth.php");
 ```
-<img :src="$withBase('/images/step-5.png')">
+<img :src="$withBase('/images/user-auth-5.png')">
 
 ## Step-6
 Include VueScripts
@@ -97,7 +96,7 @@ let jses = [
 
     mix.js(jses,  output_folder+'/build/script.js');
 ```
-<img :src="$withBase('/images/step-6.png')">
+<img :src="$withBase('/images/user-auth-6.png')">
 
 ## Step-7
 Include the vue router file
@@ -108,14 +107,14 @@ Add this code in above path
 ```
 <script src="{{vh_theme_assets_url("MyTheme", "build/script.js")}}"></script>
 ```
-<img :src="$withBase('/images/step-7.png')">
+<img :src="$withBase('/images/user-auth-7.png')">
 
 ## Step-8
 Then add ```/signup``` ahead of your URL to display sign in page 
 ```
 http://127.0.0.1:8000/signup
 ```
-<img :src="$withBase('/images/step-8.png')">
+<img :src="$withBase('/images/user-auth-8.png')">
 
 ```In this video the process of signup where data stored after signin, data flow after activation through link explained.```
 
@@ -128,4 +127,4 @@ Then add ```/signin``` ahead of your URL to display sign in page
 ```
 http://127.0.0.1:8000/signin
 ```
-<img :src="$withBase('/images/step-9.png')">
+<img :src="$withBase('/images/user-auth-9.png')">
