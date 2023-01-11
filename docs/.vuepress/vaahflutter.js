@@ -69,6 +69,22 @@ sidebar = [
                     },
                 ]
             },
+            {
+                text: 'vaahextendflutter',
+                collapsible: true,
+                children: [
+                    {
+                        text: 'base',
+                        collapsible: true,
+                        children: [
+                            { text: 'controller', link: '/vaahflutter/directory_structure/vaahextendflutter/base/controller.md' },
+                            { text: 'theme', link: '/vaahflutter/directory_structure/vaahextendflutter/base/theme.md' },
+                        ],
+                    },
+                    { text: 'environments', link: '/vaahflutter/directory_structure/vaahextendflutter/env.md' },
+                    { text: 'app theme', link: '/vaahflutter/directory_structure/vaahextendflutter/apptheme.md' },
+                ]
+            },
         ]
     },
 ];
