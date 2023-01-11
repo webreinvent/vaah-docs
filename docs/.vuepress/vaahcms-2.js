@@ -19,7 +19,8 @@ sidebar = [
             {text: 'Generate CRUD', link: '/vaahcms-2/backend/generate-crud.md'},
             {text: 'User auth', link: '/vaahcms-2/backend/user-auth.md'},
             {text: 'Roles', link: '/vaahcms-2/backend/roles.md'},
-            {text: 'Permissions', link: '/vaahcms-2/backend/permissions.md'}
+            {text: 'Permissions', link: '/vaahcms-2/backend/permissions.md'},
+            {text: 'Users', link: '/vaahcms-2/backend/users.md'},
         ]
     },
 ];
