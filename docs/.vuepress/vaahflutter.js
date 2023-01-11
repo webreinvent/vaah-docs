@@ -83,6 +83,58 @@ sidebar = [
                     },
                     { text: 'environments', link: '/vaahflutter/directory_structure/vaahextendflutter/env.md' },
                     { text: 'app theme', link: '/vaahflutter/directory_structure/vaahextendflutter/apptheme.md' },
+                    {
+                        text: 'helpers',
+                        collapsible: true,
+                        children: [
+                            { text: 'console', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/console.md' },
+                            { text: 'constants', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/constants.md' },
+                            { text: 'datetime', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/datetime.md' },
+                            { text: 'input formatters', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/input-formatters.md' },
+                            { text: 'responsive', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/responsive.md' },
+                            { text: 'styles', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/styles.md' },
+                        ],
+                    },
+                    {
+                        text: 'services',
+                        collapsible: true,
+                        children: [
+                            { text: 'api', link: '/vaahflutter/directory_structure/vaahextendflutter/services/api.md' },
+                            { text: 'api self sign', link: '/vaahflutter/directory_structure/vaahextendflutter/services/self-sign.md' },
+                        ],
+                    },
+                    {
+                        text: 'widgets',
+                        collapsible: true,
+                        children: [
+                            {
+                                text: 'atoms',
+                                collapsible: true,
+                                children: [
+                                    { text: 'container with rounded corners', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/container-with-rounded-corners.md' },
+                                    { text: 'expansion panel', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/expansion-panel.md' },
+                                    { text: 'inputs', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/inputs.md' },
+                                    { text: 'auto complete input', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/auto-complete-input.md' },
+                                    { text: 'date time input', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/date-time-input.md' },
+                                    { text: 'file picker', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/file-picker.md' },
+                                    { text: 'slider input', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/slider-input.md' },
+                                ],
+                            },
+                            {
+                                text: 'molecules',
+                                collapsible: true,
+                                children: [
+                                ],
+                            },
+                            {
+                                text: 'organisms',
+                                collapsible: true,
+                                children: [
+                                ],
+                            },
+                        ],
+                    },
+                    { text: 'docs', link: '/vaahflutter/directory_structure/vaahextendflutter/docs.md' },
                 ]
             },
         ]
