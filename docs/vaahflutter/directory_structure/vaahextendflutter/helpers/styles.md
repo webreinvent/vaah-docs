@@ -17,7 +17,7 @@ We have 9 different size fonts:
 - `size7`: `24`,
 - and `size8`: `27`.
 
-And we have 4 diffent kind of weights for fonts:
+And we have 4 different kind of weights for fonts:
 - `light`,
 - `regular`,
 - `semiBold`,

@@ -1,4 +1,4 @@
-# Constants
+# DateTime Helpers
 
 ::: warning Dependencies
 `dart:math` and [`package:intl/intl.dart`](https://pub.dev/packages/intl)
@@ -6,7 +6,7 @@
 
 [[toc]]
 
-This file contains all the common Date and Time helpers which can be used in app.
+This file contains all the common Date and Time helpers which can be used in the app.
 
 ## Extension On TimeOfDay
 
@@ -17,11 +17,11 @@ final TimeOfDay time = TimeOfDay.now();
 print(time.toHMaa);
 ```
 
-date time helper contains toHMaa getter on extension so it translates to wanted result.
+date time helper contains toHMaa getter on the extension so it translates to the wanted result.
 
 ## Extension On DateTime
 
-##### Get DateTime with zero millisecond and microsecond
+##### Get DateTime with zero milliseconds and microsecond
 
 ```dart
 final DateTime date = DateTime.now();
@@ -42,7 +42,7 @@ final DateTime date = DateTime.now();
 print(date.daysAfter(2));
 ```
 
-##### Get DateTime for next day start
+##### Get DateTime for the next day start
 
 ```dart
 final DateTime date = DateTime.now();
@@ -51,7 +51,7 @@ print(date.nextDayStart);
 
 returns `xxxx-xx-xx 00:00:00.000`
 
-##### Get Date only (time is set to zero) (if DatTime type is UTC then return UTC otherwise return local)
+##### Get Date only (time is set to zero) (if DateTime type is UTC then return UTC otherwise return local)
 
 ```dart
 final DateTime date = DateTime.now();
@@ -60,7 +60,7 @@ print(date.onlyDate);
 
 returns year, month, date
 
-##### Get Month only (time is set to zero and date is set to first) (if DatTime type is UTC then return UTC otherwise return local)
+##### Get Month only (time is set to zero and date is set to first) (if DateTime type is UTC then return UTC otherwise return local)
 
 ```dart
 final DateTime date = DateTime.now();
@@ -76,7 +76,7 @@ final DateTime date = DateTime.now();
 print(date.onlytime(01, 15));
 ```
 
-can pass optional arguments hour and minutes, first arg will be hour always.
+can pass optional arguments hours and minutes, the first argument will be hour always.
 returns (epoch date + time) `1970-01-01 xx:xx:00.000z`
 
 ##### Get UTC Time First Day Since Epoch
@@ -102,14 +102,14 @@ final DateTime date = DateTime.now();
 print(date.asLocal);
 ```
 
-##### Get MMM DD HH:MM AM/PM formated string
+##### Get MMM DD HH:MM AM/PM formatted string
 
 ```dart
 final DateTime date = DateTime.now();
 print(date.toDateTimeString);
 ```
 
-##### Get EEEE Month DD HH:MM AM/PM formated string
+##### Get EEEE Month DD HH:MM AM/PM formatted string
 
 ```dart
 final DateTime date = DateTime.now();
@@ -123,14 +123,14 @@ final DateTime date = DateTime.now();
 print(date.toFullDateString);
 ```
 
-##### Get HH:MM AM/PM formated string
+##### Get HH:MM AM/PM formatted string
 
 ```dart
 final DateTime date = DateTime.now();
 print(date.toHMaa);
 ```
 
-##### Get HH:MM:SS AM/PM formated string
+##### Get HH:MM:SS AM/PM formatted string
 
 ```dart
 final DateTime date = DateTime.now();
@@ -151,7 +151,7 @@ final DateTime date = DateTime.now();
 print(date.toYyyymmmdd);
 ```
 
-##### Get Date of Birth (YYYY-MM-DD) formated string
+##### Get Date of Birth (YYYY-MM-DD) formatted string
 
 ```dart
 final DateTime date = DateTime.now();
@@ -166,9 +166,9 @@ print(date.toDateOfBirth);
 final DateTime date = '2023-01-01 00:00:00'.toDateTime();
 ```
 
-you can pass valid pattern in toDateTime function to convert string from that format, default pattern is 'yyyy-mm-dd hh:mm:ss'
+you can pass a valid pattern in toDateTime function to convert the string from that format, default pattern is 'yyyy-mm-dd hh:mm:ss'
 
-##### Add zeros as prefix to equalize the length
+##### Add zeros as a prefix to equalize the length
 
 ```dart
 const String number = '100';
@@ -185,7 +185,7 @@ final double? numDouble = number.parseDouble;
 
 ## Extension on Duration
 
-##### Get formated String
+##### Get formatted String
 
 ```dart
 const Duration dur = Duration(days:3, hours: 20, minutes: 10);
@@ -194,7 +194,7 @@ print(dur.format);
 
 will give output HH:MM:SS
 
-##### Get HH:MM:SS formated String
+##### Get HH:MM:SS formatted String
 
 ```dart
 const Duration dur = Duration(days:3, hours: 20, minutes: 10);
@@ -203,7 +203,7 @@ print(dur.toHms);
 
 will give output HH:MM:SS (Two Digit Hours, Two Digit Minutes, Two Digit Seconds)
 
-##### Get MM:SS formated String
+##### Get MM:SS formatted String
 
 ```dart
 const Duration dur = Duration(days:3, hours: 20, minutes: 10);
