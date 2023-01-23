@@ -1,0 +1,287 @@
+# File Picker Input
+
+::: danger Dependencies
+depends on [file_picker](https://pub.dev/packages/file_picker) for icons.
+:::
+
+[[toc]]
+
+<img height="500" :src="$withBase('/images/flutter/atom-widgets/filepicker.gif')" alt="filepicker">
+
+## How to use?
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+),
+```
+
+Pass `callback` function to get response when user selects file(s).
+
+```dart
+VaahFilePicker(
+    label: 'Pick File',
+    callback: (List<PlatformFile>? files) {
+        if (files == null) return;
+        if (files.isEmpty) return;
+        Console.info(files.length.toString());
+    },
+),
+```
+
+Set `withData` to `true` to get file(s) with data.
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+    withData: true,
+),
+```
+
+Set `allowMultiple` to `true` to allow user to select multiple files.
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+    allowMultiple: true,
+),
+```
+
+Set `fileType` to allow specific file types. Valid values are `FileType.image`, `FileType.media`, `FileType.audio`, `FileType.video`, `FileType.any`. To allow specific extensions only, check below segment.
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+    fileType: FileType.image,
+),
+```
+
+Set `fileType` to `FileType.custom` and pass `allowedExtensions`.
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+    fileType: FileType.custom,
+    allowedExtensions: ['pdf'],
+),
+```
+
+Paas `padding` parameter to set custom padding in input field.
+
+```dart
+VaahFilePicker(
+    label: 'Pick File',
+    padding: horizontalPadding8 + verticalPadding4,
+),
+```
+
+Paas `isEnabled` parameter to enable/ disable picker.
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+    isEnabled: false,
+),
+```
+
+Paas `size` parameter to change size of field. Available input sizes are `enum InputSize { extraSmall, small, medium, large, extraLarge }`
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+    size: InputSize.extraSmall,
+),
+```
+
+Paas `iconBackgroundColor` and `iconColor` parameter to change appereance of icon.
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+    iconColor: Colors.white,
+    iconBackgroundColor: Colors.pink,
+),
+```
+
+Paas `iconBackgroundColor` and `iconColor` parameters to change appereance of icon.
+
+```dart
+const VaahFilePicker(
+    label: 'Pick File',
+    iconColor: Colors.white,
+    iconBackgroundColor: Colors.pink,
+),
+```
+
+Pass `validator` and `autoValidateMode` parameters for validation.
+
+```dart
+VaahFilePicker(
+    label: 'Pick File',
+    validator: (value) {
+        if (value! == 'Pick File') return 'Please select file!';
+        return null;
+    },
+    autoValidateMode: AutovalidateMode.always,
+),
+```
+
+## Source code
+
+```dart
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:team/vaahextendflutter/app_theme.dart';
+import 'package:team/vaahextendflutter/helpers/constants.dart';
+
+enum InputSize { extraSmall, small, medium, large, extraLarge }
+
+class VaahFilePicker extends StatefulWidget {
+  final String label;
+  final EdgeInsets padding;
+  final double borderRadius;
+  final bool isEnabled;
+  final InputSize size;
+  final Color? iconBackgroundColor;
+  final Color? iconColor;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autoValidateMode;
+  final Function(List<PlatformFile>?)? callback;
+  final String? dialogTitle;
+  final bool withData;
+  final bool allowMultiple;
+  final FileType fileType;
+  final List<String>? allowedExtensions;
+
+  const VaahFilePicker({
+    super.key,
+    required this.label,
+    this.padding = allPadding12,
+    this.borderRadius = defaultPadding / 2,
+    this.isEnabled = true,
+    this.size = InputSize.medium,
+    this.iconBackgroundColor,
+    this.iconColor,
+    this.validator,
+    this.autoValidateMode,
+    this.callback,
+    this.dialogTitle,
+    this.withData = false,
+    this.allowMultiple = false,
+    this.fileType = FileType.any,
+    this.allowedExtensions,
+  });
+
+  @override
+  State<VaahFilePicker> createState() => _VaahFilePickerState();
+}
+
+class _VaahFilePickerState extends State<VaahFilePicker> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    _controller.text = widget.label;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      onTap: _onTap,
+      decoration: InputDecoration(
+        contentPadding: widget.padding,
+        border: border(AppTheme.colors['black']!.shade400),
+        enabledBorder: border(AppTheme.colors['black']!.shade400),
+        disabledBorder: border(AppTheme.colors['black']!.shade300),
+        focusedBorder: border(AppTheme.colors['black']!.shade400),
+        errorBorder: border(AppTheme.colors['danger']!.shade400),
+        focusedErrorBorder: border(AppTheme.colors['danger']!.shade400),
+        errorStyle: TextStyle(color: AppTheme.colors['danger']!.shade400),
+        suffixIcon: InkWell(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(widget.borderRadius),
+                bottomRight: Radius.circular(widget.borderRadius),
+              ),
+              color: widget.iconBackgroundColor ?? AppTheme.colors['primary'],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FaIcon(
+                  asset(),
+                  size: getFontSize() * 1.3,
+                  color: widget.iconColor ?? AppTheme.colors['white'],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      controller: _controller,
+      readOnly: true,
+      style: TextStyle(
+        fontSize: getFontSize(),
+        color: widget.isEnabled
+            ? AppTheme.colors['black']!.shade400
+            : AppTheme.colors['black']!.shade300,
+      ),
+      enabled: widget.isEnabled,
+      validator: widget.validator,
+      autovalidateMode: widget.autoValidateMode,
+    );
+  }
+
+  void _onTap() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowedExtensions: widget.allowedExtensions,
+      dialogTitle: widget.dialogTitle,
+      type: widget.fileType,
+      allowMultiple: widget.allowMultiple,
+      withData: widget.withData,
+    );
+
+    if (result != null) {
+      List<PlatformFile> files = result.files;
+      setState(() {
+        _controller.text = files.map((element) => element.name).toList().join(', ');
+      });
+      if (widget.callback != null) widget.callback!(files);
+    } else {
+      // User canceled the picker
+    }
+  }
+
+  OutlineInputBorder border(Color color) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(widget.borderRadius),
+      borderSide: BorderSide(
+        width: 1,
+        color: color,
+      ),
+    );
+  }
+
+  double getFontSize() {
+    switch (widget.size) {
+      case InputSize.extraSmall:
+        return AppTheme.extraSmall;
+      case InputSize.small:
+        return AppTheme.small;
+      case InputSize.large:
+        return AppTheme.large;
+      case InputSize.extraLarge:
+        return AppTheme.extraLarge;
+      default:
+        return AppTheme.medium;
+    }
+  }
+
+  IconData asset() {
+    return FontAwesomeIcons.file;
+  }
+}
+```
