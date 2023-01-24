@@ -10,16 +10,71 @@ This file contains all the common Date and Time helpers which can be used in the
 
 ## Extension On TimeOfDay
 
-Get TimeOfDay in  HH:MM AM/PM format
+Get TimeOfDay in  HH:MM AM/PM format. DateTime extension contains toHMaa getter on the extension so it translates DateTime to HH:MM AM/PM.
 
 ```dart
 final TimeOfDay time = TimeOfDay.now();
 print(time.toHMaa);
 ```
 
-date time helper contains toHMaa getter on the extension so it translates to the wanted result.
+```dart
+String formatExt({String format = 'hh:mm a'}) =>
+    DateFormat(format).format(DateTime(0, 0, 0, hour, minute));
+```
 
 ## Extension On DateTime
+
+### Change timezone
+
+::: tip Note:
+In database developer should save DateTime in UTC if possible. And Developer will have to be carefull when working with Timezone.
+:::
+
+We have offset with respect to UTC time so we can change timezone with respect to UTC only. We will walk you through few use cases and how they should be handled.
+
+#### Usecase: We receive UTC time from database and we want to change it for specific timezone.
+
+```dart
+DateTime? date = DateTime.utc(...);
+date.toTimezone('Asia/Dhaka');
+```
+
+#### Usecase: We have DateTime for specific timezone and we want to change it to UTC.
+
+let's assume we have two properties in our model, one `datekey` and other `timezonekey`. And for some reason when we use date we don't want to use it as UTC.
+
+```dart
+DateTime? date = DateTime.utc(datekey...);
+date = date.fromTimezone(timezonekey);
+```
+
+`timezonekey` will be something like `Asia/Kolkata`.
+
+#### Usecase: We have to change DateTime from one timezone (known priorly) to another timezone.
+
+Let's say I have my DateTime according to `ABC` timezone and I want to change it to `LMN` timezone then First I'll have to convert `ABC` to `UTC` and then we can convert that `UTC` to `LMN`. But why do we have to go back to UTC when we want to change from one timezone to another timezone? Because we have time offsets respected to UTC.
+
+let's assume we have two properties in our model, one `datekey` and other `timezonekey`.
+
+```dart
+DateTime? date = DateTime.utc(datekey...);
+date = date.fromTimezone(timezonekey);
+date = date?.toTimezone(newTimezone);
+```
+
+#### Usecase: We have to change DateTime from one timezone (not known priorly) to another timezone.
+
+for reference in below explaination:
+| **Region** | **DateTime** |
+| --- | --- |
+| EST | 2023-01-01 00:00:00 am |
+| IST | 2023-01-01 10:30:00 am |
+
+Now why can't we convert DateTime from one timezone (not known priorly) to another timezone. e.g. let's try to convert EST (unknown) DateTime to IST DateTime. Date property from database looks something like: `2023-01-01 00:00:00` now we parse it in flutter, flutter gives us DateTime object as local. If I live in India it will give me DateTime object with same properties of `2023-01-01 00:00:00` and not with properties of `2023-01-01 10:30:00`. Which is not correct. You can try everything/ available extension methods but you won't get correct results to show if you don't know the timezone.
+
+::: danger Note
+When we change timezone the DateTime, it will be converted to UTC. In Flutter we don't have `setter` for `timeZoneName` property on DateTime, so we don't know from which timzeone DateTime has and if we don't know that we can't convert that time to UTC automatically in our extension, because for every timezone offsets are different, And as we have said We can change timezone with respect to UTC. That's why if you want to remeber timezone, you have to maintain a separate property.
+:::
 
 ##### Get DateTime with zero milliseconds and microsecond
 
@@ -102,6 +157,13 @@ final DateTime date = DateTime.now();
 print(date.asLocal);
 ```
 
+##### Get Client DateTime
+
+```dart
+final DateTime date = DateTime.now();
+print(date.asClient);
+```
+
 ##### Get MMM DD HH:MM AM/PM formatted string
 
 ```dart
@@ -137,7 +199,7 @@ final DateTime date = DateTime.now();
 print(date.toHHMMSS);
 ```
 
-##### Get  Month(short) Date formated string
+##### Get Month(short) Date formated string
 
 ```dart
 final DateTime date = DateTime.now();
@@ -157,6 +219,18 @@ print(date.toYyyymmmdd);
 final DateTime date = DateTime.now();
 print(date.toDateOfBirth);
 ```
+
+##### Get Custom formatted string
+
+by default format will be : 'yyyy MMM dd, h:mm a'
+
+`mm` will be used for Minutes and `MM`, `MMM`, `MMMM` will be used for Month.
+
+```dart
+DateTime date = DateTime.now();
+Console.danger(date.format(format: 'yyyy-MM-dd'));
+```
+
 
 ## Extension On String
 
