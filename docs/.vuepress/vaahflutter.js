@@ -87,6 +87,7 @@ sidebar = [
                         text: 'helpers',
                         collapsible: true,
                         children: [
+                            { text: 'alerts', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/alerts.md' },
                             { text: 'console', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/console.md' },
                             { text: 'constants', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/constants.md' },
                             { text: 'datetime', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/datetime.md' },
