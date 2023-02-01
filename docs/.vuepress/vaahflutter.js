@@ -112,8 +112,9 @@ sidebar = [
                                 text: 'atoms',
                                 collapsible: true,
                                 children: [
-                                    { text: 'expansion panel', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/app-expansion-panel.md' },
+                                    { text: 'tabs', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/tab-options.md' },
                                     { text: 'container with rounded corners', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/container-with-rounded-corners.md' },
+                                    { text: 'expansion panel', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/app-expansion-panel.md' },
                                     { text: 'inputs', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/inputs.md' },
                                     { text: 'auto complete input', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/auto-complete-input.md' },
                                     { text: 'date time input', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/date-time-input.md' },
