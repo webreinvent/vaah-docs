@@ -89,7 +89,7 @@ static DateTime? fromTimezone(
 
 // Call
 DateTime? datetime = DateTimeHelper.fromTimezone(
-  'etc/gmt',
+  'utc',
   '2023-01-01',
   pattern: 'yyyy-MM-dd',
 );
