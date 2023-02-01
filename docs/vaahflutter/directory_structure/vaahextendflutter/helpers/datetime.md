@@ -24,7 +24,7 @@ String formatExt({String format = 'hh:mm a'}) =>
 
 ## Extension On DateTime
 
-### Change timezone
+### Timezone Related
 
 ::: tip Note:
 In database developer should save DateTime in UTC if possible. And Developer will have to be carefull when working with Timezone.
@@ -32,11 +32,12 @@ In database developer should save DateTime in UTC if possible. And Developer wil
 
 We have offset with respect to UTC time so we can change timezone with respect to UTC only. We will walk you through few use cases and how they should be handled.
 
+Example of valid Timezones: `Asia/Kolkata`, `ASIA/KOLKATA`, `asia/kolkata`, Also check list of available timezones [here](https://gist.github.com/we-prajapati-c001/e67c763b0fb1f81c914092eedcfe0bbe)
+
 #### Usecase: We receive UTC time from database and we want to change it for specific timezone.
 
 ```dart
-DateTime? date = DateTime.utc(...);
-date.toTimezone('Asia/Dhaka');
+DateTime? date = DateTimeHelper.toTimezone('Asia/Kolkata', dateString);
 ```
 
 #### Usecase: We have DateTime for specific timezone and we want to change it to UTC.
@@ -44,22 +45,17 @@ date.toTimezone('Asia/Dhaka');
 let's assume we have two properties in our model, one `datekey` and other `timezonekey`. And for some reason when we use date we don't want to use it as UTC.
 
 ```dart
-DateTime? date = DateTime.utc(datekey...);
-date = date.fromTimezone(timezonekey);
+DateTime? date = DateTimeHelper.fromTimezone(timezonekey, datekey);
 ```
-
-`timezonekey` will be something like `Asia/Kolkata`.
 
 #### Usecase: We have to change DateTime from one timezone (known priorly) to another timezone.
 
 Let's say I have my DateTime according to `ABC` timezone and I want to change it to `LMN` timezone then First I'll have to convert `ABC` to `UTC` and then we can convert that `UTC` to `LMN`. But why do we have to go back to UTC when we want to change from one timezone to another timezone? Because we have time offsets respected to UTC.
 
-let's assume we have two properties in our model, one `datekey` and other `timezonekey`.
+let's assume we have two properties in our model, one `datekey` and other `timezonekey`. And `newtimezone` holds new timezone value.
 
 ```dart
-DateTime? date = DateTime.utc(datekey...);
-date = date.fromTimezone(timezonekey);
-date = date?.toTimezone(newTimezone);
+DateTime? date = DateTimeHelper.fromTimezone(timezonekey, datekey)?.toTimezone(newtimezone);
 ```
 
 #### Usecase: We have to change DateTime from one timezone (not known priorly) to another timezone.
@@ -75,6 +71,50 @@ Now why can't we convert DateTime from one timezone (not known priorly) to anoth
 ::: danger Note
 When we change timezone the DateTime, it will be converted to UTC. In Flutter we don't have `setter` for `timeZoneName` property on DateTime, so we don't know from which timzeone DateTime has and if we don't know that we can't convert that time to UTC automatically in our extension, because for every timezone offsets are different, And as we have said We can change timezone with respect to UTC. That's why if you want to remeber timezone, you have to maintain a separate property.
 :::
+
+#### DateTimeHelper
+
+##### fromTimezone method: This method from DateTimeHelper class returns UTC datetime. `timezone` and `datetime` parameters are mendatory to pass, you can pass daylight true if the `datetime` is calculated depending on daylight, you can pass custom `pattern` if you're saving datetime in custom format.
+
+```dart
+static DateTime? fromTimezone(
+  String timezone,
+  String datetime, {
+  String pattern = 'yyyy-MM-dd hh:mm:ss',
+  bool daylight = false,
+}) {
+  // Will return UTC DateTime
+  return DateFormat(pattern).parse(datetime, true).fromTimezone(timezone, daylight: daylight);
+}
+
+// Call
+DateTime? datetime = DateTimeHelper.fromTimezone(
+  'etc/gmt',
+  '2023-01-01',
+  pattern: 'yyyy-MM-dd',
+);
+```
+
+##### toTimezone method: this method will give desired timezone datetime from UTC. You can pass daylight true if you want the results depending on daylight, you can pass custom `pattern` if you're saving datetime in custom format.
+
+```dart
+static DateTime? toTimezone(
+  String timezone,
+  String datetime, {
+  String pattern = 'yyyy-MM-dd hh:mm:ss',
+  bool daylight = false,
+}) {
+  return DateFormat(pattern).parse(datetime, true).toTimezone(timezone, daylight: daylight);
+}
+
+DateTime? datetime = DateTimeHelper.toTimezone(
+  'Asia/Kolkata',
+  '2023-01-01 10:30:00.000Z',
+  pattern: 'yyyy-MM-dd hh:mm:ss.000Z',
+);
+```
+
+### Other DateTime Extensions
 
 ##### Get DateTime with zero milliseconds and microsecond
 
