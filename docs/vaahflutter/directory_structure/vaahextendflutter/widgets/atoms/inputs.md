@@ -16,13 +16,13 @@ final TextEditingController controller = TextEditingController();
 Simple Default Input
 
 ```dart
-TextInput(label: 'Default', controller: controller),
+InputText(label: 'Default', controller: controller),
 ```
 
 Enable/ Disable Input Field, by default field is enabled
 
 ```dart{3}
-TextInput(
+InputText(
     label: 'Disabled',
     isEnabled: false,
     controller: controller,
@@ -39,7 +39,7 @@ return Form(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-            TextInput(
+            InputText(
                 label: 'Invalid',
                 validator: (value) {
                     if (value!.isEmpty) {
@@ -66,16 +66,16 @@ enum InputSize { extraSmall, small, medium, large, extraLarge }
 ```
 
 ```dart
-const TextInput(size: InputSize.small, label: 'Small'),
-const TextInput(size: InputSize.medium, label: 'Medium'),
-const TextInput(size: InputSize.large, label: 'Large'),
+const InputText(size: InputSize.small, label: 'Small'),
+const InputText(size: InputSize.medium, label: 'Medium'),
+const InputText(size: InputSize.large, label: 'Large'),
 ```
 
 Use Prefix and Suffix icons, Note: we need to pass IconData which can be interpreted by `FaIcon`. You can check documentation [here](https://pub.dev/packages/font_awesome_flutter) and you can check which icons are available [here](https://fontawesome.com/search).
 
 Prefix icon
 ```dart{3-6}
-const TextInput(
+const InputText(
     label: 'User Prefix Icon',
     prefixOnTap: () {
         print(content: 'Prefix icon onTap');
@@ -86,7 +86,7 @@ const TextInput(
 
 Suffix icon
 ```dart{3-6}
-const TextInput(
+const InputText(
     label: 'User Suffix Icon',
     suffixOnTap: () {
         print(content: 'Suffix icon onTap');
@@ -97,7 +97,7 @@ const TextInput(
 
 Change icon colors
 ```dart{3-6}
-const TextInput(
+const InputText(
     label: 'Search',
     prefixIcon: FontAwesomeIcons.user,
     prefixIconColor: AppTheme.colors['primary'],
@@ -108,7 +108,7 @@ const TextInput(
 
 Use custom padding for text input
 ```dart{3}
-const TextInput(
+const InputText(
     label: 'Search',
     padding: horizontalPadding16 + verticalPadding8,
 ),
@@ -116,7 +116,7 @@ const TextInput(
 
 Use custom padding for text input
 ```dart{3}
-const TextInput(
+const InputText(
     label: 'Search',
     padding: horizontalPadding16 + verticalPadding8,
 ),
@@ -124,7 +124,7 @@ const TextInput(
 
 Use onChanged function to execute action when value is changed
 ```dart{3-5}
-TextInput(
+InputText(
     label: 'Test',
     onChanged: (value) {
         print(value);
@@ -134,7 +134,7 @@ TextInput(
 
 Change validation mode
 ```dart{3}
-const TextInput(
+const InputText(
     label: 'Test',
     autoValidateMode: AutovalidateMode.always,
 ),
@@ -142,7 +142,7 @@ const TextInput(
 
 Change keyboard type for field
 ```dart{3}
-const TextInput(
+const InputText(
     label: 'Test',
     keyboardType: TextInputType.number,
 ),
@@ -152,7 +152,7 @@ Use input formatters to restrcit/ allow special kind of values. You might have t
 ```dart{6}
 import 'package:flutter/services.dart' hide TextInput;
 
-TextInput(
+InputText(
     label: 'Digits Only',
     keyboardType: TextInputType.number,
     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -161,7 +161,7 @@ TextInput(
 
 Use minLines and maxLines to set lines visibility.
 ```dart{3,4}
-TextInput(
+InputText(
     label: 'Address',
     minLines: 3,
     maxLines: 3,
@@ -179,7 +179,7 @@ import 'package:team/vaahextendflutter/helpers/constants.dart';
 
 enum InputSize { extraSmall, small, medium, large, extraLarge }
 
-class TextInput extends StatelessWidget {
+class InputText extends StatelessWidget {
   final String? label;
   final EdgeInsets padding;
   final double borderRadius;
@@ -200,7 +200,7 @@ class TextInput extends StatelessWidget {
   final int? minLines;
   final int? maxLines;
 
-  const TextInput({
+  const InputText({
     super.key,
     this.label,
     this.padding = allPadding12,
