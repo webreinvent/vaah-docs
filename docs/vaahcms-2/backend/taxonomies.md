@@ -20,11 +20,10 @@ By default, `VaahCMS` have following types of `Taxonomy`:
 3. Roles
 
 ## Features & Demos
- 
-### Create Taxonomies and Taxonomy Types via VaahSeeder
+<!-- 
+##### Create Taxonomies and Taxonomy Types via VaahSeeder
 
-Through seeds, you can create `taxonomies` and `taxonomy types`. Make two json files with the names `taxonomies.json` and `taxonomy_types.json` in the directory `.../VaahCms/Modules/{module name}/Database/Seeds/json/`.
-
+User can create a taxonomies and taxonomy types through seeds. Create json files of name `taxonomies.json` and `taxonomy_types.json` at `.../VaahCms/Modules/{module_name}>/Database/Seeds/json/` this directory.
 
 `taxonomies.json`
 
@@ -42,7 +41,8 @@ Through seeds, you can create `taxonomies` and `taxonomy types`. Make two json f
     {
         "type_slug": "registrations",
         "name": "Email Verification Pending"
-    }
+    },
+    .........
 ]
 ```
 
@@ -62,11 +62,13 @@ Through seeds, you can create `taxonomies` and `taxonomy types`. Make two json f
 
     {
         "name": "Roles"
-    }
+    },
+    .........
 ]
 ```
 
-You must add some code to `DatabaseTableSeeder.php` in the directory `.../VaahCms/Modules/{module_name}/Database/Seeds` in order to run these seeds.
+To run these seeds, you have to add some code in `DatabaseTableSeeder.php` at `.../VaahCms/Modules/{module_name}>/Database/Seeds/` this directory.
+
 
 
 `DatabaseTableSeeder.php`
@@ -99,70 +101,54 @@ class DatabaseTableSeeder extends Seeder
 
 ------
 
-### Create Taxonomy via Dashboard
-
-To view the `Taxonomy` section, go to the following url:
-
-``` text
-<project-url>/backend#/vaah/manage/taxonomies/
-```
-
-Now you have to create a `Taxonomy` by click on `Create` button. You will see a create page with following field.
-
-Type is the first field, and the options are organised hierarchically. Additionally, you can manage the taxonomy kinds by selecting the `Manage` button. The `Tree View` of Taxonomy Types PopUp with 'CRUD' Operation will now show.
-
-You will notice a new field called `Select a Parent` name with the taxonomies of the parent of the type you have chosen if you choose any of the children types.
-
-Complete every field. Press the `Save` button.
-
-The file is now visible in the `View` Page.
-
-You can view the video attached below for more info:
-
-<figure class="video_container">
-  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_F20Ga5vKrX.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
-</figure>
+-->
 
 ## Permissions
-The following permissions are necessary for `Taxonomies` and `Taxonomy Type` management in order to carry out certain actions.
-
-| Permissions          | Description                                           |
-| ------------- | ------------------------------------------------------------ |
-| Can Manage Taxonomies | This permission enables roles to manage taxonomies. The user can activate, deactivate, update or delete a taxonomy with this access. |
-| Can Delete Taxonomies | This permission grants roles access to delete a taxonomy. |
-| Can Update Taxonomies | This permission grants roles to update details of a taxonomy. |
-| Can Read Taxonomies   | This permission grants roles to read all listed taxonomies of the application. |
-| Can Create Taxonomies | This permission grant roles to create a new taxonomy for the application. |
-| Has Access Of Taxonomies Section | This permission grant roles to access of the taxonomies section in the side nav bar of the application. |
-| Can Manage Taxonomy Types | This permission grant roles to manage or perform `CRUD` operation on the `Taxonomy Type`. |
+<!-- 
+REMOVE THIS COMMENT
+List the permissions & details for this page in table format 
+-->
 
 ## Files
+<!-- 
+REMOVE THIS COMMENT
+List of all the files responsible for this pages
 
-- Laravel Route: `vaahcms/Routes/backend/route-texonomies.php`
-- Laravel Controller: `vaahcms/Http/Controllers/Backend/TaxonomiesController.php`
-- Laravel Model: `vaahcms/Models/Taxonomy.php`
-- Vue Route: `vaahcms/Vue/routes/vue-routes-taxonomies.js`
-- Vue Store: `vaahcms/Vue/stores/store-taxonomies.js`
-- Vue Page Directory: `vaahcms/Vue/pages/taxonomies`
+- Laravel Route: `routes/backend/route-example.php`
+- Laravel Controller: 
+- Laravel Model: 
+- Vue Route: 
+- Vue Store: 
+- Vue Page Directory: 
+
+-->
+
+## Packages
+<!-- 
+REMOVE THIS COMMENT
+
+### Laravel Packages
+
+- `creativeorange/gravatar`: Write purpose of the package
+
+
+### Vue Packages
+- `laravel-mix`: To build assets
+
+-->
 
 
 ## Methods
+<!-- 
+REMOVE THIS COMMENT
+List important methods which can be reused. 
 
-Some reusable method of `Taxonomy` and `TaxonomyType` metioned bellowed:
-
-#### TaxonomyType::getTaxonomyByType($type)
-
-You can use this method to retrieve all taxonomies that are currently active under given `TaxonomyType` by just giving the desired `TaxonomyType` slug.
-
-```php
-use WebReinvent\VaahCms\Models\Taxonomy;  // Import Taxonomy class at the top
-
-$taxonomy_type_slug = 'cities';
-return $active_taxonomies = Taxonomy::getTaxonomyByType($taxonomy_type_slug);
+Eg:
 ```
----
+User::addRole();
+```
 
-
+-->
 
 ## Events
 <!-- 
