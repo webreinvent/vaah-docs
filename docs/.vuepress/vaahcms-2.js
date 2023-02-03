@@ -34,6 +34,7 @@ sidebar = [
             {text: 'Failed Jobs', link: '/vaahcms-2/backend/failed-jobs.md'},
             {text: 'User settings', link: '/vaahcms-2/backend/user-settings.md'},
             {text: 'General settings', link: '/vaahcms-2/backend/general-settings.md'},
+            {text: 'Taxonomies', link: '/vaahcms-2/backend/taxonomies.md'},
         ]
     },
 ];
