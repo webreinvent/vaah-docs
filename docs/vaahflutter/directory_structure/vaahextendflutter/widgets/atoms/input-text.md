@@ -1,4 +1,4 @@
-# Text Inputs
+# Input Text
 
 ::: danger Dependencies
 depends on [font_awesome_flutter](https://pub.dev/packages/font_awesome_flutter) for icons.
@@ -176,8 +176,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:team/vaahextendflutter/app_theme.dart';
 import 'package:team/vaahextendflutter/helpers/constants.dart';
-
-enum InputSize { extraSmall, small, medium, large, extraLarge }
+import 'package:team/vaahextendflutter/helpers/enums.dart';
 
 class InputText extends StatelessWidget {
   final String? label;
