@@ -1,4 +1,4 @@
-# Slider input
+# Input Sliders
 
 [[toc]]
 
@@ -7,7 +7,7 @@
 Pass `initialValue` for initial value, it cannot be less than minimum limit and cannot be greater than maximum limit.
 
 ```dart
-const SliderInput(
+const InputSlider(
     initialValue: 0.8,
 ),
 ```
@@ -15,7 +15,7 @@ const SliderInput(
 Set `min` and `max` for starting and ending limit, default value of min is 0 and maximum is 1.
 
 ```dart{3,4}
-const SliderInput(
+const InputSlider(
     initialValue: 50,
     min: 0,
     max: 100,
@@ -25,7 +25,7 @@ const SliderInput(
 Pass `label` parameter for setting label. Note: label won't work if steps aren't there, also if you're not passing custom label and steps are there then it will show current value of slider.
 
 ```dart{4}
-const SliderInput(
+const InputSlider(
     initialValue: 0.0,
     step: 0.1,
     label: 'your label',
@@ -35,7 +35,7 @@ const SliderInput(
 Pass `precision` value to use that much of precision in all slider calculations and display. When using high precision (let's say greatear than 5), it might give wrong results. The reason for this is [floating-point arithmetic](https://en.wikipedia.org/wiki/Floating-point_arithmetic) and the fact that Dart uses the [IEEE 754 standard](https://en.wikipedia.org/wiki/IEEE_754) as far as I am concerned. This happens for all languages that use floating-point arithmetic. [General question about floating-point arithmetic](https://stackoverflow.com/questions/588004/is-floating-point-math-broken) in modern programming languages.
 
 ```dart{4}
-const SliderInput(
+const InputSlider(
     initialValue: 0.0,
     step: 0.1,
     precision: 3,
@@ -45,7 +45,7 @@ const SliderInput(
 Pass `activeColor`, `inactiveColor`, and `thumbColor` for changing appereance of slider.
 
 ```dart{3-5}
-const SliderInput(
+const InputSlider(
     initialValue: 0.0,
     inactiveColor: Colors.orange.shade200,
     activeColor: Colors.orange,
@@ -56,7 +56,7 @@ const SliderInput(
 Pass `onChanged`, `onChangeStart`, and `onChangeEnd` functions to perform actions for respective changes.
 
 ```dart{4}
-SliderInput(
+InputSlider(
     initialValue: 0.8,
     onChanged: (value) => Console.danger(value.toString()),
 ),
@@ -67,7 +67,7 @@ SliderInput(
 Pass `forceInputBox` as true to make slider use input field also.
 
 ```dart{5}
-const SliderInput(
+const InputSlider(
     min: 0,
     max: 100,
     initialValue: 50,
@@ -80,7 +80,7 @@ const SliderInput(
 Pass `step` argument to make slider increase / decrease value in steps only.
 
 ```dart{5}
-const SliderInput(
+const InputSlider(
     min: 0,
     max: 100,
     initialValue: 0,
@@ -93,7 +93,7 @@ const SliderInput(
 You can pass `step` arg in decimal points for having decimal steps.
 
 ```dart{5}
-SliderInput(
+InputSlider(
     min: 0,
     max: 10,
     initialValue: 0.0,
@@ -106,7 +106,7 @@ SliderInput(
 Pass `forceVertical` as true to make slider vertical.
 
 ```dart{3}
-const SliderInput(
+const InputSlider(
     initialValue: 0,
     forceVertical: true,
 ),
@@ -123,7 +123,7 @@ For Range Slider, `min` and `max`, `step`, `precision`, `activeColor`, `inactive
 Pass `initialValues` argument to pass initial values, and `labels` argument to show custom label.
 
 ```dart
-const RangeSliderInput(
+const InputRangeSlider(
     min: 0,
     max: 10,
     step: 1,
@@ -143,9 +143,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as services;
 import 'package:team/vaahextendflutter/app_theme.dart';
 import 'package:team/vaahextendflutter/helpers/constants.dart';
-import 'package:team/vaahextendflutter/widgets/atoms/inputs.dart';
+import 'package:team/vaahextendflutter/widgets/atoms/input_text.dart';
 
-class SliderInput extends StatefulWidget {
+class InputSlider extends StatefulWidget {
   final double initialValue;
   final Function(double)? onChanged;
   final Function(double)? onChangeStart;
@@ -161,7 +161,7 @@ class SliderInput extends StatefulWidget {
   final Color? inactiveColor;
   final Color? thumbColor;
 
-  const SliderInput({
+  const InputSlider({
     Key? key,
     required this.initialValue,
     this.onChanged,
@@ -180,10 +180,10 @@ class SliderInput extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<SliderInput> createState() => _SliderInputState();
+  State<InputSlider> createState() => _InputSliderState();
 }
 
-class _SliderInputState extends State<SliderInput> {
+class _InputSliderState extends State<InputSlider> {
   String? err;
   late double _value;
   String? label;
@@ -259,7 +259,7 @@ class _SliderInputState extends State<SliderInput> {
                       Container(
                         margin: verticalPadding24,
                         padding: horizontalPadding16 + verticalPadding0,
-                        child: TextInput(
+                        child: InputText(
                           controller: controller,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
@@ -287,7 +287,7 @@ class _SliderInputState extends State<SliderInput> {
   }
 }
 
-class RangeSliderInput extends StatefulWidget {
+class InputRangeSlider extends StatefulWidget {
   final RangeValues initialValues;
   final Function(RangeValues)? onChanged;
   final Function(RangeValues)? onChangeStart;
@@ -301,7 +301,7 @@ class RangeSliderInput extends StatefulWidget {
   final Color? inactiveColor;
   final Color? thumbColor;
 
-  const RangeSliderInput({
+  const InputRangeSlider({
     Key? key,
     required this.initialValues,
     this.onChanged,
@@ -318,10 +318,10 @@ class RangeSliderInput extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<RangeSliderInput> createState() => _RangeSliderInputState();
+  State<InputRangeSlider> createState() => _InputRangeSliderState();
 }
 
-class _RangeSliderInputState extends State<RangeSliderInput> {
+class _InputRangeSliderState extends State<InputRangeSlider> {
   late RangeValues _values;
   RangeLabels? _labels;
   int? divisions;
