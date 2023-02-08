@@ -217,28 +217,34 @@ class _InputSliderState extends State<InputSlider> {
           )
         : Builder(
             builder: (context) {
-              final Slider slider = Slider(
-                value: _value,
-                onChanged: (value) {
-                  setState(() {
-                    _value =
-                        double.parse(value.toStringAsFixed(widget.precision ?? AppTheme.precision));
-                  });
-                  controller.text = _value.toString();
-                  if (widget.onChanged != null) {
-                    widget.onChanged!(_value);
-                  }
-                },
-                onChangeStart: widget.onChangeStart,
-                onChangeEnd: widget.onChangeEnd,
-                min: widget.min,
-                max: widget.max,
-                divisions: divisions,
-                label:
-                    widget.label ?? _value.toStringAsFixed(widget.precision ?? AppTheme.precision),
-                activeColor: widget.activeColor ?? AppTheme.colors['primary'],
-                inactiveColor: widget.inactiveColor ?? AppTheme.colors['primary']!.shade200,
-                thumbColor: widget.thumbColor ?? AppTheme.colors['primary'],
+              final SliderTheme slider = SliderTheme(
+                data: SliderThemeData(
+                  trackShape: TrackShape(),
+                ),
+                child: Slider(
+                  value: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = double.parse(
+                        value.toStringAsFixed(widget.precision ?? AppTheme.precision),
+                      );
+                    });
+                    controller.text = _value.toString();
+                    if (widget.onChanged != null) {
+                      widget.onChanged!(_value);
+                    }
+                  },
+                  onChangeStart: widget.onChangeStart,
+                  onChangeEnd: widget.onChangeEnd,
+                  min: widget.min,
+                  max: widget.max,
+                  divisions: divisions,
+                  label: widget.label ??
+                      _value.toStringAsFixed(widget.precision ?? AppTheme.precision),
+                  activeColor: widget.activeColor ?? AppTheme.colors['primary'],
+                  inactiveColor: widget.inactiveColor ?? AppTheme.colors['primary']!.shade200,
+                  thumbColor: widget.thumbColor ?? AppTheme.colors['primary'],
+                ),
               );
               if (widget.forceVertical) {
                 return RotatedBox(
@@ -258,7 +264,6 @@ class _InputSliderState extends State<InputSlider> {
                     if (!widget.forceVertical && widget.forceInputBox)
                       Container(
                         margin: verticalPadding24,
-                        padding: horizontalPadding16 + verticalPadding0,
                         child: InputText(
                           controller: controller,
                           keyboardType: TextInputType.number,
@@ -343,31 +348,71 @@ class _InputRangeSliderState extends State<InputRangeSlider> {
   Widget build(BuildContext context) {
     return err != null
         ? Text(err!, style: TextStyle(color: AppTheme.colors['danger']))
-        : RangeSlider(
-            values: _values,
-            onChanged: (values) {
-              setState(() {
-                _values = RangeValues(
-                  double.parse(
-                      values.start.toStringAsFixed(widget.precision ?? AppTheme.precision)),
-                  double.parse(values.end.toStringAsFixed(widget.precision ?? AppTheme.precision)),
-                );
-                _labels = RangeLabels(
-                  _values.start.toStringAsFixed(widget.precision ?? AppTheme.precision),
-                  _values.end.toStringAsFixed(widget.precision ?? AppTheme.precision),
-                );
-              });
-              if (widget.onChanged != null) widget.onChanged!(_values);
-            },
-            onChangeStart: widget.onChangeStart,
-            onChangeEnd: widget.onChangeEnd,
-            min: widget.min,
-            max: widget.max,
-            labels: widget.labels ?? _labels,
-            activeColor: widget.activeColor,
-            inactiveColor: widget.inactiveColor,
-            divisions: divisions,
+        : SliderTheme(
+            data: SliderThemeData(
+              rangeTrackShape: RangeTrackShape(),
+            ),
+            child: RangeSlider(
+              values: _values,
+              onChanged: (values) {
+                setState(() {
+                  _values = RangeValues(
+                    double.parse(
+                        values.start.toStringAsFixed(widget.precision ?? AppTheme.precision)),
+                    double.parse(
+                        values.end.toStringAsFixed(widget.precision ?? AppTheme.precision)),
+                  );
+                  _labels = RangeLabels(
+                    _values.start.toStringAsFixed(widget.precision ?? AppTheme.precision),
+                    _values.end.toStringAsFixed(widget.precision ?? AppTheme.precision),
+                  );
+                });
+                if (widget.onChanged != null) widget.onChanged!(_values);
+              },
+              onChangeStart: widget.onChangeStart,
+              onChangeEnd: widget.onChangeEnd,
+              min: widget.min,
+              max: widget.max,
+              labels: widget.labels ?? _labels,
+              activeColor: widget.activeColor,
+              inactiveColor: widget.inactiveColor,
+              divisions: divisions,
+            ),
           );
+  }
+}
+
+class TrackShape extends RoundedRectSliderTrackShape {
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final trackHeight = sliderTheme.trackHeight;
+    final trackLeft = offset.dx;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
+  }
+}
+
+class RangeTrackShape extends RoundedRectRangeSliderTrackShape {
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final trackHeight = sliderTheme.trackHeight;
+    final trackLeft = offset.dx;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
 ```
