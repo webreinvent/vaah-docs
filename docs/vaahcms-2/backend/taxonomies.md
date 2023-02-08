@@ -162,6 +162,15 @@ return $active_taxonomies = Taxonomy::getTaxonomyByType($taxonomy_type_slug);
 ```
 ---
 
+| Permissions          | Description                                           |
+| ------------- | ------------------------------------------------------------ |
+| Can Manage Taxonomies | This permission enables roles to manage taxonomies. The user can activate, deactivate, update or delete a taxonomy with this access. |
+| Can Delete Taxonomies | This permission grants roles access to delete a taxonomy. |
+| Can Update Taxonomies | This permission grants roles to update details of a taxonomy. |
+| Can Read Taxonomies   | This permission grants roles to read all listed taxonomies of the application. |
+| Can Create Taxonomies | This permission grant roles to create a new taxonomy for the application. |
+| Has Access Of Taxonomies Section | This permission grant roles to access of the taxonomies section in the side nav bar of the application. |
+| Can Manage Taxonomy Types | This permission grant roles to manage or perform `CRUD` operation on the `Taxonomy Type`. |
 
 ## API
 VaahCMS has APIs for every method, allowing you to interact with `NuxJS` or other frameworks.
