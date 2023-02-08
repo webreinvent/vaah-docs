@@ -1,4 +1,4 @@
-# File Picker Input
+# Input File Picker
 
 ::: danger Dependencies
 depends on [file_picker](https://pub.dev/packages/file_picker) for icons.
@@ -11,7 +11,7 @@ depends on [file_picker](https://pub.dev/packages/file_picker) for icons.
 ## How to use?
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
 ),
 ```
@@ -19,7 +19,7 @@ const VaahFilePicker(
 Pass `callback` function to get response when user selects file(s).
 
 ```dart
-VaahFilePicker(
+InputFilePicker(
     label: 'Pick File',
     callback: (List<PlatformFile>? files) {
         if (files == null) return;
@@ -32,7 +32,7 @@ VaahFilePicker(
 Set `withData` to `true` to get file(s) with data.
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
     withData: true,
 ),
@@ -41,7 +41,7 @@ const VaahFilePicker(
 Set `allowMultiple` to `true` to allow user to select multiple files.
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
     allowMultiple: true,
 ),
@@ -50,7 +50,7 @@ const VaahFilePicker(
 Set `fileType` to allow specific file types. Valid values are `FileType.image`, `FileType.media`, `FileType.audio`, `FileType.video`, `FileType.any`. To allow specific extensions only, check below segment.
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
     fileType: FileType.image,
 ),
@@ -59,7 +59,7 @@ const VaahFilePicker(
 Set `fileType` to `FileType.custom` and pass `allowedExtensions`.
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
     fileType: FileType.custom,
     allowedExtensions: ['pdf'],
@@ -69,7 +69,7 @@ const VaahFilePicker(
 Paas `padding` parameter to set custom padding in input field.
 
 ```dart
-VaahFilePicker(
+InputFilePicker(
     label: 'Pick File',
     padding: horizontalPadding8 + verticalPadding4,
 ),
@@ -78,7 +78,7 @@ VaahFilePicker(
 Paas `isEnabled` parameter to enable/ disable picker.
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
     isEnabled: false,
 ),
@@ -87,7 +87,7 @@ const VaahFilePicker(
 Paas `size` parameter to change size of field. Available input sizes are `enum InputSize { extraSmall, small, medium, large, extraLarge }`
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
     size: InputSize.extraSmall,
 ),
@@ -96,7 +96,7 @@ const VaahFilePicker(
 Paas `iconBackgroundColor` and `iconColor` parameter to change appereance of icon.
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
     iconColor: Colors.white,
     iconBackgroundColor: Colors.pink,
@@ -106,7 +106,7 @@ const VaahFilePicker(
 Paas `iconBackgroundColor` and `iconColor` parameters to change appereance of icon.
 
 ```dart
-const VaahFilePicker(
+const InputFilePicker(
     label: 'Pick File',
     iconColor: Colors.white,
     iconBackgroundColor: Colors.pink,
@@ -116,7 +116,7 @@ const VaahFilePicker(
 Pass `validator` and `autoValidateMode` parameters for validation.
 
 ```dart
-VaahFilePicker(
+InputFilePicker(
     label: 'Pick File',
     validator: (value) {
         if (value! == 'Pick File') return 'Please select file!';
@@ -134,10 +134,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:team/vaahextendflutter/app_theme.dart';
 import 'package:team/vaahextendflutter/helpers/constants.dart';
+import 'package:team/vaahextendflutter/helpers/enums.dart';
 
-enum InputSize { extraSmall, small, medium, large, extraLarge }
-
-class VaahFilePicker extends StatefulWidget {
+class InputFilePicker extends StatefulWidget {
   final String label;
   final EdgeInsets padding;
   final double borderRadius;
@@ -154,7 +153,7 @@ class VaahFilePicker extends StatefulWidget {
   final FileType fileType;
   final List<String>? allowedExtensions;
 
-  const VaahFilePicker({
+  const InputFilePicker({
     super.key,
     required this.label,
     this.padding = allPadding12,
@@ -174,10 +173,10 @@ class VaahFilePicker extends StatefulWidget {
   });
 
   @override
-  State<VaahFilePicker> createState() => _VaahFilePickerState();
+  State<InputFilePicker> createState() => _InputFilePickerState();
 }
 
-class _VaahFilePickerState extends State<VaahFilePicker> {
+class _InputFilePickerState extends State<InputFilePicker> {
   final TextEditingController _controller = TextEditingController();
 
   @override
