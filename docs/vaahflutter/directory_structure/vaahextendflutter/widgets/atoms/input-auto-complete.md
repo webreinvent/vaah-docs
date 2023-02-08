@@ -65,6 +65,44 @@ InputAutoComplete(
 ),
 ```
 
+Use isBorderEnabled and isShadowEnabled to change field shadow and border of options.
+
+```dart{12-13}
+InputAutoComplete(
+    label: 'Select Continent',
+    hints: const [
+        'Asia',
+        'Africa',
+        'North America',
+        'South America',
+        'Antarctica',
+        'Europe',
+        'Australia',
+    ],
+    isBorderEnabled: false,
+    isShadowEnabled: true,
+),
+```
+
+Use icon to pass custom icon and optionsBackgroundColor to change background color of options.
+
+```dart{12-13}
+InputAutoComplete(
+    label: 'Select Continent',
+    hints: const [
+        'Asia',
+        'Africa',
+        'North America',
+        'South America',
+        'Antarctica',
+        'Europe',
+        'Australia',
+    ],
+    icon: FontAwesomeIcons.flag,
+    optionsBackgroundColor: Color(0XFFFFBAD7),
+),
+```
+
 Use onSelected to perform action when user selects input. TODO: pass the controller value back.
 
 ```dart{14-16}
@@ -102,8 +140,12 @@ class InputAutoComplete extends StatefulWidget {
   final EdgeInsets padding;
   final double borderRadius;
   final bool isEnabled;
+  final bool isBorderEnabled;
   final InputSize size;
   final double height;
+  final Color? optionsBackgroundColor;
+  final bool isShadowEnabled;
+  final IconData? icon;
   final Color? iconBackgroundColor;
   final Color? iconColor;
   final List<String> hints;
@@ -117,9 +159,13 @@ class InputAutoComplete extends StatefulWidget {
     required this.label,
     this.padding = allPadding12,
     this.borderRadius = defaultPadding / 2,
+    this.isBorderEnabled = true,
     this.isEnabled = true,
     this.size = InputSize.medium,
     this.height = 250,
+    this.optionsBackgroundColor,
+    this.isShadowEnabled = false,
+    this.icon,
     this.iconBackgroundColor,
     this.iconColor,
     required this.hints,
@@ -135,6 +181,7 @@ class InputAutoComplete extends StatefulWidget {
 
 class _InputAutoCompleteState extends State<InputAutoComplete> {
   final controller = TextEditingController();
+  bool _optionsAvailable = false;
 
   @override
   Widget build(BuildContext context) {
@@ -142,11 +189,15 @@ class _InputAutoCompleteState extends State<InputAutoComplete> {
       builder: (ctx, constraints) {
         return Autocomplete<String>(
           optionsBuilder: (TextEditingValue textEditingValue) {
-            return widget.hints
+            List<String> hints = widget.hints
                 .where(
                   (String hint) => hint.toLowerCase().contains(textEditingValue.text.toLowerCase()),
                 )
                 .toList();
+            setState(() {
+              _optionsAvailable = hints.isNotEmpty && textEditingValue.text != hints.first;
+            });
+            return hints;
           },
           displayStringForOption: (String hint) => hint,
           onSelected: (String selection) {
@@ -158,21 +209,47 @@ class _InputAutoCompleteState extends State<InputAutoComplete> {
             return Align(
               alignment: Alignment.topLeft,
               child: Material(
-                child: SizedBox(
+                child: Container(
                   width: constraints.maxWidth,
                   height: widget.height,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(widget.borderRadius),
+                      bottomRight: Radius.circular(widget.borderRadius),
+                    ),
+                    border: widget.isBorderEnabled
+                        ? Border.all(color: AppTheme.colors['black']!.shade300)
+                        : null,
+                    boxShadow: !widget.isShadowEnabled
+                        ? null
+                        : const [
+                            BoxShadow(
+                              color: Color(0x44000000),
+                              offset: Offset(0, 1),
+                              blurRadius: 8.0,
+                              spreadRadius: 0.0,
+                            ),
+                          ],
+                    color: widget.optionsBackgroundColor ?? AppTheme.colors['primary']!.shade50,
+                  ),
                   child: ListView.builder(
                     padding: const EdgeInsets.all(10.0),
                     itemCount: options.length,
                     itemBuilder: (BuildContext context, int index) {
                       final String option = options.elementAt(index);
-                      return GestureDetector(
-                        onTap: () {
-                          onSelected(option);
-                        },
-                        child: ListTile(
-                          title: Text(option),
-                        ),
+                      return Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {});
+                              FocusScope.of(context).focusedChild?.unfocus();
+                              onSelected(option);
+                            },
+                            child: ListTile(
+                              title: Text(option),
+                            ),
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -188,6 +265,7 @@ class _InputAutoCompleteState extends State<InputAutoComplete> {
           ) {
             return TextFormField(
               onTap: () {
+                setState(() {});
                 if (fieldFocusNode.hasFocus) fieldFocusNode.unfocus();
               },
               decoration: InputDecoration(
@@ -195,7 +273,18 @@ class _InputAutoCompleteState extends State<InputAutoComplete> {
                 border: border(AppTheme.colors['black']!.shade400),
                 enabledBorder: border(AppTheme.colors['black']!.shade400),
                 disabledBorder: border(AppTheme.colors['black']!.shade300),
-                focusedBorder: border(AppTheme.colors['black']!.shade400),
+                focusedBorder: !_optionsAvailable
+                    ? border(AppTheme.colors['black']!.shade400)
+                    : OutlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(widget.borderRadius),
+                          topRight: Radius.circular(widget.borderRadius),
+                        ),
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: AppTheme.colors['black']!.shade400,
+                        ),
+                      ),
                 errorBorder: border(AppTheme.colors['danger']!.shade400),
                 focusedErrorBorder: border(AppTheme.colors['danger']!.shade400),
                 errorStyle: TextStyle(color: AppTheme.colors['danger']!.shade400),
@@ -211,7 +300,9 @@ class _InputAutoCompleteState extends State<InputAutoComplete> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(widget.borderRadius),
-                        bottomRight: Radius.circular(widget.borderRadius),
+                        bottomRight: fieldFocusNode.hasFocus && _optionsAvailable
+                            ? Radius.zero
+                            : Radius.circular(widget.borderRadius),
                       ),
                       color: widget.iconBackgroundColor ?? AppTheme.colors['primary'],
                     ),
@@ -219,7 +310,7 @@ class _InputAutoCompleteState extends State<InputAutoComplete> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FaIcon(
-                          asset(),
+                          widget.icon ?? FontAwesomeIcons.angleDown,
                           size: getFontSize() * 1.3,
                           color: widget.iconColor ?? AppTheme.colors['white'],
                         ),
@@ -268,10 +359,6 @@ class _InputAutoCompleteState extends State<InputAutoComplete> {
       default:
         return AppTheme.medium;
     }
-  }
-
-  IconData asset() {
-    return FontAwesomeIcons.angleDown;
   }
 }
 ```
