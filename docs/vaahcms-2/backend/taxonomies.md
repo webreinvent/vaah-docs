@@ -6,7 +6,7 @@
 
 Although taxonomies are a crucial component of categorising the material on your website, the phrase frequently confuses newcomers because `Taxonomy` isn't a term that most of us use on a daily basis. Taxonomies are really just a technique to group similar posts entries (or other types of content) together. That's it! It's a large term, but it's not as hard to understand as it would seem.
 
-If you run a sports blog, for instance, you could make taxonomies for each sport (basketball, cricket, football, etc.) and assign pertinent entries to each taxonomy.
+For example, if you manage a sports blog, you could create taxonomies for every sport (basketball, cricket, football, etc.) and assign relevant posts to each taxonomy.
 
 Taxonomies are advantageous because they make it simpler for readers to locate relevant content (and also because they provide your content some context, though that is a secondary advantage).
 
@@ -73,7 +73,7 @@ You must add some code to `DatabaseTableSeeder.php` in the directory `.../VaahCm
 
 ```php
 <?php
-namespace VaahCms\Modules\<module_name>\Database\Seeds;
+namespace VaahCms\Modules\{module_name}\Database\Seeds;
 
 
 use Illuminate\Database\Seeder;
@@ -148,7 +148,7 @@ The following permissions are necessary for `Taxonomies` and `Taxonomy Type` man
 
 ## Methods
 
-Some reusable method of `Taxonomy` and `TaxonomyType` metioned bellowed:
+Some reusable method of `Taxonomy` and `TaxonomyType` mentioned bellowed:
 
 #### TaxonomyType::getTaxonomyByType($type)
 
