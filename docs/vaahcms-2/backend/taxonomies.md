@@ -163,27 +163,95 @@ return $active_taxonomies = Taxonomy::getTaxonomyByType($taxonomy_type_slug);
 ---
 
 
-
-## Events
-<!-- 
-REMOVE THIS COMMENT
-List events for this section in table format 
--->
-
-
 ## API
-<!-- 
-REMOVE THIS COMMENT
+VaahCMS has APIs for every method, allowing you to interact with `NuxJS` or other frameworks.
 
-Example
+You can access APIs method from `vaachms/Http/Controllers/Api/TaxonomiesController.php` and routes from `vaahcms/Routes/api/api-routes-taxonomies.php`
 
-### Create permission
+We mention some methods bellow which help you to understand the structure.
 
-##### Method: `post`
-##### URL: `<public-url>/api/permission/create`
-##### Request Parameters
-List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
-##### Response Parameters
+#### Create Taxonomy
+
+##### Method: `POST`
+##### Action: `creatItem`
+##### URL: `<public-url>/api/vaah/manage/taxonomies/`
+
 ##### Sample Request
+```php 
+parameter = [
+    'type',              //required
+    'name',              //required
+    'slug',              //required
+    'is_active'          //required
+    'note',              //optional
+    'seo_title'          //optional
+    'seo_keywords'       //optional
+    'seo_description'    //optional
+];
+```
+
 ##### Sample Response
--->
+
+```json
+{
+  "data": {
+    "item": {
+      ...
+    }
+  },
+  "messages": [
+    "Saved successfully."
+  ],
+  "success": "true"
+}
+```
+---
+
+#### Fetch Taxonomies
+
+###### Method: `GET`
+###### Action: `getList`
+###### URL: `<public-url>/api/vaah/manage/taxonomies/`
+
+##### Sample Request
+```php 
+parameter = [
+    'filter' => [
+        'q'            // for search queary (optionl)
+        'trashed'      // for include or exclude trashed data (optionl)
+        'is_active'    // for fetching only active or inactive data (optionl)
+        'sort'         // for sorting the data (optionl)
+    ];  
+];
+```
+
+##### Sample Response
+
+```json
+{
+  "data": {
+    "data" : {
+      ...
+    }
+  }
+}
+```
+---
+
+#### Fetch Single Taxonomy
+
+###### Method: `GET`
+###### Action: `getItem`
+###### URL: `<public-url>/api/vaah/manage/taxonomies/{id}`
+
+##### Sample Response
+
+```json
+{
+  "data": {
+      ...
+  },
+  "success": "true"
+}
+```
+---
