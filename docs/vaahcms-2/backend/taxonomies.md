@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Although taxonomies are a crucial component of categorising the material on your website, the phrase frequently confuses newcomers because `Taxonomy` isn't a term that most of us use on a daily basis. Taxonomies are really just a technique to group similar posts entries (or other types of content) together. That's it! It's a large term, but it's not as hard to understand as it would seem.
+Although taxonomies are a crucial component of categorising the material on your application, the phrase frequently confuses newcomers because `Taxonomy` isn't a term that most of us use on a daily basis. Taxonomy are really just a technique to group similar posts entries (or other types of content) together. That's it! It's a large term, but it's not as hard to understand as it would seem.
 
 For example, if you manage a sports blog, you could create taxonomies for every sport (basketball, cricket, football, etc.) and assign relevant posts to each taxonomy.
 
@@ -13,7 +13,7 @@ Taxonomies are advantageous because they make it simpler for readers to locate r
 
 ## Default Taxonomy Types
 
-By default, `VaahCMS` have following types of `Taxonomy`:
+By default, `VaahCMS` have following types of `Taxonomies`:
 
 1. Countries
 2. Registrations
@@ -99,7 +99,7 @@ class DatabaseTableSeeder extends Seeder
 
 ------
 
-### Create Taxonomy via Dashboard
+### Create Taxonomies and TaxonomyType via Dashboard
 
 To view the `Taxonomy` section, go to the following url:
 
