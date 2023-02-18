@@ -20,14 +20,14 @@ publish_to: 'none'
 version: 1.0.0+0001
 
 environment:
-  sdk: ">=2.18.6"
-  flutter: ">=3.3.10"
+  sdk: ">=2.19.2"
+  flutter: ">=3.7.3"
 
 dependencies:
   flutter:       # Required for every Flutter project
     sdk: flutter # Required for every Flutter project
 
-  cupertino_icons: ^1.0.2 # Only required if you use Cupertino (iOS style) icons
+  cupertino_icons: ^1.0.5 # Only required if you use Cupertino (iOS style) icons
 
 dev_dependencies:
   flutter_test:

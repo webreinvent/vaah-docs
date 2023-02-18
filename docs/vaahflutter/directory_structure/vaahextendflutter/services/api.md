@@ -2,7 +2,7 @@
 
 ::: warning Dependencies
 
-- [dio: ^4.0.6](https://pub.dev/packages/dio)
+- [dio](https://pub.dev/packages/dio)
 
 - This panel uses EnvironmentConfig, thus depending on the env.dart file. It uses the base API URL from your EnviromentConfig.
 :::
@@ -584,7 +584,7 @@ class Api {
       }
 
       // Here response error means server sends error response. eg 401: unauthorised
-      else if (error.type == DioErrorType.response) {
+      else if (error.type == DioErrorType.badResponse) {
         await _handleResponseError(
           error,
           showAlert,
@@ -639,8 +639,8 @@ class Api {
   }) async {
     Response? response;
     final Options options = await _getOptions();
-    options.sendTimeout = customTimeoutLimit ?? _config.timeoutLimit;
-    options.receiveTimeout = customTimeoutLimit ?? _config.timeoutLimit;
+    options.sendTimeout = Duration(milliseconds: customTimeoutLimit ?? _config.timeoutLimit);
+    options.receiveTimeout = Duration(milliseconds: customTimeoutLimit ?? _config.timeoutLimit);
     if (headers != null && headers.isNotEmpty) {
       if (options.headers != null) {
         for (Map<String, String> element in headers) {
@@ -711,7 +711,7 @@ class Api {
             if (Alerts.showErrorDialog != null) {
               await Alerts.showErrorDialog!(
                 title: 'Error',
-                content: ['Invalid request type!'],
+                messages: ['Invalid request type!'],
                 hint: "get, post, put, patch, delete request types are allowed.",
               );
               break;
@@ -766,7 +766,7 @@ class Api {
             if (Alerts.showSuccessDialog != null) {
               await Alerts.showSuccessDialog!(
                 title: 'Success',
-                content: responseMessages,
+                messages: responseMessages,
                 hint: responseHint,
               );
             } else {
@@ -808,7 +808,7 @@ class Api {
         if (Alerts.showErrorDialog != null) {
           await Alerts.showErrorDialog!(
             title: 'Error',
-            content: ['Check your internet connection!'],
+            messages: ['Check your internet connection!'],
           );
           return;
         }
@@ -836,7 +836,7 @@ class Api {
     bool showAlert,
     String alertType,
   ) async {
-    if (error is DioError && error.type == DioErrorType.response) {
+    if (error is DioError && error.type == DioErrorType.badResponse) {
       final Response<dynamic>? response = error.response;
       try {
         // By pass dio header error code to get response content
@@ -866,9 +866,9 @@ class Api {
           error: res.statusMessage,
         );
       } catch (e) {
-        if (error.type == DioErrorType.response) {
+        if (error.type == DioErrorType.badResponse) {
           String errorCode = 'unknown';
-          List<String> errors = [error.message];
+          List<String> errors = error.message == null ? [] : [error.message!];
           String? debug;
           if (error.response?.statusCode == 401) {
             errorCode = 'unauthorized';
@@ -902,7 +902,7 @@ class Api {
               if (Alerts.showErrorDialog != null) {
                 await Alerts.showErrorDialog!(
                   title: 'Error',
-                  content: errors,
+                  messages: errors.isEmpty ? null : errors,
                   hint: debug,
                 );
                 return;
@@ -910,7 +910,7 @@ class Api {
               Console.danger(errors.toString());
               _showDialog(
                 title: 'Error',
-                content: errors,
+                content: errors.isEmpty ? null : errors,
                 hint: debug,
               );
             } else {

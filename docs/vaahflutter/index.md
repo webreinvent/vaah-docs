@@ -31,11 +31,11 @@ The purpose of developing VaahFlutter is to create a framework that can be exten
 ### Flutter and Dart Versions
 
 ::: danger requirements
-We try to use the latest stable version released by flutter, thus as of now VaahFlutter depends on dart SDK version 2.18.2 and flutter version 3.3.4
+We try to use the latest stable version released by flutter, thus as of now VaahFlutter depends on dart SDK version 2.19.2 and flutter version 3.7.3
 
 The `root/pubspec.yaml` file contains `sdk` and `flutter` properties which are used to define dart sdk and flutter versions.
-- sdk: '>=2.18.2'
-- flutter: ">=3.3.4"
+- sdk: ">=2.19.2"
+- flutter: ">=3.7.3"
 :::
 
 ### Learning Curve
