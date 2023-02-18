@@ -12,7 +12,7 @@ git clone ...
 
 ### How to change the Package Name/ Bundle Identifier, and App Name?
 
-Let's say you want to change the package name/ Bundle identifier from `com.webreinvent.app` to `domain.company.appname`.
+Let's say you want to change the package name/ Bundle identifier from `com.webreinvent.vaahflutter` to `domain.company.appname`.
 
 ::: tip Note:
 To avoid renaming the package and bundle identifier, you can start your project using this command in your terminal:
@@ -33,7 +33,7 @@ Change the package name in your `AndroidManifest.xml` (locations: `root/android/
 From
 ```xml{2}
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.webreinvent.app">
+    package="com.webreinvent.vaahflutter">
 ```
 
 To
@@ -52,7 +52,7 @@ android {
     ...
     defaultConfig {
         // Specify your unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.webreinvent.app"
+        applicationId "com.webreinvent.vaahflutter"
         ...
     }
     ...
@@ -74,11 +74,25 @@ android {
 
 ###### Step 3:
 
+Change the package name in `root/android/app/src/main/kotlin/com/webreinvent/vaahflutter/MainActivity.kt`
+
+From
+```kotlin
+package com.webreinvent.vaahflutter
+```
+
+To
+```kotlin
+package domain.company.appname
+```
+
+###### Step 4:
+
 Change the directory name
 
 From
 ```
-root/android/app/src/main/kotlin/com/webreinvent/app/
+root/android/app/src/main/kotlin/com/webreinvent/vaahflutter/
 ```
 
 To
@@ -95,7 +109,7 @@ Change the `android:label` in your `AndroidManifest.xml` (locations: `root/andro
 From
 ```dart{2}
 <application
-        android:label="App"
+        android:label="VaahFlutter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 ```
@@ -119,7 +133,7 @@ Change the `CFBundleIdentifier` (bundle identifier) value in your `root/ios/Runn
 From
 ```xml{2}
 <key>CFBundleIdentifier</key>
-<string>com.webreinvent.app</string>
+<string>com.webreinvent.vaahflutter</string>
 ```
 
 To
@@ -135,7 +149,7 @@ Change the `CFBundleDisplayName` (bundle display name) value in your `root/ios/R
 From
 ```xml{2}
 <key>CFBundleDisplayName</key>
-<string>App</string>
+<string>VaahFlutter</string>
 ```
 
 To
@@ -154,7 +168,7 @@ Change `name` and `description` properties in `root/pubspec.yaml`
 
 From
 ```
-name: app
+name: vaahflutter
 description: VaahFlutter, is all about app essentials.
 ```
 
@@ -180,3 +194,11 @@ description: Your app description.
 ::: tip Future plans
 TODO: implement VaahFlutter as a package.
 :::
+
+## Change App Icon
+
+We use [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons) to change app icon.
+
+## Change Launch Screen
+
+We use [flutter_native_splash](https://pub.dev/packages/flutter_native_splash) to change launch screen.
