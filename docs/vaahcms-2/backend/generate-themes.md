@@ -12,7 +12,7 @@ This is guide to teachs `How to create Theme in VAAH CMS`
 
 ### Step 1: Vaah Cli Installtion
 
-To use Vaah generators to generate themes, install VaahCli Tool using
+To use Vaah generators to generate modules, install VaahCli Tool using
 
 ```terminal command
 npm install vaah -g
@@ -26,7 +26,7 @@ npm i vaah -g
 
 ###### Note: For this tutorial, we'll be creating Articles Theme.
 
-Command that is used to generate a theme is:-
+Command that is used to generate a module is:-
 ```terminal command
 npx vaah cms:t
 ```
@@ -64,8 +64,7 @@ regarding the Theme. Like:-
     ? Enter author website:  https://vaah.dev
     ? Enter download url: 
     ```
-
-- Enter `true` if you want to run migration for this theme as soon as the theme
+- Enter `true` if you want to run migration for this module as soon as the module
   is activated. Else select `false`.
     ```
     ? Do you want to run migration when activated (true/false):  true
@@ -73,7 +72,7 @@ regarding the Theme. Like:-
 
   ###### Note: All the migration files will be found in `root/VaahCms/Themes/<theme-name>/Database/Migrations` directory
 
-- Select `true` if you want to activate this theme with some sample data. Else
+- Select `true` if you want to activate this module with some sample data. Else
   select `false`.
 
     ```
@@ -85,6 +84,7 @@ regarding the Theme. Like:-
 
 After providing all the information, Theme will be generated under `project-root/Vaahcms/Themes`.
 <img :src="$withBase('/images/themes/files.png')" alt="theme_path">
+
 
 `<theme-root-folder>\config\config.php` contains the information that was enter while creating a theme and can be changed by making changes to config.php file.
 <img :src="$withBase('/images/themes/config.png')" alt="theme-config-file">
@@ -105,114 +105,88 @@ After that, on the sidebar, click on `Extend` and then click on `Themes`.
 ```
 <img :src="$withBase('/images/themes/activation-page.png')" alt="theme-activation-page">
 
-List of all the installed themes will be displayed. From this list,
-find your theme and click on `Activate` button present on the right
-side of that same theme to activate the theme.
+List of all the installed modules will be displayed. From this list,
+find your module and click on `Activate` button present on the right
+side of that same module to activate the module.
 
-After Successfull activation, theme name will be visible on the
-side bar. Click on theme name to access DashBoard of the theme.
+After Successfull activation, module name will be visible on the
+side bar. Click on module name to access DashBoard of the module.
 
-<img :src="$withBase('/images//themes/activated-sidebar-icon.png')" alt="activated-theme-sidebar-icon">
+<img :src="$withBase('/images/module-dashboard-page.png')" alt="module-dashboard-page">
 
-###### Note: All migrations of that specific theme will run automatically when the theme is activated .
+###### Note: All migrations of that specific module will run automatically when the module is activated .
 
 
 ### Step 4: Directory Structure
 
-<img :src="$withBase('/images/themes/directory-structure.png')" alt="directory-structure">
+<img :src="$withBase('/images/module-directory-structure.png')" alt="module-directory-structure">
 
 - Config:
-  
-  <img :src="$withBase('/images/themes/config-directory.png')" alt="theme-config-directory">
-
-  Config file is present here. Config file contains all the information related to theme, that was provided while creating theme, such as, name, description, `is_migratable`, `is sample data available` etc.
+  Config file is present here. Config file contains all the information related to module, that was provided while creating module, such as, name, description, `is_migratable`, `is sample data available` etc.
   And this information can be changed in this config file.
 
-  <img :src="$withBase('/images/themes/config.png')" alt="theme-config-file">
+  <img :src="$withBase('/images/module-config-file.png')" alt="module-config-file">
 
 - Database:
-
-  <img :src="$withBase('/images/themes/database-directory.png')" alt="theme-database-directory">
-
-  All the Factory, Migrations and Seeds files of this themes are present in Database Folder.
+  All the Factory, Migrations and Seeds files of this modules are present in Database Folder.
 
     - To generate Migration File:
       ```terminal
-       npx vaah cms:t-make migration <theme-folder-name> <migration-name> 
+       npx vaah cms:m-make migration <module-folder-name> <migration-name> 
       ```
-      example:-
-      ```terminal
-       npx vaah cms:t-make migration ArticleTheme contact
-      ```
-      Migration file generated after running command:-
-        <img :src="$withBase('/images/themes/migration-file.png')" alt="theme-migration-file"> 
+        <img :src="$withBase('/images/module-migration-file.png')" alt="module-migration-file"> 
       Migration file will be generated under `Database/Migrations`.
 
-  In order to run migrations, `deactivate` and `activate` theme again.
+  In order to run migrations, `deactivate` and `activate` module again.
 
 - To generate Seeds File:
   ```terminal
-   npx vaah cms:m-make seed <theme-folder-name> <seeder-name>
+   npx vaah cms:m-make seed <module-folder-name> <seeder-name>
   ```
 
-  Seeds file will be generated under `Database/Seeders`. Or we can use json files to seed data into tables.
-  To use a json file, create a json file under `<theme-folder>/Database/Seeds/json` folder. 
+  Seeds file will be generated under `Database/Seeders`.
+  Or
+  we can use json files to seed data into tables.
   Example:
-
-  <img :src="$withBase('/images/themes/json-seed-file.png')" alt="theme-json-seed-file">
+  <img :src="$withBase('/images/module-json-seed-file.png')" alt="module-json-seed-file">
 
   and this json file can be used in SampleDataTableSeeder
-  <img :src="$withBase('/images/themes/seed-file1.png')" alt="theme-sample-seeder-file1">
+  <img :src="$withBase('/images/module-sample-seeder-file1.png')" alt="module-sample-seeder-file1">
+
+  and
+  <img :src="$withBase('/images/module-sample-seeder-file2.png')" alt="module-sample-seeder-file2">
 
   and to run `SampleDataTableSeeder` file, click on `import sample data` button:-
-  <img :src="$withBase('/images/themes/seed-button.png')" alt="theme-sample-seeder-button">
+  <img :src="$withBase('/images/module-sample-seeder-button.png')" alt="module-sample-seeder-button">
 
-  ####Note: In order to run seeds, is_sample_data_available must be set to true in config file.
 - Http:
-
-  <img :src="$withBase('/images/themes/http-directory.png')" alt="theme-http-directory">
-
-  All the Controllers,Middlewares,Requests file related to this theme will be created here.
-  command used to create theme controller is:-
+  All the Controllers,Middlewares,Requests file related to this module will be created here.
+  command used to create module controller is:-
     ```terminal-command-for-controller 
-        vaah cms:t-make controller <theme-folder-name> <controller-name>
+        vaah cms:t-make controller <module-folder-name> <controller-name>
     ```
     ```terminal-command-for-middleware
-        vaah cms:t-make middleware <theme-folder-name> <middleware-name>
-    ```
-  #### Note: All the Controllers will be created in Http/Controllers/Frontend for themes.
+        vaah cms:t-make middleware <module-folder-name> <middleware-name>
+  #### Note: All the Controllers must be created in Http/Controllers/Backend for modules.
 
 - Models:
-
-  <img :src="$withBase('/images/themes/model-directory.png')" alt="theme-model-directory">
-
-  All the models for this theme will be generated in `<theme-root>/Models` using:
+  All the models for this module will be generated in `<module-root>/Models` using:
 ```terminal
-    npx vaah cms:t-make model <theme-root> <model-name>
+    npx vaah cms:t-make model <module-root> <model-name>
 ```
-
-- Routes:
-  All the routes for theme will be found in routes/frontend.php. And all the new route will be created in this same file.
-  
 - Views:
-
-  <img :src="$withBase('/images/themes/views-directory.png')" alt="theme-views-directory">
-
-  All the views for this theme will be generated in `<theme-root>/Resources/Views/frontend`
-    - this is the first page of the theme `welcome.blade.php`.
+  All the views for this module will be generated in `<module-root>/Resources/Views/backend`
+    - this is the first page of the module `index.blade.php`.
 
 - Vue:
-  This folder will contain all the vue files, vuex store, vue routes related to this theme.
+  This folder will contain all the vue files, vuex store, vue routes related to this module.
     - Vue components will be present under Vue/pages.
-
-      <img :src="$withBase('/images/themes/vue-file.png')" alt="theme vue componentes files">
+      <img :src="$withBase('/images/module-vue-components-files.png')" alt="module vue componentes files">
 
     - Vue routes will be present under Vue/routes.
-
-      <img :src="$withBase('/images/themes/vue-route-file.png')" alt="themes vue routes file">
+      <img :src="$withBase('/images/module-vue-routes-file.png')" alt="modules vue routes file">
 
     - Vue store will be found under Vue/stores.
+      <img :src="$withBase('/images/module-vue-store-file.png')" alt="module vue store file">
 
-      <img :src="$withBase('/images/themes/vue-store-file.png')" alt="theme vue store file">
-
-#### Note: Use `npm install` inside theme root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
+#### Note: Use `npm install` inside module root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
