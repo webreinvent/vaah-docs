@@ -86,7 +86,6 @@ regarding the Theme. Like:-
 After providing all the information, Theme will be generated under `project-root/Vaahcms/Themes`.
 <img :src="$withBase('/images/themes/files.png')" alt="theme_path">
 
-
 `<theme-root-folder>\config\config.php` contains the information that was enter while creating a theme and can be changed by making changes to config.php file.
 <img :src="$withBase('/images/themes/config.png')" alt="theme-config-file">
 
@@ -153,16 +152,13 @@ side bar. Click on theme name to access DashBoard of the theme.
   Or
   we can use json files to seed data into tables.
   Example:
-  <img :src="$withBase('/images/theme-json-seed-file.png')" alt="theme-json-seed-file">
+  <img :src="$withBase('/images/themes/json-seed-file.png')" alt="theme-json-seed-file">
 
   and this json file can be used in SampleDataTableSeeder
-  <img :src="$withBase('/images/theme-sample-seeder-file1.png')" alt="theme-sample-seeder-file1">
-
-  and
-  <img :src="$withBase('/images/theme-sample-seeder-file2.png')" alt="theme-sample-seeder-file2">
+  <img :src="$withBase('/images/themes/seed-file1.png')" alt="theme-sample-seeder-file1">
 
   and to run `SampleDataTableSeeder` file, click on `import sample data` button:-
-  <img :src="$withBase('/images/theme-sample-seeder-button.png')" alt="theme-sample-seeder-button">
+  <img :src="$withBase('/images/themes/seed-button.png')" alt="theme-sample-seeder-button">
 
 - Http:
   All the Controllers,Middlewares,Requests file related to this theme will be created here.
@@ -172,6 +168,7 @@ side bar. Click on theme name to access DashBoard of the theme.
     ```
     ```terminal-command-for-middleware
         vaah cms:t-make middleware <theme-folder-name> <middleware-name>
+    ```
   #### Note: All the Controllers must be created in Http/Controllers/Backend for themes.
 
 - Models:
@@ -186,12 +183,15 @@ side bar. Click on theme name to access DashBoard of the theme.
 - Vue:
   This folder will contain all the vue files, vuex store, vue routes related to this theme.
     - Vue components will be present under Vue/pages.
-      <img :src="$withBase('/images/theme-vue-components-files.png')" alt="theme vue componentes files">
+
+      <img :src="$withBase('/images/themes/vue-file.png')" alt="theme vue componentes files">
 
     - Vue routes will be present under Vue/routes.
-      <img :src="$withBase('/images/theme-vue-routes-file.png')" alt="themes vue routes file">
+
+      <img :src="$withBase('/images/themes/vue-route-file.png')" alt="themes vue routes file">
 
     - Vue store will be found under Vue/stores.
-      <img :src="$withBase('/images/theme-vue-store-file.png')" alt="theme vue store file">
+
+      <img :src="$withBase('/images/themes/vue-store-file.png')" alt="theme vue store file">
 
 #### Note: Use `npm install` inside theme root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
