@@ -3,9 +3,9 @@
 [[toc]]
 
 ## Introduction
-VahhFlutter is a Flutter-based framework that provides common features required in any application.
-
-The purpose of developing VahhFlutter is to create a framework that can be extended in a manageable and structured manner in order to develop large applications while not having to reinvent all essential functionalities every time. Some of the features are as follows:
+VaahFlutter is a Flutter-based framework that provides common features required in any application.
+    
+The purpose of developing VaahFlutter is to create a framework that can be extended in a manageable and structured manner in order to develop large applications while not having to reinvent all essential functionalities every time. Some of the features are as follows:
 
 - Managing environments
 - Log Library
@@ -40,13 +40,13 @@ The `root/pubspec.yaml` file contains `sdk` and `flutter` properties which are u
 
 ### Learning Curve
 
-If you want to get started quickly with VahhFlutter, all you need to know is [Flutter](https://flutter.dev/) and [Dart](https://dart.dev/). Please read the detailed documentation on Flutter and Dart's official website.
+If you want to get started quickly with VaahFlutter, all you need to know is [Flutter](https://flutter.dev/) and [Dart](https://dart.dev/). Please read the detailed documentation on Flutter and Dart's official website.
 
 ## Releases
 
 ### Versioning Scheme
 
-VahhFlutter and its other first-party packages follow Semantic Versioning. Major platform releases are released every 6 to 8 months, while minor and patch releases maybe released as often as every month. Minor and patch releases should never contain breaking changes.
+VaahFlutter and its other first-party packages follow Semantic Versioning. Major platform releases are released every 6 to 8 months, while minor and patch releases maybe released as often as every month. Minor and patch releases should never contain breaking changes.
 
 The official way to report the bugs is via [github repo](https://github.com/webreinvent/vaahflutter/issues).
 
