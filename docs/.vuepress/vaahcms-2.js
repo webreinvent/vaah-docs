@@ -27,6 +27,7 @@ sidebar = [
             {text: 'Jobs', link: '/vaahcms-2/backend/jobs.md'},
             {text: 'Batches', link: '/vaahcms-2/backend/batches.md'},
             {text: 'Env variables', link: '/vaahcms-2/backend/env-variables.md'},
+            {text: 'Localization', link: '/vaahcms-2/backend/localization.md'},
         ]
     },
 ];
