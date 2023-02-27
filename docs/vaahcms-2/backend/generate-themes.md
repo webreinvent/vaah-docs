@@ -122,12 +122,18 @@ side bar. Click on theme name to access DashBoard of the theme.
 <img :src="$withBase('/images/themes/directory-structure.png')" alt="directory-structure">
 
 - Config:
+  
+  <img :src="$withBase('/images/themes/config-directory.png')" alt="theme-config-directory">
+
   Config file is present here. Config file contains all the information related to theme, that was provided while creating theme, such as, name, description, `is_migratable`, `is sample data available` etc.
   And this information can be changed in this config file.
 
   <img :src="$withBase('/images/themes/config.png')" alt="theme-config-file">
 
 - Database:
+
+  <img :src="$withBase('/images/themes/database-directory.png')" alt="theme-database-directory">
+
   All the Factory, Migrations and Seeds files of this themes are present in Database Folder.
 
     - To generate Migration File:
@@ -163,6 +169,9 @@ side bar. Click on theme name to access DashBoard of the theme.
 
   ####Note: In order to run seeds, is_sample_data_available must be set to true in config file.
 - Http:
+
+  <img :src="$withBase('/images/themes/http-directory.png')" alt="theme-http-directory">
+
   All the Controllers,Middlewares,Requests file related to this theme will be created here.
   command used to create theme controller is:-
     ```terminal-command-for-controller 
@@ -171,16 +180,25 @@ side bar. Click on theme name to access DashBoard of the theme.
     ```terminal-command-for-middleware
         vaah cms:t-make middleware <theme-folder-name> <middleware-name>
     ```
-  #### Note: All the Controllers must be created in Http/Controllers/Backend for themes.
+  #### Note: All the Controllers will be created in Http/Controllers/Frontend for themes.
 
 - Models:
+  <img :src="$withBase('/images/themes/model-directory.png')" alt="theme-model-directory">
+
   All the models for this theme will be generated in `<theme-root>/Models` using:
 ```terminal
     npx vaah cms:t-make model <theme-root> <model-name>
 ```
+
+- Routes:
+  All the routes for theme will be found in routes/frontend.php. And all the new route will be created in this same file.
+  
 - Views:
-  All the views for this theme will be generated in `<theme-root>/Resources/Views/backend`
-    - this is the first page of the theme `index.blade.php`.
+
+  <img :src="$withBase('/images/themes/views-directory.png')" alt="theme-views-directory">
+
+  All the views for this theme will be generated in `<theme-root>/Resources/Views/frontend`
+    - this is the first page of the theme `welcome.blade.php`.
 
 - Vue:
   This folder will contain all the vue files, vuex store, vue routes related to this theme.
