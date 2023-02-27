@@ -98,7 +98,7 @@ After providing all the information, Module will generated under `project-root/V
 <img :src="$withBase('/images/module_path.png')" alt="module_path">
 
 
-`<module-root-folder>\config\config.php` contains the information that was enter while creating a module and can be changed by making changes tp config.php file.
+`<module-root-folder>\config\config.php` contains the information that was enter while creating a module and can be changed by making changes to config.php file.
 <img :src="$withBase('/images/module-config-file.png')" alt="module-config-file">
 
 ### Step 3: Activating a module
@@ -126,7 +126,7 @@ side bar. Click on module name to access DashBoard of the module.
 
 <img :src="$withBase('/images/module-dashboard-page.png')" alt="module-dashboard-page">
 
-###### Note: All migrations of that specific module will run automatically when the module is activated .
+###### Note: All migrations of that specific module will run automatically when the module is activated if `is_migratable` is set to true in config file.
 
 
 ### Step 4: Directory Structure
@@ -156,9 +156,8 @@ side bar. Click on module name to access DashBoard of the module.
    npx vaah cms:m-make seed <module-folder-name> <seeder-name>
   ```
 
-  Seeds file will be generated under `Database/Seeders`.
-  Or
-  we can use json files to seed data into tables.
+  Seeds file will be generated under `Database/Seeders`. Or we can use json files to seed data into tables.
+  To use a json file, create a json file under `<module-folder>/Database/Seeds/json` folder.
   Example:
   <img :src="$withBase('/images/module-json-seed-file.png')" alt="module-json-seed-file">
 
@@ -170,7 +169,8 @@ side bar. Click on module name to access DashBoard of the module.
 
   and to run `SampleDataTableSeeder` file, click on `import sample data` button:-
   <img :src="$withBase('/images/module-sample-seeder-button.png')" alt="module-sample-seeder-button">
-
+  
+  ####Note: In order to run seeds, `is_sample_data_available` must be set to true in config file.
 - Http:
   All the Controllers,Middlewares,Requests file related to this module will be created here.
   command used to create module controller is:-
