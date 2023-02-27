@@ -161,6 +161,7 @@ side bar. Click on theme name to access DashBoard of the theme.
   and to run `SampleDataTableSeeder` file, click on `import sample data` button:-
   <img :src="$withBase('/images/themes/seed-button.png')" alt="theme-sample-seeder-button">
 
+  ####Note: In order to run seeds, is_sample_data_available must be set to true in config file.
 - Http:
   All the Controllers,Middlewares,Requests file related to this theme will be created here.
   command used to create theme controller is:-
