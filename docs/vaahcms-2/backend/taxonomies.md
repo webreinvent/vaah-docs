@@ -120,8 +120,20 @@ The file is now visible in the `View` Page.
 You can view the video attached below for more info:
 
 <figure class="video_container">
+
   <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_F20Ga5vKrX.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"></iframe>
+
 </figure>
+
+
+### Update TaxonomyType via Dashboard
+
+Go to the Taxonomy section first, then click the Manage Taxonomy Type button to edit or 
+update the TaxonomyType name. To learn more, view the video attachment.
+
+<div style="padding:53.65% 0 0 0;position:relative;">
+<iframe src="https://player.vimeo.com/video/802634665?h=e1bd2f4f84&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Update TaxonomyType"></iframe>
+</div>
 
 ## Permissions
 The following permissions are necessary for `Taxonomies` and `Taxonomy Type` management in order to carry out certain actions.
