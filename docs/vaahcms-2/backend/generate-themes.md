@@ -183,6 +183,7 @@ side bar. Click on theme name to access DashBoard of the theme.
   #### Note: All the Controllers will be created in Http/Controllers/Frontend for themes.
 
 - Models:
+
   <img :src="$withBase('/images/themes/model-directory.png')" alt="theme-model-directory">
 
   All the models for this theme will be generated in `<theme-root>/Models` using:
