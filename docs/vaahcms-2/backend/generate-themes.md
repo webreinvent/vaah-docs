@@ -138,6 +138,7 @@ side bar. Click on theme name to access DashBoard of the theme.
       ```terminal
        npx vaah cms:t-make migration ArticleTheme contact
       ```
+      Migration file generated after running command:-
         <img :src="$withBase('/images/themes/migration-file.png')" alt="theme-migration-file"> 
       Migration file will be generated under `Database/Migrations`.
 
@@ -148,10 +149,10 @@ side bar. Click on theme name to access DashBoard of the theme.
    npx vaah cms:m-make seed <theme-folder-name> <seeder-name>
   ```
 
-  Seeds file will be generated under `Database/Seeders`.
-  Or
-  we can use json files to seed data into tables.
+  Seeds file will be generated under `Database/Seeders`. Or we can use json files to seed data into tables.
+  To use a json file, create a json file under `<theme-folder>/Database/Seeds/json` folder. 
   Example:
+
   <img :src="$withBase('/images/themes/json-seed-file.png')" alt="theme-json-seed-file">
 
   and this json file can be used in SampleDataTableSeeder
