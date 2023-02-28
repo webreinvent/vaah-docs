@@ -38,10 +38,6 @@ A search field is there which will filter according to notification title, by us
 
 Below video for better understanding.
 
-<figure>
-  <iframe src="https://drive.google.com/file/d/1tx9R-WuwP9oDmfpCMeixezKU26KYeObd/view?usp=share_link" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
-</figure>
-
 #### How to edit notification
 
 To edit notification you need to click the edit button present on the right side of the list.
@@ -83,5 +79,5 @@ One can type anything it will search users and by selecting user notification ca
 Follow below videos for better understanding:
 
 <figure>
-  <iframe src="https://drive.google.com/file/d/1tx9R-WuwP9oDmfpCMeixezKU26KYeObd/view?usp=share_link" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_n9zbdkcnPK.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
