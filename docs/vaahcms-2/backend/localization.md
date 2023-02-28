@@ -6,7 +6,7 @@
 
 Localization features provide a convenient way to retrieve strings in various languages, allowing you to easily support multiple languages within your application.
 
-Visit following url you will see the Env-variables section:
+Visit following url you will see the localization section:
 ```
 <project-url>/backend#/vaah//settings/localization
 ```
