@@ -34,7 +34,10 @@ If version is same then it will show like below :
 
 <img :src="$withBase('/images/update-setting-5.png')">
 
-This video will help you to understand the process of auto update 
+This video will help you to understand the process of auto update
 
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_cAoLQPpcOd.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
 
 
