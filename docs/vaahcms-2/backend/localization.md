@@ -35,7 +35,7 @@ Then a warning confirmation will come just like below :
 Below video for better understanding.
 
 <figure>
-  <iframe src="https://drive.google.com/file/d/1tx9R-WuwP9oDmfpCMeixezKU26KYeObd/view?usp=share_link" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_OAmkBlhFCF.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 
@@ -63,7 +63,7 @@ If you want to add field, it will add the field against the selected language fr
 Below video will help you to understand with example :
 
 <figure>
-  <iframe src="https://drive.google.com/file/d/1tx9R-WuwP9oDmfpCMeixezKU26KYeObd/view?usp=share_link" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_9HFaHtKvhc.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 #### Add category localization
@@ -81,7 +81,7 @@ Once put category name in the field and click on `save` button, the new category
 Below video will help you to understand with example :
 
 <figure>
-  <iframe src="https://drive.google.com/file/d/1tx9R-WuwP9oDmfpCMeixezKU26KYeObd/view?usp=share_link" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_CEk9xFYSRC.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 Besides `Category filter dropdown` another dropdown is present which is to filter the list with values or without.
@@ -93,10 +93,10 @@ Besides `Category filter dropdown` another dropdown is present which is to filte
 At the end of filter row `Reset` button will help to reset all the filters. But after reset `Englist (56/57) will be selected as it is the default language.
 
 <figure>
-  <iframe src="https://drive.google.com/file/d/1tx9R-WuwP9oDmfpCMeixezKU26KYeObd/view?usp=share_link" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_CXayJJCfdu.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
-#### Reset localization filter
+#### Generate Language Files localization
 `Generate Language Files` button is there at the bottom-right corner before `save` button. By which You can generate language file in the backend.
 
 <img :src="$withBase('/images/localization-setting-9.png')">
