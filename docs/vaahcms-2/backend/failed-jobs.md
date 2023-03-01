@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Sometimes our que job will failFor that reason we have a failed-jobs feature, where user can know the details about jobs which is broken in queue.
+Sometimes our que job will fail For that reason we have a failed-jobs feature, where user can know the details about jobs which is broken in queue.
 
 Visit following url you will see the Jobs section:
 
