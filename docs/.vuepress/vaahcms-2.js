@@ -30,6 +30,7 @@ sidebar = [
             {text: 'Localization', link: '/vaahcms-2/backend/localization.md'},
             {text: 'Notification', link: '/vaahcms-2/backend/notification.md'},
             {text: 'Update', link: '/vaahcms-2/backend/update.md'},
+            {text: 'Failed Jobs', link: '/vaahcms-2/backend/failed-jobs.md'},
         ]
     },
 ];
