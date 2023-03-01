@@ -23,6 +23,7 @@ sidebar = [
             {text: 'Registration', link: '/vaahcms-2/backend/registrations.md'},
             {text: 'Users', link: '/vaahcms-2/backend/users.md'},
             {text: 'Jobs', link: '/vaahcms-2/backend/jobs.md'},
+            {text: 'User setting', link: '/vaahcms-2/backend/user-setting.md'},
         ]
     },
 ];
