@@ -24,111 +24,64 @@ Click on the installation button to start the procedure.
 
 #### Step - 2
 
-When you click the installation button, a form with the fields listed above opens.
-
-**ENV - Drop-down list**
-
-Your `env` file must be chosen from this drop-down.
-If you wish to make your own unique `env` file, you must first 
-select the custom option from the drop-down list and then type
-the name of the file.
-
-**Debug - Drop-down list**
-
-From this drop-down menu, you must choose your application's "debug" mode.
-
-**Time-zone - Searchable Drop-down list**
-
-You may look up and select your application's time zone using this drop-down.
-
-**Time-zone - Searchable Drop-down list**
-
-You can look up and select your application's time zone in this drop-down.
-
-## Features & Demos
-<!-- 
-REMOVE THIS COMMENT
-Create a video demo of all features.
-
-Examples:
-#### Create roles
-**Demo Video**
-
-####  Assign permission to roles
-**Demo Video**
-
-####  Send Activation Email to User
-**Demo Video**
-
--->
-
-## Permissions
-<!-- 
-REMOVE THIS COMMENT
-List the permissions & details for this page in table format 
--->
-
-## Files
-<!-- 
-REMOVE THIS COMMENT
-List of all the files responsible for this pages
-
-- Laravel Route: `routes/backend/route-example.php`
-- Laravel Controller: 
-- Laravel Model: 
-- Vue Route: 
-- Vue Store: 
-- Vue Page Directory: 
-
--->
-
-## Packages
-<!-- 
-REMOVE THIS COMMENT
-
-### Laravel Packages
-
-- `creativeorange/gravatar`: Write purpose of the package
+When you click the installation button, a form with the fields listed bellowed opens.
 
 
-### Vue Packages
-- `laravel-mix`: To build assets
+##### Database Configuration
 
--->
+| Columns    | Type  | Description                                                  |
+| ------------- | -----|------------------------------------------------------- |
+| Debug | Drop-down | From this drop-down selection, you must choose your application's "debug" mode. |
+| Time-zone | Searchable Drop-down | You may look up and select your application's time zone using this drop-down. |
+| App/Website Name| Input | You have to enter the name of your application or website here. |
+| Database Type | Drop-down | You must select the database for your application from this drop-down selection. |
+| Database Host | Input | Enter the IP address of your database host here. |
+| Database Port | Input | Enter the active port for your database here. |
+| Database Name | Input |Enter the database name for your application here. |
+| Database Username | Input | Enter your database's username here. |
+| Database Password | Input | Enter your database's password here. |
+
+After fill-up the form you click on the `Test Database Connection` button to ensure that your given credentials are right.
+
+##### Mail Configuration
+
+| Columns    | Type  | Description                                                  |
+| ------------- | -----|------------------------------------------------------- |
+| Mail Provider | Drop-down | From thin drop-down selection you must chose your mail provider client. |
+| Mail Driver | Input | Enter your mail driver here. |
+| Mail Host | Input | Enter your mail provider's host here. |
+| Mail Port | Input | Enter your mail provider's port here. |
+| Mail Username | Input | Enter your username here. |
+| Mail Password | Input | Enter your password here. |
+| Mail Encryption | Drop-down | From this drop-down selection you must chose your mail's encryption type. |
+| From Name | Input | Enter your from name here. |
+| From Email | Input | Enter your from email here. |
+
+After fill-up the form you click on the `Test Mail Configuration` button to ensure that your given credentials are right.
+
+For more understanding you can watch bellowed attached video.
+
+<figure class="video_container">
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_MQWp0lyUkn.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
+#### Step - 3
+
+Click `Migrate & Run Seed` button for run the migration and seeds.
+
+For more understanding you can watch bellowed attached video.
+
+<figure class="video_container">
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_xQZgIoVjc4.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
 
 
-## Methods
-<!-- 
-REMOVE THIS COMMENT
-List important methods which can be reused. 
+#### Step - 4 
 
-Eg:
-```
-User::addRole();
-```
+Now create a new `super administrator` account. 
 
--->
+For more understanding you can watch bellowed attached video.
 
-## Events
-<!-- 
-REMOVE THIS COMMENT
-List events for this section in table format 
--->
-
-
-## API
-<!-- 
-REMOVE THIS COMMENT
-
-Example
-
-### Create permission
-
-##### Method: `post`
-##### URL: `<public-url>/api/permission/create`
-##### Request Parameters
-List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
-##### Response Parameters
-##### Sample Request
-##### Sample Response
--->
+<figure class="video_container">
+  <iframe src="https://img-v4.getdemo.dev/screenshot/msedge_Y9hmmPuegS.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
