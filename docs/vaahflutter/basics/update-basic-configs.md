@@ -187,7 +187,11 @@ description: Your app description.
 - `root/packages`
 - `root/pubspec.yaml`
 
-### Check the documentation for how to use [different components](../core/log.md)
+### Check the documentation for how to use different components
+
+- [Essesntials](../essentials/app.md)
+- [Core](../core/performance_and_log.md)
+- [Vaah Components](../directory_structure/vaahextendflutter/base/controller.md)
 
 ---
 

@@ -58,7 +58,7 @@ Pass `onChanged`, `onChangeStart`, and `onChangeEnd` functions to perform action
 ```dart{4}
 InputSlider(
     initialValue: 0.8,
-    onChanged: (value) => Console.danger(value.toString()),
+    onChanged: (value) => Log.info(value, disableCloudLogging: true),
 ),
 ```
 

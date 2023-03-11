@@ -413,10 +413,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart' as getx;
 
+import './logging_library/logging_library.dart';
 import '../app_theme.dart';
 import '../env.dart';
 import '../helpers/alerts.dart';
-import '../helpers/console.dart';
 import '../helpers/constants.dart';
 
 // alertType : 'dialog', 'toast',
@@ -435,53 +435,6 @@ class Api {
     header.addAll(<String, String>{'Accept': 'application/json'});
     header.addAll(<String, String>{'X-Requested-With': 'XMLHttpRequest'});
     return Options(headers: header, contentType: contentType);
-  }
-
-  static dynamic _parseKeys({
-    required dynamic data,
-    required Function changeKeys,
-  }) {
-    if (data is List) {
-      dynamic parsedData = [];
-      for (var e in data) {
-        parsedData.add(_parseKeys(data: e, changeKeys: changeKeys));
-      }
-      return parsedData;
-    } else if (data is Map) {
-      Map<String, dynamic> parsedData = {};
-      data.forEach(
-        (key, value) {
-          dynamic parsedvalue = _parseKeys(data: value, changeKeys: changeKeys);
-          parsedData.addAll({
-            changeKeys(key): parsedvalue,
-          });
-        },
-      );
-      return parsedData;
-    }
-    return data;
-  }
-
-  static String _lowerCamelCaseToSnakeCase(String data) {
-    List<String> parts = data.split(RegExp(r"(?=(?!^)[A-Z])"));
-    String result = parts.join('_');
-    return result.toLowerCase();
-  }
-
-  static String _snakeCaseToLowerCamelCase(String data) {
-    List<String> sentence = data.split('_');
-    sentence.removeWhere((element) => element.isEmpty);
-    String result = '';
-    for (var e in sentence) {
-      result += e[0].toUpperCase() + e.substring(1);
-    }
-    if (result.isEmpty) {
-      return data;
-    }
-    if (result[0].isAlphabetOnly) {
-      result = result[0].toLowerCase() + result.substring(1);
-    }
-    return result;
   }
 
   // return type of ajax is ApiResponseType? so if there is error
@@ -545,11 +498,6 @@ class Api {
         'response': response
       };
     } catch (error) {
-      // On completed, use for hide loading
-      if (onCompleted != null) {
-        await onCompleted();
-      }
-
       // On inline error
       if (onError != null) {
         await onError(error);
@@ -601,11 +549,6 @@ class Api {
           }
         };
       }
-
-      if (callback != null) {
-        await callback(null, null);
-      }
-      rethrow;
     } finally {
       // Call finally function
       if (onFinally != null) {
@@ -617,7 +560,8 @@ class Api {
   static void init() {
     // get env controller to get variable apiUrl
     _config = EnvironmentConfig.getEnvConfig();
-    if (_config.enableApiLogs) {
+    _apiBaseUrl = _config.apiUrl;
+    if (_config.enableApiLogInterceptor) {
       _dio.interceptors.add(
         LogInterceptor(
           responseBody: true,
@@ -748,18 +692,26 @@ class Api {
         final Map<String, dynamic> formatedResponse = response.data as Map<String, dynamic>;
         dynamic responseData = formatedResponse['data'];
         if (responseData == null) {
-          Console.warning('response doesn\'t contain data key.');
+          Log.warning(
+            'response doesn\'t contain data key.',
+            data: formatedResponse,
+            disableCloudLogging: true,
+          );
         }
         List<String>? responseMessages;
         if (formatedResponse['messages'] == null) {
-          Console.warning('response doesn\'t contain messages key.');
+          Log.warning(
+            'response doesn\'t contain messages key.',
+            data: formatedResponse,
+            disableCloudLogging: true,
+          );
         } else {
           responseMessages =
               (formatedResponse['messages'] as List<dynamic>).map((e) => e.toString()).toList();
         }
         String? responseHint = formatedResponse['hint'] as String?;
         if (responseHint == null) {
-          Console.warning('response doesn\'t contain hint key.');
+          Log.warning('response doesn\'t contain hint key.', disableCloudLogging: true);
         }
         if (showAlert) {
           if (alertType == 'dialog') {
@@ -802,7 +754,7 @@ class Api {
     bool showAlert,
     String alertType,
   ) async {
-    Console.danger(error.toString());
+    Log.exception(error, stackTrace: error.stackTrace);
     if (showAlert) {
       if (alertType == 'dialog') {
         if (Alerts.showErrorDialog != null) {
@@ -832,158 +784,194 @@ class Api {
   }
 
   static Future<void> _handleResponseError(
-    Object error,
+    DioError error,
     bool showAlert,
     String alertType,
   ) async {
-    if (error is DioError && error.type == DioErrorType.badResponse) {
-      final Response<dynamic>? response = error.response;
-      try {
-        // By pass dio header error code to get response content
-        // Try to return response
-        if (response == null) {
-          throw DioError(
-            requestOptions: error.requestOptions,
-            response: error.response,
-            type: error.type,
-            error: response?.statusMessage,
-          );
-        }
-        final Response res = Response(
-          data: response.data,
-          headers: response.headers,
-          requestOptions: response.requestOptions,
-          isRedirect: response.isRedirect,
-          statusCode: response.statusCode,
-          statusMessage: response.statusMessage,
-          redirects: response.redirects,
-          extra: response.extra,
-        );
+    final Response<dynamic>? response = error.response;
+    try {
+      // By pass dio header error code to get response content
+      // Try to return response
+      if (response == null) {
         throw DioError(
           requestOptions: error.requestOptions,
-          response: res,
+          response: error.response,
           type: error.type,
-          error: res.statusMessage,
+          error: response?.statusMessage,
         );
-      } catch (e) {
-        if (error.type == DioErrorType.badResponse) {
-          String errorCode = 'unknown';
-          List<String> errors = error.message == null ? [] : [error.message!];
-          String? debug;
-          if (error.response?.statusCode == 401) {
-            errorCode = 'unauthorized';
-          }
-          if (error.response?.data != null) {
-            try {
-              Console.danger('${error.response}');
-              final Map<String, dynamic> response = error.response?.data as Map<String, dynamic>;
-              Console.danger('$response');
-              if (response['errors'] != null) {
-                errors = (response['errors'] as List<dynamic>).map((e) => e.toString()).toList();
-              }
-              if (errors.isEmpty) {
-                Console.warning('response doesn\'t contain errors key.');
-              }
-              debug = response['debug'] as String?;
-              if (debug == null) {
-                Console.warning('response doesn\'t contain debug key.');
-              }
-            } catch (e) {
-              throw Exception(
-                'Unable to parse error response.',
-              );
-            }
-          }
-          if (errorCode == 'unauthorized') {
-            Console.danger('Error type: unauthorized');
-          }
-          if (showAlert) {
-            if (alertType == 'dialog') {
-              if (Alerts.showErrorDialog != null) {
-                await Alerts.showErrorDialog!(
-                  title: 'Error',
-                  messages: errors.isEmpty ? null : errors,
-                  hint: debug,
-                );
-                return;
-              }
-              Console.danger(errors.toString());
-              _showDialog(
-                title: 'Error',
-                content: errors.isEmpty ? null : errors,
-                hint: debug,
-              );
-            } else {
-              if (Alerts.showErrorToast != null) {
-                await Alerts.showErrorToast!(
-                  content: errors.isEmpty ? 'Error' : 'ERR: ${errors.join('\n')}',
-                );
-                return;
-              }
-              _showToast(
-                content: errors.isEmpty ? 'Error' : 'ERR: ${errors.join('\n')}',
-                color: AppTheme.colors['success']!,
-              );
-            }
-          }
-          return;
-        }
-        Console.danger(error.toString());
-        rethrow;
       }
+      final Response res = Response(
+        data: response.data,
+        headers: response.headers,
+        requestOptions: response.requestOptions,
+        isRedirect: response.isRedirect,
+        statusCode: response.statusCode,
+        statusMessage: response.statusMessage,
+        redirects: response.redirects,
+        extra: response.extra,
+      );
+      throw DioError(
+        requestOptions: error.requestOptions,
+        response: res,
+        type: error.type,
+        error: res.statusMessage,
+      );
+    } catch (catchErr, stackTrace) {
+      List<String> errors = error.message == null ? [] : [error.message!];
+      String? debug;
+
+      if (error.response?.data != null) {
+        try {
+          Log.exception(catchErr, data: error.response, stackTrace: stackTrace);
+
+          final Map<String, dynamic> response = error.response?.data as Map<String, dynamic>;
+          if (response['errors'] != null) {
+            errors = (response['errors'] as List<dynamic>).map((e) => e.toString()).toList();
+          }
+          if (errors.isEmpty) {
+            Log.warning('response doesn\'t contain errors key.', disableCloudLogging: true);
+          }
+          debug = response['debug'] as String?;
+          if (debug == null) {
+            Log.warning('response doesn\'t contain debug key.', disableCloudLogging: true);
+          }
+        } catch (e) {
+          throw Exception(
+            'Unable to parse error response',
+          );
+        }
+      }
+
+      if (showAlert) {
+        if (alertType == 'dialog') {
+          if (Alerts.showErrorDialog != null) {
+            await Alerts.showErrorDialog!(
+              title: 'Error',
+              messages: errors.isEmpty ? null : errors,
+              hint: debug,
+            );
+            return;
+          }
+          _showDialog(
+            title: 'Error',
+            content: errors.isEmpty ? null : errors,
+            hint: debug,
+          );
+        } else {
+          if (Alerts.showErrorToast != null) {
+            await Alerts.showErrorToast!(
+              content: errors.isEmpty ? 'Error' : 'ERR: ${errors.join('\n')}',
+            );
+            return;
+          }
+          _showToast(
+            content: errors.isEmpty ? 'Error' : 'ERR: ${errors.join('\n')}',
+            color: AppTheme.colors['success']!,
+          );
+        }
+      }
+
+      return;
     }
   }
+}
 
-  static void _showToast({
-    required String content,
-    Color color = Colors.white,
-  }) {
-    Fluttertoast.showToast(
-      msg: content,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: color.withOpacity(0.5),
-      textColor: color == AppTheme.colors['white']
-          ? AppTheme.colors['black']
-          : AppTheme.colors['whiteColor'],
-      fontSize: 16.0,
+dynamic _parseKeys({
+  required dynamic data,
+  required Function changeKeys,
+}) {
+  if (data is List) {
+    dynamic parsedData = [];
+    for (var e in data) {
+      parsedData.add(_parseKeys(data: e, changeKeys: changeKeys));
+    }
+    return parsedData;
+  } else if (data is Map) {
+    Map<String, dynamic> parsedData = {};
+    data.forEach(
+      (key, value) {
+        dynamic parsedvalue = _parseKeys(data: value, changeKeys: changeKeys);
+        parsedData.addAll({
+          changeKeys(key): parsedvalue,
+        });
+      },
     );
+    return parsedData;
   }
+  return data;
+}
 
-  static _showDialog({
-    required String title,
-    List<String>? content,
-    String? hint,
-    List<Widget>? actions,
-  }) {
-    return getx.Get.dialog(
-      CupertinoAlertDialog(
-        title: Text(title),
-        content: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (content != null && content.isNotEmpty) Text(content.join('\n')),
-              if (content != null && content.isNotEmpty) verticalMargin12,
-              if (hint != null && hint.trim().isNotEmpty) Text(hint),
-            ],
-          ),
+String _lowerCamelCaseToSnakeCase(String data) {
+  List<String> parts = data.split(RegExp(r"(?=(?!^)[A-Z])"));
+  String result = parts.join('_');
+  return result.toLowerCase();
+}
+
+String _snakeCaseToLowerCamelCase(String data) {
+  List<String> sentence = data.split('_');
+  sentence.removeWhere((element) => element.isEmpty);
+  String result = '';
+  for (var e in sentence) {
+    result += e[0].toUpperCase() + e.substring(1);
+  }
+  if (result.isEmpty) {
+    return data;
+  }
+  if (result[0].isAlphabetOnly) {
+    result = result[0].toLowerCase() + result.substring(1);
+  }
+  return result;
+}
+
+void _showToast({
+  required String content,
+  Color color = Colors.white,
+}) {
+  Fluttertoast.showToast(
+    msg: content,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: color.withOpacity(0.5),
+    textColor: color == AppTheme.colors['white']
+        ? AppTheme.colors['black']
+        : AppTheme.colors['whiteColor'],
+    fontSize: 16.0,
+  );
+}
+
+Future<void> _showDialog({
+  required String title,
+  List<String>? content,
+  String? hint,
+  List<Widget>? actions,
+}) {
+  return getx.Get.dialog(
+    CupertinoAlertDialog(
+      title: Text(title),
+      content: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (content != null && content.isNotEmpty) Text(content.join('\n')),
+            if (content != null && content.isNotEmpty) verticalMargin12,
+            if (hint != null && hint.trim().isNotEmpty) Text(hint),
+          ],
         ),
-        actions: <Widget>[
-          if (actions == null || actions.isNotEmpty)
-            CupertinoButton(
-              child: const Text('Ok'),
-              onPressed: () {
-                getx.Get.back();
-              },
-            )
-          else
-            ...actions,
-        ],
       ),
-      barrierDismissible: false,
-    );
-  }
+      actions: <Widget>[
+        if (actions == null || actions.isNotEmpty)
+          CupertinoButton(
+            child: const Text('Ok'),
+            onPressed: () {
+              getx.Get.back();
+            },
+          )
+        else
+          ...actions,
+      ],
+    ),
+    barrierDismissible: false,
+  );
 }
 ```
