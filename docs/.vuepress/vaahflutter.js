@@ -27,7 +27,7 @@ sidebar = [
     {
         text: 'Core',
         children: [
-            { text: 'Logs', link: '/vaahflutter/core/log.md' },
+            { text: 'Logs and Performance Monitoring', link: '/vaahflutter/core/logs_and_performance.md' },
             { text: 'Theme', link: '/vaahflutter/core/theme.md' },
             { text: 'Debug Panel', link: '/vaahflutter/core/debugpanel.md' },
             { text: 'API/ AJAX', link: '/vaahflutter/core/api.md' },
@@ -89,7 +89,6 @@ sidebar = [
                         collapsible: true,
                         children: [
                             { text: 'alerts', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/alerts.md' },
-                            { text: 'console', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/console.md' },
                             { text: 'constants', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/constants.md' },
                             { text: 'datetime', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/datetime.md' },
                             { text: 'input formatters', link: '/vaahflutter/directory_structure/vaahextendflutter/helpers/input-formatters.md' },
@@ -101,6 +100,27 @@ sidebar = [
                         text: 'services',
                         collapsible: true,
                         children: [
+                            {
+                                text: 'Logging Library',
+                                collapsible: true,
+                                children: [
+                                    { text: 'Logging Library', link: '/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/logging_library.md' },
+                                    {
+                                        text: '_local', children: [
+                                            { text: 'console_service', link: '/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_local/console_service.md' },
+                                            { text: 'local_device_service', link: '/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_local/local_device_service.md' },
+                                        ],
+                                    },
+                                    {
+                                        text: '_cloud', children: [
+                                            { text: 'logging_service', link: '/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_cloud/logging_service.md' },
+                                            { text: 'sentry_logging_service', link: '/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service.md' },
+                                            { text: 'firebase_logging_service', link: '/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_cloud/firebase_logging_service.md' },
+                                        ],
+                                    }
+                                ]
+                            },
+                            { text: 'Performance Monitoring', link: '/vaahflutter/directory_structure/vaahextendflutter/services/performance_monitoring.md' },
                             { text: 'api', link: '/vaahflutter/directory_structure/vaahextendflutter/services/api.md' },
                             { text: 'api self sign', link: '/vaahflutter/directory_structure/vaahextendflutter/services/self-sign.md' },
                         ],

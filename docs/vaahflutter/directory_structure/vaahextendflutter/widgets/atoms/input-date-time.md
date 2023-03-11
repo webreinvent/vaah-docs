@@ -67,7 +67,7 @@ InputDateTime(
     label: 'Choose Date',
     pickerType: PickerType.dateOnly,
     callback: (date) {
-        if (date is DateTime) Console.danger(date.toString());
+        if (date is DateTime) Log.info(date, disableCloudLogging: true);
     },
 ),
 ```
@@ -79,7 +79,7 @@ InputDateTime(
     label: 'Choose Time',
     pickerType: PickerType.timeOnly,
     callback: (time) {
-        if (time is TimeOfDay) Console.danger(time.toString());
+        if (time is TimeOfDay) Log.info(time, disableCloudLogging: true);
     },
 ),
 ```
@@ -91,7 +91,7 @@ InputDateTime(
     label: 'Choose Date And Time',
     pickerType: PickerType.dateAndTime,
     callback: (datetime) {
-        if (datetime is DateTime) Console.danger(datetime.toString());
+        if (datetime is DateTime) Log.info(datetime, disableCloudLogging: true);
     },
 ),
 ```
@@ -101,11 +101,12 @@ InputDateTime(
 ```dart
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:team/vaahextendflutter/app_theme.dart';
-import 'package:team/vaahextendflutter/helpers/console.dart';
-import 'package:team/vaahextendflutter/helpers/constants.dart';
-import 'package:team/vaahextendflutter/helpers/date_time.dart';
-import 'package:team/vaahextendflutter/helpers/enums.dart';
+
+import '../../app_theme.dart';
+import '../../helpers/constants.dart';
+import '../../helpers/date_time.dart';
+import '../../helpers/enums.dart';
+import '../../services/logging_library/logging_library.dart';
 
 enum PickerType { dateOnly, timeOnly, dateAndTime }
 
@@ -283,7 +284,7 @@ class _InputDateTimeState extends State<InputDateTime> {
         }
         break;
       default:
-        Console.danger('Error in date time input');
+        Log.exception('Error in date time input', disableCloudLogging: true);
     }
   }
 

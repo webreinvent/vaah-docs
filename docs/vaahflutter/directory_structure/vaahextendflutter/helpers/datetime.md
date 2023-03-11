@@ -268,7 +268,7 @@ by default format will be : 'yyyy MMM dd, h:mm a'
 
 ```dart
 DateTime date = DateTime.now();
-Console.danger(date.format(format: 'yyyy-MM-dd'));
+Log.info(date.format(format: 'yyyy-MM-dd'), disableCloudLogging: true);
 ```
 
 

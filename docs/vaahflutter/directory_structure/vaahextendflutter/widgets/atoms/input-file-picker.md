@@ -24,7 +24,7 @@ InputFilePicker(
     callback: (List<PlatformFile>? files) {
         if (files == null) return;
         if (files.isEmpty) return;
-        Console.info(files.length.toString());
+        Log.info(files.length, disableCloudLogging: true);
     },
 ),
 ```

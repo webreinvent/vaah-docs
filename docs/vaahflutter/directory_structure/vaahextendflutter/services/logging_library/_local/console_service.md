@@ -4,8 +4,14 @@
 
 - [colorize: ^3.0.0](https://pub.dev/packages/colorize)
 
-- Log depends [EnvironmentConfig](../env.md). 
 :::
+
+::: danger Developer Guide
+
+- Developer should never use this directly, use [Logging Library](../logging_library.md) instead.
+
+:::
+
 
 [[toc]]
 
@@ -16,16 +22,9 @@ Currently, our console logs are of 5 types.
 3. success
 4. warning
 5. danger
+6. transaction
 
 Different types will print logs in different colors. the log will be in grey, info in blue, success in green, warning in yellow, and danger will be in red.
-
-::: danger Note:
-The log will check the below variable, if it's set to false then no log will be printed. So make sure your environment variable is set to true if you want to log events.
-
-`EnvironmentConfig.enableConsoleLogs`
-
-for more details check [environments.md](./environments.md)
-:::
 
 ## Dependencies
 ```yaml
@@ -35,19 +34,14 @@ for more details check [environments.md](./environments.md)
 ## Use cases
 
 ::: tip use cases
+- To log transaction time
 - To see formatted (prettier) objects in the console easily readable by the human eye
 - To easily differentiate between different kinds of events.
 :::
 
-## How to use
+## Internal use (in [logging_library.dart](../logging_library.md) only)
 
-Step 1: Import console.dart file using the below command.
-
-```dart
-import 'vaahextendflutter/helpers/console.dart';
-```
-
-Step 2: Call static methods of the Console class to log the events.
+Call static methods of the Console class to log the events.
 
 ```dart
 Console.log("Message");
@@ -77,6 +71,25 @@ Output:
 
 <img :src="$withBase('/images/flutter/components/log/prettier-log.png')" alt="Output">
 
+```dart
+Console.logTransaction(
+  execute: () async => {},
+  details: const TransactionDetails(
+    name: 'idle transaction',
+    operation: 'idle',
+  ),
+);
+```
+
+```dart
+Console.logTransaction(
+  execute: Api.ajax('api.vaah.dev'),
+  details: const TransactionDetails(
+    name: 'get root route of vaah api',
+    operation: 'read',
+  ),
+);
+```
 
 `console.dart`
 ```dart
@@ -84,12 +97,11 @@ import 'dart:convert';
 
 import 'package:colorize/colorize.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../../env.dart';
+import '../models/log.dart';
 
 class Console {
-  static void printChunks(Colorize text) {
+  static void _printChunks(Colorize text) {
     final RegExp pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
     pattern.allMatches(text.toString()).forEach(
           (RegExpMatch match) => debugPrint(
@@ -98,9 +110,8 @@ class Console {
         );
   }
 
-  static void printLog(Colorize text) {
-    if (!EnvironmentConfig.getEnvConfig().enableConsoleLogs) return;
-    Console.printChunks(text);
+  static void _printLog(Colorize text) {
+    _printChunks(text);
   }
 
   static String _parseData(Object? data) {
@@ -115,61 +126,77 @@ class Console {
 
   static void log(String text, [Object? data]) {
     Colorize txt = Colorize(text);
-    Console.printLog(txt);
+    _printLog(txt);
 
     if (data != null) {
       Colorize dataColor = Colorize(_parseData(data));
       dataColor.white();
-      Console.printLog(dataColor);
+      _printLog(dataColor);
     }
   }
 
   static void info(String text, [Object? data]) {
     Colorize txt = Colorize(text);
     txt.blue();
-    Console.printLog(txt);
+    _printLog(txt);
 
     if (data != null) {
       Colorize dataColor = Colorize(_parseData(data));
       dataColor.blue();
-      Console.printLog(dataColor);
+      _printLog(dataColor);
     }
   }
 
   static void success(String text, [Object? data]) {
     Colorize txt = Colorize(text);
     txt.green();
-    Console.printLog(txt);
+    _printLog(txt);
 
     if (data != null) {
       Colorize dataColor = Colorize(_parseData(data));
       dataColor.green();
-      Console.printLog(dataColor);
+      _printLog(dataColor);
     }
   }
 
   static void warning(String text, [Object? data]) {
     Colorize txt = Colorize(text);
     txt.yellow();
-    Console.printLog(txt);
+    _printLog(txt);
 
     if (data != null) {
       Colorize dataColor = Colorize(_parseData(data));
       dataColor.yellow();
-      Console.printLog(dataColor);
+      _printLog(dataColor);
     }
   }
 
   static void danger(String text, [Object? data]) {
     Colorize txt = Colorize(text);
     txt.red();
-    Console.printLog(txt);
+    _printLog(txt);
 
     if (data != null) {
       Colorize dataColor = Colorize(_parseData(data));
       dataColor.red();
-      Console.printLog(dataColor);
+      _printLog(dataColor);
     }
+  }
+
+  static logTransaction({
+    required Function execute,
+    required TransactionDetails details,
+  }) async {
+    final DateTime start = DateTime.now();
+    await execute();
+    final DateTime end = DateTime.now();
+    final diff = end.difference(start);
+    success('------------- execution details -------------');
+    info('Transaction Name: ${details.name} | Operation: ${details.operation}');
+    if (null != details.description && details.description!.isNotEmpty) {
+      info('Description: ${details.description}');
+    }
+    info('Execution time in milliseconds: ${diff.inMilliseconds}');
   }
 }
 ```
