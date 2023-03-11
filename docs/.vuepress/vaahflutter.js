@@ -135,6 +135,10 @@ sidebar = [
                                 children: [
                                     { text: 'tabs', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/tab-options.md' },
                                     { text: 'container with rounded corners', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/container-with-rounded-corners.md' },
+                                    { text: 'buttons', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/buttons.md' },
+                                    { text: 'radio buttons', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/button-radio.md' },
+                                    { text: 'checkbox buttons', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/button-checkbox.md' },
+                                    { text: 'rating bar', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/button-rating-bar.md' },
                                     { text: 'expansion panel', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/app-expansion-panel.md' },
                                     { text: 'input text', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/input-text.md' },
                                     { text: 'input auto complete', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/input-auto-complete.md' },
