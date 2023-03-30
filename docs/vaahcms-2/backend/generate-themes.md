@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is guide to teachs `How to create Theme in VAAH CMS`
+This guide teaches `How to create Theme in VAAH CMS`
 
 ### Prerequisites
 
@@ -10,7 +10,7 @@ This is guide to teachs `How to create Theme in VAAH CMS`
 - vaah project directory
 
 
-### Step 1: Vaah Cli Installtion
+### Step 1: Vaah Cli Installation
 
 To use Vaah generators to generate themes, install VaahCli Tool using
 
@@ -40,7 +40,7 @@ regarding the Theme. Like:-
     ? Enter your theme name:  ArticleTheme  
     ```
 
-- Enter more relevent name for your Theme. Example Theme for Articles etc.
+- Enter more relevant name for your Theme. Example Theme for Articles etc.
     ```
     ? Enter meaningful title for your theme:  Theme for Articles
     ```
@@ -59,7 +59,7 @@ regarding the Theme. Like:-
     ```
     ? Enter Author email:  support@vaah.dev
     ```
-- Press enter for default value for Author website and Download Url.
+- Press Enter for default value for Author website and Download Url.
     ```
     ? Enter author website:  https://vaah.dev
     ? Enter download url: 
@@ -79,14 +79,14 @@ regarding the Theme. Like:-
     ```
     ? Will your theme contains sample data (true/false):  true
     ```
-  For Sample data seeders SampleDataTableSeeder.
+  Use SampleDataTableSeeder for seeding Sample data.
 
   ###### Note: All the Seeds files will be found in `root/VaahCms/Themes/<theme-name>/Database/Seeds` directory.
 
 After providing all the information, Theme will be generated under `project-root/Vaahcms/Themes`.
 <img :src="$withBase('/images/themes/files.png')" alt="theme_path">
 
-`<theme-root-folder>\config\config.php` contains the information that was enter while creating a theme and can be changed by making changes to config.php file.
+`<theme-root-folder>\config\config.php` contains the information that was entered while creating a theme and can be changed by making changes to config.php file.
 <img :src="$withBase('/images/themes/config.png')" alt="theme-config-file">
 
 ### Step 3: Activating a Theme
@@ -109,8 +109,8 @@ List of all the installed themes will be displayed. From this list,
 find your theme and click on `Activate` button present on the right
 side of that same theme to activate the theme.
 
-After Successfull activation, theme name will be visible on the
-side bar. Click on theme name to access DashBoard of the theme.
+After Successful activation, theme name will be visible on the
+sidebar. Click on theme name to access DashBoard of the theme.
 
 <img :src="$withBase('/images//themes/activated-sidebar-icon.png')" alt="activated-theme-sidebar-icon">
 
@@ -134,7 +134,7 @@ side bar. Click on theme name to access DashBoard of the theme.
 
   <img :src="$withBase('/images/themes/database-directory.png')" alt="theme-database-directory">
 
-  All the Factory, Migrations and Seeds files of this themes are present in Database Folder.
+  All the Factory, Migrations and Seeds files of this theme are present in Database Folder.
 
     - To generate Migration File:
       ```terminal
@@ -205,7 +205,7 @@ side bar. Click on theme name to access DashBoard of the theme.
   This folder will contain all the vue files, vuex store, vue routes related to this theme.
     - Vue components will be present under Vue/pages.
 
-      <img :src="$withBase('/images/themes/vue-file.png')" alt="theme vue componentes files">
+      <img :src="$withBase('/images/themes/vue-file.png')" alt="theme vue components files">
 
     - Vue routes will be present under Vue/routes.
 

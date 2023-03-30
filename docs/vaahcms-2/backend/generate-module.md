@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is guide to teachs `How to create MODULES in VAAH CMS`
+This guide teaches `How to create MODULES in VAAH CMS`
 
 ### Prerequisites
 
@@ -12,7 +12,7 @@ This is guide to teachs `How to create MODULES in VAAH CMS`
 
 ### Step 1: Vaah Cli Installtion
 
-To use Vaah generators to generate modules, install VaahCli Tool using
+To use Vaah generators for generating modules, install VaahCli Tool using following command
 
 ```terminal command
 npm install vaah -g
@@ -24,7 +24,7 @@ npm i vaah -g
 
 ### Step 2: Installation of Modules
 
-###### Note: For this tutorial, we'll be creating Product Module.
+###### Note: In this tutorial, we'll be creating Product Module.
 
 Command that is used to generate a module is:-
 ```terminal command
@@ -52,12 +52,12 @@ etc. of the module.
     ? Enter your module name:  
     ```
 
-- Enter more relevent name for your module. Example Product Managment etc.
+- Enter more relevant name for your module. Example Product Management etc.
     ```
     ? Enter meaningful title for your module:
     ```
 
-- More details of the module. Example Product Managment Module for Admin (or Seller)
+- More details of the module. Example Product Management Module for Admin (or Seller)
     ```
     ? Enter your module description:
     ```
@@ -71,7 +71,7 @@ etc. of the module.
     ```
     ? Enter Author email:  support@vaah.dev
     ```
-- Press enter for default value for Author website and Download Url.
+- Press Enter for default value for Author website and Download Url.
     ```
     ? Enter author website:  https://vaah.dev
     ? Enter download url: 
@@ -90,15 +90,15 @@ select `false`.
     ```
     ? Will your module contains sample data (true/false):  true
     ```
-    For Sample data seeders SampleDataTableSeeder.
+    Use SampleDataTableSeeder for seeding Sample data.
 
     ###### Note: All the Seeds files will be found in `root/VaahCms/Modules/<module-name>/Database/Seeds` directory.
 
-After providing all the information, Module will generated under `project-root/Vaahcms/Modules`.
+After providing all the information, Module will be generated under `project-root/Vaahcms/Modules`.
 <img :src="$withBase('/images/module_path.png')" alt="module_path">
 
 
-`<module-root-folder>\config\config.php` contains the information that was enter while creating a module and can be changed by making changes to config.php file.
+`<module-root-folder>\config\config.php` contains the information that was entered while creating a module and can be changed by making changes to config.php file.
 <img :src="$withBase('/images/module-config-file.png')" alt="module-config-file">
 
 ### Step 3: Activating a module
@@ -121,8 +121,8 @@ List of all the installed modules will be displayed. From this list,
 find your module and click on `Activate` button present on the right
 side of that same module to activate the module.
 
-After Successfull activation, module name will be visible on the 
-side bar. Click on module name to access DashBoard of the module.
+After Successful activation, module name will be visible on the 
+sidebar. Click on module name to access DashBoard of the module.
 
 <img :src="$withBase('/images/module-dashboard-page.png')" alt="module-dashboard-page">
 
@@ -140,7 +140,7 @@ side bar. Click on module name to access DashBoard of the module.
   <img :src="$withBase('/images/module-config-file.png')" alt="module-config-file">
 
 - Database:
-  All the Factory, Migrations and Seeds files of this modules are present in Database Folder.
+  All the Factory, Migrations and Seeds files of this module are present in Database Folder.
 
   - To generate Migration File:
     ```terminal
@@ -193,7 +193,7 @@ side bar. Click on module name to access DashBoard of the module.
 - Vue:
   This folder will contain all the vue files, vuex store, vue routes related to this module.
   - Vue components will be present under Vue/pages.
-    <img :src="$withBase('/images/module-vue-components-files.png')" alt="module vue componentes files">
+    <img :src="$withBase('/images/module-vue-components-files.png')" alt="module vue components files">
 
   - Vue routes will be present under Vue/routes.
     <img :src="$withBase('/images/module-vue-routes-file.png')" alt="modules vue routes file">
