@@ -2,7 +2,7 @@
 
 ::: warning Dependencies
 
-- [dio: ^4.0.6](https://pub.dev/packages/dio)
+- [dio](https://pub.dev/packages/dio)
 
 - This panel uses EnvironmentConfig, thus depending on the env.dart file. It uses the base API URL from your EnviromentConfig.
 :::
