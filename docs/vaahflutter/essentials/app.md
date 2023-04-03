@@ -12,15 +12,62 @@
 
 Base Controller is used for initializing all core functionalities needed by `vaahextendflutter`.
 
-```dart{5-8}
+```dart{4,5,7,10,14,22,26,51,54}
 ...
 
-class BaseController extends GetxController {
-  Future<void> init() async {
-    await GetStorage.init();
-    EnvironmentConfig.setEnvConfig();
-    AppTheme.init();
-    Api.init();
+Future<void> init({
+  required Widget app,
+  FirebaseOptions? firebaseOptions,
+}) async {
+  // Storage initialization to store some properties locally
+  await GetStorage.init();
+
+  // Environment initialization
+  EnvironmentConfig.setEnvConfig();
+  final EnvironmentConfig config = EnvironmentConfig.getEnvConfig();
+
+  // Initialization of Firebase and Services
+  if (firebaseOptions != null) {
+    await Firebase.initializeApp(
+      options: firebaseOptions,
+    );
+    DynamicLinks.init();
+  }
+
+  // Other Local Initializations (Depends on your app)
+  AppTheme.init();
+  Api.init();
+
+  // Sentry Initialization (And/ Or) Running main app
+  if (null != config.sentryConfig && config.sentryConfig!.dsn.isNotEmpty) {
+    await SentryFlutter.init(
+      (options) => options
+        ..dsn = config.sentryConfig!.dsn
+        ..autoAppStart = config.sentryConfig!.autoAppStart
+        ..tracesSampleRate = config.sentryConfig!.tracesSampleRate
+        ..enableAutoPerformanceTracking = config.sentryConfig!.enableAutoPerformanceTracking
+        ..enableUserInteractionTracing = config.sentryConfig!.enableUserInteractionTracing
+        ..environment = config.envType,
+    );
+    Widget child = app;
+    if (config.sentryConfig!.enableUserInteractionTracing) {
+      child = SentryUserInteractionWidget(
+        child: child,
+      );
+    }
+    if (config.sentryConfig!.enableAssetsInstrumentation) {
+      child = DefaultAssetBundle(
+        bundle: SentryAssetBundle(
+          enableStructuredDataTracing: true,
+        ),
+        child: child,
+      );
+    }
+    // Running main app
+    runApp(child);
+  } else {
+    // Running main app when sentry config is not there
+    runApp(app);
   }
 }
 ```
@@ -31,26 +78,30 @@ class BaseController extends GetxController {
 
 In the main function, we need to initialize the BaseController.
 
-```dart{5-6}
+```dart{5-9}
 ...
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BaseController baseController = Get.put(BaseController());
-  await baseController.init();
-  runApp(const MyApp());
+  await baseController.init(
+    app: const AppConfig(),
+    // If you have configured firebase correctly for your app, pass firebase options here
+  ); // Pass main app as argument in init method
 }
 ```
+
+More documentation about [firebase](../core/firebase-setup.md).
 
 ## Mateial App GetMaterialApp
 
 - We recommend using, VaahFlutter `EnvironmentConfig`, VaahFlutter `AppTheme`, VaahFlutter `route middleware`, and VaahFlutter `DebugWidget`.
 
 - You can check the documentation here:
-  - [EnvironmentConfig]()
-  - [AppTheme]()
-  - [routeMiddleware]()
-  - [DebugWidget]()
+  - [EnvironmentConfig](./environments.md)
+  - [AppTheme](../directory_structure/vaahextendflutter/apptheme.md)
+  - [routeMiddleware](../directory_structure/lib/routes/middleware.md)
+  - [DebugWidget](../directory_structure/vaahextendflutter/widgets/debug.md)
 
 ```dart
 final _navigatorKey = GlobalKey<NavigatorState>();
