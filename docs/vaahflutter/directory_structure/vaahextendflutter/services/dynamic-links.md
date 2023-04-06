@@ -65,9 +65,14 @@
 
 ### Things you need to know
 
+| Link Name/ Description | Example |
+| --- | --- |
+| Dynamic link | https://yourapp.page.link/?link=https://website.com/custom?payload={}&apn=com.example.app&ibi=com.example.app&isi=123456789 |
+| Deep link | https://website.com/custom?payload={} |
+
 - Short dynamic links does not support custom parameters/ passing custom data.
 - Long dynamic links does support it but there are some rules you follow to make it work perfectly.
-- In long dynamic links you need to encode deep link which you're passing. (On the website part, Stay with us and this point will make sense.)
+- In long dynamic links you need to [encode](#encoding-url-website-part) deep link which you're passing. (On the website part, Stay with us and this point will make sense.)
 
 ::: danger Team ID
 For iOS; Team ID in firebase (iOS App) is mandetory and it can't be fake - and using that you will have to sign your app, where for development purpose fake app id will work.
@@ -80,9 +85,9 @@ For iOS; Team ID in firebase (iOS App) is mandetory and it can't be fake - and u
 
 - Long links
 
-  - `https://yourapp.page.link/?link=https://website.com/custom?payload={}&apn=com.example.app&ibi=com.example.app&isi=123456789` ✅ works, where link should be encoded (for better reading we did not encoded it in documentation)
+  - `https://yourapp.page.link/?link=https://website.com/custom?payload={}&apn=com.example.app&ibi=com.example.app&isi=123456789` ✅ works, [where deep link should be encoded](#encoding-url-website-part) (for better reading we did not encoded it in documentation.)
 
-  - where `https://yourapp.page.link/` is main dynamic link. And you pass deep link after `?link=` which is passed in app and should be handled by app e.g. `https://website.com/custom?payload={}` (should be encoded tho). You pass android package name with `&apn=com.example.app` and iOS bundle identifier `&ibi=com.example.app`. You pass App Store ID using `&isi=123456789`.
+  - where `https://yourapp.page.link/` is main dynamic link. And you pass `deep link` after `?link=` which is passed in app and should be handled by app e.g. `https://website.com/custom?payload={}` (should be encoded tho). You pass android package name with `&apn=com.example.app` and iOS bundle identifier `&ibi=com.example.app`. You pass App Store ID using `&isi=123456789`.
 
   - If app isn't installed and you want user to redirect to some link you pass parameters link; for android fallback link as `&afl=https://vaahflutter.ml` for iOS fallback link as `&ifl=https://vaahflutter.ml`
 
@@ -133,14 +138,72 @@ path: `ios/Runner/Runner.entitlements`
 
 - Check the steps in the video: [Associated Domain](https://youtu.be/OtXhfFPDWyE)
 
-### On Website Write Code For Redirection
+### Encoding URL (Website Part)
+
+| Link Name/ Description | Example |
+| --- | --- |
+| Dynamic link | https://yourapp.page.link/?link=https://website.com/custom?payload={}&apn=com.example.app&ibi=com.example.app&isi=123456789 |
+| Deep link | https://website.com/custom?payload={} |
+
+- Dynamic link is whole link, it contains deep link and other parameters.
+
+- Deep link is a link which is passed to the app from website.
+
+::: tip Encoding
+
+- In dynamic link, the deep link you are passing has to be encoded.
+
+- If it's encoded incorrectly then it won't be passed to app. It will be broken because we have special characters in our link.
+
+- So we can't pass deep link without encoding it.
+
+- In Url parameters are encoded differently and whole url is encoded differently.
+
+:::
+
+- We have `https://website.com/custom?payload={}` as deep link
+- So we can see parameter part here is : `?payload={}`
+- And link part is : `https://website.com/custom`
+
+- We can't encode both parts same way. e.g. if we talk about javascript for parameter encoding we use `encodeURIComponent` and after that we add that encoded part to the link part and then encode whole thing with `encodeURI`.
+
+- So as example
+
+```js
+let link = 'https://website.com/custom';
+let parameters = encodeURIComponent('?payload={}');
+let encodedURL = encodeURI(`link${parameters}`);
+
+// Use encodedURL for redirection
+```
+
+::: danger Never encode like below examples
+```js
+encodeURIComponent('https://website.com/custom?payload={}');
+```
+
+OR
+
+```js
+encodeURI('https://website.com/custom?payload={}');
+```
+
+OR
+
+```js
+encodeURIComponent('https://website.com/custom');
+encodeURI('?payload={}');
+```
+:::
+
+### Handling Redirection (Website Part)
 
 - In app, vaah flutter can handle query parameter `payload with below properties`
 
 ```js
 payload = {
-  "path": null,
-  "data": null,
+  "path": "/",
+  "data": {},
   "auth": null
 };
 ```
@@ -151,9 +214,9 @@ payload = {
 
   - we create one query parameter payload like shown above, add it to the end point. e.g. `https://website.com/custom?payload={"path":null,"data":null,"auth":null}`
   
-  - And then encode that link. e.g. `https%3A%2F%2Fwebsite.com%2Fcustom%3Fpayload%3D%7B%22path%22%3Anull%2C%22data%22%3Anull%2C%22auth%22%3Anull%7D`
+  - And then encode that link. e.g. `hhttps://website.com/custom%3Fpayload%3D%7B%22path%22%3Anull%2C%22data%22%3Anull%2C%22auth%22%3Anull%7D`
 
-  - We put this encoded part in `link` parameter of `dynamic link` we created and redirect user to that link. e.g. `https://yourapp.page.link/?link=https%3A%2F%2Fwebsite.com%2Fcustom%3Fpayload%3D%7B%22path%22%3Anull%2C%22data%22%3Anull%2C%22auth%22%3Anull%7D&apn=com.example.app&ibi=com.example.app&isi=123456789`
+  - We put this encoded part in `link` parameter of `dynamic link` we created and redirect user to that link. e.g. `https://yourapp.page.link/?link=hhttps://website.com/custom%3Fpayload%3D%7B%22path%22%3Anull%2C%22data%22%3Anull%2C%22auth%22%3Anull%7D&apn=com.example.app&ibi=com.example.app&isi=123456789`
 
 - If not Mobile: we show website content.
 
@@ -163,18 +226,22 @@ payload = {
 router.get('/custom', function (req, res, next) {
   if (devicetype.isDevicePhone(req.headers['user-agent'])) {
     const endPoint = 'https://website.com/custom';
+    const dynamicLink = 'https://yourapp.page.link/?apn=com.example.app&ibi=com.example.app&isi=123456789&link=';
+
     const payload = {
-      "path": null,
-      "data": null,
+      "path": "/ui-page",
+      "data": {},
       "auth": null
     };
-    const parameters = `payload=${JSON.stringify(payload)}`;
-    const encoded = encodeURIComponent(`${endPoint}?${parameters}`);
+    const parameters = `?payload=${JSON.stringify(payload)}`;
+    const encodedParameters = encodeURIComponent(parameters);
+    const deeplink = encodeURI(endPoint + encodedParameters);
+    const url = `${dynamicLink}${deeplink}`;
 
-    res.redirect(`https://yourapp.page.link/?link=${encoded}&apn=com.example.app&ibi=com.example.app&isi=123456789`);
+    res.redirect(url);
   }
   else {
-    res.render('custom', { page: 'Custom', menuId: 'custom' });
+    res.render('error', { page: 'Error', menuId: 'link', status: 404, message: 'App Not Installed!' });
   }
 });
 ```
@@ -228,6 +295,48 @@ const payload = {
 
 - If path is not null then we redirect user to that route with the data. Routes will have to handle data by themselves.
 
+- dart code to handle the dynamic link
+
+We need to decode the full link in handle link function, as we are passing encoded link from website.
+
+```dart
+static Future<void> _handleLink(PendingDynamicLinkData linkData) async {
+  try {
+    final Uri decodedLink = Uri.parse(Uri.decodeFull(linkData.link.toString()));
+    final dynamic payload = _decodePayload(decodedLink);
+    _dynamicLinksStreamController.add(linkData);
+    if (payload != null && payload['path'] != null) {
+      Get.offAllNamed(
+        payload['path'],
+        arguments: <String, dynamic>{
+          'data': payload['data'],
+          'auth': payload['auth'],
+        },
+      );
+    }
+  } catch (error, stackTrace) {
+    Log.exception(
+      error,
+      stackTrace: stackTrace,
+      hint: "Error handling dynamic link! ${linkData.asMap()}",
+    );
+  }
+}
+
+static dynamic _decodePayload(Uri link) {
+  try {
+    return jsonDecode(link.queryParameters['payload'].toString());
+  } catch (error, stackTrace) {
+    Log.exception(
+      error,
+      stackTrace: stackTrace,
+      hint: "Error decoding payload! $link",
+    );
+    return null;
+  }
+}
+```
+
 ## Source Code
 
 ```dart
@@ -272,10 +381,10 @@ abstract class DynamicLinks {
       final String parameters = jsonEncode({"path": path, "data": data, "auth": auth});
       return await _firebaseDynamicLinks.buildShortLink(
         DynamicLinkParameters(
-          link: Uri.parse("https://vaahflutter.ml?payload=$parameters"),
-          uriPrefix: "https://vaahfluttertest.page.link",
-          androidParameters: const AndroidParameters(packageName: "com.webreinvent.vaahflutter"),
-          iosParameters: const IOSParameters(bundleId: "com.webreinvent.vaahflutter"),
+          link: Uri.parse("https://your.domain?payload=$parameters"),
+          uriPrefix: "https://YOUR_FIREBASE_APP_DYNAMIC_LINK_PREFIX.page.link",
+          androidParameters: const AndroidParameters(packageName: "your.package.name"),
+          iosParameters: const IOSParameters(bundleId: "your.bundle.identifier"),
         ),
         shortLinkType: ShortDynamicLinkType.unguessable,
       );
@@ -287,8 +396,9 @@ abstract class DynamicLinks {
 
   static Future<void> _handleLink(PendingDynamicLinkData linkData) async {
     try {
+      final Uri decodedLink = Uri.parse(Uri.decodeFull(linkData.link.toString()));
+      final dynamic payload = _decodePayload(decodedLink);
       _dynamicLinksStreamController.add(linkData);
-      final dynamic payload = jsonDecode(linkData.link.queryParameters['payload'].toString());
       if (payload != null && payload['path'] != null) {
         Get.offAllNamed(
           payload['path'],
@@ -304,6 +414,19 @@ abstract class DynamicLinks {
         stackTrace: stackTrace,
         hint: "Error handling dynamic link! ${linkData.asMap()}",
       );
+    }
+  }
+
+  static dynamic _decodePayload(Uri link) {
+    try {
+      return jsonDecode(link.queryParameters['payload'].toString());
+    } catch (error, stackTrace) {
+      Log.exception(
+        error,
+        stackTrace: stackTrace,
+        hint: "Error decoding payload! $link",
+      );
+      return null;
     }
   }
 }
