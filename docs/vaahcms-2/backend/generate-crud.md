@@ -17,8 +17,7 @@ npm install vaah -g
 ```
 
 ## Step-2
-Use the below command to generate CRUD
-Use below command for that :
+Use the below command to generate CRUD :
 ```
 npx vaah cms:crud
 ```
@@ -45,7 +44,7 @@ Use following procedures to set up CRUD.
 
 ```This video will help you to understand the generation of CRUD.```
 <figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_T6jUDyV82j.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_NiBc9DdrDM.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 ## Step-4
@@ -73,19 +72,6 @@ include('backend/routes-blog.php');
 <img :src="$withBase('/images/crud-generate-5.png')">
 
 ## Step-6
-Go to below path
-
-```module/http/controller/Backendcontroller.php```
-
-```
-comment this:
-return view('blog::backend.pages.index');
-uncomment this:
-return view('blog::backend.pages.app');
-```
-<img :src="$withBase('/images/crud-generate-6.png')">
-
-## Step-7
 Include the vue router file
 
 ```VaahCms/Modules/Blog/Vue/routes/routes.js```
@@ -96,9 +82,9 @@ import blog from "./vue-routes-blogs";
    
 routes = routes.concat(blog);
 ```
-<img :src="$withBase('/images/crud-generate-7.png')">
+<img :src="$withBase('/images/crud-generate-6.png')">
 
-## Step-8
+## Step-7
 Import the route file of vue
 
 ```modules/vue/store/store-blog.js```
@@ -109,12 +95,33 @@ Paste ```/backend```
 Make sure that code should be like this
 let ajax_url = base_url + "/backend/blog/blogs";
 ```
-<img :src="$withBase('/images/crud-generate-8.png')">
+<img :src="$withBase('/images/crud-generate-7.png')">
+
+## Step-8
+If you are generating crud `First time inside module` then only follow this step.
+
+Open ```.env & .env.custom``` and paste below code
+```
+MODULE_TRAVEL_ENV=develop
+```
+<img :src="$withBase('/images/crud-generate-8-a.png')">
+<img :src="$withBase('/images/crud-generate-8-b.png')">
 
 ## Step-9
-Open ```.env & .env.custom``` and paster below code
+
+In this step you need run `npm install` in terminal.
 ```
-MODULE_BLOG_ENV=develop
+F:\xampp8018\htdocs\vaah_abinash\vaahcms\Modules\Travel>
 ```
-<img :src="$withBase('/images/crud-generate-9-a.png')">
-<img :src="$withBase('/images/crud-generate-9-b.png')">
+<img :src="$withBase('/images/crud-generate-9.png')">
+
+## Step-10
+
+After install dependencies for local needs to run dev server `npm run dev`.
+```
+F:\xampp8018\htdocs\vaah_abinash\vaahcms\Modules\Travel>npm run dev
+```
+
+<img :src="$withBase('/images/crud-generate-10.png')">
+
+If we are deploying in production server we need to run `npm run build`.
