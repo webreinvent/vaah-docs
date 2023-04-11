@@ -31,6 +31,7 @@ sidebar = [
             { text: 'Theme', link: '/vaahflutter/core/theme.md' },
             { text: 'Debug Panel', link: '/vaahflutter/core/debugpanel.md' },
             { text: 'API/ AJAX', link: '/vaahflutter/core/api.md' },
+            { text: 'Firebase Setup', link: '/vaahflutter/core/firebase-setup.md' },
         ]
     },
     {
@@ -123,6 +124,7 @@ sidebar = [
                             { text: 'Performance Monitoring', link: '/vaahflutter/directory_structure/vaahextendflutter/services/performance_monitoring.md' },
                             { text: 'api', link: '/vaahflutter/directory_structure/vaahextendflutter/services/api.md' },
                             { text: 'api self sign', link: '/vaahflutter/directory_structure/vaahextendflutter/services/self-sign.md' },
+                            { text: 'dynamic links', link: '/vaahflutter/directory_structure/vaahextendflutter/services/dynamic-links.md' },
                         ],
                     },
                     {
@@ -159,6 +161,7 @@ sidebar = [
                                 children: [
                                 ],
                             },
+                            { text: 'debug', link: '/vaahflutter/directory_structure/vaahextendflutter/widgets/debug.md' },
                         ],
                     },
                     { text: 'docs', link: '/vaahflutter/directory_structure/vaahextendflutter/docs.md' },
