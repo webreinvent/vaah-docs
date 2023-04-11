@@ -76,11 +76,9 @@ return MaterialApp(
 // assigned with some values when material app is build.
 // *****************************************
 
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import './atoms/app_expansion_panel.dart';
 import '../app_theme.dart';
 import '../env.dart';
 import '../helpers/constants.dart';
@@ -159,113 +157,200 @@ class DebugWidgetState extends State<DebugWidget> with SingleTickerProviderState
 
   @override
   Widget build(BuildContext context) {
+    final double topMargin = MediaQuery.of(context).padding.top + defaultMargin;
     return showDebugPanel
         ? LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              final height = constraints.maxHeight;
+              final height = constraints.maxHeight - topMargin;
               final minFactor = (_handleHeight / height);
               return Stack(
                 fit: StackFit.expand,
                 children: [
                   widget.child,
-                  GestureDetector(
-                    onVerticalDragDown: (DragDownDetails details) {
-                      _controller.stop();
-                    },
-                    onVerticalDragUpdate: (DragUpdateDetails details) {
-                      _controller.value += (-details.primaryDelta! / height);
-                    },
-                    onVerticalDragEnd: (DragEndDetails details) {
-                      if (_controller.isDismissed) {
-                        return;
-                      }
-                      if (details.primaryVelocity!.abs() >= 365.0) {
-                        final visualVelocity = -details.primaryVelocity! / height;
-                        _controller.fling(velocity: visualVelocity);
-                      } else if (_controller.value < 0.5) {
-                        close();
-                      } else {
-                        open();
-                      }
-                    },
-                    onVerticalDragCancel: () {
-                      if (_controller.isDismissed || _controller.isAnimating) {
-                        return;
-                      }
-                      if (_controller.value < 0.5) {
-                        close();
-                      } else {
-                        open();
-                      }
-                    },
-                    excludeFromSemantics: true,
-                    child: RepaintBoundary(
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: AnimatedBuilder(
-                          animation: _controller,
-                          builder: (BuildContext context, Widget? child) {
-                            return Align(
-                              alignment: Alignment.topCenter,
-                              heightFactor: _controller.value + minFactor,
-                              child: child,
-                            );
-                          },
-                          child: RepaintBoundary(
-                            child: FocusScope(
-                              key: _drawerKey,
-                              node: _focusScopeNode,
-                              child: _EnvPanel(
-                                handleHeight: _handleHeight,
-                                onHandlePressed: toggle,
-                                config: _environmentConfig,
-                                child: Builder(
-                                  builder: (BuildContext context) {
-                                    return ListView(
-                                      primary: false,
-                                      padding: EdgeInsets.only(
-                                        top: MediaQuery.of(context).padding.top +
-                                            defaultPadding +
-                                            _handleHeight,
-                                        bottom: defaultPadding,
-                                        left: defaultPadding,
-                                        right: defaultPadding,
-                                      ),
-                                      children: [
-                                        _ShowDetails(
-                                          details: [
-                                            'App Title: ${_environmentConfig.appTitle}',
-                                            'App Title Short: ${_environmentConfig.appTitleShort}',
-                                            _environmentConfig.envType,
-                                            'Version: ${_environmentConfig.version}',
-                                            'Build: ${_environmentConfig.build}',
-                                          ],
+                  Container(
+                    margin: EdgeInsets.only(top: topMargin),
+                    child: GestureDetector(
+                      onVerticalDragDown: (DragDownDetails details) {
+                        _controller.stop();
+                      },
+                      onVerticalDragUpdate: (DragUpdateDetails details) {
+                        _controller.value += (-details.primaryDelta! / height);
+                      },
+                      onVerticalDragEnd: (DragEndDetails details) {
+                        if (_controller.isDismissed) {
+                          return;
+                        }
+                        if (details.primaryVelocity!.abs() >= 365.0) {
+                          final visualVelocity = -details.primaryVelocity! / height;
+                          _controller.fling(velocity: visualVelocity);
+                        } else if (_controller.value < 0.5) {
+                          close();
+                        } else {
+                          open();
+                        }
+                      },
+                      onVerticalDragCancel: () {
+                        if (_controller.isDismissed || _controller.isAnimating) {
+                          return;
+                        }
+                        if (_controller.value < 0.5) {
+                          close();
+                        } else {
+                          open();
+                        }
+                      },
+                      excludeFromSemantics: true,
+                      child: RepaintBoundary(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: AnimatedBuilder(
+                            animation: _controller,
+                            builder: (BuildContext context, Widget? child) {
+                              return Align(
+                                alignment: Alignment.topCenter,
+                                heightFactor: _controller.value + minFactor,
+                                child: child,
+                              );
+                            },
+                            child: RepaintBoundary(
+                              child: FocusScope(
+                                key: _drawerKey,
+                                node: _focusScopeNode,
+                                child: _EnvPanel(
+                                  handleHeight: _handleHeight,
+                                  onHandlePressed: toggle,
+                                  config: _environmentConfig,
+                                  child: Builder(
+                                    builder: (BuildContext context) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(
+                                          top: _handleHeight,
                                         ),
-                                        verticalMargin24,
-                                        _ShowDetails(
-                                          details: [
-                                            'Backend URL: ${_environmentConfig.backendUrl}',
-                                            'API URL: ${_environmentConfig.apiUrl}',
-                                            'Request and Response Timeout: ${(_environmentConfig.timeoutLimit) / 1000} Seconds',
-                                            'Firebase Id: ${_environmentConfig.firebaseId}',
-                                            'Local Logs Enabled (Console + Device Specific): ${_environmentConfig.enableLocalLogs}',
-                                            'Cloud Logs Enabled: ${_environmentConfig.enableCloudLogs}',
-                                            if (null != _environmentConfig.sentryConfig) ...[
-                                              'Sentry DSN: ${_environmentConfig.sentryConfig!.dsn}',
-                                              'Sentry Auto App Start (Record Cold And Warm Start Time): ${_environmentConfig.sentryConfig!.autoAppStart}',
-                                              'Sentry Traces Sample Rate: ${_environmentConfig.sentryConfig!.tracesSampleRate}',
-                                              'Sentry User Interaction Tracing: ${_environmentConfig.sentryConfig!.enableUserInteractionTracing}',
-                                              'Sentry Auto Performance Tracking: ${_environmentConfig.sentryConfig!.enableAutoPerformanceTracking}',
-                                              'Sentry Assets Instrumentation: ${_environmentConfig.sentryConfig!.enableAssetsInstrumentation}',
-                                            ],
-                                            'API Logs Interceptor: ${_environmentConfig.enableApiLogInterceptor}',
-                                          ],
+                                        child: Container(
+                                          margin: allPadding24,
+                                          child: SingleChildScrollView(
+                                            physics: const BouncingScrollPhysics(),
+                                            child: Column(
+                                              children: [
+                                                _ShowDetails(
+                                                  contentHolder: PanelDataContentHolder(
+                                                    content: {
+                                                      'App Title':
+                                                          Data(value: _environmentConfig.appTitle),
+                                                      'App Title Short': Data(
+                                                        value: _environmentConfig.appTitleShort,
+                                                      ),
+                                                      'Environment': Data(
+                                                        value: _environmentConfig.envType,
+                                                      ),
+                                                      'Version':
+                                                          Data(value: _environmentConfig.version),
+                                                      'Build':
+                                                          Data(value: _environmentConfig.build),
+                                                      'Backend URL': Data(
+                                                        value: _environmentConfig.backendUrl,
+                                                      ),
+                                                      'API URL':
+                                                          Data(value: _environmentConfig.apiUrl),
+                                                      'Request and Response Timeout': Data(
+                                                        value:
+                                                            '${_environmentConfig.timeoutLimit / 1000} Seconds',
+                                                      ),
+                                                      'Firebase Id': Data(
+                                                        value: _environmentConfig.firebaseId,
+                                                      ),
+                                                      'API Logs Interceptor': Data(
+                                                        value: _environmentConfig
+                                                                .enableApiLogInterceptor
+                                                            ? 'enabled'
+                                                            : 'disabled',
+                                                        color: _environmentConfig
+                                                                .enableApiLogInterceptor
+                                                            ? AppTheme.colors['success']
+                                                            : AppTheme.colors['danger'],
+                                                      ),
+                                                      'Local Logs': Data(
+                                                        value: _environmentConfig.enableLocalLogs
+                                                            ? 'enabled'
+                                                            : 'disabled',
+                                                        color: _environmentConfig.enableLocalLogs
+                                                            ? AppTheme.colors['success']
+                                                            : AppTheme.colors['danger'],
+                                                      ),
+                                                      'Cloud Logs': Data(
+                                                        value: _environmentConfig.enableCloudLogs
+                                                            ? 'enabled'
+                                                            : 'disabled',
+                                                        color: _environmentConfig.enableCloudLogs
+                                                            ? AppTheme.colors['success']
+                                                            : AppTheme.colors['danger'],
+                                                      ),
+                                                      if (null !=
+                                                          _environmentConfig.sentryConfig) ...{
+                                                        'Sentry DSN': Data(
+                                                          value:
+                                                              _environmentConfig.sentryConfig!.dsn,
+                                                        ),
+                                                        'Sentry Traces Sample Rate': Data(
+                                                          value: _environmentConfig
+                                                              .sentryConfig!.tracesSampleRate
+                                                              .toString(),
+                                                        ),
+                                                        'Sentry Auto App Start (Record Cold And Warm Start Time)':
+                                                            Data(
+                                                          value: _environmentConfig
+                                                                  .sentryConfig!.autoAppStart
+                                                              ? 'enabled'
+                                                              : 'disabled',
+                                                          color: _environmentConfig
+                                                                  .sentryConfig!.autoAppStart
+                                                              ? AppTheme.colors['success']
+                                                              : AppTheme.colors['danger'],
+                                                        ),
+                                                        'Sentry User Interaction Tracing': Data(
+                                                          value: _environmentConfig.sentryConfig!
+                                                                  .enableUserInteractionTracing
+                                                              ? 'enabled'
+                                                              : 'disabled',
+                                                          color: _environmentConfig.sentryConfig!
+                                                                  .enableUserInteractionTracing
+                                                              ? AppTheme.colors['success']
+                                                              : AppTheme.colors['danger'],
+                                                        ),
+                                                        'Sentry Auto Performance Tracking': Data(
+                                                          value: _environmentConfig.sentryConfig!
+                                                                  .enableAutoPerformanceTracking
+                                                              ? 'enabled'
+                                                              : 'disabled',
+                                                          color: _environmentConfig.sentryConfig!
+                                                                  .enableAutoPerformanceTracking
+                                                              ? AppTheme.colors['success']
+                                                              : AppTheme.colors['danger'],
+                                                        ),
+                                                        'Sentry Assets Instrumentation': Data(
+                                                          value: _environmentConfig.sentryConfig!
+                                                                  .enableAssetsInstrumentation
+                                                              ? 'enabled'
+                                                              : 'disabled',
+                                                          color: _environmentConfig.sentryConfig!
+                                                                  .enableAssetsInstrumentation
+                                                              ? AppTheme.colors['success']
+                                                              : AppTheme.colors['danger'],
+                                                        ),
+                                                      },
+                                                    },
+                                                  ),
+                                                ),
+                                                verticalMargin24,
+                                                const _StreamLinksSection(),
+                                                verticalMargin24,
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                        verticalMargin24,
-                                        const _StreamLinksSection(),
-                                      ],
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
@@ -438,14 +523,48 @@ class _PanelBorder extends ShapeBorder {
   }
 }
 
+class _StreamLinksSection extends StatefulWidget {
+  const _StreamLinksSection({Key? key}) : super(key: key);
+
+  @override
+  State<_StreamLinksSection> createState() => _StreamLinksSectionState();
+}
+
+class _StreamLinksSectionState extends State<_StreamLinksSection> {
+  DeepLink? link;
+
+  @override
+  void initState() {
+    super.initState();
+    DynamicLinks.dynamicLinksStream.listen((DeepLink deeplink) {
+      setState(() {
+        link = deeplink;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return link == null
+        ? emptyWidget
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Dynamic Link'),
+              verticalMargin8,
+              _ShowDetails(contentHolder: PanelLinkContentHolder(content: link!)),
+            ],
+          );
+  }
+}
+
 class _ShowDetails extends StatefulWidget {
-  final List<String> details;
-  final bool hasLinks;
+  final PanelContentHolder contentHolder;
 
   const _ShowDetails({
     Key? key,
-    required this.details,
-    this.hasLinks = false,
+    required this.contentHolder,
   }) : super(key: key);
 
   @override
@@ -455,75 +574,92 @@ class _ShowDetails extends StatefulWidget {
 class _ShowDetailsState extends State<_ShowDetails> {
   @override
   Widget build(BuildContext context) {
+    final PanelContentHolder contentHolder = widget.contentHolder;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (final detail in widget.details) ...[
+        if (contentHolder is PanelDataContentHolder)
+          Builder(
+            builder: (context) {
+              final List<TableRow> rows = [];
+              contentHolder.content.forEach(
+                (key, data) {
+                  rows.add(
+                    TableRow(
+                      children: [
+                        Padding(
+                          padding: allPadding8,
+                          child: Text(key),
+                        ),
+                        Padding(
+                          padding: allPadding8,
+                          child: SelectableText(
+                            data.value ?? '',
+                            style: TextStyle(color: data.color ?? AppTheme.colors['warning']),
+                          ),
+                        ),
+                      ],
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: AppTheme.colors['white']!.withOpacity(0.55)),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+              return Table(
+                children: rows,
+              );
+            },
+          )
+        else if (contentHolder is PanelLinkContentHolder) ...[
           SelectableText(
-            detail,
-            style: (widget.hasLinks && Uri.tryParse(detail) != null)
-                ? TextStyles.regular3?.copyWith(
-                    color: AppTheme.colors['success'],
-                    decoration: TextDecoration.underline,
-                  )
-                : TextStyles.regular3,
-            onTap: () => Clipboard.setData(ClipboardData(text: detail)),
+            contentHolder.content.encoded,
+            style: TextStyles.regular3?.copyWith(color: AppTheme.colors['danger']),
+            onTap: () => Clipboard.setData(ClipboardData(text: contentHolder.content.encoded)),
           ),
-          verticalMargin8,
+          SelectableText(
+            contentHolder.content.decoded,
+            style: TextStyles.regular3?.copyWith(color: AppTheme.colors['success']),
+            onTap: () => Clipboard.setData(ClipboardData(text: contentHolder.content.decoded)),
+          ),
         ]
       ],
     );
   }
 }
 
-class _StreamLinksSection extends StatefulWidget {
-  const _StreamLinksSection({Key? key}) : super(key: key);
-
-  @override
-  State<_StreamLinksSection> createState() => _StreamLinksSectionState();
+abstract class PanelContentHolder {
+  const PanelContentHolder();
 }
 
-class _StreamLinksSectionState extends State<_StreamLinksSection> {
-  final List<String> links = [];
+class PanelDataContentHolder extends PanelContentHolder {
+  final Map<String, Data> content;
 
-  @override
-  void initState() {
-    super.initState();
-    DynamicLinks.dynamicLinksStream.listen((PendingDynamicLinkData linkData) {
-      links.add(linkData.link.toString());
-      setState(() {});
-    });
-  }
+  const PanelDataContentHolder({
+    required this.content,
+  });
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return links.isEmpty
-        ? emptyWidget
-        : AppExpansionPanel(
-            padding: verticalPadding8,
-            headerBuilder: (BuildContext context, ExpansionControl control) {
-              return InkWell(
-                onTap: () {
-                  control.expanded = !control.expanded;
-                },
-                child: Row(
-                  children: const [
-                    Expanded(
-                      child: Text('Dynamic Links'),
-                    ),
-                    AppExpansionPanelIcon(color: Colors.white),
-                  ],
-                ),
-              );
-            },
-            backgroundColor: Colors.transparent,
-            children: [
-              verticalMargin8,
-              _ShowDetails(details: links, hasLinks: true),
-              verticalMargin8,
-            ],
-          );
-  }
+class PanelLinkContentHolder extends PanelContentHolder {
+  final DeepLink content;
+
+  const PanelLinkContentHolder({
+    required this.content,
+  });
+}
+
+class Data {
+  final String? value;
+  final String? tooltip;
+  final Color? color;
+
+  const Data({
+    this.value,
+    this.tooltip,
+    this.color,
+  });
 }
 ```
