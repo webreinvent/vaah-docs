@@ -39,7 +39,8 @@ sidebar = [
             {text: 'Modules',                   link: '/vaahcms/basic/modules.md'},
             {text: 'Themes',                    link: '/vaahcms/basic/themes.md'},
             {text: 'Media',                     link: '/vaahcms/basic/media.md'},
-            {text: 'Taxonomies',                     link: '/vaahcms/basic/taxonomies.md'},
+            {text: 'Taxonomies',                link: '/vaahcms/basic/taxonomies.md'},
+            {text: 'Logs',                      link: '/vaahcms/basic/logs.md'},
             {
                 text: 'SETTING',
                 //link: '/vaahcms/directory-structure.md',
@@ -52,7 +53,7 @@ sidebar = [
                     {text: 'Reset Application',     link: '/vaahcms/basic/setting/reset-application.md'},
                 ]
             },
-            {text: 'API',          link: '/vaahcms/basic/api.md'},
+            {text: 'API',                       link: '/vaahcms/basic/api.md'},
         ]
     },
     {
