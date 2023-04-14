@@ -29,6 +29,7 @@ sidebar = [
         children: [
             {text: 'Dashboard', link: '/vaahcms-2/backend/dashboard.md'},
             {text: 'Setup', link: '/vaahcms-2/backend/setup.md'},
+            {text: 'MFA', link: '/vaahcms-2/backend/mfa.md'},
             {
                 text: 'USER & ACCESS',
                 //link: '/vaahcms/directory-structure.md',

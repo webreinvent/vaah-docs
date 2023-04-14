@@ -12,7 +12,7 @@ Visit following url you will see the Jobs section:
 <project-url>/backend#/vaah/advanced/jobs
 ```
 
-Below Image is a example of job records.
+Below Image is an example of job records.
 
 <img :src="$withBase('/images/job-1.png')">
 
