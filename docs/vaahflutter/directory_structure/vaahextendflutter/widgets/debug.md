@@ -68,8 +68,7 @@ return MaterialApp(
 
 ```dart
 // *****************************************
-// Dev helper panel that comes from bottom
-// example: https://img-v4.getdemo.dev/screenshot/qemu-system-x86_64_9g9eFWHZK5.mp4
+// Debug panel
 
 // If you change any code in this file you'll probably have to restart the app
 // HotReload won't work because most of the variables are constants and are
