@@ -32,7 +32,7 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
 
@@ -69,7 +69,7 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
             .............
