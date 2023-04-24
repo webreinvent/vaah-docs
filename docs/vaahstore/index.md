@@ -25,9 +25,9 @@ It is suitable for all small or large E-Commerce business demands using a simple
 
 ### Why VaahStore ?
 
-- It is completely opensource.
-- It is based on latest and stable versions.
-- It is suitable for small to large individual or companies.
+- It is open-source.
+- It is based on latest and stable versions `larave 10`,`vue 3` and `VaahCMS` .
+- It is suitable for small to large business.
 - It can be customizable.
 
 ## Requirements
@@ -37,7 +37,7 @@ It is suitable for all small or large E-Commerce business demands using a simple
 ::: tip requirements
 - [npm](https://docs.npmjs.com/cli)
 - [VaahCMS](https://www.npmjs.com/package/vaah)
-- php >= 7.4
+- php >= 8.1
   :::
 
 ### Minimum Learning curve
@@ -46,7 +46,7 @@ If you want to make a quick E-Commerce site, all you need to know is [VaahCMS](h
 
 ### Advance Learning Curve
 
-To customize `VaahStore`, all you need to know is [Larave 10](https://laravel.com/docs/10.x/installation), [vue 3](https://vuejs.org/guide/introduction.html) and [VaahCMS](https://docs.vaah.dev/vaahcms-2)
+To customize `VaahStore`, you must need to know is [Larave 10](https://laravel.com/docs/10.x/installation), [vue 3](https://vuejs.org/guide/introduction.html) and [VaahCMS](https://docs.vaah.dev/vaahcms-2)
 
 ## Releases
 
