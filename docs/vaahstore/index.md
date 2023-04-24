@@ -33,7 +33,7 @@ The purpose of developing VaahStore is to create VaahCms module which can be con
 
 ### Learning Curve
 
-If you want to get started quickly with VaahFlutter, all you need to know is [VaahCli](https://www.npmjs.com/package/vaah). Please read the detailed documentation on vaahCli official website.
+If you want to get started quickly with VaahStore, all you need to know is [VaahCli](https://www.npmjs.com/package/vaah). Please read the detailed documentation on vaahCli official website.
 
 ## Releases
 
