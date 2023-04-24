@@ -3,9 +3,10 @@
 [[toc]]
 
 ## Introduction
-VaahStore is a Laravel and Vue based module that provides common feature required in developing an e-commerce site.
 
-The purpose of developing VaahStore is to create VaahCms module which can be connected any front-end and provide a complete backend support to an e-commerce site. Some features are as follows:
+VaahStore is a E-Commerce framework built on top of the latest opensource technologies such as `Laravel 10`, a `PHP` framework and `Vue 3`, a progressive Javascript framework.
+
+It is suitable for all small or large E-Commerce business demands using a simple set-up procedure. Built on top of `VaahCms` and equipped with an easy product information management.
 
 - Multi-vendor
 - Multi-currency
