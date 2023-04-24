@@ -4,6 +4,7 @@ const vaahcms2 = require("./vaahcms-2");
 const vaahcms = require("./vaahcms");
 const vaahcli = require("./vaahcli");
 const vaahflutter = require("./vaahflutter");
+const vaahstore = require("./vaahstore");
 
 module.exports = {
     lang: 'en-US',
@@ -39,6 +40,10 @@ module.exports = {
                 link: "/vaahflutter/",
             },
             {
+                text: "VaahStore",
+                link: "/vaahstore/",
+            },
+            {
                 text: "Guide",
                 link: "/guide/",
             },
@@ -53,6 +58,7 @@ module.exports = {
             '/guide/': guide.sidebar,
             '/vaahcli/': vaahcli.sidebar,
             '/vaahflutter/': vaahflutter.sidebar,
+            '/vaahstore/': vaahstore.sidebar,
         }
     }),
 
