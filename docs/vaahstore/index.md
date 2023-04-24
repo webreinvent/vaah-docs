@@ -54,7 +54,7 @@ To customize `VaahStore`, all you need to know is [Larave 10](https://laravel.co
 
 VaahStore and its other first-party packages follow Semantic Versioning. Major platform releases are released every 6 to 8 months, while minor and patch releases may be released as often as every month. Minor and patch releases should never contain breaking changes.
 
-The official away to report the bugs is via [github repo](https://github.com/webreinvent/vaahcms/issues).
+The official away to report the bugs is via [github repo](https://github.com/webreinvent/vaahstore/issues).
 
 
 
