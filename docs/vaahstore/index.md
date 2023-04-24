@@ -4,24 +4,31 @@
 
 ## Introduction
 
-VaahStore is a E-Commerce framework built on top of the latest opensource technologies such as `Laravel 10`, a `PHP` framework and `Vue 3`, a progressive Javascript framework.
+VaahStore is an E-commerce module for `VaahCMS` build on top of latest opensource technologies such as [laravel 10](https://laravel.com/docs/10.x) and [Vue 3](https://vuejs.org/guide/introduction.html).
 
-It is suitable for all small or large E-Commerce business demands using a simple set-up procedure. Built on top of `VaahCms` and equipped with an easy product information management.
+It is suitable for all small or large E-Commerce business demands using a simple set-up procedure. Built on top of `VaahCms` and equipped with an easy product information management. Some features are as follows:
 
-- Multi-vendor
-- Multi-currency
-- Multi-lingual
-- Multi Country Taxes
+- Multi-vendor <sub>(able to add any vendor to individual store)</sub>
+- Multi-currency <sub>(support multiple currency's)</sub>
+- Multi-lingual <sub>(support multiple language's)</sub>
+- Multi Country Taxes <sub>(can handle multiple taxes)</sub>
 - Wishlists
-- Headless Product Content
+- Headless Product Content <sub>(data by API's)</sub>
 - Waitlist
-- Brand Store
-- Abandoned Cart
+- Brand Store <sub>(create own brand)</sub>
+- Abandoned Cart <sub>(forbidden cart)</sub>
 - Coupon
-- AR Products Assets
+- AR Products Assets <sub>(view and add 3D products)</sub>
 - Subscriptions
 - Dropshipping
 - Affiliates
+
+### Why VaahStore ?
+
+- It is completely opensource.
+- It is based on latest and stable versions.
+- It is suitable for small to large individual or companies.
+- It can be customizable.
 
 ## Requirements
 
@@ -29,12 +36,17 @@ It is suitable for all small or large E-Commerce business demands using a simple
 
 ::: tip requirements
 - [npm](https://docs.npmjs.com/cli)
-- [VaahCli](https://www.npmjs.com/package/vaah)
+- [VaahCMS](https://www.npmjs.com/package/vaah)
+- php >= 7.4
   :::
 
-### Learning Curve
+### Minimum Learning curve
 
-If you want to get started quickly with VaahStore, all you need to know is [VaahCli](https://www.npmjs.com/package/vaah). Please read the detailed documentation on vaahCli's official website.
+If you want to make a quick E-Commerce site, all you need to know is [VaahCMS](https://docs.vaah.dev/vaahcms-2)
+
+### Advance Learning Curve
+
+To customize `VaahStore`, all you need to know is [Larave 10](https://laravel.com/docs/10.x/installation), [vue 3](https://vuejs.org/guide/introduction.html) and [VaahCMS](https://docs.vaah.dev/vaahcms-2)
 
 ## Releases
 
