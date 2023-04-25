@@ -7,17 +7,17 @@
 
 [[toc]]
 
-## How to run the store
+## How to run the VaahStore
 
-### Step 1. Install Store
+### Step 1. Install VaahStore
 
-To install store go into `Modules` section of `VaahCMS` and click on `install` button.
+To install Vaahstore go into `VaahCMS > Extends > Modules` click on `install` button on top right corner.
 
 Then a `Install Modules` sidebar will open, inside that search `Store` and click on `Install` button.
 
 ### Step 2. Activate Store
 
-After installation a new module of `Ecommerce for VaahCMS` will added inside `Modules` section of `VaahCMS`, click on `Activate` button.
+After installation a new module of `Ecommerce for VaahCMS` will added inside `VaahCMS > Extends > Modules`, click on `Activate` button.
 
 ### Step 3. Add sample data
 
