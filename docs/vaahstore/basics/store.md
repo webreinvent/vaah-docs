@@ -10,7 +10,7 @@ Just consider a Stores as a digital form of any physical stores.
 
 After activating `VaahStore`, to create a Store go into `VaahCMS > Store > Stores` then click on create button. A form to create Store will open.
 
-### requirement to create a Store
+### Requirement to create a Store
 
 - [Name](#Name)
 - [Is Multi Currency](#is-multi-currency)
