@@ -14,17 +14,17 @@ After activating `VaahStore`, to create a vendor go into `VaahCMS > Store > Vend
 
 ### Requirement to create a Vendor
 
-| Type         |      | Command                                      |
+| Fields         |      | Descriptions                                      |
 | ------------ | ---- | -------------------------------------------- |
-| Name    |      | `This will contain name of the vendor.`    |
-| Store         |      | `This is to choose Store for the vendor.`         |
-| Approve By        |      | `The user which has approved the vendor. By default it is the current active user.`        |
-| Owned By   |      | `The user who owned the vendor.`   |
-| Status         |      | `This is to set the status of the vendor.`         |
-| Status Notes   |      | `Notes are to describe your decision for any status.`   |
-| Is Default     |      | `This is to make current vendor default option for VaahStore.`     |
-| Auto Approve Products        |      | `To automatically approved product from this vendor.`        |
-| Is Active         |      | `This is to Activate or Deactivate your vendor.`         |
+| Name    |      | This will contain name of the vendor.    |
+| Store         |      | This is to choose Store for the vendor.         |
+| Approve By        |      | The user which has approved the vendor. By default it is the current active user.        |
+| Owned By   |      | The user who owned the vendor.   |
+| Status         |      | This is to set the status of the vendor.         |
+| Status Notes   |      | Notes are to describe your decision for any status.   |
+| Is Default     |      | This is to make current vendor default option for VaahStore.     |
+| Auto Approve Products        |      | To automatically approved product from this vendor.        |
+| Is Active         |      | This is to Activate or Deactivate your vendor.         |
 
 
 ## Add product to vendor
@@ -42,4 +42,109 @@ Inside the `Add Product` page there is a dropdown to select and add product.
 <img :src="$withBase('/images/vaahstore/dropdown_to_select_add_product_in_vendor.png')" alt="product linking from vendor">
 
 All the added product will be shown in the below table, and some basic changes to the product can be done in the table and then click on above save button, to save the changes.
+
+## API
+
+### create
+
+#### URL
+```php
+POST <public-url>/store/vendors
+```
+
+#### Request samples
+
+```php
+parameter = [
+    "name",                             // String
+    "slug",                             // String
+    "vh_st_store_id",                   // JSON
+    "approved_by",                      // JSON
+    "owned_by",                         // JSON
+    "taxonomy_id_vendor_status",        // JSON
+    "status_notes",                     // String
+    "is_default",                       // boolean
+    "auto_approve_products",            // boolean
+    "is_active",                        // boolean
+];
+```
+
+#### Response sample
+
+```php
+{
+    "status": "success",
+    "messages": [
+        "Saved"
+    ],
+    "data": {
+        ...........
+        ...........
+        ...........
+    }
+}
+```
+
+### Get List
+
+#### URL
+```php
+GET <public-url>/store/vendors?rows={number_of_rows}
+```
+
+#### Response sample
+
+```php
+{
+    "success": true,
+    "data": {
+        ...........
+        ...........
+        ...........
+    }
+}
+```
+
+### Get Record
+
+#### URL
+```php
+GET <public-url>/store/vendors/{record_id}
+```
+
+#### Response sample
+
+```php
+{
+    "success": true,
+    "data": {
+        ...........
+        ...........
+        ...........
+    }
+}
+```
+
+### Save Product
+
+#### URL
+```php
+POST <public-url>/store/vendors/product
+```
+
+#### Request samples
+
+```php
+parameter = [
+    ..........
+    'same as create'
+    ..........
+    "products": {
+        "can_update"                // boolean
+        "id"                // product id
+        "product"                // JSON
+        "status"                // JSON
+    },
+];
+```
 
