@@ -38,8 +38,6 @@ parameter = [
 
             .............
             .............
-            .............
-            .............
 
             "api_token": "3EsIxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdyN9",
         }
@@ -77,12 +75,10 @@ parameter = [
         "item": {
             .............
             .............
-            .............
-            .............
         }
     },
     "messages": [
-        "saved successfully"
+        "Saved successfully"
     ]
 }
 ```
@@ -166,7 +162,7 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
             .............
@@ -215,13 +211,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
             "data": [
-                ..............
-                ..............
                 ..............
                 ..............
             ],
@@ -280,7 +274,7 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         .............
         .............
@@ -342,12 +336,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
     "data": {
-        ...........
         ...........
         ...........
     }
@@ -367,7 +360,7 @@ GET/POST <public-url>/api/registrations/{column}/{value}/delete
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -386,10 +379,9 @@ GET/POST <public-url>/api/registrations/{column}/{value}/create-user
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "user": {
-            ...........
             ...........
             ...........
         }
@@ -462,10 +454,9 @@ param = [
 
 ```
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
-           ..........
            ..........
            ..........
         }
@@ -518,13 +509,11 @@ param = [
 
 ```
 {
-    "status": "success",
+    ""success": true,
     "data": {
         "list": {
             "current_page": 1,
             "data": [
-                ..............
-                ..............
                 ..............
                 ..............
             ],
@@ -585,9 +574,8 @@ parameter = [
 
 ```
 {
-    "status": "success",
+    "success": true,
     "data": {
-        .............
         .............
         .............
     }
@@ -653,12 +641,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
     "data": {
-        ...........
         ...........
         ...........
     }
@@ -678,7 +665,7 @@ GET/POST <public-url>/api/users/{column}/{value}/delete
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -752,7 +739,7 @@ parameter = [
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 #### User has Role
@@ -771,7 +758,7 @@ GET/POST <public-url>/api/users/{column}/{value}/roles/{role_slug}
 ```php
 {
     "data": true/false,
-    "status": "success"
+    "success": true,
 }
 ```
 #### Get User's Permissions
@@ -840,7 +827,7 @@ parameter = [
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 #### User has Permission
@@ -858,7 +845,7 @@ GET/POST <public-url>/api/users/{column}/{value}/permissions/{permission_slug}
 ```php
 {
     "data": true/false,
-    "status": "success"
+    "success": true,
 }
 ```
 
@@ -889,10 +876,9 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
-           ..........
            ..........
            ..........
         }
@@ -939,13 +925,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
             "data": [
-                ..............
-                ..............
                 ..............
                 ..............
             ],
@@ -1004,9 +988,8 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
-        .............
         .............
         .............
     }
@@ -1039,12 +1022,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
     "data": {
-        ...........
         ...........
         ...........
     }
@@ -1064,7 +1046,7 @@ GET/POST <public-url>/api/roles/{column}/{value}/delete
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -1099,12 +1081,10 @@ parameter = [
         "role": {
             .............
             .............
-            .............
         },
         "users": {
             "current_page": 1,
             "data": [
-                ..............
                 ..............
                 ..............
             ],
@@ -1137,7 +1117,7 @@ parameter = [
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 #### Get Role's Permissions
@@ -1168,12 +1148,10 @@ parameter = [
         "role": {
             .............
             .............
-            .............
         },
         "permissions": {
             "current_page": 1,
             "data": [
-                ..............
                 ..............
                 ..............
             ],
@@ -1206,7 +1184,7 @@ parameter = [
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 
@@ -1251,13 +1229,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
             "data": [
-                ..............
-                ..............
                 ..............
                 ..............
             ],
@@ -1315,9 +1291,8 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
-        .............
         .............
         .............
     }
@@ -1337,7 +1312,7 @@ GET/POST <public-url>/api/roles/{column}/{value}/delete
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -1372,12 +1347,10 @@ parameter = [
         "role": {
             .............
             .............
-            .............
         },
         "users": {
             "current_page": 1,
             "data": [
-                ..............
                 ..............
                 ..............
             ],
@@ -1410,7 +1383,7 @@ parameter = [
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 #### Get Permission's Roles
@@ -1439,12 +1412,10 @@ parameter = [
         "role": {
             .............
             .............
-            .............
         },
         "permissions": {
             "current_page": 1,
             "data": [
-                ..............
                 ..............
                 ..............
             ],
@@ -1477,7 +1448,7 @@ parameter = [
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 
@@ -1507,10 +1478,9 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
-           ..........
            ..........
            ..........
         }
@@ -1559,13 +1529,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
             "data": [
-                ..............
-                ..............
                 ..............
                 ..............
             ],
@@ -1624,9 +1592,8 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
-        .............
         .............
         .............
     }
@@ -1658,12 +1625,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
     "data": {
-        ...........
         ...........
         ...........
     }
@@ -1683,7 +1649,7 @@ GET/POST <public-url>/api/taxonomies/{column}/{value}/delete
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -1716,10 +1682,9 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
-           ..........
            ..........
            ..........
         }
@@ -1767,13 +1732,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
             "data": [
-                ..............
-                ..............
                 ..............
                 ..............
             ],
@@ -1832,9 +1795,8 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": {
-        .............
         .............
         .............
     }
@@ -1865,12 +1827,11 @@ parameter = [
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
     "data": {
-        ...........
         ...........
         ...........
     }
@@ -1890,7 +1851,7 @@ GET/POST <public-url>/api/taxonomy-types/{column}/{value}/delete
 ##### Response samples
 ```php
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
