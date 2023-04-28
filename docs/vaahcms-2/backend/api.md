@@ -63,6 +63,9 @@ parameter = [
     "email",                    // required
     "password",                 // required
     "password_confirmation",    // required
+    "is_active",                // required
+    "status",                   // required
+    "username",                 // required
 ];
 ```
 
@@ -79,7 +82,7 @@ parameter = [
         }
     },
     "messages": [
-        "vaahcms-general.saved_successfully"
+        "saved successfully"
     ]
 }
 ```
