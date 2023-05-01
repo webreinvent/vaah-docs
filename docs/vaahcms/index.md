@@ -2,6 +2,16 @@
 
 [[toc]]
 
+
+::: danger NOTE
+**YOU'RE READING AN OUTDATED DOCUMENTATION.**
+
+Latest documentation of `VaahCMS 2.x` is available at:
+
+[Checkout VaahCMS 2.x Documentation](https://docs.vaah.dev/vaahcms-2/)
+
+:::
+
 ## Introduction
 VaahCMS is a web application development platform shipped with headless content management system and common features required in any web application.
 
