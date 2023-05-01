@@ -1,14 +1,14 @@
 # API
 
-When building an  [API](https://laravel.com/docs/8.x/eloquent-resources#introduction), you may need a transformation layer that sits between your 
-Eloquent models and the JSON responses that are actually returned to your application's users. 
-For example, you may wish to display certain attributes for a subset of 
-users and not others, or you may wish to always include certain relationships in the 
-JSON representation of your models. Eloquent's resource classes allow you to expressively 
+When building an  [API](https://laravel.com/docs/8.x/eloquent-resources#introduction), you may need a transformation layer that sits between your
+Eloquent models and the JSON responses that are actually returned to your application's users.
+For example, you may wish to display certain attributes for a subset of
+users and not others, or you may wish to always include certain relationships in the
+JSON representation of your models. Eloquent's resource classes allow you to expressively
 and easily transform your models and model collections into JSON.
 
-Of course, you may always convert Eloquent models or collections to JSON using 
-their toJson methods; however, Eloquent resources provide more granular and robust 
+Of course, you may always convert Eloquent models or collections to JSON using
+their toJson methods; however, Eloquent resources provide more granular and robust
 control over the JSON serialization of your models and their relationships.
 
 ### Sign In
@@ -32,9 +32,10 @@ let params  = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
+
             .............
             .............
 
@@ -46,7 +47,7 @@ let params  = {
 
 ### Sign Up
 
-If you don't have an account by using sign up you can create account 
+If you don't have an account by using sign up you can create account
 
 For `sign up` follow below link :
 
@@ -59,14 +60,17 @@ let params = {
     first_name:"",               
     email:"",                    
     password:"",                 
-    password_confirmation:"",    
+    password_confirmation:"", 
+    is_active:"",                
+    status:"",                   
+    username:"",                 
 }
 ```
 
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
             .............
@@ -81,14 +85,14 @@ let params = {
 
 ### Authentication
 
-VaahCms supports [API authentication](https://laravel.com/docs/5.8/api-authentication). 
-This allows you to protect the URLs on your web server so that only you can access them. 
-In order to authenticate with HTTP, you may provide a `API Token` in Header. 
+VaahCms supports [API authentication](https://laravel.com/docs/5.8/api-authentication).
+This allows you to protect the URLs on your web server so that only you can access them.
+In order to authenticate with HTTP, you may provide a `API Token` in Header.
 
-The most common way of accessing OAuth 2.0 APIs is using a “Bearer Token”. 
+The most common way of accessing OAuth 2.0 APIs is using a “Bearer Token”.
 This is a single string which acts as the authentication of the API request,
- sent in an HTTP “Authorization” header. The string is meaningless to clients using it, 
- and may be of varying lengths.
+sent in an HTTP “Authorization” header. The string is meaningless to clients using it,
+and may be of varying lengths.
 
 ```
 Authorization: Bearer <api-token>
@@ -96,7 +100,7 @@ Authorization: Bearer <api-token>
 
 You can ask to Admin for assigning you a `API Token`.
 
-The following is a curl example using the HTTP Authorization 
+The following is a curl example using the HTTP Authorization
 header using the Bearer schema with a line break and spaces for readability.
 
 ```
@@ -158,7 +162,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
             .............
@@ -207,7 +211,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
@@ -248,7 +252,7 @@ let params = {
 ```
 #### Get Item
 
-Get a Item of the Registration objects. This will retrieves a User by their custom attributes, 
+Get a Item of the Registration objects. This will retrieves a User by their custom attributes,
 and returns all the properties of Registration.
 
 Column can be id, uuid, email, username or Registration's attribute and their value.
@@ -265,12 +269,14 @@ let params = {
    trashed:""
 }
 ```
+```
 
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
+        .............
         .............
         .............
     }
@@ -330,7 +336,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
@@ -354,7 +360,7 @@ GET/POST <public-url>/api/registrations/{column}/{value}/delete
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -373,7 +379,7 @@ GET/POST <public-url>/api/registrations/{column}/{value}/create-user
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "user": {
             ...........
@@ -396,12 +402,12 @@ Create new user with HTTP request. During the creation you can set up attributes
 
 ##### URL
 
-```php
+```
 GET <public-url>/api/users/create?api_token=xxxxxxxxxxx
 ```
 
 ##### Request samples
-```php
+```
 POST <public-url>/api/users/create
 ```
 
@@ -449,7 +455,7 @@ let params = {
 
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
            ..........
@@ -479,12 +485,12 @@ This method supports some of the query parameters to help customize the response
 
 ##### URL
 
-```php
+```
 GET <public-url>/api/users?api_token=xxxxxxxxxxx
 ```
 
 ##### Request samples
-```php
+```
 POST <public-url>/api/users
 ```
 
@@ -505,7 +511,7 @@ let params = {
 
 ```json
 {
-    "status": "success",
+    ""success": true,
     "data": {
         "list": {
             "current_page": 1,
@@ -570,7 +576,7 @@ let params = {
 
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         .............
         .............
@@ -579,7 +585,7 @@ let params = {
 ```
 #### Update
 
-Simple HTTP request to Users API and you can update standard attributes for a user within few seconds! 
+Simple HTTP request to Users API and you can update standard attributes for a user within few seconds!
 
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
 
@@ -674,7 +680,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
@@ -698,7 +704,7 @@ GET/POST <public-url>/api/users/{column}/{value}/delete
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -726,7 +732,6 @@ let params = {
     per_page:""
 }
 ```
-
 ##### Response samples
 ```json
 {
@@ -770,7 +775,7 @@ let params = {
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 #### User has Role
@@ -786,10 +791,10 @@ GET/POST <public-url>/api/users/{column}/{value}/roles/{role_slug}
 ```
 
 ##### Response samples
-```json
+```php
 {
     "data": true/false,
-    "status": "success"
+    "success": true,
 }
 ```
 #### Get User's Permissions
@@ -856,7 +861,7 @@ let params = {
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 #### User has Permission
@@ -871,10 +876,10 @@ GET/POST <public-url>/api/users/{column}/{value}/permissions/{permission_slug}
 ```
 
 ##### Response samples
-```json
+```php
 {
     "data": true/false,
-    "status": "success"
+    "success": true,
 }
 ```
 
@@ -901,11 +906,10 @@ let params = {
     type:"",                     
 }
 ```
-
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
            ..........
@@ -954,7 +958,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
@@ -996,7 +1000,7 @@ let params = {
 #### Get Item
 
 Get a Item of the Role objects . This will retrieves a Role by their custom attributes,
- and returns all the properties of Role.
+and returns all the properties of Role.
 
 Column can be id, uuid, email, username or Role's attribute and their value.
 
@@ -1017,7 +1021,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         .............
         .............
@@ -1051,7 +1055,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
@@ -1075,7 +1079,7 @@ GET/POST <public-url>/api/roles/{column}/{value}/delete
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -1146,7 +1150,7 @@ let params = {
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 #### Get Role's Permissions
@@ -1213,7 +1217,7 @@ let params = {
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 
@@ -1258,7 +1262,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
@@ -1320,7 +1324,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         .............
         .............
@@ -1341,7 +1345,7 @@ GET/POST <public-url>/api/roles/{column}/{value}/delete
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -1412,7 +1416,7 @@ let params = {
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 #### Get Permission's Roles
@@ -1477,7 +1481,7 @@ let params = {
             "total": 3
         }
     },
-    "status": "success"
+    "success": true,
 }
 ```
 
@@ -1507,7 +1511,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
            ..........
@@ -1555,11 +1559,10 @@ let params = {
 }
 ```
 
-
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
@@ -1600,7 +1603,7 @@ let params = {
 ```
 #### Get Item
 
-Get a Item of the Taxonomy objects . This will retrieves a User by their custom attributes, 
+Get a Item of the Taxonomy objects . This will retrieves a User by their custom attributes,
 and returns all the properties of Taxonomy.
 
 Column can be id, uuid, email, username or Taxonomy's attribute and their value.
@@ -1622,7 +1625,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         .............
         .............
@@ -1655,7 +1658,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
@@ -1679,7 +1682,7 @@ GET/POST <public-url>/api/taxonomies/{column}/{value}/delete
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
@@ -1712,7 +1715,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "item": {
            ..........
@@ -1749,20 +1752,21 @@ GET/POST <public-url>/api/taxonomy-types
 ```
 let params = {
 
-    api_token:"",                 
-    q:"",                         
-    from:"",                     
-    to:"",                        
-    per_page:"",                  
-    trashed:"",                         
-    with_children:""        
+    api_token:'',                 
+    name:"",                     
+    slug:"",                     
+    parent:"", 
+    to:'',                 
+    per_page:"",                     
+    trashed:"",                     
+    with_children:"",                   
 }
 ```
 
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         "list": {
             "current_page": 1,
@@ -1803,7 +1807,7 @@ let params = {
 ```
 #### Get Item
 
-Get a Item of the Taxonomy Type objects . This will retrieves a User by their custom attributes, 
+Get a Item of the Taxonomy Type objects . This will retrieves a User by their custom attributes,
 and returns all the properties of Taxonomy Type.
 
 Column can be id, uuid, email, username or Taxonomy Type's attribute and their value.
@@ -1825,7 +1829,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": {
         .............
         .............
@@ -1857,7 +1861,7 @@ let params = {
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "messages": [
         "Saved"
     ],
@@ -1881,7 +1885,7 @@ GET/POST <public-url>/api/taxonomy-types/{column}/{value}/delete
 ##### Response samples
 ```json
 {
-    "status": "success",
+    "success": true,
     "data": [],
     "messages": [
         "Action was successful"
