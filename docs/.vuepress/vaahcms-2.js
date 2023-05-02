@@ -30,7 +30,7 @@ sidebar = [
             {text: 'Installation', link: ''},
             {text: 'Setup', link: '/vaahcms-2/backend/setup.md'},
             {text: 'Dashboard', link: '/vaahcms-2/backend/dashboard.md'},
-            {text: 'API Authentication', link: '/vaahcms-2/backend/api.md'},
+            {text: 'API Authentication', link: '/vaahcms-2/backend/api-authentication.md'},
             {
                 text: 'USER & ACCESS',
                 //link: '/vaahcms/directory-structure.md',
