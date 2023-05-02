@@ -103,7 +103,7 @@ You can ask to Admin for assigning you a `API Token`.
 The following is a curl example using the HTTP Authorization
 header using the Bearer schema with a line break and spaces for readability.
 
-```
+```php
 curl -H 'Authorization: Bearer <api-token>' \
      <public-url>/api/users
  ```
@@ -402,12 +402,12 @@ Create new user with HTTP request. During the creation you can set up attributes
 
 ##### URL
 
-```
+```php
 GET <public-url>/api/users/create?api_token=xxxxxxxxxxx
 ```
 
 ##### Request samples
-```
+```php
 POST <public-url>/api/users/create
 ```
 
@@ -485,12 +485,12 @@ This method supports some of the query parameters to help customize the response
 
 ##### URL
 
-```
+```php
 GET <public-url>/api/users?api_token=xxxxxxxxxxx
 ```
 
 ##### Request samples
-```
+```php
 POST <public-url>/api/users
 ```
 
@@ -559,7 +559,7 @@ This will retrieves a `User` by their `custom attributes`, and returns all the p
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
 
 ##### URL
-```
+```php
 <public-url>/api/cms/users/{column}/{value}`
 ```
 
