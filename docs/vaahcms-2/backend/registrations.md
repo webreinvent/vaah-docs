@@ -140,7 +140,7 @@ List of all the files responsible for this pages
  some methods which can be reused. 
 - **itemAction()** method can be used for actions like `restore`,`trash` in particular item
 
-``` 
+```php
     packages/vaahcms/Models/Registration.php  
     
     Registration::itemAction($request,$id,$type);
@@ -149,7 +149,7 @@ where `$request` is HTTP request,`$id` is Item's id,`$type` is action type.
 
 - **listAction()** methods can be  used for different actions like `trash`,`restore`,`delete`,`trash all`,`delete all`,`restore all` and different status change on item's list
 
-```
+```php
     packages/vaahcms/Models/Registration.php
     
     Registration::listAction($request,$id,$type);

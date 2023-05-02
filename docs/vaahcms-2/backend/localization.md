@@ -7,7 +7,7 @@
 Localization features provide a convenient way to retrieve strings in various languages, allowing you to easily support multiple languages within your application.
 
 Visit following url you will see the localization section:
-```
+```php
 <project-url>/backend#/vaah//settings/localization
 ```
 Below Image is an example of localization.
