@@ -10,6 +10,6 @@ Module is designed with flexibility, simplicity, and re-usability in mind. A mod
 
 VaahCms provide a `framework` for `Module`. This framework have largely been designed over the last several years and will all be good choices for building Backend site.
 
-We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS exist.
+We will be using `Vue` because this is where the real power of VaahCMS exist.
 
 [Read Documentation](/vaahcms-2/backend/generate-module.md)
