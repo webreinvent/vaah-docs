@@ -9,6 +9,7 @@ sidebar = [
             {text: 'The VaahCMS 2.x', link: '/vaahcms-2/'},
         ]
     },
+    {text: 'GENERATORS', link: '/vaahcms-2/backend/generators.md'},
     {
         text: 'GETTING STARTED',
         //link: '/vaahcms/directory-structure.md',
@@ -21,6 +22,14 @@ sidebar = [
             {text: 'Generate CRUD', link: '/vaahcms-2/backend/generate-crud.md'},
             {text: 'Generate Theme', link: '/vaahcms-2/backend/generate-themes.md'},
             {text: 'User auth', link: '/vaahcms-2/backend/user-auth.md'},
+        ]
+    },
+    {
+        text: 'VaahCms',
+        //link: '/vaahcms/directory-structure.md',
+        children: [
+            {text: 'Mail', link: '/vaahcms-2/backend/mail.md'},
+            {text: 'Access Control List(ACL)', link: '/vaahcms-2/backend/acl.md'},
         ]
     },
     {
