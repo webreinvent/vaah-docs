@@ -28,7 +28,7 @@ sidebar = [
         text: 'VaahCms',
         //link: '/vaahcms/directory-structure.md',
         children: [
-            {text: 'Mail', link: '/vaahcms-2/backend/mail.md'},
+            {text: 'Mail', link: '/vaahcms-2/backend/mails.md'},
             {text: 'Access Control List(ACL)', link: '/vaahcms-2/backend/acl.md'},
         ]
     },

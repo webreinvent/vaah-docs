@@ -6,7 +6,7 @@ An access control list (ACL) contains rules that grant or deny access to certain
 
 
 
-##### ACL in Controller
+##### ACL in Controllers
 
 VaahCms provide a method in Controller to check the User's access. You can call this method before execute an action.
 
