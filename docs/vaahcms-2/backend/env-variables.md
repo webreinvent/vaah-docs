@@ -8,7 +8,7 @@ Environment variables are values that impact the processes and behavior of vaahC
 
 Visit following url you will see the Env-variables section:
 ```php
-<project-url>/backend#/vaah//settings/env-variables
+http://127.0.0.1:8000/backend#/vaah//settings/env-variables
 ```
 Below Image is an example of Env-variables values.
 

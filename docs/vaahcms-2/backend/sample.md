@@ -90,7 +90,7 @@ Example
 ### Create permission
 
 ##### Method: `post`
-##### URL: `<public-url>/api/permission/create`
+##### URL: `http://127.0.0.1:8000/api/permission/create`
 ##### Request Parameters
 List all request params like https://docs.vaah.dev/vaahcms/basic/api.html#get-a-list 
 ##### Response Parameters

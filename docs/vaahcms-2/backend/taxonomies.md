@@ -195,7 +195,7 @@ We mention some methods bellow which help you to understand the structure.
 
 ##### Method: `POST`
 ##### Action: `creatItem`
-##### URL: `<public-url>/api/vaah/manage/taxonomies/`
+##### URL: `http://127.0.0.1:8000/api/vaah/manage/taxonomies/`
 
 ##### Sample Request
 ```php 
@@ -232,7 +232,7 @@ parameter = [
 
 ###### Method: `GET`
 ###### Action: `getList`
-###### URL: `<public-url>/api/vaah/manage/taxonomies/`
+###### URL: `http://127.0.0.1:8000/api/vaah/manage/taxonomies/`
 
 ##### Sample Request
 ```php 
@@ -263,7 +263,7 @@ parameter = [
 
 ###### Method: `GET`
 ###### Action: `getItem`
-###### URL: `<public-url>/api/vaah/manage/taxonomies/{id}`
+###### URL: `http://127.0.0.1:8000/api/vaah/manage/taxonomies/{id}`
 
 ##### Sample Response
 

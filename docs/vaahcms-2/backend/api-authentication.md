@@ -18,11 +18,11 @@ an ` api_token ` in the response will be there which you can use as authorizatio
 
 For `sign in` follow below link :
 
-```php
-POST <public-url>/api/signin
+```js
+POST http://127.0.0.1:8000/api/signin
 ```
 ##### Request samples
-```
+```js
 let params  = {
     email:"",                    
     password:"",                 
@@ -51,11 +51,11 @@ If you don't have an account by using sign up you can create account
 
 For `sign up` follow below link :
 
-```php
-POST <public-url>/api/signup
+```js
+POST http://127.0.0.1:8000/api/signup
 ```
 ##### Request samples
-```
+```js
 let params = {
     first_name:"",               
     email:"",                    
@@ -103,9 +103,9 @@ You can ask to Admin for assigning you a `API Token`.
 The following is a curl example using the HTTP Authorization
 header using the Bearer schema with a line break and spaces for readability.
 
-```php
+```shell
 curl -H 'Authorization: Bearer <api-token>' \
-     <public-url>/api/users
+     http://127.0.0.1:8000/api/users
  ```
 
 ### Registration : -
@@ -115,12 +115,12 @@ curl -H 'Authorization: Bearer <api-token>' \
 Create new registration with HTTP request. During the creation you can set up attributes.
 
 ##### URL
-```php
-GET/POST <public-url>/api/registrations/create
+```js
+GET/POST http://127.0.0.1:8000/api/registrations/create
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:''                 
@@ -190,12 +190,12 @@ This method supports some of the query parameters to help customize the response
 | trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
 
 ##### URL
-```php
-GET/POST <public-url>/api/registrations
+```js
+GET/POST http://127.0.0.1:8000/api/registrations
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",
@@ -219,10 +219,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "<public-url>/api/registrations?page=1",
+            "first_page_url": "http://127.0.0.1:8000/api/registrations?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "<public-url>/api/registrations?page=1",
+            "last_page_url": "http://127.0.0.1:8000/api/registrations?page=1",
             "links": [
                 {
                     "url": null,
@@ -230,7 +230,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "<public-url>/api/registrations?page=1",
+                    "url": "http://127.0.0.1:8000/api/registrations?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -241,7 +241,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "<public-url>/api/registrations",
+            "path": "http://127.0.0.1:8000/api/registrations",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -258,18 +258,18 @@ and returns all the properties of Registration.
 Column can be id, uuid, email, username or Registration's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/registrations/{column}/{value}
+```js
+GET/POST http://127.0.0.1:8000/api/registrations/{column}/{value}
 ```
 
 ##### Request samples
-```
+```js
 let params = {
    api_token:"",
    trashed:""
 }
 ```
-```
+
 
 ##### Response samples
 ```json
@@ -289,12 +289,12 @@ Simple HTTP request to Registrations API and you can update standard attributes 
 Column can be id, uuid, email, username or Registration's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/registrations/{column}/{value}/update
+```js
+GET/POST http://127.0.0.1:8000/api/registrations/{column}/{value}/update
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:''                 
@@ -353,8 +353,8 @@ Simple HTTP request to Registration API to delete registration.
 Column can be id, uuid, email, username or Registration's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/registrations/{column}/{value}/delete
+```js
+GET/POST http://127.0.0.1:8000/api/registrations/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -372,8 +372,8 @@ GET/POST <public-url>/api/registrations/{column}/{value}/delete
 Simple HTTP request to Registration API to create User.
 
 ##### URL
-```php
-GET/POST <public-url>/api/registrations/{column}/{value}/create-user
+```js
+GET/POST http://127.0.0.1:8000/api/registrations/{column}/{value}/create-user
 ```
 
 ##### Response samples
@@ -402,16 +402,23 @@ Create new user with HTTP request. During the creation you can set up attributes
 
 ##### URL
 
-```php
-GET <public-url>/api/users/create?api_token=xxxxxxxxxxx
+```js
+let config = {
+    headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${api_token}`
+    }
+};
+
+let response = await this.axios.get("http://127.0.0.1:8000/api/users/create", config);
 ```
 
 ##### Request samples
-```php
-POST <public-url>/api/users/create
+```js
+POST http://127.0.0.1:8000/api/users/create
 ```
 
-```
+```js
 let params = {
       api_token:"",
       email:"",
@@ -485,16 +492,23 @@ This method supports some of the query parameters to help customize the response
 
 ##### URL
 
-```php
-GET <public-url>/api/users?api_token=xxxxxxxxxxx
+```js
+let config = {
+    headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${api_token}`
+    }
+};
+
+let response = await this.axios.get("http://127.0.0.1:8000/api/users", config);
 ```
 
 ##### Request samples
-```php
-POST <public-url>/api/users
+```js
+POST http://127.0.0.1:8000/api/users
 ```
 
-```
+```js
 let params = {
      api_token:"",
      q:"",
@@ -519,10 +533,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "<public-url>/api/users?page=1",
+            "first_page_url": "http://127.0.0.1:8000/api/users?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "<public-url>/api/users?page=1",
+            "last_page_url": "http://127.0.0.1:8000/api/users?page=1",
             "links": [
                 {
                     "url": null,
@@ -530,7 +544,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "<public-url>/api/users?page=1",
+                    "url": "http://127.0.0.1:8000/api/users?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -541,7 +555,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "<public-url>/api/users",
+            "path": "http://127.0.0.1:8000/api/users",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -559,13 +573,13 @@ This will retrieves a `User` by their `custom attributes`, and returns all the p
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
 
 ##### URL
-```php
-<public-url>/api/cms/users/{column}/{value}`
+```js
+http://127.0.0.1:8000/api/cms/users/{column}/{value}`
 ```
 
 ##### Request samples
 
-```
+```js
 let params = {
 
    trashed:""                  
@@ -590,90 +604,51 @@ Simple HTTP request to Users API and you can update standard attributes for a us
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/users/{column}/{value}/update
+```js
+GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/update
 ```
 
 ##### Request samples
-```
+```js
 let params = {
-         api_token:''                 
-         email:"",                    
-         username:"",
-         password:"",                 
-         display_name:"",
-         title:"",
-         designation:"",
-         first_name:"",               
-         middle_name:"",
-         last_name:"",
-         gender:"",                  
-         country_calling_code:"",
-         phone:"", 
-         bio:"",
-         website:"",
-         timezone:"",
-         alternate_email:"",
-         avatar_url:"",
-         birth:"", 
-         country:"",
-         country_code:"",
-         last_login_at:"",
-         last_login_ip:"",
-         remember_token:"",
-         login_otp:"",
-         api_token:"",
-         api_token_used_at:"",
-         api_token_used_ip:"",
-         is_active:"",
-         activated_at:"",
-         status:"",                  
-         affiliate_code:"",
-         affiliate_code_used_at:"",
-         reset_password_code:"",
-         reset_password_code_sent_at:"",
-         reset_password_code_used_at:"",
-         foreign_user_id:"",
-         meta:""                     
-         created_ip:""    api_token:''                 
-         email:"",                    
-         username:"",
-         password:"",                 
-         display_name:"",
-         title:"",
-         designation:"",
-         first_name:"",               
-         middle_name:"",
-         last_name:"",
-         gender:"",                  
-         country_calling_code:"",
-         phone:"", 
-         bio:"",
-         website:"",
-         timezone:"",
-         alternate_email:"",
-         avatar_url:"",
-         birth:"", 
-         country:"",
-         country_code:"",
-         last_login_at:"",
-         last_login_ip:"",
-         remember_token:"",
-         login_otp:"",
-         api_token:"",
-         api_token_used_at:"",
-         api_token_used_ip:"",
-         is_active:"",
-         activated_at:"",
-         status:"",                  
-         affiliate_code:"",
-         affiliate_code_used_at:"",
-         reset_password_code:"",
-         reset_password_code_sent_at:"",
-         reset_password_code_used_at:"",
-         foreign_user_id:"",
-         meta:""                     
-         created_ip:""
+    api_token:''
+    email:"",
+    username:"",
+    password:"",
+    display_name:"",
+    title:"",
+    designation:"",
+    first_name:"",
+    middle_name:"",
+    last_name:"",
+    gender:"",
+    country_calling_code:"",
+    phone:"",
+    bio:"",
+    website:"",
+    timezone:"",
+    alternate_email:"",
+    avatar_url:"",
+    birth:"",
+    country:"",
+    country_code:"",
+    last_login_at:"",
+    last_login_ip:"",
+    remember_token:"",
+    login_otp:"",
+    api_token_used_at:"",
+    api_token_used_ip:"",
+    is_active:"",
+    activated_at:"",
+    status:"",
+    affiliate_code:"",
+    affiliate_code_used_at:"",
+    reset_password_code:"",
+    reset_password_code_sent_at:"",
+    reset_password_code_used_at:"",
+    foreign_user_id:"",
+    meta:"",
+    created_ip:"",
 }
 ```
 
@@ -697,8 +672,8 @@ Simple HTTP request to Users API to delete user.
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/users/{column}/{value}/delete
+```js
+GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -719,12 +694,12 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 
 ##### URL
-```php
-GET/POST <public-url>/api/users/{column}/{value}/roles
+```js
+GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/roles
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                
@@ -786,8 +761,8 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 
 ##### URL
-```php
-GET/POST <public-url>/api/users/{column}/{value}/roles/{role_slug}
+```js
+GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/roles/{role_slug}
 ```
 
 ##### Response samples
@@ -804,12 +779,12 @@ Get `user's permissions` via GET/POST request.
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/users/{column}/{value}/permissions
+```js
+GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/permissions
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                
@@ -871,8 +846,8 @@ API to check if an user has a specific permission.
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/users/{column}/{value}/permissions/{permission_slug}
+```js
+GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/permissions/{permission_slug}
 ```
 
 ##### Response samples
@@ -890,12 +865,12 @@ GET/POST <public-url>/api/users/{column}/{value}/permissions/{permission_slug}
 Create new role with HTTP request. During the creation you can set up attributes.
 
 ##### URL
-```php
-GET/POST <public-url>/api/roles/create
+```js
+GET/POST http://127.0.0.1:8000/api/roles/create
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:""                 
@@ -937,12 +912,12 @@ This method supports some of the query parameters to help customize the response
 | trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
 
 ##### URL
-```php
-GET/POST <public-url>/api/roles
+```js
+GET/POST http://127.0.0.1:8000/api/roles
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                 
@@ -966,10 +941,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "<public-url>/api/roles?page=1",
+            "first_page_url": "http://127.0.0.1:8000/api/roles?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "<public-url>/api/roles?page=1",
+            "last_page_url": "http://127.0.0.1:8000/api/roles?page=1",
             "links": [
                 {
                     "url": null,
@@ -977,7 +952,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "<public-url>/api/roles?page=1",
+                    "url": "http://127.0.0.1:8000http://127.0.0.1:8000/api/roles?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -988,7 +963,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "<public-url>/api/roles",
+            "path": "http://127.0.0.1:8000/api/roles",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -1005,15 +980,15 @@ and returns all the properties of Role.
 Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/roles/{column}/{value}
+```js
+GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
-   api_tokenapi_token:"",                 
+   api_token:"",                 
    trashedtrashed:""                     
 }
 ```
@@ -1035,12 +1010,12 @@ Simple HTTP request to Role API and you can update standard attributes for a rol
 Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/roles/{column}/{value}/update
+```js
+GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/update
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:'',                 
@@ -1072,8 +1047,8 @@ Simple HTTP request to Role API to delete user.
 Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/roles/{column}/{value}/delete
+```js
+GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -1093,12 +1068,12 @@ Get role's users via GET/POST request.
 Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/roles/{column}/{value}/users
+```js
+GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/users
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                 
@@ -1160,12 +1135,12 @@ Get role's permissions via GET/POST request.
 Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/roles/{column}/{value}/permissions
+```js
+GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/permissions
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                 
@@ -1240,12 +1215,12 @@ This method supports some of the query parameters to help customize the response
 | trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
 
 ##### URL
-```php
-GET/POST <public-url>/api/permissions
+```js
+GET/POST http://127.0.0.1:8000/api/permissions
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                 
@@ -1270,10 +1245,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "<public-url>/api/permissions?page=1",
+            "first_page_url": "http://127.0.0.1:8000/api/permissions?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "<public-url>/api/permissions?page=1",
+            "last_page_url": "http://127.0.0.1:8000/api/permissions?page=1",
             "links": [
                 {
                     "url": null,
@@ -1281,7 +1256,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "<public-url>/api/permissions?page=1",
+                    "url": "http://127.0.0.1:8000/api/permissions?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -1292,7 +1267,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "<public-url>/api/permissions",
+            "path": "http://127.0.0.1:8000/api/permissions",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -1308,12 +1283,12 @@ Get a Item of the Permission objects . This will retrieves a User by their custo
 Column can be id, uuid, email, username or Permission's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/permissions/{column}/{value}
+```js
+GET/POST http://127.0.0.1:8000/api/permissions/{column}/{value}
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
    api_token:"",
@@ -1338,8 +1313,8 @@ Simple HTTP request to Users API to delete permission.
 Column can be id, uuid, email, username or Permission's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/roles/{column}/{value}/delete
+```js
+GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -1359,12 +1334,12 @@ Get permission's users via GET/POST request.
 Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/permissions/{column}/{value}/users
+```js
+GET/POST http://127.0.0.1:8000/api/permissions/{column}/{value}/users
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                 
@@ -1424,12 +1399,12 @@ let params = {
 Get permission's roles via GET/POST request.
 
 ##### URL
-```php
-GET/POST <public-url>/api/permissions/{column}/{value}/roles
+```js
+GET/POST http://127.0.0.1:8000/api/permissions/{column}/{value}/roles
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                 
@@ -1492,12 +1467,12 @@ let params = {
 Create new Create with HTTP request. During the creation you can set up attributes.
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomies/create
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomies/create
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:'',                
@@ -1540,12 +1515,12 @@ This method supports some of the query parameters to help customize the response
 | trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomies
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomies
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:"",                 
@@ -1570,10 +1545,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "<public-url>/api/taxonomies?page=1",
+            "first_page_url": "http://127.0.0.1:8000/api/taxonomies?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "<public-url>/api/taxonomies?page=1",
+            "last_page_url": "http://127.0.0.1:8000/api/taxonomies?page=1",
             "links": [
                 {
                     "url": null,
@@ -1581,7 +1556,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "<public-url>/api/taxonomies?page=1",
+                    "url": "http://127.0.0.1:8000/api/taxonomies?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -1592,7 +1567,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "<public-url>/api/taxonomies",
+            "path": "http://127.0.0.1:8000/api/taxonomies",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -1609,12 +1584,12 @@ and returns all the properties of Taxonomy.
 Column can be id, uuid, email, username or Taxonomy's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomies/{column}/{value}
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomies/{column}/{value}
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
    api_token:"",
@@ -1639,12 +1614,12 @@ Simple HTTP request to Taxonomy API and you can update standard attributes for a
 Column can be id, uuid, email, username or Taxonomy's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomies/{column}/{value}/update
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomies/{column}/{value}/update
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:'',                 
@@ -1675,8 +1650,8 @@ Simple HTTP request to Users API to delete taxonomy.
 Column can be id, uuid, email, username or Taxonomy's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomies/{column}/{value}/delete
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomies/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -1697,12 +1672,12 @@ GET/POST <public-url>/api/taxonomies/{column}/{value}/delete
 Create new Taxonomy Type with HTTP request. During the creation you can set up attributes.
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomy-types/create
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomy-types/create
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:'',                 
@@ -1744,12 +1719,12 @@ This method supports some of the query parameters to help customize the response
 | trashed | Set true to show `Trashed (Soft Delete)` data | Boolean | false
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomy-types
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomy-types
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:'',                 
@@ -1774,10 +1749,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "<public-url>/api/taxonomy-types?page=1",
+            "first_page_url": "http://127.0.0.1:8000/api/taxonomy-types?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "<public-url>/api/taxonomy-types?page=1",
+            "last_page_url": "http://127.0.0.1:8000/api/taxonomy-types?page=1",
             "links": [
                 {
                     "url": null,
@@ -1785,7 +1760,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "<public-url>/api/taxonomy-types?page=1",
+                    "url": "http://127.0.0.1:8000/api/taxonomy-types?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -1796,7 +1771,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "<public-url>/api/taxonomy-types",
+            "path": "http://127.0.0.1:8000/api/taxonomy-types",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -1813,12 +1788,12 @@ and returns all the properties of Taxonomy Type.
 Column can be id, uuid, email, username or Taxonomy Type's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomy-types/{column}/{value}
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomy-types/{column}/{value}
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
    api_token:''                 
@@ -1843,12 +1818,12 @@ Simple HTTP request to Taxonomy type API and you can update standard attributes 
 Column can be id, uuid, email, username or Taxonomy type's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomy-types/{column}/{value}/update
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomy-types/{column}/{value}/update
 ```
 
 ##### Request samples
-```
+```js
 let params = {
 
     api_token:''            
@@ -1878,8 +1853,8 @@ Simple HTTP request to Users API to delete taxonomy type.
 Column can be id, uuid, email, username or Taxonomy type's attribute and their value.
 
 ##### URL
-```php
-GET/POST <public-url>/api/taxonomy-types/{column}/{value}/delete
+```js
+GET/POST http://127.0.0.1:8000/api/taxonomy-types/{column}/{value}/delete
 ```
 
 ##### Response samples

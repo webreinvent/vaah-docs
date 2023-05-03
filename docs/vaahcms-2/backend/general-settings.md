@@ -10,7 +10,7 @@ Here controls are segregated in 5 parts in accordion, will discuss one by one.
 Visit following url you will see the General settings section:
 
 ```php
-<project-url>/backend#/vaah/advanced/general
+http://127.0.0.1:8000/backend#/vaah/advanced/general
 ```
 
 Below Image is a example of General settings.

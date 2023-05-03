@@ -8,7 +8,7 @@ Localization features provide a convenient way to retrieve strings in various la
 
 Visit following url you will see the localization section:
 ```php
-<project-url>/backend#/vaah//settings/localization
+http://127.0.0.1:8000/backend#/vaah//settings/localization
 ```
 Below Image is an example of localization.
 

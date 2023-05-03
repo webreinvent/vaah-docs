@@ -8,7 +8,7 @@ This feature is to self updation of vaahCMS.
 
 Visit following url you will see the update section:
 ```php
-<project-url>/backend#/vaah//settings/update
+http://127.0.0.1:8000/backend#/vaah//settings/update
 ```
 The update page is looks like below image:
 
