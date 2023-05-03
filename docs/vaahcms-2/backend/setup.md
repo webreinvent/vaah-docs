@@ -11,7 +11,7 @@ and first "Super Administrator" account, we provided a GUI.
 This setup page makes it simple to set up the fundamental procedure 
 and begin work.
 
-`<public_url>/backend#/setup`
+`http://127.0.0.1:8000/signup/backend#/setup`
 
 ## Setup Process
 
