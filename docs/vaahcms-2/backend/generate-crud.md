@@ -91,9 +91,8 @@ Import the route file of vue
 ```modules/vue/store/store-blog.js```
 
 Paste ```/backend```
-
-```
 Make sure that code should be like this
+```js
 let ajax_url = base_url + "/backend/blog/blogs";
 ```
 <img :src="$withBase('/images/crud-generate-7.png')">
@@ -102,7 +101,7 @@ let ajax_url = base_url + "/backend/blog/blogs";
 If you are generating crud `First time inside module` then only follow this step.
 
 Open ```.env & .env.custom``` and paste below code
-```php
+```
 MODULE_TRAVEL_ENV=develop
 ```
 <img :src="$withBase('/images/crud-generate-8-a.png')">
@@ -111,16 +110,16 @@ MODULE_TRAVEL_ENV=develop
 ## Step-9
 
 In this step you need run `npm install` in terminal.
-```php
-F:\xampp8018\htdocs\vaah_abinash\vaahcms\Modules\Travel>
+```shell
+../<project-name>/vaahcms/Modules/<module-name>
 ```
 <img :src="$withBase('/images/crud-generate-9.png')">
 
 ## Step-10
 
 After install dependencies for local needs to run dev server `npm run dev`.
-```php
-F:\xampp8018\htdocs\vaah_abinash\vaahcms\Modules\Travel>npm run dev
+```shell
+../<project-name>/vaahcms/Modules/<module-name>npm run dev
 ```
 
 <img :src="$withBase('/images/crud-generate-10.png')">
