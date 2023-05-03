@@ -11,11 +11,11 @@ For the module and theme set up follow below link:-
 ## Step-1
 Firstly need to update VaahCms self update
 Use below command for that :
-```
+```shell
 npm install vaah -g
 ```
 Then install theme using below command :
-```
+```shell
 npx vaah cms:t
 ```
 
@@ -24,7 +24,7 @@ npx vaah cms:t
 ## Step-2
 After completing theme setup and activation we will generate authentication :
 Use below command for that :
-```
+```shell
 npx vaah cms:auth
 ```
 
@@ -77,7 +77,7 @@ Include route auth file
 
 Add this code in above path
 
-```
+```php
 include("frontend/routes-auth.php");
 ```
 <img :src="$withBase('/images/user-auth-5.png')">
@@ -89,7 +89,7 @@ Include VueScripts
 
 Add this code in above path  
 
-```
+```js
 let jses = [
         './Resources/assets/js/VueScripts.js',
     ];

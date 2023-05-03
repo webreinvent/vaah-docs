@@ -13,14 +13,14 @@ sidebar = [
         text: 'GETTING STARTED',
         //link: '/vaahcms/directory-structure.md',
         children: [
-            {text: 'Overview', link: '/vaahcms-2/backend/index.md'},
-
-
-            {text: 'Sample', link: '/vaahcms-2/backend/sample.md'},
+            {text: 'Installation', link: '/vaahcms-2/backend/installation.md'},
+            {text: 'Configuration', link: '/vaahcms-2/backend/configuration.md'},
+            {text: 'Directory Structure', link: '/vaahcms-2/backend/directory-structure.md'},
+            {text: 'Database', link: '/vaahcms-2/backend/database.md'},
             {text: 'Generate Module', link: '/vaahcms-2/backend/generate-module.md'},
             {text: 'Generate CRUD', link: '/vaahcms-2/backend/generate-crud.md'},
-            // {text: 'Generate Theme', link: '/vaahcms-2/backend/generate-themes.md'},
-            // {text: 'User auth', link: '/vaahcms-2/backend/user-auth.md'},
+            {text: 'Generate Theme', link: '/vaahcms-2/backend/generate-themes.md'},
+            {text: 'User auth', link: '/vaahcms-2/backend/user-auth.md'},
         ]
     },
     {
