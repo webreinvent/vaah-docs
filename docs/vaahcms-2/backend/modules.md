@@ -3,7 +3,13 @@
 Module is designed with flexibility, simplicity, and re-usability in mind. A module may contain just about anything: PHP code, including MVC functionality; library code; view scripts; and/or public assets such as images, CSS, and JavaScript.
 
 ------
+Visit following url you will see the Notification section:
+```
+http://127.0.0.1:8000/backend#/vaah/modules/
+```
+Below Image is an example of notification.
 
+<img :src="$withBase('/images/2.x-modules-1.png')">
 
 
 ##### Vaahcms Module
@@ -13,3 +19,56 @@ VaahCms provide a `framework` for `Module`. This framework have largely been des
 We will be using `Vue` & `Pinia` because this is where the real power of VaahCMS exist.
 
 [Read Documentation](/vaahcms-2/backend/generate-module.md)
+
+## Usage
+
+#### Install Theme
+
+You can install modules by clicking `Install` button, Which will open a panel with list of modules.
+
+Just like below image :
+
+<img :src="$withBase('/images/2.x-modules-2.png')">
+
+After a full down scroll an `install` button will be appeared. Onclick it will install your chosen theme.
+
+<img :src="$withBase('/images/2.x-modules-3.png')">
+
+If the theme is installed already button will indicate as `installed`.
+
+#### Activate Theme
+
+An `Activate` button is present in the action column of the list. By clicking on it, theme will be activated.
+
+Follow below images for the reference :
+
+<img :src="$withBase('/images/2.x-modules-4.png')">
+
+`After activation`
+
+<img :src="$withBase('/images/2.x-modules-5.png')">
+
+There are multiple buttons are there which will responsible for multiple functionality.
+We will discuss below One by One.
+
+#### Deactivate
+
+By clicking on `Deactivate` button will Deactive the theme.
+
+#### Action
+
+This a`Action` button has three more options, `Run Migrations`, `Run Seeds`, `Refresh Migrations`.
+
+<img :src="$withBase('/images/2.x-modules-7.png')">
+
+`Run Migrations` will run the migrations file presents in `../VaahCms/Modules/Database/Migrations`.
+
+`Run Seeds` this button will insert the data into respective tables according to the files presents in `../VaahCms/Modules/Database/Seeds`.
+
+`Refresh Migrations` is responsible to fresh the schema of respective theme only.
+
+#### View
+
+The `Eye icon button` is for details of the theme. it will create a panel at right side.
+
+<img :src="$withBase('/images/2.x-modules-8.png')">
