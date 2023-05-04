@@ -4,7 +4,13 @@ A theme is a set of files that define the visual look and feel of your site. The
 
 
 
-------
+Visit following url you will see the Notification section:
+```
+http://127.0.0.1:8000/backend#/vaah//settings/notifications
+```
+Below Image is an example of notification.
+
+<img :src="$withBase('/images/2.x-themes-1.png')">
 
 
 
@@ -12,5 +18,77 @@ A theme is a set of files that define the visual look and feel of your site. The
 
 VaahCms provide a `framework` for `Theme`. This framework have largely been designed over the last several years and will all be good choices for building sites.
 
-We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS exist.
+We will be using `Vue` & `Pinina` because this is where the real power of VaahCMS exist.
+
+## Usage
+
+#### Install Theme
+
+You can install themes by clicking `Install` button, Which will open a panel with list of themes.
+
+Just like below image :
+
+<img :src="$withBase('/images/2.x-themes-2.png')">
+
+After a full down scroll an `install` button will be appeared. Onclick it will install your chosen theme. 
+
+<img :src="$withBase('/images/2.x-themes-3.png')">
+
+If the theme is installed already button will indicate as `installed`.
+
+#### Activate Theme
+
+An `Activate` button is present in the action column of the list. By clicking on it, theme will be activated.
+
+Follow below images for the reference :
+
+<img :src="$withBase('/images/2.x-themes-4.png')">
+
+`After activation`
+
+<img :src="$withBase('/images/2.x-themes-5.png')">
+
+There are multiple buttons are there which will responsible for multiple functionality.
+We will discuss below One by One.
+
+#### Deactivate
+
+By clicking on `Deactivate` button will Deactive the theme.
+
+#### Mark as default
+
+If multiple active theme is there, then `Make Default` button will be visible.
+This button will make the theme active and button will change into yellow `✓`.
+
+Bellow image will help you to understand better:
+
+<img :src="$withBase('/images/2.x-themes-6.png')">
+
+#### Action
+
+This a`Action` button has three more options, `Run Migrations`, `Run Seeds`, `Refresh Migrations`.
+
+<img :src="$withBase('/images/2.x-themes-7.png')">
+
+`Run Migrations` will run the migrations file presents in `../VaahCms/Themes/Database/Migrations`.
+
+`Run Seeds` this button will insert the data into respective tables according to the files presents in `../VaahCms/Themes/Database/Seeds`.
+
+`Refresh Migrations` is responsible to fresh the schema of respective theme only.
+
+#### View
+
+The `Eye icon button` is for details of the theme. it will create a panel at right side.
+
+<img :src="$withBase('/images/2.x-themes-8.png')">
+
+
+
+
+
+
+
+
+
+
 
