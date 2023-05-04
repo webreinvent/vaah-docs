@@ -3,11 +3,11 @@
 Module is designed with flexibility, simplicity, and re-usability in mind. A module may contain just about anything: PHP code, including MVC functionality; library code; view scripts; and/or public assets such as images, CSS, and JavaScript.
 
 ------
-Visit following url you will see the Notification section:
+Visit following url you will see the Module section:
 ```
 http://127.0.0.1:8000/backend#/vaah/modules/
 ```
-Below Image is an example of notification.
+Below Image is an example of module.
 
 <img :src="$withBase('/images/2.x-modules-1.png')">
 
