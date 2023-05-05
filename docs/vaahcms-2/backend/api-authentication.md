@@ -19,7 +19,7 @@ an ` api_token ` in the response will be there which you can use as authorizatio
 For `sign in` follow below link :
 
 ```js
-POST http://127.0.0.1:8000/api/signin
+POST <public-url>/api/signin
 ```
 ##### Request samples
 ```js
@@ -52,7 +52,7 @@ If you don't have an account by using sign up you can create account
 For `sign up` follow below link :
 
 ```js
-POST http://127.0.0.1:8000/api/signup
+POST <public-url>/api/signup
 ```
 ##### Request samples
 ```js
@@ -105,7 +105,7 @@ header using the Bearer schema with a line break and spaces for readability.
 
 ```shell
 curl -H 'Authorization: Bearer <api-token>' \
-     http://127.0.0.1:8000/api/users
+     <public-url>/api/users
  ```
 
 ### Registration : -
@@ -116,7 +116,7 @@ Create new registration with HTTP request. During the creation you can set up at
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/registrations/create
+GET/POST <public-url>/api/registrations/create
 ```
 
 ##### Request samples
@@ -191,7 +191,7 @@ This method supports some of the query parameters to help customize the response
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/registrations
+GET/POST <public-url>/api/registrations
 ```
 
 ##### Request samples
@@ -219,10 +219,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "http://127.0.0.1:8000/api/registrations?page=1",
+            "first_page_url": "<public-url>/api/registrations?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "http://127.0.0.1:8000/api/registrations?page=1",
+            "last_page_url": "<public-url>/api/registrations?page=1",
             "links": [
                 {
                     "url": null,
@@ -230,7 +230,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "http://127.0.0.1:8000/api/registrations?page=1",
+                    "url": "<public-url>/api/registrations?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -241,7 +241,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "http://127.0.0.1:8000/api/registrations",
+            "path": "<public-url>/api/registrations",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -259,7 +259,7 @@ Column can be id, uuid, email, username or Registration's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/registrations/{column}/{value}
+GET/POST <public-url>/api/registrations/{column}/{value}
 ```
 
 ##### Request samples
@@ -290,7 +290,7 @@ Column can be id, uuid, email, username or Registration's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/registrations/{column}/{value}/update
+GET/POST <public-url>/api/registrations/{column}/{value}/update
 ```
 
 ##### Request samples
@@ -354,7 +354,7 @@ Column can be id, uuid, email, username or Registration's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/registrations/{column}/{value}/delete
+GET/POST <public-url>/api/registrations/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -373,7 +373,7 @@ Simple HTTP request to Registration API to create User.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/registrations/{column}/{value}/create-user
+GET/POST <public-url>/api/registrations/{column}/{value}/create-user
 ```
 
 ##### Response samples
@@ -410,12 +410,12 @@ let config = {
     }
 };
 
-let response = await this.axios.get("http://127.0.0.1:8000/api/users/create", config);
+let response = await this.axios.get("<public-url>/api/users/create", config);
 ```
 
 ##### Request samples
 ```js
-POST http://127.0.0.1:8000/api/users/create
+POST <public-url>/api/users/create
 ```
 
 ```js
@@ -500,12 +500,12 @@ let config = {
     }
 };
 
-let response = await this.axios.get("http://127.0.0.1:8000/api/users", config);
+let response = await this.axios.get("<public-url>/api/users", config);
 ```
 
 ##### Request samples
 ```js
-POST http://127.0.0.1:8000/api/users
+POST <public-url>/api/users
 ```
 
 ```js
@@ -533,10 +533,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "http://127.0.0.1:8000/api/users?page=1",
+            "first_page_url": "<public-url>/api/users?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "http://127.0.0.1:8000/api/users?page=1",
+            "last_page_url": "<public-url>/api/users?page=1",
             "links": [
                 {
                     "url": null,
@@ -544,7 +544,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "http://127.0.0.1:8000/api/users?page=1",
+                    "url": "<public-url>/api/users?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -555,7 +555,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "http://127.0.0.1:8000/api/users",
+            "path": "<public-url>/api/users",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -574,7 +574,7 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 ##### URL
 ```js
-http://127.0.0.1:8000/api/cms/users/{column}/{value}`
+<public-url>/api/cms/users/{column}/{value}`
 ```
 
 ##### Request samples
@@ -605,7 +605,7 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/update
+GET/POST <public-url>/api/users/{column}/{value}/update
 ```
 
 ##### Request samples
@@ -673,7 +673,7 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/delete
+GET/POST <public-url>/api/users/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -695,7 +695,7 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/roles
+GET/POST <public-url>/api/users/{column}/{value}/roles
 ```
 
 ##### Request samples
@@ -762,7 +762,7 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/roles/{role_slug}
+GET/POST <public-url>/api/users/{column}/{value}/roles/{role_slug}
 ```
 
 ##### Response samples
@@ -780,7 +780,7 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/permissions
+GET/POST <public-url>/api/users/{column}/{value}/permissions
 ```
 
 ##### Request samples
@@ -847,7 +847,7 @@ Column can be `id`, `uuid`, `email`, `username` or User's attribute and their va
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/users/{column}/{value}/permissions/{permission_slug}
+GET/POST <public-url>/api/users/{column}/{value}/permissions/{permission_slug}
 ```
 
 ##### Response samples
@@ -866,7 +866,7 @@ Create new role with HTTP request. During the creation you can set up attributes
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/roles/create
+GET/POST <public-url>/api/roles/create
 ```
 
 ##### Request samples
@@ -913,7 +913,7 @@ This method supports some of the query parameters to help customize the response
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/roles
+GET/POST <public-url>/api/roles
 ```
 
 ##### Request samples
@@ -941,10 +941,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "http://127.0.0.1:8000/api/roles?page=1",
+            "first_page_url": "<public-url>/api/roles?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "http://127.0.0.1:8000/api/roles?page=1",
+            "last_page_url": "<public-url>/api/roles?page=1",
             "links": [
                 {
                     "url": null,
@@ -963,7 +963,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "http://127.0.0.1:8000/api/roles",
+            "path": "<public-url>/api/roles",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -981,7 +981,7 @@ Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}
+GET/POST <public-url>/api/roles/{column}/{value}
 ```
 
 ##### Request samples
@@ -1011,7 +1011,7 @@ Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/update
+GET/POST <public-url>/api/roles/{column}/{value}/update
 ```
 
 ##### Request samples
@@ -1048,7 +1048,7 @@ Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/delete
+GET/POST <public-url>/api/roles/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -1069,7 +1069,7 @@ Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/users
+GET/POST <public-url>/api/roles/{column}/{value}/users
 ```
 
 ##### Request samples
@@ -1136,7 +1136,7 @@ Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/permissions
+GET/POST <public-url>/api/roles/{column}/{value}/permissions
 ```
 
 ##### Request samples
@@ -1216,7 +1216,7 @@ This method supports some of the query parameters to help customize the response
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/permissions
+GET/POST <public-url>/api/permissions
 ```
 
 ##### Request samples
@@ -1245,10 +1245,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "http://127.0.0.1:8000/api/permissions?page=1",
+            "first_page_url": "<public-url>/api/permissions?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "http://127.0.0.1:8000/api/permissions?page=1",
+            "last_page_url": "<public-url>/api/permissions?page=1",
             "links": [
                 {
                     "url": null,
@@ -1256,7 +1256,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "http://127.0.0.1:8000/api/permissions?page=1",
+                    "url": "<public-url>/api/permissions?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -1267,7 +1267,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "http://127.0.0.1:8000/api/permissions",
+            "path": "<public-url>/api/permissions",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -1284,7 +1284,7 @@ Column can be id, uuid, email, username or Permission's attribute and their valu
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/permissions/{column}/{value}
+GET/POST <public-url>/api/permissions/{column}/{value}
 ```
 
 ##### Request samples
@@ -1314,7 +1314,7 @@ Column can be id, uuid, email, username or Permission's attribute and their valu
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/roles/{column}/{value}/delete
+GET/POST <public-url>/api/roles/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -1335,7 +1335,7 @@ Column can be id, uuid, email, username or Role's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/permissions/{column}/{value}/users
+GET/POST <public-url>/api/permissions/{column}/{value}/users
 ```
 
 ##### Request samples
@@ -1400,7 +1400,7 @@ Get permission's roles via GET/POST request.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/permissions/{column}/{value}/roles
+GET/POST <public-url>/api/permissions/{column}/{value}/roles
 ```
 
 ##### Request samples
@@ -1468,7 +1468,7 @@ Create new Create with HTTP request. During the creation you can set up attribut
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomies/create
+GET/POST <public-url>/api/taxonomies/create
 ```
 
 ##### Request samples
@@ -1516,7 +1516,7 @@ This method supports some of the query parameters to help customize the response
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomies
+GET/POST <public-url>/api/taxonomies
 ```
 
 ##### Request samples
@@ -1545,10 +1545,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "http://127.0.0.1:8000/api/taxonomies?page=1",
+            "first_page_url": "<public-url>/api/taxonomies?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "http://127.0.0.1:8000/api/taxonomies?page=1",
+            "last_page_url": "<public-url>/api/taxonomies?page=1",
             "links": [
                 {
                     "url": null,
@@ -1556,7 +1556,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "http://127.0.0.1:8000/api/taxonomies?page=1",
+                    "url": "<public-url>/api/taxonomies?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -1567,7 +1567,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "http://127.0.0.1:8000/api/taxonomies",
+            "path": "<public-url>/api/taxonomies",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -1585,7 +1585,7 @@ Column can be id, uuid, email, username or Taxonomy's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomies/{column}/{value}
+GET/POST <public-url>/api/taxonomies/{column}/{value}
 ```
 
 ##### Request samples
@@ -1615,7 +1615,7 @@ Column can be id, uuid, email, username or Taxonomy's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomies/{column}/{value}/update
+GET/POST <public-url>/api/taxonomies/{column}/{value}/update
 ```
 
 ##### Request samples
@@ -1651,7 +1651,7 @@ Column can be id, uuid, email, username or Taxonomy's attribute and their value.
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomies/{column}/{value}/delete
+GET/POST <public-url>/api/taxonomies/{column}/{value}/delete
 ```
 
 ##### Response samples
@@ -1673,7 +1673,7 @@ Create new Taxonomy Type with HTTP request. During the creation you can set up a
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomy-types/create
+GET/POST <public-url>/api/taxonomy-types/create
 ```
 
 ##### Request samples
@@ -1720,7 +1720,7 @@ This method supports some of the query parameters to help customize the response
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomy-types
+GET/POST <public-url>/api/taxonomy-types
 ```
 
 ##### Request samples
@@ -1749,10 +1749,10 @@ let params = {
                 ..............
                 ..............
             ],
-            "first_page_url": "http://127.0.0.1:8000/api/taxonomy-types?page=1",
+            "first_page_url": "<public-url>/api/taxonomy-types?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "http://127.0.0.1:8000/api/taxonomy-types?page=1",
+            "last_page_url": "<public-url>/api/taxonomy-types?page=1",
             "links": [
                 {
                     "url": null,
@@ -1760,7 +1760,7 @@ let params = {
                     "active": false
                 },
                 {
-                    "url": "http://127.0.0.1:8000/api/taxonomy-types?page=1",
+                    "url": "<public-url>/api/taxonomy-types?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -1771,7 +1771,7 @@ let params = {
                 }
             ],
             "next_page_url": null,
-            "path": "http://127.0.0.1:8000/api/taxonomy-types",
+            "path": "<public-url>/api/taxonomy-types",
             "per_page": 20,
             "prev_page_url": null,
             "to": 2,
@@ -1789,7 +1789,7 @@ Column can be id, uuid, email, username or Taxonomy Type's attribute and their v
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomy-types/{column}/{value}
+GET/POST <public-url>/api/taxonomy-types/{column}/{value}
 ```
 
 ##### Request samples
@@ -1819,7 +1819,7 @@ Column can be id, uuid, email, username or Taxonomy type's attribute and their v
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomy-types/{column}/{value}/update
+GET/POST <public-url>/api/taxonomy-types/{column}/{value}/update
 ```
 
 ##### Request samples
@@ -1854,7 +1854,7 @@ Column can be id, uuid, email, username or Taxonomy type's attribute and their v
 
 ##### URL
 ```js
-GET/POST http://127.0.0.1:8000/api/taxonomy-types/{column}/{value}/delete
+GET/POST <public-url>/api/taxonomy-types/{column}/{value}/delete
 ```
 
 ##### Response samples

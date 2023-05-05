@@ -9,7 +9,7 @@ Sometimes our que job will fail For that reason we have a failed-jobs feature, w
 Visit following url you will see the Jobs section:
 
 ```php
-http://127.0.0.1:8000/backend#/vaah/advanced/failedjobs
+<public-url>/backend#/vaah/advanced/failedjobs
 ```
 
 Below Image is a example of job records.

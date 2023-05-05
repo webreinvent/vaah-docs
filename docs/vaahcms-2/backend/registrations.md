@@ -162,7 +162,7 @@ where `$request` is HTTP request,`$id` is Item's id,`$type` is action type.
 ### Create User
 
 ##### Method: `post`
-##### URL: `http://127.0.0.1:8000/api/vaah/registrations/form`
+##### URL: `<public-url>/api/vaah/registrations/form`
 ##### Request Parameters
 | Parameter                         | Description |Type    |Dafault |
 | --------------------------------- | ------------|--------|--------|
@@ -242,7 +242,7 @@ where `$request` is HTTP request,`$id` is Item's id,`$type` is action type.
 ### Get a List
 
 ##### Method: `get`
-##### URL: `http://127.0.0.1:8000/api/vaah/registrations`
+##### URL: `<public-url>/api/vaah/registrations`
 ##### Request Parameters
 | Parameter | Description                                                  | Type            | Default              |
 | ---- | ------------------------------------------------------------ | ------------------ | -------------------- |
@@ -305,30 +305,30 @@ parameter = [
         ............
       }
     ],
-    "first_page_url": "http://127.0.0.1:8000/backend\/vaah\/registrations?page=1",
+    "first_page_url": "<public-url>/backend\/vaah\/registrations?page=1",
     "from": 1,
     "last_page": 1,
-    "last_page_url": "http://127.0.0.1:8000/backend\/vaah\/registrations?page=1",
+    "last_page_url": "<public-url>/backend\/vaah\/registrations?page=1",
     "links": [
       {
-        "url": "http://127.0.0.1:8000\/backend\/vaah\/registrations?page=1",
+        "url": "<public-url>\/backend\/vaah\/registrations?page=1",
         "label": "&laquo; Previous",
         "active": false
       },
       {
-        "url": "http://127.0.0.1:8000\/backend\/vaah\/registrations?page=2",
+        "url": "<public-url>\/backend\/vaah\/registrations?page=2",
         "label": "1",
         "active": true
       },
       {
-        "url": "http://127.0.0.1:8000\/backend\/vaah\/registrations?page=3",
+        "url": "<public-url>\/backend\/vaah\/registrations?page=3",
         "label": "Next &raquo;",
         "active": false
       }
     ],
-    "path": "http://127.0.0.1:8000\/backend\/vaah\/registrations",
+    "path": "<public-url>\/backend\/vaah\/registrations",
     "per_page": 20,
-    "prev_page_url": "http://127.0.0.1:8000\/backend\/vaah\/registrations?page=1",
+    "prev_page_url": "<public-url>\/backend\/vaah\/registrations?page=1",
     "to": 2
     "total": 2
   }
@@ -339,7 +339,7 @@ parameter = [
 ### Get Item
 
 ##### Method: `get`
-##### URL: `http://127.0.0.1:8000/api/registrations/{form/view}/{id}`
+##### URL: `<public-url>/api/registrations/{form/view}/{id}`
 ##### Request Parameters
 | Parameter | Description               | Type            |
 | --------- | --------------------------| ----------------|
@@ -379,7 +379,7 @@ parameter = [
 ### Update
 
 ##### Method: `PUT`
-##### URL: `http://127.0.0.1:8000/api/registrations/{id}`
+##### URL: `<public-url>/api/registrations/{id}`
 ##### Request Parameters
 | Parameter                         | Description                                       | Type            |
 | --------------------------------- | --------------------------------------------------| ----------------|
@@ -548,7 +548,7 @@ parameter = [
 ### Delete
 
 ##### Method: `delete`
-##### URL: `http://127.0.0.1:8000/api/registrations/{id}`
+##### URL: `<public-url>/api/registrations/{id}`
 ##### Response Parameters
 | Parameter   | Description         | Type            |
 | ----------- | --------------------| ----------------|

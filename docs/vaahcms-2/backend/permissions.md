@@ -202,7 +202,7 @@ We mention some methods bellow which help you to understand the structure.
 
 ##### Method: `GET`
 ##### Action: `PermissionsController@getList`
-##### URL: `http://127.0.0.1:8000/api/vaah/permissions/`
+##### URL: `<public-url>/api/vaah/permissions/`
 
 #### Sample Axios Request
 
@@ -256,7 +256,7 @@ parameter = [
 
 ###### Method: `DELETE`
 ###### Action: `PermissionsController@deleteItem`
-###### URL: `http://127.0.0.1:8000/api/vaah/permissions/{id}`
+###### URL: `<public-url>/api/vaah/permissions/{id}`
 
 ##### Sample Response
 
@@ -274,7 +274,7 @@ parameter = [
 
 ###### Method: `GET`
 ###### Action: `PermissionsController@getItem($id)`
-###### URL: `http://127.0.0.1:8000/api/vaah/permissions/{id}`
+###### URL: `<public-url>/api/vaah/permissions/{id}`
 
 #### Sample Axios Request
 

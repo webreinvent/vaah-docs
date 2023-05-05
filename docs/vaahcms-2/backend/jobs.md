@@ -9,7 +9,7 @@ Through this feature you can monitor the assign jobs. This job section will show
 Visit following url you will see the Jobs section:
 
 ```
-http://127.0.0.1:8000/backend#/vaah/advanced/jobs
+<public-url>/backend#/vaah/advanced/jobs
 ```
 
 Below Image is a example of job records.

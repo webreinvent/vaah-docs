@@ -64,8 +64,8 @@ Following steps:
     <script src="{{vh_theme_assets_url("MyTheme", "build/script.js")}}"></script>
 5) Run npm run dev in the root folder of the theme
 6) Now, following routes will be available:
-a) http://127.0.0.1:8000/signin
-b) http://127.0.0.1:8000/signup
+a) <public-url>/signin
+b) <public-url>/signup
 ```
 
 <img :src="$withBase('/images/user-auth-4.png')">
@@ -112,7 +112,7 @@ Add this code in above path
 ## Step-8
 Then add ```/signup``` ahead of your URL to display sign in page 
 ```
-http://127.0.0.1:8000/signup
+<public-url>/signup
 ```
 <img :src="$withBase('/images/user-auth-8.png')">
 
@@ -125,6 +125,6 @@ http://127.0.0.1:8000/signup
 ## Step-9
 Then add ```/signin``` ahead of your URL to display sign in page
 ```
-http://127.0.0.1:8000/signin
+<public-url>/signin
 ```
 <img :src="$withBase('/images/user-auth-9.png')">

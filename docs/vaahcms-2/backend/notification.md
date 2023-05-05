@@ -9,7 +9,7 @@ Through this panel you can control all the notification related things like what
 
 Visit following url you will see the Notification section:
 ```php
-http://127.0.0.1:8000/backend#/vaah//settings/notifications
+<public-url>/backend#/vaah//settings/notifications
 ```
 Below Image is an example of notification.
 
