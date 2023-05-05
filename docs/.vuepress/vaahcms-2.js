@@ -54,7 +54,6 @@ sidebar = [
         text: 'THE BASICS',
         //link: '/vaahcms/directory-structure.md',
         children: [
-            {text: 'Installation', link: ''},
             {text: 'Setup', link: '/vaahcms-2/backend/setup.md'},
             {text: 'Dashboard', link: '/vaahcms-2/backend/dashboard.md'},
             {text: 'API Authentication', link: '/vaahcms-2/backend/api-authentication.md'},

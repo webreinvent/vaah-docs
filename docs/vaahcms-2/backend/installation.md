@@ -24,12 +24,12 @@ php artisan serve
 
 And visit:
 
-```
-http://127.0.0.1:8000/vaahcms/setup
+```php
+<public-url>/vaahcms/setup
 ```
 
 ::: warning NOTE
-If you visit http://127.0.0.1:8000 before completing the setup then you may get few errors, you can ignore these errors and visit http://127.0.0.1:8000/vaahcms/setup to setup the VaahCMS
+If you visit `<public-url>` before completing the setup then you may get few errors, you can ignore these errors and visit `<public-url>/vaahcms/setup` to setup the VaahCMS
 
 :::
 
@@ -61,11 +61,11 @@ composer install
 
 Once the dependencies are downloaded, you need to publish the assets & config of VaahCMS via following commands:
 
-```php
+```shell
 php artisan vendor:publish --provider='WebReinvent\VaahCms\VaahCmsServiceProvider' --tag=assets --force
 ```
 
-```php
+```shell
 php artisan vendor:publish --provider='WebReinvent\VaahCms\VaahCmsServiceProvider' --tag=config --force
 ```
 
@@ -73,7 +73,7 @@ If you get this error: `Unable to locate publishable resources`.
 
 Then just run publish command and choose the class that you want to publish.
 
-```php
+```shell
 php artisan vendor:publish
 ```
 
@@ -82,8 +82,8 @@ php artisan vendor:publish
 
 If you're using XAMPP or WAMP, visit following url to begin the setup:
 
-```
-http://127.0.0.1:8000/vaahcms/setup
+```php
+<public-url>/vaahcms/setup
 ```
 
 or
@@ -99,8 +99,8 @@ php artisan serve
 
 and visit:
 
-```
-http://localhost:8000/vaahcms/setup
+```php
+<public-url>/vaahcms/setup
 ```
 
 
