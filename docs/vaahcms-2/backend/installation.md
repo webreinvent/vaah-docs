@@ -88,7 +88,7 @@ If you're using XAMPP or WAMP, visit following url to begin the setup:
 
 or
 
-If you have PHP installed locally and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at `http://localhost:8000`. Run following command to start the serving the application:
+If you have PHP installed locally and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at `<public-url>`. Run following command to start the serving the application:
 
 ```shell
 php artisan serve
@@ -109,13 +109,13 @@ This is will begin setup and easy form wizard to configure your the application.
 In case of XAMPP or WAMP:
 
 ```
-http://127.0.0.1:8000/backend
+<public-url>/backend
 ```
 
 
 In case of development server:
 
 ```
-http://localhost:8000/backend
+<public-url>/backend
 ```
 
