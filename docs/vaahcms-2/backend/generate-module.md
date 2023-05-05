@@ -104,7 +104,7 @@ After providing all the information, Module will be generated under `project-roo
 ### Step 3: Activating a module
 Go to:-
 ```http request
-<project-url>/backend
+<public-url>/backend
 ```
 <img :src="$withBase('/images/vaahcms-backend-login.png')" alt="backend-login">
 
@@ -113,7 +113,7 @@ and login to the backend panel using credentials of the user that was created wh
 After that, on the sidebar, click on `Extend` and then click on `Modules`.
 
 ```http
-<project-url>/backend#/vaah/modules/
+<public-url>/backend#/vaah/modules/
 ```
 <img :src="$withBase('/images/module-activation-page.png')" alt="module-activation-page">
 
