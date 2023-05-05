@@ -9,8 +9,8 @@ In this section we can see progress of the Batches of jobs like if batch have fa
 
 Visit following url you will see the Batches section:
 
-```
-<project-url>/backend#/vaah/advanced/batches
+```php
+<public-url>/backend#/vaah/advanced/batches
 ```
 
 Below is an example of Batch records.
@@ -46,12 +46,12 @@ In details column information related to the bacth can be seen.
 Jobs can be batched in order to be executed in bulk.
 
 ```Command “queue:batches-table” helps you to create migration file forbatching.```
-```
+```shell
 php artisan queue:batches-table 
 ```
 
 ```create table in database```
-```
+```shell
 php artisan migrate 
 ```
 
@@ -59,12 +59,12 @@ Batch table will contain meta information about your job batches, such as their 
 
 ### Step-2 Create Batch Class
 To make a Job Batchable use:-
-```
+```php  
 use Illuminate\Bus\Batchable;
 ```
 in imports of the job class.
 
-```
+```php
 <?php
  
 namespace App\Jobs;
@@ -99,7 +99,7 @@ class ImportCsv implements ShouldQueue
 ```
 ### Step-2 Create a Batch of Jobs
 
-```
+```php
 $batch = Bus::batch([
     new ImportCsv(1, 100),
     new ImportCsv(101, 200),

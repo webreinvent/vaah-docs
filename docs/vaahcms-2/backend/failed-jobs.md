@@ -8,8 +8,8 @@ Sometimes our que job will fail For that reason we have a failed-jobs feature, w
 
 Visit following url you will see the Jobs section:
 
-```
-<project-url>/backend#/vaah/advanced/failedjobs
+```php
+<public-url>/backend#/vaah/advanced/failedjobs
 ```
 
 Below Image is a example of job records.

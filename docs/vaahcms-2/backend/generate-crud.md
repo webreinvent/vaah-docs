@@ -12,13 +12,14 @@ For the module and theme set up follow below link:-
 ## Step-1
 Firstly need to update VaahCms self update
 Use below command for that :
-```
+```shell
 npm install vaah -g
 ```
 
 ## Step-2
 Use the below command to generate CRUD :
-```
+
+```shell
 npx vaah cms:crud
 ```
 <img :src="$withBase('/images/crud-generate-2.png')">
@@ -50,8 +51,8 @@ Use following procedures to set up CRUD.
 ## Step-4
 Now write migrations according to schema and re-activate module to run the migration.
 Below link you can use to go module in your browser
-```
-http://127.0.0.1:8000/backend#/vaah/modules/
+```php
+<public-url>/backend#/vaah/modules/
 ```
 ```This video will help you to understand how to re-activate module.```
 
@@ -66,7 +67,7 @@ Include the laravel router file in the module's route file
 
 Add this code in above path
 
-```
+```php
 include('backend/routes-blog.php');
 ```
 <img :src="$withBase('/images/crud-generate-5.png')">
@@ -77,7 +78,7 @@ Include the vue router file
 ```VaahCms/Modules/Blog/Vue/routes/routes.js```
 
 Add this code in above path
-```
+```php
 import blog from "./vue-routes-blogs";
    
 routes = routes.concat(blog);
@@ -90,9 +91,8 @@ Import the route file of vue
 ```modules/vue/store/store-blog.js```
 
 Paste ```/backend```
-
-```
 Make sure that code should be like this
+```js
 let ajax_url = base_url + "/backend/blog/blogs";
 ```
 <img :src="$withBase('/images/crud-generate-7.png')">
@@ -110,16 +110,16 @@ MODULE_TRAVEL_ENV=develop
 ## Step-9
 
 In this step you need run `npm install` in terminal.
-```
-F:\xampp8018\htdocs\vaah_abinash\vaahcms\Modules\Travel>
+```shell
+../<project-name>/vaahcms/Modules/<module-name>
 ```
 <img :src="$withBase('/images/crud-generate-9.png')">
 
 ## Step-10
 
 After install dependencies for local needs to run dev server `npm run dev`.
-```
-F:\xampp8018\htdocs\vaah_abinash\vaahcms\Modules\Travel>npm run dev
+```shell
+../<project-name>/vaahcms/Modules/<module-name>npm run dev
 ```
 
 <img :src="$withBase('/images/crud-generate-10.png')">

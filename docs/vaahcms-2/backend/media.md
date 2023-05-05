@@ -11,7 +11,7 @@ Media Section is a collection of your image, audio, and Flash files used to enha
 Visit following url you will see the Media section:
 
 ```php
-<project-url>/backend#/vaah/manage/media/
+<public-url>/backend#/vaah/manage/media/
 ```
 
 <img :src="$withBase('/images/2x-media-1.png')" alt="media1">

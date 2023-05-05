@@ -7,8 +7,8 @@
 Environment variables are values that impact the processes and behavior of vaahCMS, it may access the values for configuration purposes.
 
 Visit following url you will see the Env-variables section:
-```
-<project-url>/backend#/vaah//settings/env-variables
+```php
+<public-url>/backend#/vaah/settings/env-variables
 ```
 Below Image is an example of Env-variables values.
 

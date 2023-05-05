@@ -8,8 +8,8 @@ This features helps  user to view the errors inside the panel instead of termina
 
 Visit following url you will see the Lobs section:
 
-```
-<project-url>/backend#/vaah/advanced/logs
+```php
+<public-url>/backend#/vaah/advanced/logs
 ```
 
 Below Image is a example of job records.
