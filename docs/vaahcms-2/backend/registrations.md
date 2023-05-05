@@ -223,7 +223,7 @@ where `$request` is HTTP request,`$id` is Item's id,`$type` is action type.
 
 ```
 ##### Sample Response
-```php
+```json
 {
     "status": true,
     "data": {
@@ -280,7 +280,7 @@ parameter = [
 ];
 ```
 ##### Sample Response
-```php
+```json
 {
   "success": true,
   "data": {
@@ -360,7 +360,7 @@ parameter = [
 ];
 ```
 ##### Sample Response
-```php
+```json
 {
     "status": true,
     "data": {
@@ -478,7 +478,7 @@ parameter = [
 ];
 ```
 ##### Sample Response
-```php
+```json
 {
   "success": true,
   "data": {
@@ -556,7 +556,7 @@ parameter = [
 | data | null  | NA  |
 | messages | response message   |String  |
 ##### Sample Response
-```php
+```json
 {
   "success": true,
   "data": [

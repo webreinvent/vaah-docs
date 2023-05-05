@@ -8,7 +8,7 @@ Through this feature you can monitor the assign jobs. This job section will show
 
 Visit following url you will see the Jobs section:
 
-```
+```php
 <public-url>/backend#/vaah/advanced/jobs
 ```
 
@@ -46,28 +46,28 @@ In payload column there is an eye button present, by clicking it will show the p
 Let’s take an example for a better understanding. We will create an email queue using the Laravel Queue and store all the email sending jobs in the database driver.
 
 ```Command “queue:table” helps you to use the database driver for the queue.```
-```
+```shell
 php artisan queue:table
 ```
 
 To set a queue driver in environment file open the “.env” file to set the value like below:
 
-```
+```text
 QUEUE_CONNECTION=database
 ```
 Then open the “config/queue.php” file and add below code:
 
-```
+```php
 ‘default’ => env(‘QUEUE_CONNECTION’, ‘sync’)
 ```
 To create a Queue Job run below command:
 
-```
+```shell
 php artisan make:job MatchSendEmail
 ```
 In ```app/Jobs``` you can see the code like below:
 
-```
+```php
 <?PHP
 namespace App\Jobs;
 
@@ -106,13 +106,13 @@ class MatchSendEmail implements ShouldQueue
 
 To create mailable, run below command:
 
-```
+```shell
 php artisan make:mail HelloEmail
 ```
 
 After this command  the ```Mail``` folder will be created along with the ```HelloEmail.php``` file in the ```app``` folder.
 code structure:
-```
+```php
 <?php
 namespace App\Mail;
 
@@ -148,18 +148,18 @@ return $this->view(‘view.name’);
 ```
 Now you need to create a folder called “emails” in the “resources/views” folder and create the file named “hello.blade.php” in the “email” folder. It will contain the simple HTML code below:
 
-```
+```php
 <h1>Hello,</h1>
 <p>Welcome to laravel platform.</p>
 ```
 Now you need to change the “view.name” text with the newly created email view file name along with the folder name in “HelloEmail.php” like below:
 
-```
+```php
 return $this->view(’emails.hello’);
 ```
 Also, you need to add the email sending logic in the “handle()” method in the ```app/Jobs/MatchSendEmail.php``` file. But first, we need to add “Mail” and “HelloMail” namespaces to use it in the logic.
 
-```
+```php
 <?php
 
 namespace App\Jobs;
@@ -203,12 +203,12 @@ Mail::to(‘test@test.com’)->send($email);
 
 Add the below line in your ```routes/web.php” file.```
 
-```
+```php
 Route::get(‘send-test-email’, ‘EmailController@sendEmail’);
 ```
 Add a new controller file called “EmailController.php” file in the ```app/Http/Controllers/``` folder. The Code of the file will look like this.
 
-```
+```php
 <?php
 namespace App\Http\Controllers;
 
@@ -225,7 +225,7 @@ dispatch($emailJob);
 }
 ```
 Then visit url
-```
+```php
 <project_url>/send-test-email
 ```
 And  it will add the job in the “jobs” table.

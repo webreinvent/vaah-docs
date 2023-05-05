@@ -46,12 +46,12 @@ In details column information related to the bacth can be seen.
 Jobs can be batched in order to be executed in bulk.
 
 ```Command “queue:batches-table” helps you to create migration file forbatching.```
-```
+```shell
 php artisan queue:batches-table 
 ```
 
 ```create table in database```
-```
+```shell
 php artisan migrate 
 ```
 
