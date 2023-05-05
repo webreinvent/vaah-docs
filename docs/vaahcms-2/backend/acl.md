@@ -16,7 +16,7 @@ public function getList(Request $request)
 
         if(!\Auth::user()->hasPermission('has-access-of-users-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = true;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);

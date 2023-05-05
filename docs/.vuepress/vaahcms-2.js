@@ -30,6 +30,24 @@ sidebar = [
         children: [
             {text: 'Mail', link: '/vaahcms-2/backend/mails.md'},
             {text: 'Access Control List(ACL)', link: '/vaahcms-2/backend/acl.md'},
+            {
+                text: 'THEME',
+                //link: '/vaahcms/directory-structure.md',
+                children: [
+                    {text: 'Introduction',          link: '/vaahcms-2/backend/theme/introduction.md'},
+                    {text: 'Directory Structure',   link: '/vaahcms-2/backend/theme/directory-structure.md'},
+                    {text: 'Configuration',         link: '/vaahcms-2/backend/theme/configuration.md'},
+                    {text: 'Develop Theme',         link: '/vaahcms-2/backend/theme/develop-theme.md'},
+                    {text: 'Configure Blade File',  link: '/vaahcms-2/backend/theme/configure-blade.md'},
+                    {text: 'Activate CMS Module',   link: '/vaahcms-2/backend/theme/activate-cms-module.md'},
+                    {text: 'Create Content Types',  link: '/vaahcms-2/backend/theme/create-content-type.md'},
+                    {text: 'Create Content',        link: '/vaahcms-2/backend/theme/create-content.md'},
+                    {text: 'Create Menu',           link: '/vaahcms-2/backend/theme/create-menu.md'},
+                    {text: 'Create Block',          link: '/vaahcms-2/backend/theme/create-block.md'},
+                    {text: 'Import Sample Data',    link: '/vaahcms-2/backend/theme/import-data.md'},
+
+                ]
+            },
         ]
     },
     {
