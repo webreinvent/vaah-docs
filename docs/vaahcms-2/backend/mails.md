@@ -109,11 +109,11 @@ VaahMail::send($mail, $to, $cc, $bcc);
 
 To customize the default Laravel mail & notification template you must publish the asset, using following commands:
 
-```php
+```shell
 php artisan vendor:publish --tag=laravel-mail
 ```
 
-```php
+```shell
 php artisan vendor:publish --tag=laravel-notifications
 ```
 
