@@ -223,8 +223,8 @@ class SampleDataTableSeeder extends Seeder
 
 Now, you just need to `reactivate` the theme and click on `Import Sample Data` button by visiting this url:
 
-```php
-<public -url>/backend#/vaah/themes/
+```http request
+<public-url>/backend#/vaah/themes/
 ```
 
 

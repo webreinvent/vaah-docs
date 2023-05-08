@@ -101,7 +101,7 @@ class DatabaseTableSeeder extends Seeder
 
 Now, you just need to reactivate the theme by visiting this url:
 
-```php
+```http request
 <public-url>/backend#/vaah/themes/
 ```
 

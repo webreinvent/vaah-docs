@@ -92,7 +92,7 @@ After providing all the information, Theme will be generated under `project-root
 ### Step 3: Activating a Theme
 Go to:-
 ```http request
-http://127.0.0.1:8000/backend
+<publc-url>/backend
 ```
 <img :src="$withBase('/images/themes/login.png')" alt="themes-login">
 
@@ -100,8 +100,8 @@ and login to the backend panel using credentials of the user that was created wh
 
 After that, on the sidebar, click on `Extend` and then click on `Themes`.
 
-```http
-http://127.0.0.1:8000/backend#/vaah/themes/
+```http request
+<public-url>/backend#/vaah/themes/
 ```
 <img :src="$withBase('/images/themes/activation-page.png')" alt="theme-activation-page">
 

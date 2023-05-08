@@ -72,7 +72,7 @@ class DatabaseTableSeeder extends Seeder
 
 Now, you just need to reactivate the theme by visiting this url:
 
-```php
+```http request
 <public-url>/backend#/vaah/themes/
 ```
 
@@ -84,7 +84,7 @@ Once, the theme is activated, Location will also be created.
 
 To create Block, visit this url:
 
-```php
+```http request
 <public-url>/backend/cms#/blocks/
 ```
 

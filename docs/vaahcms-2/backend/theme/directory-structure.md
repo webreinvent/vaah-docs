@@ -116,7 +116,7 @@ A mix is a configuration layer on top of Webpack, so to run the Mix tasks you on
 
 
 
-```php
+```shell
 // Run all Mix tasks...
 npm run dev
 OR
@@ -127,7 +127,7 @@ It will compile our CSS and JS files and put the build inside a public folder.
 
 
 
-```php
+```shell
 // Run all Mix tasks and minify output...
 npm run production
 ```

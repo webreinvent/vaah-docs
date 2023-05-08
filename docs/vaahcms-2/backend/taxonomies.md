@@ -103,7 +103,7 @@ class DatabaseTableSeeder extends Seeder
 
 To view the `Taxonomy` section, go to the following url:
 
-```php
+```http request
 <project-url>/backend#/vaah/manage/taxonomies/
 ```
 

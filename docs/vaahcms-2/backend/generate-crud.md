@@ -51,7 +51,7 @@ Use following procedures to set up CRUD.
 ## Step-4
 Now write migrations according to schema and re-activate module to run the migration.
 Below link you can use to go module in your browser
-```php
+```http request
 <public-url>/backend#/vaah/modules/
 ```
 ```This video will help you to understand how to re-activate module.```

@@ -1,4 +1,4 @@
-# Develop Theme
+    # Develop Theme
 
 ------
 
@@ -58,14 +58,14 @@ Once this step is complete, it will generate a new folder at `VaahCMS > Themes >
 Now, you actually activate the theme by visiting following URL:
 
 
-```php
+```http request
 <public-url>/backend#/vaah/themes/
 ```
 
 
 Once, the theme is activated, you will be able to see the "BlogTheme" on Public url.
 
-```php
+```http request
 <public-url>
 ```
 

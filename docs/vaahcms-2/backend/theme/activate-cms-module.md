@@ -6,7 +6,7 @@ Now, we are going to add cms codes in our blade file. It is very simple to work 
 
 First, You need to activate the `CMS Module` by visiting this url:
 
-```php
+```http request
 <public-url>/backend#/vaah/modules/
 ```
 

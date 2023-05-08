@@ -9,7 +9,7 @@ Here controls are segregated in 5 parts in accordion, will discuss one by one.
 
 Visit following url you will see the General settings section:
 
-```php
+```http request
 <public-url>/backend#/vaah/advanced/general
 ```
 

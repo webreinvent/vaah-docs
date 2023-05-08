@@ -24,7 +24,7 @@ php artisan serve
 
 And visit:
 
-```php
+```http request
 <public-url>/vaahcms/setup
 ```
 
@@ -82,7 +82,7 @@ php artisan vendor:publish
 
 If you're using XAMPP or WAMP, visit following url to begin the setup:
 
-```php
+```http request
 <public-url>/vaahcms/setup
 ```
 
@@ -99,7 +99,7 @@ php artisan serve
 
 and visit:
 
-```php
+```http request
 <public-url>/vaahcms/setup
 ```
 
@@ -108,14 +108,14 @@ This is will begin setup and easy form wizard to configure your the application.
 
 In case of XAMPP or WAMP:
 
-```
+```http request
 <public-url>/backend
 ```
 
 
 In case of development server:
 
-```
+```http request
 <public-url>/backend
 ```
 

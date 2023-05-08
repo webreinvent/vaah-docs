@@ -111,7 +111,7 @@ Add this code in above path
 
 ## Step-8
 Then add ```/signup``` ahead of your URL to display sign in page 
-```
+```http request
 <public-url>/signup
 ```
 <img :src="$withBase('/images/user-auth-8.png')">
@@ -124,7 +124,7 @@ Then add ```/signup``` ahead of your URL to display sign in page
 
 ## Step-9
 Then add ```/signin``` ahead of your URL to display sign in page
-```
+```http request
 <public-url>/signin
 ```
 <img :src="$withBase('/images/user-auth-9.png')">
