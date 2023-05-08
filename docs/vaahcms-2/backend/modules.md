@@ -53,7 +53,15 @@ We will discuss below One by One.
 
 #### Deactivate
 
-By clicking on `Deactivate` button will Deactive the theme.
+By clicking on `Deactivate` button will Deactivate the theme.
+
+#### Publish assets
+
+It will put the required css and js files from resources to public folder so that all the properties can be use easily.
+
+#### Import data
+
+This is the functionality by which user can import dummy data to the database for testing or for something like placeholder.
 
 #### Action
 
