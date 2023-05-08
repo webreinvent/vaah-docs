@@ -79,5 +79,5 @@ One can type anything it will search users and by selecting user notification ca
 Follow below videos for better understanding:
 
 <figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_n9zbdkcnPK.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_UGS71dEP36.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
