@@ -1,6 +1,6 @@
 # Dashboard
 
-[[toc]]
+[comment]: <> ([[toc]])
 
 This is the home page of VaahCms. Where you can have the shortcuts of important features.
 
