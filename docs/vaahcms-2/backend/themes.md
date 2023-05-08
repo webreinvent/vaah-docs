@@ -12,5 +12,5 @@ A theme is a set of files that define the visual look and feel of your site. The
 
 VaahCms provide a `framework` for `Theme`. This framework have largely been designed over the last several years and will all be good choices for building sites.
 
-We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS exist.
+We will be using `Vue` & `Pinia` because this is where the real power of VaahCMS exist.
 

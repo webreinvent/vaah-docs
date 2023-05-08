@@ -9,7 +9,7 @@ In this section we can see progress of the Batches of jobs like if batch have fa
 
 Visit following url you will see the Batches section:
 
-```php
+```http request
 <public-url>/backend#/vaah/advanced/batches
 ```
 

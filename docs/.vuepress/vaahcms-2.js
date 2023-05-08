@@ -9,25 +9,51 @@ sidebar = [
             {text: 'The VaahCMS 2.x', link: '/vaahcms-2/'},
         ]
     },
+    {text: 'GENERATORS', link: '/vaahcms-2/backend/generators.md'},
     {
         text: 'GETTING STARTED',
         //link: '/vaahcms/directory-structure.md',
         children: [
-            {text: 'Overview', link: '/vaahcms-2/backend/index.md'},
-
-
-            {text: 'Sample', link: '/vaahcms-2/backend/sample.md'},
+            {text: 'Installation', link: '/vaahcms-2/backend/installation.md'},
+            {text: 'Configuration', link: '/vaahcms-2/backend/configuration.md'},
+            {text: 'Directory Structure', link: '/vaahcms-2/backend/directory-structure.md'},
+            {text: 'Database', link: '/vaahcms-2/backend/database.md'},
             {text: 'Generate Module', link: '/vaahcms-2/backend/generate-module.md'},
             {text: 'Generate CRUD', link: '/vaahcms-2/backend/generate-crud.md'},
-            // {text: 'Generate Theme', link: '/vaahcms-2/backend/generate-themes.md'},
-            // {text: 'User auth', link: '/vaahcms-2/backend/user-auth.md'},
+            {text: 'Generate Theme', link: '/vaahcms-2/backend/generate-themes.md'},
+            {text: 'User auth', link: '/vaahcms-2/backend/user-auth.md'},
+        ]
+    },
+    {
+        text: 'VaahCms',
+        //link: '/vaahcms/directory-structure.md',
+        children: [
+            {text: 'Mail', link: '/vaahcms-2/backend/mails.md'},
+            {text: 'Access Control List(ACL)', link: '/vaahcms-2/backend/acl.md'},
+            {
+                text: 'THEME',
+                //link: '/vaahcms/directory-structure.md',
+                children: [
+                    {text: 'Introduction',          link: '/vaahcms-2/backend/theme/introduction.md'},
+                    {text: 'Directory Structure',   link: '/vaahcms-2/backend/theme/directory-structure.md'},
+                    {text: 'Configuration',         link: '/vaahcms-2/backend/theme/configuration.md'},
+                    {text: 'Develop Theme',         link: '/vaahcms-2/backend/theme/develop-theme.md'},
+                    {text: 'Configure Blade File',  link: '/vaahcms-2/backend/theme/configure-blade.md'},
+                    {text: 'Activate CMS Module',   link: '/vaahcms-2/backend/theme/activate-cms-module.md'},
+                    {text: 'Create Content Types',  link: '/vaahcms-2/backend/theme/create-content-type.md'},
+                    {text: 'Create Content',        link: '/vaahcms-2/backend/theme/create-content.md'},
+                    {text: 'Create Menu',           link: '/vaahcms-2/backend/theme/create-menu.md'},
+                    {text: 'Create Block',          link: '/vaahcms-2/backend/theme/create-block.md'},
+                    {text: 'Import Sample Data',    link: '/vaahcms-2/backend/theme/import-data.md'},
+
+                ]
+            },
         ]
     },
     {
         text: 'THE BASICS',
         //link: '/vaahcms/directory-structure.md',
         children: [
-            {text: 'Installation', link: ''},
             {text: 'Setup', link: '/vaahcms-2/backend/setup.md'},
             {text: 'Dashboard', link: '/vaahcms-2/backend/dashboard.md'},
             {text: 'API Authentication', link: '/vaahcms-2/backend/api-authentication.md'},

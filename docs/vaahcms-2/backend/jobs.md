@@ -8,7 +8,7 @@ Through this feature you can monitor the assign jobs. This job section will show
 
 Visit following url you will see the Jobs section:
 
-```php
+```http request
 <public-url>/backend#/vaah/advanced/jobs
 ```
 
@@ -225,7 +225,7 @@ dispatch($emailJob);
 }
 ```
 Then visit url
-```php
+```http request
 <project_url>/send-test-email
 ```
 And  it will add the job in the “jobs” table.

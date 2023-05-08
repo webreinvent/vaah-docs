@@ -14,11 +14,11 @@ This is guide to teachs `How to create Themes in VAAH CMS`
 
 To use Vaah generators to generate themes, install VaahCli Tool using
 
-```terminal command
+```shell
 npm install vaah -g
 ```
 or
-```terminal command
+```shell
 npm i vaah -g
 ```
 
@@ -27,7 +27,7 @@ npm i vaah -g
 ###### Note: For this tutorial, we'll be creating Blog Theme.
 
 Command that is used to generate a theme is:-
-```terminal command
+```shell
 npx vaah cms:t
 ```
 
@@ -79,7 +79,7 @@ After providing all the information, Theme will generated under `project-root/Va
 ### Step 3: Activating a Theme
 Go to:-
 ```http request
-<your-site-url>/backend
+http://127.0.0.1:8000/backend
 ```
 <img :src="$withBase('/images/vaahcms-backend-login.png')" alt="backend-login">
 
@@ -89,7 +89,7 @@ After that, on the sidebar, click on `Extend` and then click on `Modules`.
 
 Or visit:-
 ```http
-<your-site-url>/backend#/vaah/themes/
+http://127.0.0.1:8000/backend#/vaah/themes/
 ```
 to access `Theme Activation Page` directly.
 
