@@ -16,7 +16,7 @@ Below Image is an example of themes.
 
 ##### Vaahcms Theme
 
-VaahCms provide a `framework` for `Theme`. This framework have largely been designed over the last several years and will all be good choices for building sites.
+VaahCms provide a `framework` for `Theme`. This framework has largely been designed over the last several years and will all be good choices for building sites.
 
 We will be using `Vue` & `Pinina` because this is where the real power of VaahCMS exist.
 
@@ -53,7 +53,17 @@ We will discuss below One by One.
 
 #### Deactivate
 
-By clicking on `Deactivate` button will Deactive the theme.
+By clicking on `Deactivate` button will Deactivate the theme.
+
+#### Publish assets
+
+This functionality is to transfer the css and js files from `Resources` to `Public`, so that design can be performed.
+
+#### Import data
+
+To store dummy data in the database to display in site user can use this functionality.
+
+Fo more information : [Read Documentation](/vvaahcms-2/backend/theme/import-data.md)
 
 #### Mark as default
 
