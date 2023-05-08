@@ -5,8 +5,8 @@ A theme is a set of files that define the visual look and feel of your site. The
 
 
 Visit following url you will see the Themes section:
-```
-http://127.0.0.1:8000/backend#/vaah/settings/Themes
+```http request
+<public-url>/backend#/vaah/settings/Themes
 ```
 Below Image is an example of themes.
 
@@ -63,7 +63,7 @@ This functionality is to transfer the css and js files from `Resources` to `Publ
 
 To store dummy data in the database to display in site user can use this functionality.
 
-Fo more information : [Read Documentation](/vvaahcms-2/backend/theme/import-data.md)
+Fo more information : [Read Documentation](/vaahcms-2/backend/theme/import-data.md)
 
 #### Mark as default
 
