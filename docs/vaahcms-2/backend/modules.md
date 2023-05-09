@@ -4,8 +4,8 @@ Module is designed with flexibility, simplicity, and re-usability in mind. A mod
 
 ------
 Visit following url you will see the Module section:
-```
-http://127.0.0.1:8000/backend#/vaah/modules/
+```http request
+<public-url>/backend#/vaah/modules/
 ```
 Below Image is an example of module.
 
@@ -14,7 +14,7 @@ Below Image is an example of module.
 
 ##### Vaahcms Module
 
-VaahCms provide a `framework` for `Module`. This framework have largely been designed over the last several years and will all be good choices for building Backend site.
+VaahCms provide a `framework` for `Module`. This framework has largely been designed over the last several years and will all be good choices for building Backend site.
 
 We will be using `Vue` & `Pinia` because this is where the real power of VaahCMS exist.
 
