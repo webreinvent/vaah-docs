@@ -9,16 +9,16 @@ Visit following url you will see the Module section:
 ```
 Below Image is an example of module.
 
-<img :src="$withBase('/images/1.x-modules-1.png')">
+<img :src="$withBase('/images/2.x-modules-1.png')">
 
 
 ##### Vaahcms Module
 
-VaahCms provide a `framework` for `Module`. This framework have largely been designed over the last several years and will all be good choices for building Backend site.
+VaahCms provide a `framework` for `Module`. This framework has largely been designed over the last several years and will all be good choices for building Backend site.
 
-We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS exist.
+We will be using `Vue` & `Pinia` because this is where the real power of VaahCMS exist.
 
-[Read Documentation](/vaahcms/module/introduction.md)
+[Read Documentation](/vaahcms-2/backend/generate-module.md)
 
 ## Usage
 
@@ -28,11 +28,11 @@ You can install modules by clicking `Install` button, Which will open a panel wi
 
 Just like below image :
 
-<img :src="$withBase('/images/1.x-modules-2.png')">
+<img :src="$withBase('/images/2.x-modules-2.png')">
 
 After a full down scroll an `install` button will be appeared. Onclick it will install your chosen theme.
 
-<img :src="$withBase('/images/1.x-modules-3.png')">
+<img :src="$withBase('/images/2.x-modules-3.png')">
 
 If the theme is installed already button will indicate as `installed`.
 
@@ -42,11 +42,11 @@ An `Activate` button is present in the action column of the list. By clicking on
 
 Follow below images for the reference :
 
-<img :src="$withBase('/images/1.x-modules-4.png')">
+<img :src="$withBase('/images/2.x-modules-4.png')">
 
 `After activation`
 
-<img :src="$withBase('/images/1.x-modules-5.png')">
+<img :src="$withBase('/images/2.x-modules-5.png')">
 
 There are multiple buttons are there which will responsible for multiple functionality.
 We will discuss below One by One.
@@ -63,12 +63,11 @@ It will put the required css and js files from resources to public folder so tha
 
 This is the functionality by which user can import dummy data to the database for testing or for something like placeholder.
 
-
 #### Action
 
 This a`Action` button has three more options, `Run Migrations`, `Run Seeds`, `Refresh Migrations`.
 
-<img :src="$withBase('/images/1.x-modules-7.png')">
+<img :src="$withBase('/images/2.x-modules-7.png')">
 
 `Run Migrations` will run the migrations file presents in `../VaahCms/Modules/Database/Migrations`.
 
@@ -78,6 +77,6 @@ This a`Action` button has three more options, `Run Migrations`, `Run Seeds`, `Re
 
 #### View
 
-The `Right chevron button` is for details of the theme. it will create a panel at right side.
+The `Eye icon button` is for details of the theme. it will create a panel at right side.
 
-<img :src="$withBase('/images/1.x-modules-8.png')">
+<img :src="$withBase('/images/2.x-modules-8.png')">
