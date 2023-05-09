@@ -63,6 +63,7 @@ It will put the required css and js files from resources to public folder so tha
 
 This is the functionality by which user can import dummy data to the database for testing or for something like placeholder.
 
+
 #### Action
 
 This a`Action` button has three more options, `Run Migrations`, `Run Seeds`, `Refresh Migrations`.
