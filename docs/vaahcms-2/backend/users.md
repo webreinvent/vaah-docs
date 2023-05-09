@@ -150,6 +150,15 @@ To know about `Relationships`, see [Laravel Documentation](https://laravel.com/d
 | User::getAvatarById        | `$id`                                | The `getAvatarById` method find users only by the `id` and return avatar url. |
 | User::getUsersForAssets    |                                      | The `getUsersForAssets` method return list of `active` users with following columns: `id`, `first_name`, `middle_name`, `last_name` |
 
+## Generate new API Token
+
+To use api of VaahCMS you need to pass the `Token` in Authorization. To generate
+this toke you need to click `Genenrate new API Token` option which is presents 
+in the `Detail view` of the item.
+
+Just like below image:
+
+<img :src="$withBase('/images/2.x-generate_token.png')">
 
 ## API
 

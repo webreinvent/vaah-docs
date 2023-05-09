@@ -212,7 +212,7 @@ async getList() {
     let options = {
         query: vaah().clone(this.query)
     };
-    await vaah().ajax(
+    await axios(
         this.ajax_url,
         this.afterGetList,
         options
@@ -282,7 +282,7 @@ parameter = [
 
  async getItem(id) {
     if(id){
-        await vaah().ajax(
+        await axios(
             ajax_url+'/'+id,
             this.getItemAfter
         );
