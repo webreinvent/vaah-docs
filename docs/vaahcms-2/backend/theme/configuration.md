@@ -33,10 +33,10 @@ return [
     "aside-menu-order"=> null
 ];
 ```
-
+::: warning NOTE
 - Allow them to update their Name, Title, Slug, Description.
 - Allow them to update their version.
 - Allow them to upload their own logo.
 - Allow them to enable or disable the `is_migratable` features.
 - Allow them to enable or disable the `is_sample_data_available` features. This features allows you to import sample data through seeds.
-
+:::

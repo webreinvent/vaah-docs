@@ -71,19 +71,19 @@ etc. of the module.
     ```
     ? Enter Author email:  support@vaah.dev
     ```
-- Press Enter for default value for Author website and Download Url.
-    ```
-    ? Enter author website:  https://vaah.dev
-    ? Enter download url: 
-    ```
-- Enter `true` if you want to run migration for this module as soon as the module
-  is activated. Else select `false`.
-    ```
-    ? Do you want to run migration on activation (true/false):  true
-    ```
-
-    ###### Note: All the migration files will be found in `root/VaahCms/Modules/<module-name>/Migrations` directory
-
+  - Press Enter for default value for Author website and Download Url.
+      ```
+      ? Enter author website:  https://vaah.dev
+      ? Enter download url: 
+      ```
+    - Enter `true` if you want to run migration for this module as soon as the module
+      is activated. Else select `false`.
+        ```
+        ? Do you want to run migration on activation (true/false):  true
+        ```
+  ::: warning NOTE
+  All the migration files will be found in `root/VaahCms/Modules/<module-name>/Migrations` directory
+  :::
 - Select `true` if you want to activate this module with some sample data. Else
 select `false`.
 
@@ -91,9 +91,9 @@ select `false`.
     ? Will your module contains sample data (true/false):  true
     ```
     Use SampleDataTableSeeder for seeding Sample data.
-
-    ###### Note: All the Seeds files will be found in `root/VaahCms/Modules/<module-name>/Database/Seeds` directory.
-
+  ::: warning NOTE
+    All the Seeds files will be found in `root/VaahCms/Modules/<module-name>/Database/Seeds` directory.
+  :::
 After providing all the information, Module will be generated under `project-root/Vaahcms/Modules`.
 <img :src="$withBase('/images/module_path.png')" alt="module_path">
 
@@ -126,8 +126,9 @@ sidebar. Click on module name to access DashBoard of the module.
 
 <img :src="$withBase('/images/module-dashboard-page.png')" alt="module-dashboard-page">
 
-###### Note: All migrations of that specific module will run automatically when the module is activated if `is_migratable` is set to true in config file.
-
+::: warning NOTE
+ All migrations of that specific module will run automatically when the module is activated if `is_migratable` is set to true in config file.
+:::
 
 ### Step 4: Directory Structure
 
@@ -169,8 +170,9 @@ sidebar. Click on module name to access DashBoard of the module.
 
   and to run `SampleDataTableSeeder` file, click on `import sample data` button:-
   <img :src="$withBase('/images/module-sample-seeder-button.png')" alt="module-sample-seeder-button">
-  
-  ####Note: In order to run seeds, `is_sample_data_available` must be set to true in config file.
+  ::: warning NOTE
+  In order to run seeds, `is_sample_data_available` must be set to true in config file.
+- :::
 - Http:
   All the Controllers,Middlewares,Requests file related to this module will be created here.
   command used to create module controller is:-
@@ -179,8 +181,10 @@ sidebar. Click on module name to access DashBoard of the module.
     ```
     ```terminal-command-for-middleware
         vaah cms:t-make middleware <module-folder-name> <middleware-name>
-  #### Note: All the Controllers must be created in Http/Controllers/Backend for modules.
-
+  ::: warning NOTE
+  All the Controllers must be created in Http/Controllers/Backend for modules.
+  :::
+  
 - Models:
   All the models for this module will be generated in `<module-root>/Models` using:
 ```terminal
@@ -201,4 +205,6 @@ sidebar. Click on module name to access DashBoard of the module.
   - Vue store will be found under Vue/stores.
     <img :src="$withBase('/images/module-vue-store-file.png')" alt="module vue store file">
 
-#### Note: Use `npm install` inside module root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
+  ::: warning NOTE
+  Use `npm install` inside module root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
+  :::

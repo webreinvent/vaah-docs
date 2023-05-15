@@ -17,8 +17,10 @@ Below Image is a example of Dashboard.
 
 ## Purpose & Features
 
+::: warning NOTE
 The main use of a dashboard is to show a comprehensive overview of data from different sources. 
 Dashboards are useful for monitoring, measuring, and analyzing relevant data in key areas.
+:::
 
 #### The features we will discuss below:
 

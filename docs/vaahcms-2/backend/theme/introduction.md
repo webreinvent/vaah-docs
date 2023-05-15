@@ -19,11 +19,11 @@ npx vaah cms:theme
 
 
 ##### VaahCms Theme
-
+::: warning NOTE
 VaahCms provide a `framework` for `Theme`. This framework has largely been designed over the last several years and will all be good choices for building sites.
 
 We will be using `Vue` & `Vuex` because this is where the real power of VaahCMS exist.
-
+:::
 ------
 
 

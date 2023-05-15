@@ -33,9 +33,9 @@ You can effectively use the tool with `Command Generator` at [Generators](/vaahc
 
 
 ##### Step 3: Generate Theme
-
+::: warning NOTE
 Let's call the theme as `BlogTheme`. Open the command line tool & navigate to the project root folder or in PHPStorm open `Terminal` and to generate scaffolding for the theme, use following command:
-
+:::
 ```shell
 npx vaah cms:theme
 ```

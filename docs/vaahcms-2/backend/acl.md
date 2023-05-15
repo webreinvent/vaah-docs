@@ -56,13 +56,13 @@ You can call the Controller method inside view file
 
 
 ##### ACL in Vue
-
+::: warning NOTE
 In Vue, you can not call the Controller method directly. So for ACL, you will need to get the list of Permissions from Controller.
 
 There is a function in `root.js` at `VaahCms/..../Vue/store/modules/` of name `getPermissions`. If you don't found any function like this, then you can create in `root.js`.
 
 root.js
-
+:::
 ```js
 import Vue from 'vue';
 import { ToastProgrammatic as Toast } from 'buefy'

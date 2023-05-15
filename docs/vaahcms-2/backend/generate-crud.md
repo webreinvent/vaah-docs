@@ -98,9 +98,13 @@ let ajax_url = base_url + "/backend/blog/blogs";
 <img :src="$withBase('/images/crud-generate-7.png')">
 
 ## Step-8
+
+::: warning NOTE
 If you are generating crud `First time inside module` then only follow this step.
 
 Open ```.env & .env.custom``` and paste below code
+:::
+
 ```
 MODULE_TRAVEL_ENV=develop
 ```

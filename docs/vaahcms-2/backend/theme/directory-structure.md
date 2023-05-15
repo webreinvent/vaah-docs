@@ -83,12 +83,12 @@ At `../<project-name>VaahCms/Themes/<theme-name>/Resources/views/frontend/` dire
 
 
 ##### Seeds
-
+::: warning NOTE
 Seeds are used to generate necessary data or sample data for the module. At `VaahCms/Modules/Articles/Database/Seeds` folder you will find two files:
 
 - `DatabaseTableSeeder.php`: This seeder file will be called whenever you will activate the module from the backend of the VaahCMS.
 - `SampleDataTableSeeder.php`: This seeder file will be called whenever you will click on "Import Sample Data" button of the module.
-
+:::
 ------
 
 
