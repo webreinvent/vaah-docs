@@ -16,9 +16,9 @@ This will open a content structure page. There are two section.
 
 - Content Structure
 - Content Fields
-
+::: warning NOTE
 You can drag the blocks from `Content Fields` to `Content Structure` and place according to your order. You can set the field name also.
-
+:::
 For more details about content fields, see CMS Content Type's [documentation](/vaahcms/cms/content-type.md)
 
 <img :src="$withBase('/images/create-content-type-3.png')" alt="create-content-type-3">

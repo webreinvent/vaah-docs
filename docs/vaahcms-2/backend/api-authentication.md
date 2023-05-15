@@ -85,6 +85,7 @@ let params = {
 
 ### Authentication
 
+::: warning NOTE
 VaahCms supports [API authentication](https://laravel.com/docs/5.8/api-authentication).
 This allows you to protect the URLs on your web server so that only you can access them.
 In order to authenticate with HTTP, you may provide a `API Token` in Header.
@@ -93,6 +94,7 @@ The most common way of accessing OAuth 2.0 APIs is using a “Bearer Token”.
 This is a single string which acts as the authentication of the API request,
 sent in an HTTP “Authorization” header. The string is meaningless to clients using it,
 and may be of varying lengths.
+:::
 
 ```
 Authorization: Bearer <api-token>
@@ -774,9 +776,11 @@ GET/POST <public-url>/api/users/{column}/{value}/roles/{role_slug}
 ```
 #### Get User's Permissions
 
+::: warning NOTE
 Get `user's permissions` via GET/POST request.
 
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
+:::
 
 ##### URL
 ```js
@@ -840,11 +844,11 @@ let params = {
 }
 ```
 #### User has Permission
-
+::: warning NOTE
 API to check if an user has a specific permission.
 
 Column can be `id`, `uuid`, `email`, `username` or User's attribute and their value.
-
+:::
 ##### URL
 ```js
 GET/POST <public-url>/api/users/{column}/{value}/permissions/{permission_slug}
@@ -974,10 +978,12 @@ let params = {
 ```
 #### Get Item
 
-Get a Item of the Role objects . This will retrieves a Role by their custom attributes,
+::: warning NOTE
+Get a Item of the Role objects . This will retrieve a Role by their custom attributes,
 and returns all the properties of Role.
 
 Column can be id, uuid, email, username or Role's attribute and their value.
+:::
 
 ##### URL
 ```js
@@ -1005,7 +1011,7 @@ let params = {
 ```
 #### Update
 
-Simple HTTP request to Role API and you can update standard attributes for a role within few seconds!
+Simple HTTP requests to Role API and you can update standard attributes for a role within few seconds!
 
 Column can be id, uuid, email, username or Role's attribute and their value.
 

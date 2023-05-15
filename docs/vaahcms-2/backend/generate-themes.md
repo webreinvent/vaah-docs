@@ -215,4 +215,6 @@ sidebar. Click on theme name to access DashBoard of the theme.
 
       <img :src="$withBase('/images/themes/vue-store-file.png')" alt="theme vue store file">
 
-#### Note: Use `npm install` inside theme root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
+  ::: warning NOTE
+  Use `npm install` inside theme root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
+  :::

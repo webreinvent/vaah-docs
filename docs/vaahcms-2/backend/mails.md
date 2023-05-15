@@ -28,7 +28,9 @@ If you make any changes in code of your `Job` class, then you must restart the `
 
 ## Send mails with Laravel Queues
 
+::: warning NOTE
 By default `VaahCMS` does not use Laravel queues/jobs to schedule the mail. Hence, mails will be send immediately.
+:::
 
 ### Send a generic mail:
 

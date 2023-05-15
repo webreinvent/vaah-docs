@@ -22,8 +22,10 @@ npx vaah cms:t
 <img :src="$withBase('/images/user-auth-1.png')">
 
 ## Step-2
+::: warning NOTE
 After completing theme setup and activation we will generate authentication :
 Use below command for that :
+:::
 ```shell
 npx vaah cms:auth
 ```

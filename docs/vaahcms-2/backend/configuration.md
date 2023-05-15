@@ -16,9 +16,9 @@ It is often found that applications are required to be configured for multiple e
 
 
 ## Environment Configuration
-
+::: warning NOTE
 Once the VaahCMS setup is complete, it generates a `vaahcms.json` file on the root of the project folder. `vaahcms.json` file contains the `APP_URL` of different environments and respective `env` files.
-
+:::
 | Environment       | `env` File      |
 | ----------------- | --------------- |
 | Local             | .env.local      |

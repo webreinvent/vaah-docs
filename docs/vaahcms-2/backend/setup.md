@@ -41,7 +41,9 @@ When you click the installation button, a form with the fields listed bellowed o
 | Database Username | Input | Enter your database's username here. |
 | Database Password | Input | Enter your database's password here. |
 
+::: warning NOTE
 After fill-up the form you click on the `Test Database Connection` button to ensure that your given credentials are right.
+:::
 
 ##### Mail Configuration
 
