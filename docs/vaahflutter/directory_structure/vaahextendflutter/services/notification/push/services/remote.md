@@ -1,0 +1,270 @@
+# Remote Notifications
+
+::: warning Dependencies
+- [onesignal_flutter](https://pub.dev/packages/onesignal_flutter)
+:::
+
+[[toc]]
+
+::: tip Note:
+We use PushNotifications class and not RemoteNotifications class whenever needed in project becuse of [the given reasons.](../notification.md#best-practices-using-the-pushnotifications-class)
+:::
+
+VaahFlutter uses OneSignal as push notification service. [https://onesignal.com/](https://onesignal.com/)
+
+## OneSignal Setup and Env Variables
+
+- Devs will have to do the setup their app on One Signal and then set env variable with the id. e.g. for your env set `oneSignalConfig: const OneSignalConfig(appId: "0000aaaa-0000-0000-0000-aaaa0000aaaa"),`
+
+- Check [Flutter SDK Setup](https://documentation.onesignal.com/docs/flutter-sdk-setup) on OneSignal.
+
+## Usage
+
+### Initialization
+
+Initialize AppNotification in your base controller. So whenever the notification is tapped, it can be handled by AppNotification class. And data passed from the notification can be parsed and handled by app.
+
+This will also handle assignment of player id to device. More details on player id is in [this section.](#targetting-specific-users)
+
+### Disposing
+When you no longer need the remote notification service, make sure to dispose of the resources by calling the dispose method.
+
+```dart
+RemoteNotifications.dispose();
+```
+
+### Asking Permission
+
+To ask the user for permission to display remote notifications, use the askPermission method.
+
+```dart
+bool? permissionGranted = await RemoteNotifications.askPermission();
+```
+
+The method returns a boolean indicating whether the user granted permission for remote notifications. If the OneSignal configuration is not available, the method will return null.
+
+### Subscribing and Unsubscribing
+To subscribe to remote notifications, call the subscribe method.
+
+```dart
+await RemoteNotifications.subscribe();
+```
+
+To unsubscribe from remote notifications, use the unsubscribe method.
+
+```dart
+await RemoteNotifications.unsubscribe();
+```
+
+## Pushing Notifications/ Targetting Specific Users
+
+- We can target notifications for specific user if we know the player id of that user.
+
+- When user successfully initializes the one signal, they get a player id. Everytime app starts, one signal checks if user has player id? if not, then it initializes one signal. If it's expired then also it reinitializes. And gives a new player id to device.
+
+- We can listen to the change of player id and we can send a request to API to register new player id with the current looged in user.
+
+```dart
+_oneSignal.setSubscriptionObserver(_handleSubscriptionStateChanges);
+```
+
+In listner (_handleSubscriptionStateChanges) function we can write logic to register new player id for user (depending on if user is guest or not/ bifurcation mechanism of app).
+
+```dart{7-11}
+static Future<void> _handleSubscriptionStateChanges(
+  OSSubscriptionStateChanges subscriptionState,
+) async {
+  if (subscriptionState.to.userId != null) {
+    await _storage.write(_userIdKey, subscriptionState.to.userId);
+    _userIdStreamController.add(subscriptionState.to.userId!);
+    // Add your logic below to register player id for user
+    API.post('test', {
+      'user_id': 'current_user_id',
+      'player_id': subscriptionState.to.userId,
+    });
+  }
+}
+```
+
+### Real World Example
+
+- `User A` has Android device and `User B` has iOS device.
+
+- We have developed messaging app and it uses `VaahFlutter`, both users have installed this app.
+
+- When User A starts app they gets a player id and its stored using get_storage, but they are not logged in yet. So when they will log in, we check stored player id (in get_storage) and assign it to the User A, send request to API to register player id for that user, and let's say thier id is `user_a`. Same happens for User B, and let's assume their id is `user_b`.
+
+- Our app has a functionality using which one user can send message to other user. User A (user_a) sends message to User B (user_b). We can setup notification service in backend when one user sends message to another, backend sends notification to appropriate device (because backend knows who is sending message to whom and backend can get specific player id to target). Or if we want to handle it using app, we can post notification when user sends message, because app will also know who is sending message to whom, so it can fetch player id stored in database for targeted user.
+
+- Let's say one of the user's player id is expired and it's reassigned when user openes app, so as we have explained, we do have a `setSubscriptionObserver` where we can handle this case to store new player id for logged in user to database.
+
+- So again when user_a sends message to user_b, we will have updated player id in database and it will be handled correctly.
+
+- What if user doesn't grant permission/ turns off notifications? In that case OneSignal knows this and doesn't send notification.
+
+## Receive Notification
+
+Notification can have one parameter `payload` with `path`, `data`, and `auth` properties. So that all notifications have uniform format and vaahflutter can handle them.
+
+```js
+const payload = {
+  "path": "/",
+  "data": {},
+  "auth": null
+};
+```
+
+- Notifications Are handled by `setNotificationOpenedHandler`.
+
+```dart
+_oneSignal.setNotificationOpenedHandler(_handleNotification);
+```
+
+Developer can do the changes in below function to handle notifications differently. 
+
+```dart
+static void _handleNotification(OSNotificationOpenedResult openedResult) {
+  Log.success('Notification Opened', data: {
+    "actionId": openedResult.action?.actionId,
+    "title": openedResult.notification.title,
+    "body": openedResult.notification.body,
+    "additionalData": openedResult.notification.additionalData,
+    "timestamp": DateTime.now().millisecondsSinceEpoch,
+  });
+  final dynamic payload = openedResult.notification.additionalData?['payload'];
+  if (payload != null && payload['path'] != null) {
+    Get.offAllNamed(
+      payload['path'],
+      arguments: <String, dynamic>{
+        'data': payload['data'],
+        'auth': payload['auth'],
+      },
+    );
+  }
+}
+```
+
+## Send Notification
+
+- To send notifications from App developer will ave to call AppNotification.post method.
+
+- Where you have to pass `playerIds` and `content` parameters compulsorily.
+
+- There are other optional parameters which you can pass: `heading`, `payloadPath`, `payloadData`, `payloadAuth`, `buttons`, and `imageURL`.
+
+- From App you can not target all users, if you want to do that you'll have to get all player ids and then target them.
+
+```dart
+AppNotification.post(playerIds: ['id_a', 'id_b'], content: 'Hello World!');
+```
+
+## Source Code
+
+```dart
+import 'dart:async';
+
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
+import './logging_library/logging_library.dart';
+import '../env.dart';
+
+const String _userIdKey = 'notification_user_id';
+
+abstract class AppNotification {
+  static final OneSignal _oneSignal = OneSignal.shared;
+  static final EnvironmentConfig _env = EnvironmentConfig.getEnvConfig();
+  static final GetStorage _storage = GetStorage();
+
+  static final StreamController<String> _userIdStreamController =
+      StreamController<String>.broadcast();
+  static final Stream<String> userIdStream = _userIdStreamController.stream;
+
+  static String? get userId => _storage.read(_userIdKey);
+
+  static Future<void> init() async {
+    if (_env.oneSignalConfig == null) return;
+    if (_storage.read(_userIdKey) != null) {
+      _userIdStreamController.add(_storage.read(_userIdKey));
+    }
+    _oneSignal.setSubscriptionObserver(_handleSubscriptionStateChanges);
+    await _oneSignal.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+    await _oneSignal.setAppId(_env.oneSignalConfig!.appId);
+    await _oneSignal.promptUserForPushNotificationPermission();
+    _oneSignal.setNotificationOpenedHandler(_handleNotification);
+  }
+
+  static void dispose() {
+    _userIdStreamController.close();
+  }
+
+  static Future<void> unsubscribe() async {
+    await _oneSignal.disablePush(true);
+  }
+
+  static Future<void> post({
+    required List<String> playerIds,
+    String? heading,
+    required String content,
+    String? payloadPath,
+    dynamic payloadData,
+    dynamic payloadAuth,
+    List<OSActionButton>? buttons,
+    String? imageURL,
+  }) async {
+    assert(playerIds.isNotEmpty);
+    assert(content.trim().isNotEmpty);
+    await _oneSignal.postNotification(
+      OSCreateNotification(
+        playerIds: playerIds,
+        heading: heading,
+        content: content,
+        additionalData: {
+          'payload': {
+            'path': payloadPath,
+            'data': payloadData,
+            'auth': payloadAuth,
+          },
+        },
+        buttons: buttons,
+        bigPicture: imageURL,
+        iosAttachments: imageURL == null
+            ? null
+            : {
+                'image': imageURL,
+              },
+      ),
+    );
+  }
+
+  static Future<void> _handleSubscriptionStateChanges(
+    OSSubscriptionStateChanges subscriptionState,
+  ) async {
+    if (subscriptionState.to.userId != null) {
+      await _storage.write(_userIdKey, subscriptionState.to.userId);
+      _userIdStreamController.add(subscriptionState.to.userId!);
+    }
+  }
+
+  static void _handleNotification(OSNotificationOpenedResult openedResult) {
+    Log.success('Notification Opened', data: {
+      "actionId": openedResult.action?.actionId,
+      "title": openedResult.notification.title,
+      "body": openedResult.notification.body,
+      "additionalData": openedResult.notification.additionalData,
+      "timestamp": DateTime.now().millisecondsSinceEpoch,
+    });
+    final dynamic payload = openedResult.notification.additionalData?['payload'];
+    if (payload != null && payload['path'] != null) {
+      Get.offAllNamed(
+        payload['path'],
+        arguments: <String, dynamic>{
+          'data': payload['data'],
+          'auth': payload['auth'],
+        },
+      );
+    }
+  }
+}
+```
