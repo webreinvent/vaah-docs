@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-450ddce7","path":"/vaahcms/module/configure-vue-vuex.html","title":"Configure Vue & Vuex","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/module/configure-vue-vuex.md"}');export{e as data};

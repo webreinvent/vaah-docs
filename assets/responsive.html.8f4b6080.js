@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-2301e9a0","path":"/vaahflutter/directory_structure/vaahextendflutter/helpers/responsive.html","title":"Responsive","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahflutter/directory_structure/vaahextendflutter/helpers/responsive.md"}');export{e as data};

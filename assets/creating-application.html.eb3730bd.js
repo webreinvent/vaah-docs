@@ -1,0 +1,1 @@
+const a=JSON.parse('{"key":"v-1fc4194b","path":"/vaahcms/module/creating-application.html","title":"Creating Vue.js Application","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/module/creating-application.md"}');export{a as data};

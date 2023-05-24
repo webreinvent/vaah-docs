@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-35e6ce5c","path":"/vaahcms-2/backend/media.html","title":"Media","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms-2/backend/media.md"}');export{e as data};

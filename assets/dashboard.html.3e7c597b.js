@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-aea693a8","path":"/vaahcms-2/backend/dashboard.html","title":"Dashboard","lang":"en-US","frontmatter":{},"excerpt":"","headers":[{"level":2,"title":"Purpose & Features","slug":"purpose-features","link":"#purpose-features","children":[]}],"git":{},"filePathRelative":"vaahcms-2/backend/dashboard.md"}');export{e as data};

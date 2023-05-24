@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-1d654235","path":"/vaahcms/module/configuration.html","title":"Configuration","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/module/configuration.md"}');export{t as data};

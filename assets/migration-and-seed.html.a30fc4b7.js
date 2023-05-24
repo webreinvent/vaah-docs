@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-18e22f81","path":"/vaahcms/module/migration-and-seed.html","title":"Migrations and Seeds","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/module/migration-and-seed.md"}');export{e as data};

@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-5f3d2378","path":"/vaahcms/basic/setting/reset-application.html","title":"Reset Application","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/basic/setting/reset-application.md"}');export{t as data};
