@@ -7,7 +7,7 @@
 Install [VaahCLI](https://vaah.dev/cli), via following command:
 
 ```shell
-npm install vaah -g
+npm i vaah -g
 ```
 
 Then run following command to install VaahCMS:
@@ -25,12 +25,18 @@ php artisan serve
 And visit:
 
 ```http request
-<public-url>/vaahcms/setup
+localhost:8080/vaahcms/setup
+```
+**OR**
+
+If you are using `xampp` or `wamp`, then visit
+
+```http request
+<laravel-public-url>/vaahcms/setup
 ```
 
 ::: warning NOTE
-If you visit `<public-url>` before completing the setup then you may get few errors, you can ignore these errors and visit `<public-url>/vaahcms/setup` to setup the VaahCMS
-
+If you visit `<laravel-public-url>` before completing the setup then you may get few errors, you can ignore these errors and visit `<laravel-public-url>/vaahcms/setup` to setup the VaahCMS
 :::
 
 ## Manual Download & Installation
@@ -78,9 +84,7 @@ php artisan vendor:publish
 ```
 
 
-
-
-If you're using XAMPP or WAMP, visit following url to begin the setup:
+If you're using `XAMPP` or `WAMP`, visit following url to begin the setup:
 
 ```http request
 <public-url>/vaahcms/setup
@@ -88,34 +92,23 @@ If you're using XAMPP or WAMP, visit following url to begin the setup:
 
 or
 
-If you have PHP installed locally and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at `<public-url>`. Run following command to start the serving the application:
+If you have PHP installed locally, and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at `<public-url>`. Run following command to start the serving the application:
 
 ```shell
 php artisan serve
 ```
 
-
-
-
 and visit:
 
 ```http request
-<public-url>/vaahcms/setup
+localhost:8080/vaahcms/setup
 ```
 
 
-This is will begin setup and easy form wizard to configure your the application. Once you're done with the configuration you will be able to login to the admin control panel at following url:
+This will begin the setup process and easy form wizard to configure your the application. Once you're done with the configuration you will be able to login to the backend (administrative control panel) at following url:
 
 In case of XAMPP or WAMP:
 
 ```http request
 <public-url>/backend
 ```
-
-
-In case of development server:
-
-```http request
-<public-url>/backend
-```
-

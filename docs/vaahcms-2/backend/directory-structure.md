@@ -60,5 +60,5 @@ Each Module and Theme will have its own directory structure which will be discus
 
 ## Environment Detection
 ::: warning NOTE
-bootstrap / environment.php file is responsible to detect the environment from vaahcms.json file based on APP URL and apply respective .env file.
+`bootstrap/environment.php` file is responsible to detect the environment from vaahcms.json file based on APP URL and apply respective .env file.
 :::

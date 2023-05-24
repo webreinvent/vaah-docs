@@ -6,18 +6,14 @@ This guide teaches `How to create MODULES in VAAH CMS`
 
 ### Prerequisites
 
-- node js installed
-- vaah project directory
+- Node
+- VaahCMS project directory
 
 
-### Step 1: Vaah Cli Installtion
+### Step 1: VaahCli Installation
 
-To use Vaah generators for generating modules, install VaahCli Tool using following command
+To use VaahCLI generators for generating modules, install VaahClI Tool using following command
 
-```terminal command
-npm install vaah -g
-```
-or
 ```terminal command
 npm i vaah -g
 ```
