@@ -121,10 +121,45 @@ sidebar = [
                                     }
                                 ]
                             },
+                            {
+                                text: 'Notifications',
+                                collapsible: true,
+                                children: [
+                                    { text: 'basics', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/basics.md' },
+                                    {
+                                        text: 'Internal Notifications',
+                                        children: [
+                                            { text: 'notification', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/notification.md' },
+                                            { text: 'notification_view', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/notification_view.md' },
+                                            {
+                                                text: 'Services', children: [
+                                                    { text: 'base_service', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/services/base_service.md' },
+                                                    { text: 'firebase', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/services/firebase.md' },
+                                                    { text: 'pusher', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/services/pusher.md' },
+                                                    { text: 'custom', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/services/custom.md' },
+                                                    { text: 'no_service', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/services/no_service.md' },
+                                                ],
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        text: 'Push Notifications', children: [
+                                            { text: 'notification', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/notification.md' },
+                                            {
+                                                text: 'Services', children: [
+                                                    { text: 'local', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/services/local.md' },
+                                                    { text: 'remote', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/services/remote.md' },
+                                                ],
+                                            },
+                                        ],
+                                    }
+                                ]
+                            },
                             { text: 'Performance Monitoring', link: '/vaahflutter/directory_structure/vaahextendflutter/services/performance_monitoring.md' },
                             { text: 'api', link: '/vaahflutter/directory_structure/vaahextendflutter/services/api.md' },
                             { text: 'api self sign', link: '/vaahflutter/directory_structure/vaahextendflutter/services/self-sign.md' },
                             { text: 'dynamic links', link: '/vaahflutter/directory_structure/vaahextendflutter/services/dynamic-links.md' },
+                            { text: 'notification', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification.md' },
                         ],
                     },
                     {
