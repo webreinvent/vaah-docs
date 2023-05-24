@@ -16,6 +16,22 @@ The Pusher service file provides the implementation of internal notifications us
 For further information and guidance on Pusher, refer to the official Pusher documentation and support resources provided by Pusher at [https://support.pusher.com/hc/en-us/articles/4412239519249](https://support.pusher.com/hc/en-us/articles/4412239519249).
 :::
 
+- Pusher can only trigger events on public channels from the client side. It cannot trigger events on private channels directly.
+
+- To send events on private channels, you need to establish a private channel and configure the necessary authorization process.
+
+- When using a private channel, you need to set up an onAuthorizer function and a corresponding backend implementation.
+
+- The onAuthorizer function sends a request to your backend server to obtain an authorization object, which will be used by Pusher to authenticate the client's access to the private channel.
+
+- By using the onAuthorizer function and backend implementation, you can ensure that only authorized clients can subscribe to and trigger events on private channels. This adds an extra layer of security and control over the communication.
+
+::: tip Note
+Please note that setting up the authorization process and implementing the backend functionality are essential steps when using private channels with Pusher. Make sure to configure the onAuthorizer function and handle the backend logic accordingly to enable secure and authorized communication on private channels.
+
+Please refere `onAuthorizer` and `Backend` sample code [here](#onauthorizer-and-backend-sample-code).
+:::
+
 ## Integration
 
 Developers integrating Pusher-based internal notifications should follow these steps:
@@ -130,4 +146,158 @@ class InternalNotificationsWithPusher implements InternalNotificationsService {
     _notifications = updatedNotifications;
   }
 }
+```
+
+## onAuthorizer and Backend sample code
+
+### 1. Client-side Configuration (Dart/Flutter):
+
+```dart
+_pusher = PusherChannelsFlutter.getInstance();
+await _pusher.init(
+  // Rest of your Pusher configuration...
+  onAuthorizer: (String channelName, String socketId, dynamic options) async {
+    final response = await http.post(
+      'https://your-backend-server.com/pusher/authorize',
+      body: {
+        'channelName': channelName,
+        'socketId': socketId,
+      },
+    );
+    return jsonDecode(response.body);
+  },
+);
+```
+
+### 2. Backend Configuration
+
+::: tip note
+Assuming you have an Express server set up, you'll need to create a route that handles the authorization request and generates the authorization data.
+:::
+
+In this example, when the client requests authorization for a private channel, the server receives the request and performs the necessary authorization logic. It generates the authorization data (authData) based on the user's permissions or any other relevant information. The server then uses the Pusher library to generate the authorization signature (auth) required by Pusher. Finally, the server sends the auth data back to the client as a response.
+
+Please note that this is a simplified example, and you'll need to adapt it to your specific backend setup and requirements. Make sure to install the required dependencies (pusher in this case) and configure your Pusher credentials appropriately.
+
+#### a. Example using Node.js and Express:
+
+```js
+const express = require('express');
+const Pusher = require('pusher');
+
+const app = express();
+
+// Pusher configuration
+const pusher = new Pusher({
+  appId: 'YOUR_APP_ID',
+  key: 'YOUR_APP_KEY',
+  secret: 'YOUR_APP_SECRET',
+  cluster: 'YOUR_APP_CLUSTER',
+});
+
+app.post('/pusher/authorize', async (req, res) => {
+  const { channelName, socketId } = req.body;
+
+  // Implement your authorization logic here
+  // This can include checking user permissions, validating session, etc.
+  // Generate the necessary auth data based on your requirements
+
+  const authData = {
+    user_id: '',
+    user_info: {
+      name: '',
+    },
+  };
+
+  const auth = pusher.authenticate(channelName, socketId, authData);
+  res.send(auth);
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+```
+
+#### a. Example using PHP:
+
+1. Install the Pusher PHP library:
+
+```bash
+composer require pusher/pusher-php-server
+```
+
+2. Create a route and controller in your Laravel application:
+
+  - 2 (a). Define the route in routes/web.php:
+  ```php
+  Route::post('/pusher/authorize', [PusherAuthController::class, 'authorize']);
+  ```
+  
+  - 2 (b). Create a new controller using the command:
+  ```bash
+  php artisan make:controller PusherAuthController
+  ```
+
+  - 2 (c). Implement the authorization logic in PusherAuthController.php:
+  ```php
+  <?php
+
+  namespace App\Http\Controllers;
+
+  use Illuminate\Http\Request;
+  use Pusher\Pusher;
+
+  class PusherAuthController extends Controller
+  {
+      public function authorize(Request $request)
+      {
+          $channelName = $request->input('channelName');
+          $socketId = $request->input('socketId');
+
+          // Implement your authorization logic here
+          // This can include checking user permissions, validating session, etc.
+          // Generate the necessary auth data based on your requirements
+
+          $pusher = new Pusher(
+              config('broadcasting.connections.pusher.key'),
+              config('broadcasting.connections.pusher.secret'),
+              config('broadcasting.connections.pusher.app_id'),
+              config('broadcasting.connections.pusher.options')
+          );
+
+          $authData = $pusher->socket_auth($channelName, $socketId);
+
+          // Send the authorization data as a response
+          return response()->json($authData);
+      }
+  }
+  ```
+
+3. Configure Laravel to use Pusher:
+
+Set your Pusher credentials in the .env file:
+
+```makefile
+BROADCAST_DRIVER=pusher
+PUSHER_APP_ID=your-app-id
+PUSHER_APP_KEY=your-app-key
+PUSHER_APP_SECRET=your-app-secret
+PUSHER_APP_CLUSTER=your-app-cluster
+```
+
+Configure the broadcasting settings in config/broadcasting.php:
+
+```php
+'connections' => [
+    'pusher' => [
+        'driver' => 'pusher',
+        'key' => env('PUSHER_APP_KEY'),
+        'secret' => env('PUSHER_APP_SECRET'),
+        'app_id' => env('PUSHER_APP_ID'),
+        'options' => [
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+        ],
+    ],
+    // Other broadcasting connections...
+],
 ```
