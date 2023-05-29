@@ -1,5 +1,7 @@
 # Registrations
 
+[[toc]]
+
 Registration and authentication are mandatory in any application when you have little concern about privacy.
 
 
@@ -121,19 +123,6 @@ Permissions allow users to access certain features of a course or project site, 
 ------
 
 
-## Files
-
-List of all the files responsible for this pages
-
-
-- Laravel Route: `packages/vaahcms/Routes/backend/routes-registrations.php` 
-- Laravel Controller: `packages/vaahcms/Http/Controllers/Backend/RegistrationsController.php`
-- Laravel Model: `packages/vaahcms/Models/Registration.php`
-- Vue Route: `packages/vaahcms/Vue/vaahtwo/routes/vue-routes-registrations.js`
-- Vue Store: `packages/vaahcms/Vue/vaahtwo/stores/store-registrations.js`
-- Vue Page Director: `packages/vaahcms/Vue/vaahtwo/pages/registrations`
-
-
 
 ## Methods
 
@@ -141,7 +130,7 @@ List of all the files responsible for this pages
 - **itemAction()** method can be used for actions like `restore`,`trash` in particular item
 
 ```php
-    packages/vaahcms/Models/Registration.php  
+    namespace WebReinvent\VaahCms\Models;
     
     Registration::itemAction($request,$id,$type);
 ```
@@ -150,7 +139,7 @@ where `$request` is HTTP request,`$id` is Item's id,`$type` is action type.
 - **listAction()** methods can be  used for different actions like `trash`,`restore`,`delete`,`trash all`,`delete all`,`restore all` and different status change on item's list
 
 ```php
-    packages/vaahcms/Models/Registration.php
+    namespace WebReinvent\VaahCms\Models;
     
     Registration::listAction($request,$id,$type);
 ```

@@ -30,6 +30,8 @@ sidebar = [
         //link: '/vaahcms/directory-structure.md',
         children: [
             {text: 'Setup', link: '/vaahcms-2/backend/setup.md'},
+            {text: 'The Concept', link: '/vaahcms-2/backend/the-concept.md'},
+            {text: 'Sign In', link: '/vaahcms-2/backend/signin.md'},
             {text: 'Dashboard', link: '/vaahcms-2/backend/dashboard.md'},
             {text: 'API Authentication', link: '/vaahcms-2/backend/api-authentication.md'},
             {

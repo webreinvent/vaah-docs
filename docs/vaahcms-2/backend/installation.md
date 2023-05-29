@@ -16,6 +16,14 @@ Then run following command to install VaahCMS:
 npx vaah cms:install
 ```
 
+Select one from the options by lower/upper arrow key.
+
+```shell
+? Select the VaahCMS version: (Use arrow keys)
+> VaahCMS 2.x
+  VaahCMS 1.x
+```
+
 Then run
 
 ```shell
