@@ -14,6 +14,12 @@ VaahFlutter uses OneSignal as push notification service. [https://onesignal.com/
 
 ## OneSignal Setup and Env Variables
 
+::: tip Setup
+- To do the setup on one signal you will need to setup one of the below thing.
+  - [.p12 Certificate](../configurations/p12_certificate.md)
+  - OR [p8 Token-Based Connection to APNs](../configurations/p8_key.md)
+:::
+
 - Devs will have to do the setup their app on One Signal and then set env variable with the id. e.g. for your env set `oneSignalConfig: const OneSignalConfig(appId: "0000aaaa-0000-0000-0000-aaaa0000aaaa"),`
 
 - Check [Flutter SDK Setup](https://documentation.onesignal.com/docs/flutter-sdk-setup) on OneSignal.

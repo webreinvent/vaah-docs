@@ -151,6 +151,12 @@ sidebar = [
                                                     { text: 'remote', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/services/remote.md' },
                                                 ],
                                             },
+                                            {
+                                                text: 'configurations', children: [
+                                                    { text: 'p12 certificate', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/configurations/p12_certificate.md' },
+                                                    { text: 'p8 key', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/configurations/p8_key.md' },
+                                                ],
+                                            },
                                         ],
                                     }
                                 ]
