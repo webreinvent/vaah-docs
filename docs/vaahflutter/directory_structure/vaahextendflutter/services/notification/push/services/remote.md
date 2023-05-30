@@ -12,6 +12,31 @@ We use PushNotifications class and not RemoteNotifications class whenever needed
 
 VaahFlutter uses OneSignal as push notification service. [https://onesignal.com/](https://onesignal.com/)
 
+## Overview
+
+- Direct communication with service (We are using this method)
+
+<img width="400" :src="$withBase('/images/flutter/notifications/communication-types/dct1.png')">
+<img width="400" :src="$withBase('/images/flutter/notifications/communication-types/dct2.png')">
+<img width="400" :src="$withBase('/images/flutter/notifications/communication-types/dct3.png')">
+<img width="400" :src="$withBase('/images/flutter/notifications/communication-types/dct4.png')">
+
+- Communication with service via backend
+
+<img width="400" :src="$withBase('/images/flutter/notifications/communication-types/ict1.png')">
+<img width="400" :src="$withBase('/images/flutter/notifications/communication-types/ict2.png')">
+<img width="600" :src="$withBase('/images/flutter/notifications/communication-types/ict3.png')">
+<img width="600" :src="$withBase('/images/flutter/notifications/communication-types/ict4.png')">
+
+- General flows
+
+<img width="500" :src="$withBase('/images/flutter/notifications/general-flows/gf1.png')">
+<img width="500" :src="$withBase('/images/flutter/notifications/general-flows/gf2.png')">
+<img :src="$withBase('/images/flutter/notifications/general-flows/gf3.png')">
+<img :src="$withBase('/images/flutter/notifications/general-flows/gf4.png')">
+<img :src="$withBase('/images/flutter/notifications/general-flows/gf5.png')">
+<img :src="$withBase('/images/flutter/notifications/general-flows/gf6.png')">
+
 ## OneSignal Setup and Env Variables
 
 ::: tip Setup
@@ -274,5 +299,3 @@ abstract class AppNotification {
   }
 }
 ```
-
-## TODO: ADD DIAGRAMS

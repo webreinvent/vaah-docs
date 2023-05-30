@@ -20,8 +20,8 @@ publish_to: 'none'
 version: 1.0.0+0001
 
 environment:
-  sdk: ">=2.19.2"
-  flutter: ">=3.7.3"
+  sdk: ">=2.19.6"
+  flutter: ">=3.7.11"
 
 dependencies:
   flutter:       # Required for every Flutter project

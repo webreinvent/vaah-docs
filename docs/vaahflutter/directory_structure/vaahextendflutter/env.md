@@ -34,6 +34,8 @@ flutter run --dart-define="environment=production"
 
 ## About environment configuration
 
+### Properties
+
 Environment config contains below properties.
 
 | **Property Name** | **Description** |
@@ -47,14 +49,20 @@ Environment config contains below properties.
 | apiUrl | Represents root endpoint of url |
 | timeoutLimit | Represents timeout limit for requests (in milliseconds) |
 | firebaseId | Represents firebase id of app |
-| sentryConfig | Contains all essential variable for sentry |
 | enableLocalLogs | Used for enabling/ disabling Local Logs |
 | enableCloudLogs | Used for enabling/ disabling Cloud Logs |
 | enableApiLogInterceptor | Used for enabling/ disabling API Request and Response Local logs |
+| sentryConfig | Contains all essential values for sentry |
+| pushNotificationsServiceType | Used to set the Push Notifications Service Type |
+| oneSignalConfig | Used to set the One signal config **(needed/ works only when push notification service type is remote)** |
+| internalNotificationsServiceType | Used to set the Internal Notifications Service Type |
+| pusherConfig | Used to set the Pusher config **(needed/ works only when internal notification service type is pusher)** |
 | showDebugPanel | Used for enabling/ disabling Debug Panel |
 | debugPanelColor | Used for changing color of Debug Panel |
 
-Sentry Config: check more [here](./services/performance_monitoring.md)and [here](./services/logging_library/logging_library.md)
+#### Sentry Config (sentryConfig)
+
+check more [here](../directory_structure/vaahextendflutter/services/performance_monitoring.md) and [here](../directory_structure/vaahextendflutter/services/logging_library/logging_library.md)
 
 | **Property Name** | **Description** |
 | --- | --- |
@@ -64,6 +72,44 @@ Sentry Config: check more [here](./services/performance_monitoring.md)and [here]
 | enableUserInteractionTracing | if enabled will monitor User Interaction |
 | enableAssetsInstrumentation | if enabled will monitor Asset Performance |
 | tracesSampleRate | will report uncaught errors as per rate is set, i.e. if it's 0.4 then 40% of all uncaught error will be reported |
+
+#### Push Notifications Service Type (pushNotificationsServiceType)
+
+Check [this](../directory_structure/vaahextendflutter/services/notification/push/notification.md).
+
+Possible values for `pushNotificationsServiceType` are
+
+| **Property Name** | **Description** |
+| --- | --- |
+| PushNotificationsServiceType.local | No additional configuration needed to push local notifications |
+| PushNotificationsServiceType.remote | This will allow dev to push notifications via Remote service (devices which are not local will also be allowed using player id) |
+| PushNotificationsServiceType.both | This will allow dev to push notifications via Local service (for local device notifications) and to push notifications via Remote service (devices which are not local will also be allowed |
+| PushNotificationsServiceType.none | No additional configuration needed. Choosing this will disable Push Notifications |
+
+If you choose `PushNotificationsServiceType.remote` or `PushNotificationsServiceType.both` you need to add `oneSignalConfig` as well.
+
+```dart
+oneSignalConfig: const OneSignalConfig(appId: ''),
+```
+
+#### Internal Notifications Service Type (internalNotificationsServiceType)
+
+Check [this](../directory_structure/vaahextendflutter/services/notification/internal/notification.md).
+
+Possible values for `internalNotificationsServiceType` are
+
+| **Property Name** | **Description** |
+| --- | --- |
+| InternalNotificationsServiceType.firebase | This will enable internal notifications via firestore |
+| InternalNotificationsServiceType.pusher | This will enable internal notifications via pusher |
+| InternalNotificationsServiceType.custom | This will enable internal notifications via custom service |
+| InternalNotificationsServiceType.none | This will disable internal notifications |
+
+If you choose `InternalNotificationsServiceType.firebase` you need to setup firestore and firebase app as well, check more details [here](../directory_structure/vaahextendflutter/services/notification/internal/services/firebase.md#integration).
+
+If you choose `InternalNotificationsServiceType.pusher` you need to setup pusher as well, check more details [here](../directory_structure/vaahextendflutter/services/notification/internal/services/pusher.md#integration).
+
+If you choose `InternalNotificationsServiceType.cutom` you need to write custom service code in [custom.dart](../directory_structure/vaahextendflutter/services/notification/internal/services/custom.md)
 
 ### Example of environment config
 ```dart
@@ -133,6 +179,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import './app_theme.dart';
 import './services/logging_library/logging_library.dart';
@@ -152,20 +199,15 @@ final EnvironmentConfig defaultConfig = EnvironmentConfig(
   backendUrl: '',
   apiUrl: '',
   timeoutLimit: 20 * 1000, // 20 seconds
-  firebaseId: '',
-  sentryConfig: const SentryConfig(
-    dsn: '',
-    enableAutoPerformanceTracking: true,
-    autoAppStart: true,
-    enableUserInteractionTracing: true,
-    enableAssetsInstrumentation: true,
-    tracesSampleRate: 0.6,
-  ),
   enableLocalLogs: true,
   enableCloudLogs: true,
   enableApiLogInterceptor: true,
+  pushNotificationsServiceType: PushNotificationsServiceType.both,
+  oneSignalConfig: const OneSignalConfig(appId: ''),
+  internalNotificationsServiceType: InternalNotificationsServiceType.custom,
+  pusherConfig: const PusherConfig(apiKey: '', cluster: ''),
   showDebugPanel: true,
-  debugPanelColor: AppTheme.colors['black']!.withOpacity(0.7),
+  debugPanelColor: AppTheme.colors['black']!.withOpacity(0.8),
 );
 
 // To add new configuration add new key, value pair in envConfigs
@@ -191,13 +233,14 @@ Map<String, EnvironmentConfig> _envConfigs = {
 };
 
 class EnvController extends GetxController {
+  final GetStorage _storage = GetStorage();
   late EnvironmentConfig _config;
+
   EnvironmentConfig get config => _config;
 
   EnvController(String environment) {
     try {
-      _config = getSpecificConfig(environment);
-      update();
+      _config = getSpecificConfig(environment).copyWith(openCount: _storage.read('open_count'));
     } catch (error, stackTrace) {
       Log.exception(error, stackTrace: stackTrace);
       exit(0);
@@ -211,6 +254,11 @@ class EnvController extends GetxController {
     }
     throw Exception('Environment configuration not found for key: $key');
   }
+
+  Future<void> increaseOpenCount() async {
+    await _storage.write('open_count', _config.openCount + 1);
+    _config = _config.copyWith(openCount: _config.openCount + 1);
+  }
 }
 
 class EnvironmentConfig {
@@ -219,14 +267,19 @@ class EnvironmentConfig {
   final String envType;
   final String version;
   final String build;
+  final int openCount;
   final String backendUrl;
   final String apiUrl;
-  final String firebaseId;
+  final String? firebaseId;
   final int timeoutLimit;
   final bool enableLocalLogs;
   final bool enableCloudLogs;
   final SentryConfig? sentryConfig;
   final bool enableApiLogInterceptor;
+  final PushNotificationsServiceType pushNotificationsServiceType;
+  final InternalNotificationsServiceType internalNotificationsServiceType;
+  final OneSignalConfig? oneSignalConfig;
+  final PusherConfig? pusherConfig;
   final bool showDebugPanel;
   final Color debugPanelColor;
 
@@ -236,14 +289,19 @@ class EnvironmentConfig {
     required this.envType,
     required this.version,
     required this.build,
+    this.openCount = 0,
     required this.backendUrl,
     required this.apiUrl,
-    required this.firebaseId,
+    this.firebaseId,
     required this.timeoutLimit,
     required this.enableLocalLogs,
     required this.enableCloudLogs,
     this.sentryConfig,
     required this.enableApiLogInterceptor,
+    required this.pushNotificationsServiceType,
+    required this.internalNotificationsServiceType,
+    this.oneSignalConfig,
+    this.pusherConfig,
     required this.showDebugPanel,
     required this.debugPanelColor,
   });
@@ -276,6 +334,7 @@ class EnvironmentConfig {
     String? envType,
     String? version,
     String? build,
+    int? openCount,
     String? backendUrl,
     String? apiUrl,
     String? firebaseId,
@@ -284,6 +343,10 @@ class EnvironmentConfig {
     bool? enableCloudLogs,
     SentryConfig? sentryConfig,
     bool? enableApiLogInterceptor,
+    PushNotificationsServiceType? pushNotificationsServiceType,
+    InternalNotificationsServiceType? internalNotificationsServiceType,
+    OneSignalConfig? oneSignalConfig,
+    PusherConfig? pusherConfig,
     bool? showDebugPanel,
     Color? debugPanelColor,
   }) {
@@ -293,6 +356,7 @@ class EnvironmentConfig {
       envType: envType ?? this.envType,
       version: version ?? this.version,
       build: build ?? this.build,
+      openCount: openCount ?? this.openCount,
       backendUrl: backendUrl ?? this.backendUrl,
       apiUrl: apiUrl ?? this.apiUrl,
       firebaseId: firebaseId ?? this.firebaseId,
@@ -301,11 +365,27 @@ class EnvironmentConfig {
       enableCloudLogs: enableCloudLogs ?? this.enableCloudLogs,
       sentryConfig: sentryConfig ?? this.sentryConfig,
       enableApiLogInterceptor: enableApiLogInterceptor ?? this.enableApiLogInterceptor,
+      pushNotificationsServiceType:
+          pushNotificationsServiceType ?? this.pushNotificationsServiceType,
+      internalNotificationsServiceType:
+          internalNotificationsServiceType ?? this.internalNotificationsServiceType,
+      oneSignalConfig: oneSignalConfig ?? this.oneSignalConfig,
+      pusherConfig: pusherConfig ?? this.pusherConfig,
       showDebugPanel: showDebugPanel ?? this.showDebugPanel,
       debugPanelColor: debugPanelColor ?? this.debugPanelColor,
     );
   }
+
+  Future<void> increaseOpenCount() async {
+    final bool envControllerExists = Get.isRegistered<EnvController>();
+    if (!envControllerExists) throw Exception('No EnvController Is Registered');
+    await Get.find<EnvController>().increaseOpenCount();
+  }
 }
+
+enum PushNotificationsServiceType { local, remote, both, none }
+
+enum InternalNotificationsServiceType { pusher, firebase, custom, none }
 
 class SentryConfig {
   final String dsn;
@@ -341,6 +421,42 @@ class SentryConfig {
       enableUserInteractionTracing:
           enableUserInteractionTracing ?? this.enableUserInteractionTracing,
       enableAssetsInstrumentation: enableAssetsInstrumentation ?? this.enableAssetsInstrumentation,
+    );
+  }
+}
+
+class OneSignalConfig {
+  final String appId;
+
+  const OneSignalConfig({
+    required this.appId,
+  });
+
+  OneSignalConfig copyWith({
+    String? appId,
+  }) {
+    return OneSignalConfig(
+      appId: appId ?? this.appId,
+    );
+  }
+}
+
+class PusherConfig {
+  final String apiKey;
+  final String cluster;
+
+  const PusherConfig({
+    required this.apiKey,
+    required this.cluster,
+  });
+
+  PusherConfig copyWith({
+    String? apiKey,
+    String? cluster,
+  }) {
+    return PusherConfig(
+      apiKey: apiKey ?? this.apiKey,
+      cluster: cluster ?? this.cluster,
     );
   }
 }

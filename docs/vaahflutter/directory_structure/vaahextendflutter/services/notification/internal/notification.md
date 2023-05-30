@@ -10,6 +10,10 @@ Developer can set the type of service which they want to use from the environmen
 
 The notification.dart file offers a centralized interface for integrating internal notifications within your application
 
+::: tip enable notifications
+To enable default code from VaahFlutter you need to enable it from env. And to change the service which is used by push notifications; you need to change Internal Notifications Service Type from [env](../enabling_and_disabling_services.md).
+:::
+
 ## InternalNotifications Class
 
 - The InternalNotifications class acts as a facade, providing a set of static methods and properties to interact with the chosen internal notifications service. Here's an overview of its members (For details check this [Source code section](#source-code)):
