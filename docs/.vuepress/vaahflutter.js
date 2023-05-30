@@ -126,6 +126,7 @@ sidebar = [
                                 collapsible: true,
                                 children: [
                                     { text: 'basics', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/basics.md' },
+                                    { text: 'enabling and disabling services', link: '/vaahflutter/directory_structure/vaahextendflutter/services/notification/enabling_and_disabling_services.md' },
                                     {
                                         text: 'Internal Notifications',
                                         children: [

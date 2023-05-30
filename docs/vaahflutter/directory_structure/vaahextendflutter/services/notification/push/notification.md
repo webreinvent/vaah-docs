@@ -10,6 +10,10 @@ The PushNotifications class is an abstract class that provides static methods to
 
 The RemoteNotifications service manages notifications that are sent from a remote source, commonly employed in scenarios similar to chat applications. In contrast, the LocalNotifications service is responsible for handling notifications generated locally on the device, often utilized for user-defined reminders.
 
+::: tip enable notifications
+To enable default code from VaahFlutter you need to enable it from env. And to change the service which is used by push notifications; you need to change Push Notifications Service Type from [env](../enabling_and_disabling_services.md).
+:::
+
 ## Usage
 
 This section explains how to use the PushNotifications class and its various methods.
@@ -87,6 +91,10 @@ When implementing push notifications in your Flutter app, it's recommended to us
 4. Future-Proofing: The `PushNotifications` class acts as a layer of abstraction that shields your app from potential changes or updates in the remote and local notification services. If you ever decide to switch to a different notification service or update the existing implementation, you can make the necessary adjustments within the `PushNotifications` class, ensuring minimal impact on the rest of your app.
 
 By following these best practices and utilizing the `PushNotifications` class, you can achieve a more organized, maintainable, and future-proof implementation of push notifications in your Flutter app. Remember to encourage developers on your team to utilize the `PushNotifications` class wherever push notifications are needed and discourage direct usage of the remote and local services.
+
+::: tip configuration
+- As mentioned in [this file](../enabling_and_disabling_services.md), you need to change env variables to enable push notifications.
+:::
 
 ## Source Code
 
