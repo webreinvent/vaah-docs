@@ -4,7 +4,12 @@
 
 ## Internal Notifications and Push Notifications
 
+### Overview
+
+<img :src="$withBase('/images/flutter/notifications/overview.png')" alt="overview">
+
 ### Introduction
+
 - Internal notifications and push notifications are two essential communication channels in your application. Understanding the differences between these two types of notifications is crucial for effectively engaging your users and delivering timely updates. This documentation provides an overview of internal notifications and push notifications, their benefits, implementation considerations, and guidelines for their usage.
 
 #### Target Audience
@@ -26,3 +31,4 @@ Push notifications are messages sent to users' devices from a server or a backen
 - Reach and engagement: Push notifications allow you to reach users beyond the application, increasing the likelihood of user engagement and interactions.
 - Personalization: Customize push notifications based on user preferences, behavior, or location to deliver relevant and personalized content.
 - Timely updates: Push notifications deliver time-sensitive information, such as news, promotions, or event reminders, to keep users informed.
+

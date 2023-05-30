@@ -208,7 +208,13 @@ sidebar = [
                     },
                     { text: 'docs', link: '/vaahflutter/directory_structure/vaahextendflutter/docs.md' },
                 ]
-            },
+            }
+        ]
+    },
+    {
+        text: 'TODO',
+        children: [
+            { text: 'Initial Planning', link: '/vaahflutter/todo/initial.md' },
         ]
     },
 ];
