@@ -18,71 +18,120 @@
 
 ## Format
 ```markdown
-## Overview
+[Task #0 Title](url)
 
-- [ ] I have performed a self-review of my code
-- [ ] New and existing tests pass locally with my changes
-- [ ] The code modified as part of this PR has been covered with tests
+**Time invested:** hh:mm format | **Billable**: 00:00 | **Non-Billable**: 00:00
 
-### Problem statement
-<!-- Problem description -->
+**Problem Statement**
 
-### Solution
-<!-- Solution description -->
+**Describe The Fix/ Solution You Implemented**
 
-### Dependencies
-<!-- dependencies you added/ modified -->
+**Proof of your testing (Demo link or video links or image links)**
+- For all the plateforms
 
-### Links
-<!-- links related to issue, videos, screenshot, etc. -->
-```
+**Dependencies**
+Updated:
+- 
+Added:
+- 
 
-### Output
-<img :src="$withBase('/images/flutter/getting-started/pr.png')" alt="Output">
-
-### Overview
-Developer should tick the relevant boxes for PR they're raising. To tick a box? put `[x]` instead of `[ ]`.
-
-```markdown
-## Overview
+### Merge Request Checklist
 
 - [x] I have performed a self-review of my code
-- [ ] New and existing tests pass locally with my changes
+- [ ] My code does follow `industry standards`
+- [ ] My code doesn't produce `warnings/ errors` for `dart analyzer`
+- [ ] New and existing `tests` pass locally with my changes (No tests are there as of now)
 - [ ] The code modified as part of this PR has been covered with tests
+- [ ] My code is `properly formatted`
+- [ ] I've followed the proper naming conventions
+- [ ] I have rebased the `feature` on the latest `develop`
+- [ ] I have run `flutter run` after the rebase
+- [ ] I have added new dependencies/ updated old dependencies
+- [ ] I have read all the `comments` & `notes` in `wireframe` and verified that I did take care of that
+- [ ] verify that the `UI` must match with `design` & `wireframe` if available
+- [ ] I have updated the `version/ build` (`x.x.x+xxx`)
+- [ ] I've verified that the latest commit of `develop` exists in your `feature` branch after rebase.
+- [ ] My fix achieves 100% of what is required
+- [ ] Can enhance the solution in the future because better implementation could be made
+```
+
+### Title with the link
+
+Developer need to add title of Task here, and add the task link as well. For open source contributers, they can put the title by theirselves.
+
+```markdown
+[Task #0 Title](url)
+```
+
+### Time Log
+
+Developer need to log Billable/ Non-Billable Time. All the Developers contributing for open-source should log Non-Billable time/ they can ignore this section.
+
+```markdown
+**Time invested:** hh:mm format | **Billable**: 00:00 | **Non-Billable**: 00:00
 ```
 
 ### Problem statement
-Write down the issue description after `<!-- Problem description -->` comment.
+Write down the issue description after `**Problem Statement**`.
 
 ```markdown
-### Problem statement
-<!-- Problem description -->
+**Problem Statement**
 This is the issue description.
 ```
 
-### Solution
-Write your suggetion after `<!-- Solution description -->` comment.
+### Describe The Fix/ Solution You Implemented
+Write your suggetion after `**Describe The Fix/ Solution You Implemented**`
 
 ```markdown
-### Solution
-<!-- Solution description -->
-I suggest changing xyz.
+**Describe The Fix/ Solution You Implemented**
+I fixed xyz.
 ```
 
 ### Dependencies
-Write dependencies you added/ modified, after `<!-- dependencies you added/ modified -->` comment.
+Write dependencies you added/ modified, after `**Dependencies**`.
 
 ```markdown
-### Dependencies
-<!-- dependencies you added/ modified -->
+**Dependencies**
+
+- added
+abc: 1.0.0
+
+- updated
 xyz: 1.0.0
 ```
 
-### Links
-Attach links after <!-- links related to issue, videos, screenshot, etc. --> comment.
+### Proof of your testing
+Attach links after `**Proof of your testing (Demo link or video links or image links)**`.
 
 ```markdown
-### Links
-<!-- links related to issue, videos, screenshot, etc. -->
+**Proof of your testing (Demo link or video links or image links)**
+- Android
 [link](https://webreinvent.com)
+- iOS
+[link](https://webreinvent.com)
+```
+
+### Merge Request Checklist
+
+Developer should tick the relevant boxes for PR they're raising. To tick a box? put `[x]` instead of `[ ]`.
+
+```markdown
+### Merge Request Checklist
+
+- [x] I have performed a self-review of my code
+- [ ] My code does follow `industry standards`
+- [ ] My code doesn't produce `warnings/ errors` for `dart analyzer`
+- [ ] New and existing `tests` pass locally with my changes (No tests are there as of now)
+- [ ] The code modified as part of this PR has been covered with tests
+- [ ] My code is `properly formatted`
+- [ ] I've followed the proper naming conventions
+- [ ] I have rebased the `feature` on the latest `develop`
+- [ ] I have run `flutter run` after the rebase
+- [ ] I have added new dependencies/ updated old dependencies
+- [ ] I have read all the `comments` & `notes` in `wireframe` and verified that I did take care of that
+- [ ] verify that the `UI` must match with `design` & `wireframe` if available
+- [ ] I have updated the `version/ build` (`x.x.x+xxx`)
+- [ ] I've verified that the latest commit of `develop` exists in your `feature` branch after rebase.
+- [ ] My fix achieves 100% of what is required
+- [ ] Can enhance the solution in the future because better implementation could be made
 ```

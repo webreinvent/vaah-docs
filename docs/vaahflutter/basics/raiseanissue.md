@@ -21,102 +21,130 @@
 
 ## Format
 ```markdown
-## Overview
+---
+name: Reporting a bug
+about: Use this template for reporting a bug.
+title: "[Bug Description]"
+labels: bug
+---
 
-- [ ] I've performed a self-review of the issue I'm raising
-- [ ] I've provided debug logs
-- [ ] I've provided steps to reproduce
-- [ ] I've provided minimal code sample to reproduce the issue
-- [ ] I've provided additional information also
+**List all the issues you've found**
 
-### Problem statement
-<!-- Problem description -->
+- Issue title
+
+---
+
+**Steps to reproduce**
+1. Go to the `ABC` page.
+2. Perform `LMN` task.
+
+**Expected outcome**
+- description
+
+**Actual results**
+- description
+
+**Suggestions for the fix if any**
+- NA/Description
+
+**Debug logs**
+
+**Minimal code to reproduce the issue/ perticular file(s) or code which is causing the issue**
+<details>
+<summary> filename.ext </summary>
+</details>
+
+<br/>
+
+### Details
+
+- [ ] I have tried reproducing, and the issue is reproducible
+- [ ] I have tried debugging
+- [ ] I've provided all the mandatory info for this issue
+
+- Device and platform on which you've tested
+- Video/ Image(s) proof if possible (Link or attach it here)
+- Output from flutter doctor if possible
+
+```
+
+### List all the issues you've found
+Write down the issue description after `List all the issues you've found`.
+
+```markdown
+**List all the issues you've found**
+- Issue one: title
+- Issue two: title
+
+---
+```
+
+### Steps to reproduce
+
+Add Steps to reproduce the issue in this section.
+
+```markdown
+**Steps to reproduce**
+1. Go to the `ABC` page.
+2. Perform `LMN` task.
+```
+
+### Expected outcome
+
+Write about what is expected.
+
+```markdown
+**Expected outcome**
+- description
+```
+
+### Actual results
+
+Write about what is actual results.
+
+```markdown
+**Actual results**
+- description
+```
+
+### Suggestions for the fix if any
+Write your suggetion after **Suggestions for the fix if any**.
+
+```markdown
+**Suggestions for the fix if any**
+- NA/Description
+```
 
 ### Debug logs
-\```bash
-<!-- paste your debug logs here -->
-\```
 
-### Steps to reproduce
-<!-- steps to reproduce -->
-
-### Minimal code sample
-<!-- code sample/link -->
-
-### Suggested Solution
-<!-- Solution description -->
-
-### Links
-<!-- links related to issue, videos, screenshot, etc. -->
-```
-
-### Output
-<img :src="$withBase('/images/flutter/getting-started/issue.png')" alt="Output">
-
-### Overview
-Developer should tick the relevant boxes. To tick a box? put `[x]` instead of `[ ]`.
+Attach Debug logs if any.
 
 ```markdown
-## Overview
-
-- [x] I've performed a self-review of the issue I'm raising
-- [ ] I've provided debug logs
-- [ ] I've provided steps to reproduce
-- [ ] I've provided minimal code sample to reproduce the issue
-- [ ] I've provided additional information also
+**Debug logs**
 ```
 
-### Problem statement
-Write down the issue description after `<!-- Problem description -->` comment.
+### Minimal code to reproduce the issue/ perticular file(s) or code which is causing the issue
+
+Attach minimal code to reproduce the issue.
 
 ```markdown
-### Problem statement
-<!-- Problem description -->
-This is issue description.
+**Minimal code to reproduce the issue/ perticular file(s) or code which is causing the issue**
+<details>
+<summary> filename.ext </summary>
+</details>
+
+<br/>
 ```
 
-### Debug Logs
-Remove `\`, Paste the Debug logs where the comment `<!-- paste your debug logs here -->` is.
-```markdown
-### Debug logs
-\```bash
-yyyy-mm-dd hh:mm:ss XYZ failed
-yyyy-mm-dd hh:mm:ss flutter: Observatory listening on http://127.0.0.1/
-\```
-```
-
-### Steps to reproduce
-Write down the steps after `<!-- steps to reproduce -->` comment.
-```markdown
-### Steps to reproduce
-<!-- steps to reproduce -->
-Step 1: go to abc.
-Step 2: try performing xyz.
-```
-
-### Minimal code sample
-Attach minimal code sample to reproduce the issue.
+### Details
+Developer should tick the relevant boxes for PR they're raising. To tick a box? put `[x]` instead of `[ ]`. Add the additional details if possible.
 
 ```markdown
-### Minimal code sample
-<!-- code sample/link -->
-Your code sample/ link.
-```
+- [x] I have tried reproducing, and the issue is reproducible
+- [ ] I have tried debugging
+- [ ] I've provided all the mandatory info for this issue
 
-### Suggested Solution
-Write your suggetion after `<!-- Solution description -->` comment.
-
-```markdown
-### Suggested Solution
-<!-- Solution description -->
-I suggest changing xyz.
-```
-
-### Links
-Attach links after <!-- links related to issue, videos, screenshot, etc. --> comment.
-
-```markdown
-### Links
-<!-- links related to issue, videos, screenshot, etc. -->
-[link](https://webreinvent.com)
+- Device and platform on which you've tested
+- Video/ Image(s) proof if possible (Link or attach it here)
+- Output from flutter doctor if possible
 ```

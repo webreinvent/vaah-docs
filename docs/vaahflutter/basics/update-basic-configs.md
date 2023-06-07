@@ -2,6 +2,17 @@
 
 [[toc]]
 
+::: tip How to use VaahFlutter
+
+There are 2 ways to use VaahFlutter for your project.
+
+1. Clone the repository and build your APP on top of it, for this you need to change some configurations for bundle identifier, package name, app icon, and splash screen. [Check this section.](#1-clone-the-repository-and-build-your-app-on-top-of-it)
+
+2. Use VaahFlutter in your new/existing project. This will need copying core directories and packages in your project. [Check this section.](#2-use-vaahflutter-in-your-newexisting-project)
+
+We believe first one is little bit easy process in comparision of second. As you don't need to study VaahFlutter directories before starting the integration.
+:::
+
 ## 1. Clone the repository and build your APP on top of it.
 
 To clone the repository, you'll need to run the below command in your terminal. Make sure [git](https://git-scm.com/downloads) is installed in your system.
@@ -187,7 +198,7 @@ description: Your app description.
 - `root/packages`
 - `root/pubspec.yaml`
 
-### Check the documentation for how to use different components
+#### Check the documentation for how to use different components
 
 - [Essesntials](../essentials/app.md)
 - [Core](../core/performance_and_log.md)
@@ -199,10 +210,77 @@ description: Your app description.
 TODO: implement VaahFlutter as a package.
 :::
 
-## Change App Icon
+## 3. Change App Icon
 
 We use [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons) to change app icon.
 
-## Change Launch Screen
+### Step 1: Prepare the Source Image
+
+### Step 2: Configure the Pubspec.yaml File
+
+In your Flutter project, open the pubspec.yaml file. This file contains metadata and dependencies for your app. To generate app icons automatically, you'll need to add the `flutter_launcher_icons` package as a dev dependency.
+
+### Step 3: Prepare the Icon Generation Configuration
+
+Create a new file in the root of your project called `flutter_launcher_icons.yaml`. In this file, you will define the configuration for generating app icons.
+
+Add the following content to flutter_launcher_icons.yaml:
+
+```yaml
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon.png"
+```
+
+In the above configuration, make sure to replace `"assets/icon.png"` with the path to your high-resolution source image.
+
+### Step 4: Generate App Icons
+
+Now that you have configured the icon generation, run the following command in your project's root directory to generate the app icons:
+
+```shell
+flutter pub run flutter_launcher_icons:main
+```
+
+### Step 5: Test the Generated Icons
+
+Build and run your Flutter app on different devices or simulators to ensure that the generated app icons appear correctly and are properly scaled for each platform.
+
+## 4. Change Splash Screen
 
 We use [flutter_native_splash](https://pub.dev/packages/flutter_native_splash) to change launch screen.
+
+### Step 1: Prepare the Splash Screen Image
+
+Generally I recommend showing logo on top of colored container (full screen). So I just use logo for `Prepare the Splash Screen Image` step.
+
+### Step 2: Configure the Pubspec.yaml File
+
+In your Flutter project, open the pubspec.yaml file. This file contains metadata and dependencies for your app. To generate a splash screen automatically, you'll need to add the `flutter_native_splash` package as a dev dependency.
+
+### Step 3: Prepare the Splash Screen Generation Configuration
+
+Create a new file in the root of your project called `flutter_native_splash.yaml`. In this file, you will define the configuration for generating the splash screen.
+
+Add the following content to flutter_native_splash.yaml:
+
+```yaml
+flutter_native_splash:
+  image: "assets/icon.png"
+  color: "ffffff"
+```
+
+In the above configuration, make sure to replace `"assets/icon.png"` with the path to your high-resolution splash screen image. Additionally, you can customize the `"color"` value to match your app's branding.
+
+### Step 4: Generate the Splash Screen
+
+Now that you have configured the splash screen generation, run the following command in your project's root directory to generate the splash screen:
+
+```shell
+flutter pub run flutter_native_splash:create
+```
+
+### Step 5: Test the Splash Screen
+
+Build and run your Flutter app to see the generated splash screen in action. The splash screen will appear briefly when launching the app and then transition to your app's main screen.
