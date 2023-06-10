@@ -22,7 +22,7 @@ Route<dynamic>? routeMiddleware(RouteSettings route) {
 }
 ```
 
-If you've not cloned the whole repo and are using modules onlt, then to use `routeMiddleware` in your app, you need to assign `routeMiddleware` to `onGenerateRoute`.
+If you're not using the whole downloaded repository and you are using few modules only, then to use `routeMiddleware` in your app, you need to assign `routeMiddleware` to `onGenerateRoute`.
 
 ```dart
 MaterialApp(

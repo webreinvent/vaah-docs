@@ -6,20 +6,16 @@
 
 There are 2 ways to use VaahFlutter for your project.
 
-1. Clone the repository and build your APP on top of it, for this you need to change some configurations for bundle identifier, package name, app icon, and splash screen. [Check this section.](#1-clone-the-repository-and-build-your-app-on-top-of-it)
+1. Download the repository and develop your APP on top of it, for this you need to change some configurations for bundle identifier, package name, app icon, and splash screen. [Check this section.](#_1-download-the-repository-and-develop-your-app-on-top-of-it)
 
-2. Use VaahFlutter in your new/existing project. This will need copying core directories and packages in your project. [Check this section.](#2-use-vaahflutter-in-your-newexisting-project)
+2. Use VaahFlutter in your new/existing project. This will need copying core directories and packages in your project. [Check this section.](#_2-use-vaahflutter-in-your-newexisting-project)
 
 We believe first one is little bit easy process in comparision of second. As you don't need to study VaahFlutter directories before starting the integration.
 :::
 
-## 1. Clone the repository and build your APP on top of it.
+## 1. Download the repository and develop your APP on top of it.
 
-To clone the repository, you'll need to run the below command in your terminal. Make sure [git](https://git-scm.com/downloads) is installed in your system.
-
-```bash
-git clone ...
-```
+[Click here](https://github.com/webreinvent/vaahflutter/archive/refs/heads/master.zip) to download the repository.
 
 ### How to change the Package Name/ Bundle Identifier, and App Name?
 
