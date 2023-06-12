@@ -1,1 +1,0 @@
-const a=JSON.parse('{"key":"v-2fba77f7","path":"/vaahcms-2/backend/database.html","title":"Database Structure","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms-2/backend/database.md"}');export{a as data};

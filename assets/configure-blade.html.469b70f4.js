@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-a9d4bb16","path":"/vaahcms-2/backend/theme/configure-blade.html","title":"Configure Blade File","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms-2/backend/theme/configure-blade.md"}');export{e as data};

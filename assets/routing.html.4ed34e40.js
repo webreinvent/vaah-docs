@@ -1,1 +1,0 @@
-const t=JSON.parse('{"key":"v-5a8f16e5","path":"/vaahcms/basic/routing.html","title":"Routing","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/basic/routing.md"}');export{t as data};

@@ -1,1 +1,0 @@
-const t=JSON.parse('{"key":"v-53ca9fb0","path":"/vaahflutter/directory_structure/vaahextendflutter/services/notification.html","title":"","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahflutter/directory_structure/vaahextendflutter/services/notification.md"}');export{t as data};

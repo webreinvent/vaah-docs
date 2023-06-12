@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-fd363050","path":"/vaahflutter/directory_structure/lib/routes/middleware.html","title":"Middleware","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahflutter/directory_structure/lib/routes/middleware.md"}');export{e as data};

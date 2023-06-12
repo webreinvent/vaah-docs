@@ -1,1 +1,0 @@
-const a=JSON.parse('{"key":"v-a3e743f6","path":"/vaahcli/installation.html","title":"Installation","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcli/installation.md"}');export{a as data};

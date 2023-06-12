@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-b472dcda","path":"/vaahcms-2/backend/theme/directory-structure.html","title":"Directory Structure","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms-2/backend/theme/directory-structure.md"}');export{e as data};

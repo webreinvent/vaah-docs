@@ -1,1 +1,0 @@
-const a=JSON.parse('{"key":"v-0ef592a1","path":"/vaahcms/basic/acl.html","title":"Access Control List (ACL)","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/basic/acl.md"}');export{a as data};

@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-eada5880","path":"/vaahcms/module/configure-vuex-library.html","title":"Configuring Vuex Library","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/module/configure-vuex-library.md"}');export{e as data};

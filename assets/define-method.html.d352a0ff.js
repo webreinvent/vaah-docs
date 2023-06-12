@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-e32667d0","path":"/vaahcms/module/define-method.html","title":"Define Method in Model","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"vaahcms/module/define-method.md"}');export{e as data};

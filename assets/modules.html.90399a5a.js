@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-02c5724e","path":"/vaahcms-2/backend/modules.html","title":"Modules","lang":"en-US","frontmatter":{},"excerpt":"","headers":[{"level":2,"title":"Usage","slug":"usage","link":"#usage","children":[]}],"git":{},"filePathRelative":"vaahcms-2/backend/modules.md"}');export{e as data};
