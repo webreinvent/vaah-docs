@@ -120,10 +120,6 @@ side of that same module to activate the module.
 After Successful activation, module name will be visible on the 
 sidebar.
 
-
-
-Click on module name to access DashBoard of the module.
-
 <img :src="$withBase('/images/module-dashboard-page.png')" alt="module-dashboard-page">
 
 ::: warning NOTE
@@ -136,10 +132,21 @@ MODULE_PRODUCT_ENV=develop
 ```
 ### Step 5: Install the dependencies
 ```shell
-Run 'npm install' at VaahCms/Modules/Product/Vue module folder
-Now run 'npm run dev' at VaahCms/Modules/Product/Vue module folder
+Run 'npm install' at VaahCms/Modules/Product/Vue folder
+Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 ```
-### Step 6: Directory Structure
+### Step 6: Go to following url to access dashboard of product
+```http request
+<public-url>/backend/product#/
+```
+
+### Step 7: This video will help you to understand how to generate module. 
+
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_gHTjCELHOG.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
+### Step 8: Directory Structure
 
 <img :src="$withBase('/images/module-directory-structure.png')" alt="module-directory-structure">
 
