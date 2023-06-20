@@ -143,7 +143,7 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 ### Step 7: This video will help you to understand how to generate module. 
 
 <figure>
-  <iframe src="https://drive.google.com/file/d/1i06wsObQQm3weWVAuexqIzRRr7zGJv5D/view?usp=drive_link" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_FjZ1F3jOPM.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 ### Step 8: Directory Structure
@@ -220,7 +220,4 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 
   - Vue store will be found under Vue/stores.
     <img :src="$withBase('/images/module-vue-store-file.png')" alt="module vue store file">
-
-  ::: warning NOTE
-  Use `npm install` inside module root folder to install dependencies for vue, and after that `npm run dev` to display vue components.
-  :::
+  
