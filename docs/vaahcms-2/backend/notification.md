@@ -295,5 +295,27 @@ public function getNotificationActions()
     return $response;
 }
 ```
+### How to use variable strings?
+There are three types of variable strings.
 
+1. `#!USER:VARIABLE_NAME!# ` : If the notification contains #!USER:NAME!# string and then the $input array must be: $inputs = [ "user_id" => X ]. This will replace the string with value provided in the User Entity.
+2. `#!PARAM:VARIABLE_NAME!# ` : If the notification contains #!PARAM:NAME!# string and then the $input array must be: $inputs = [ "name" => "John" ]. This will replace the string with value provided in the inputs.
+3. `#!ROUTE:VARIABLE_NAME!#` : If the notification contains #!ROUTE:VH.LOGIN!# string. This will replace the string with `url` of that `route name` provided in the `PHP Routes`.
 
+```php 
+$notification = WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
+
+if($notification)
+{
+    
+    $inputs = [
+            "user_id" => xxx,
+            "notification_id" => xxx,
+        ];
+
+    WebReinvent\VaahCms\Models\Notification::send(
+    	$notification, $user, $inputs
+	);
+}
+
+```
