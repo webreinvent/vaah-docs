@@ -118,7 +118,11 @@ find your module and click on `Activate` button present on the right
 side of that same module to activate the module.
 
 After Successful activation, module name will be visible on the 
-sidebar. Click on module name to access DashBoard of the module.
+sidebar.
+
+
+
+Click on module name to access DashBoard of the module.
 
 <img :src="$withBase('/images/module-dashboard-page.png')" alt="module-dashboard-page">
 
@@ -126,7 +130,16 @@ sidebar. Click on module name to access DashBoard of the module.
  All migrations of that specific module will run automatically when the module is activated if `is_migratable` is set to true in config file.
 :::
 
-### Step 4: Directory Structure
+### Step 4: After activation of module, open ```.env & .env.custom``` and paste below code
+```
+MODULE_PRODUCT_ENV=develop
+```
+### Step 5: Install the dependencies
+```shell
+Run 'npm install' at VaahCms/Modules/Product/Vue module folder
+Now run 'npm run dev' at VaahCms/Modules/Product/Vue module folder
+```
+### Step 6: Directory Structure
 
 <img :src="$withBase('/images/module-directory-structure.png')" alt="module-directory-structure">
 
