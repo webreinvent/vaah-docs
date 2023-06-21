@@ -140,10 +140,10 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 <public-url>/backend/product#/
 ```
 
-### Step 7: This video will help you to understand how to generate module. 
+### Step 7: This video will help you to understand how to generate module.
 
 <figure>
-  <iframe src="https://www.youtube.com/watch?v=8aNtxlLY-xE" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+<iframe width="740" height="393" src="https://www.youtube.com/embed/8aNtxlLY-xE" title="VaahCMS 2.x + Vue3 | How to create module and use pre-configured vue 3 app" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </figure>
 
 ### Step 8: Directory Structure
