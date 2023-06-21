@@ -144,7 +144,7 @@ const items = ref([
 ```This video covers everything about how to generate crud ```
 
 <figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_hlRbKuyzbN.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe width="740" height="393" src="https://www.youtube.com/embed/8yc_OM6pIh8" title="VaahCMS 2.x + Vue3 | How to create CRUD and use pre-configured vue 3 app" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> 
 </figure>
 
 ::: warning NOTE
