@@ -143,7 +143,7 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 ### Step 7: This video will help you to understand how to generate module. 
 
 <figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_FjZ1F3jOPM.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://www.youtube.com/watch?v=8aNtxlLY-xE" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 ### Step 8: Directory Structure
