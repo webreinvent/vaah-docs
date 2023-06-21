@@ -141,15 +141,17 @@ const items = ref([
     },
 ]);
 ```
+```This video covers everything about how to generate crud ```
 
-## Step-9
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_hlRbKuyzbN.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
 
 ::: warning NOTE
-If you are generating crud `First time inside module` then only follow this step.
-
-Open ```.env & .env.custom``` and paste below code
+If you haven't installed the dependencies for the given module then only you need to follow  step 9,10,11.
 :::
-
+## Step-9
+Open ```.env & .env.custom``` and paste below code
 ```
 MODULE_TRAVEL_ENV=develop
 ```
@@ -160,7 +162,7 @@ MODULE_TRAVEL_ENV=develop
 
 In this step you need to run `npm install` in terminal.
 ```shell
-../<project-name>/vaahcms/Modules/<module-name>
+../<project-name>/vaahcms/Modules/Travel/Vue
 ```
 <img :src="$withBase('/images/crud-generate-9.png')">
 
@@ -168,10 +170,12 @@ In this step you need to run `npm install` in terminal.
 
 After install dependencies for local needs to run dev server `npm run dev`.
 ```shell
-../<project-name>/vaahcms/Modules/<module-name>npm run dev
+../<project-name>/vaahcms/Modules/Travel/Vue npm run dev
 ```
 
 <img :src="$withBase('/images/crud-generate-10.png')">
 
 If we are deploying in production server we need to run `npm run build`.
+
+
 
