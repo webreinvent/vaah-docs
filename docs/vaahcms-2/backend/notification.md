@@ -303,7 +303,7 @@ There are three types of variable strings.
 3. `#!ROUTE:VARIABLE_NAME!#` : If the notification contains #!ROUTE:VH.LOGIN!# string. This will replace the string with `url` of that `route name` provided in the `PHP Routes`.
 
 ```php 
-$notification = WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
+$notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
 
 if($notification)
 {
@@ -313,7 +313,7 @@ if($notification)
             "notification_id" => xxx,
         ];
 
-    WebReinvent\VaahCms\Models\Notification::send(
+    \WebReinvent\VaahCms\Models\Notification::send(
     	$notification, $user, $inputs
 	);
 }
@@ -345,7 +345,7 @@ public function getNotificationActions()
 This is how you can add custom url in method.
 
 ```php
-$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "<notification-slug>")->first();
+$notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
 
 if($notification)
 {
@@ -356,7 +356,7 @@ if($notification)
             "custom_url" => 'https://custom-url',
         ];
 
-    WebReinvent\VaahCms\Entities\Notification::send(
+    \WebReinvent\VaahCms\Models\Notification::send(
     	$notification, $user, $inputs
 	);
 }
@@ -367,7 +367,7 @@ if($notification)
 If you want to send the notification without Laravel queues, you can use following code
 
 ```php
-$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "<notification-slug>")->first();
+$notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
 
 if($notification)
 {
@@ -377,7 +377,7 @@ if($notification)
             "notification_id" => xxx,
         ];
     
-    WebReinvent\VaahCms\Entities\Notification::send(
+    \WebReinvent\VaahCms\Models\Notification::send(
     	$notification, $user, $inputs
 	);
 }
@@ -391,7 +391,7 @@ if($notification)
 To send notification with Laravel Queues, you can use following code:
 
 ```php
-$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "<notification-slug>")->first();
+$notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
 
 if($notification)
 {
@@ -401,7 +401,7 @@ if($notification)
             "notification_id" => xxx,
         ];
 
-    WebReinvent\VaahCms\Entities\Notification::dispatch(
+    \WebReinvent\VaahCms\Models\Notification::dispatch(
     	$notification, $user, $inputs, $priority
 	);
 }
@@ -505,7 +505,7 @@ In this example, we register a greeting, a line of text, a call to action, and t
 Use following code to send a Notification.
 
 ```php
-$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "send-welcome-email")->first();
+$notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "send-welcome-email")->first();
 
 if($notification)
 {
@@ -515,7 +515,7 @@ if($notification)
             "notification_id" => xxx,
         ];
     
-    WebReinvent\VaahCms\Entities\Notification::send(
+    \WebReinvent\VaahCms\Models\Notification::send(
     	$notification, $user, $inputs
 	);
 }
