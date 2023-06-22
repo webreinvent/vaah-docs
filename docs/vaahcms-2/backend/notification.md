@@ -2,6 +2,7 @@
 
 [comment]: <> ([[toc]])
 
+
 ## Introduction
 
 Through this panel you can control all the notification related things like what subject, body, from etc.
@@ -9,7 +10,7 @@ Through this panel you can control all the notification related things like what
 
 Visit following url you will see the Notification section:
 ```http request
-<public-url>/backend#/vaah/settings/notifications
+  <public-url>/backend#/vaah/settings/notifications
 ```
 Below Image is an example of notification.
 
@@ -79,5 +80,268 @@ One can type anything it will search users and by selecting user notification ca
 Follow below videos for better understanding:
 
 <figure>
+<<<<<<< Updated upstream
   <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_UGS71dEP36.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
+=======
+  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_n9zbdkcnPK.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
+
+#### 2. Create notification via Seeds
+
+You need to create json folder and inside this josn folder create  **two** `json ` files in your `module` or `theme` at following locations:
+
+`<theme-or-module-path>/Database/Seeds/json/notifications.json` with following content:
+
+```json
+[
+    {
+        "name": "<notification-name>",
+        "via_mail": 1,
+        "via_sms": 0,
+        "via_push": 0,
+        "via_backend": 1,
+        "via_frontend": 0
+    }
+]
+```
+
+You can choose the various `via` by which you want to send the `notification`.
+
+`<theme-or-module-path>/Database/Seeders/json/notification_contents.json`
+
+In this file `slug` is coming from the `<notification-name>` and each `{}` object represent the a `line` for the notification.
+
+```json
+[
+    {
+        "slug": "<notification-name-slug>",
+        "via": "mail",
+        "sort": 0,
+        "key": "subject",
+        "value": "Welcome Email"
+    },
+    {
+        "slug": "<notification-name-slug>",
+        "via": "mail",
+        "sort": 1,
+        "key": "from",
+        "meta": {
+            "name": "#!ENV:MAIL_FROM_NAME!#"
+        },
+        "value": "#!ENV:MAIL_FROM_ADDRESS!#"
+    },
+    {
+        "slug": "<notification-name-slug>",
+        "via": "mail",
+        "sort": 2,
+        "key": "line",
+        "value": "Hello #!USER:NAME!#"
+    },
+    {
+        "slug": "<notification-name-slug>",
+        "via": "backend",
+        "sort": 0,
+        "key": "content",
+        "value": "Lorem ipsum #!ENV:APP_NAME!#. Thanks!"
+    },
+    {
+        "slug": "<notification-name-slug>",
+        "via": "backend",
+        "sort": 1,
+        "key": "action",
+        "value": "Click",
+        "meta": {
+            "action":"#!ROUTE:VH.VERIFICATION!#"
+        }
+    }
+]
+```
+
+
+
+| Name    | Description                                                  |
+| ------- | ------------------------------------------------------------ |
+| `slug`  | It is the slug of the notification name.                     |
+| `via`   | Represent that this `{}` object belong to how the notification will be sent. |
+| `sort`  | Index or sequence of the each object.                        |
+| `key`   | This represent the type of object.<br />**mail** can have following keys : `greeting`, `line`, `action`, `from`, `subject`<br />**backend** can have following keys: `content`, `action` |
+| `value` | Value contain the actual content of the `key`. This can have dynamic values like `#!ENV:APP_NAME!#` will be replace by the `APP_NAME` |
+| meta    | Any additional information required. Eg: For key `action` it requires `Label` and `Link` like a hyperlink requires a `Label` and `Link` |
+
+Now to these notification should be created, whenever the `module` or `theme` gets activated. So, now we need to use `DatabaseTableSeeder.php` , add following methods to seed these notifications:
+
+```php
+...
+use WebReinvent\VaahCms\Libraries\VaahSeeder;
+
+
+public function run()
+{
+        $this->seedNotifications();
+        $this->seedNotificationContent();
+}
+
+public function seedNotifications()
+{
+    $list = \VaahSeeder::getListFromJson(__DIR__."/json/notifications.json");
+            VaahSeeder::storeSeedsWithUuid('vh_notifications', $list,'slug',true,'name',false);
+}
+
+
+public function seedNotificationContent()
+{
+    $list = \VaahSeeder::getListFromJson(__DIR__."/json/notification_contents.json");
+
+    foreach($list as $item)
+    {
+        $notification = \DB::table( 'vh_notifications' )
+            ->where( 'slug', $item['slug'] )
+            ->first();
+            
+        if(!$notification){
+                continue;
+            }
+
+        $exist = \DB::table( 'vh_notification_contents' )
+            ->where( 'vh_notification_id', $notification->id )
+            ->where('sort',  $item['sort'])
+            ->where('via',  $item['via'])
+            ->first();
+
+        $item['vh_notification_id'] = $notification->id;
+
+        if(isset($item['meta'])){
+            $item['meta'] = json_encode($item['meta']);
+        }
+
+        unset($item['slug']);
+
+
+        if(!$exist)
+        {
+            DB::table('vh_notification_contents')->insert($item);
+        } else{
+            DB::table('vh_notification_contents')
+                ->where( 'vh_notification_id', $notification->id )
+                ->where('sort',  $item['sort'])
+                ->where('via',  $item['via'])
+                ->update($item);
+        }
+    }
+}
+...
+```
+
+
+#### Notification Seeds Example
+
+`notifications.json`
+
+```json
+
+[
+    {
+        "name": "Send Welcome Email",
+        "via_mail": 1,
+        "via_sms": 0,
+        "via_push": 0,
+        "via_backend": 1,
+        "via_frontend": 0
+    }
+]
+
+```
+
+`notification_contents.json`
+
+```json
+
+[
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 0,
+        "key": "subject",
+        "value": "Welcome Email"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 1,
+        "key": "from",
+        "meta": {
+            "name": "#!ENV:MAIL_FROM_NAME!#"
+        },
+        "value": "#!ENV:MAIL_FROM_ADDRESS!#"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 2,
+        "key": "line",
+        "value": "Hello #!USER:NAME!#"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 3,
+        "key": "greetings",
+        "value": "Welcome to #!ENV:APP_NAME!#"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 4,
+        "key": "line",
+        "value": "Thank you for signing up for #!ENV:APP_NAME!# services"
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 5,
+        "key": "action",
+        "value": "Click to Login",
+        "meta": {
+            "action":"#!ROUTE:VH.LOGIN!#"
+        }
+    },
+    {
+        "slug": "send-welcome-email",
+        "via": "mail",
+        "sort": 6,
+        "key": "line",
+        "value": "If your have any queries please contact this #!ENV:MAIL_FROM_ADDRESS!#"
+    }
+]
+
+```
+
+Use following code to send a Notification.
+
+```php
+$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "send-welcome-email")->first();
+
+if($notification)
+{
+    
+    $inputs = [
+            "user_id" => xxx,
+            "notification_id" => xxx,
+        ];
+    
+    WebReinvent\VaahCms\Entities\Notification::send(
+    	$notification, $user, $inputs
+	);
+}
+```
+
+The notification channel will then translate the message components into a beautiful, responsive HTML email template with a plain-text counterpart. Here is an example of an email generated by the notification:
+
+<img :src="$withBase('/images/notification-4.png')" alt="notification-4">
+
+**Note:** When sending notifications, be sure to set the `APP_NAME` in your `env` file. This value will be used in the `header` and `footer` of your mail notification messages.
+
+
+>>>>>>> Stashed changes
