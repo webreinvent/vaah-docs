@@ -362,6 +362,12 @@ if($notification)
 }
 ```
 
+Follow below videos for better understanding:
+
+<figure>
+  <iframe src="https://img-v4.getdemo.dev/screenshot/phpstorm64_FktN7s3pEd.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
 ### Sending without Laravel Queues
 
 If you want to send the notification without Laravel queues, you can use following code
