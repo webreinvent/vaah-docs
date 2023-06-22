@@ -319,3 +319,48 @@ if($notification)
 }
 
 ```
+
+### How to add Custom Url?
+To add custom url, you need to add `param string` of custom url: `#!PARAM:CUSTOM_URL!#`.
+
+You can add this param string in `Notification Actions`.
+
+```php
+public function getNotificationActions()
+{
+    
+    $list = [
+        [
+            'name'=>'#!PARAM:CUSTOM_URL!#'
+        ]
+    ];
+
+    $response['success'] = true;
+    $response['data'] = $list;
+
+    return $response;
+}
+```
+
+This is how you can add custom url in method.
+
+```php
+$notification = WebReinvent\VaahCms\Entities\Notification::where('slug', "<notification-slug>")->first();
+
+if($notification)
+{
+    
+    $inputs = [
+            "user_id" => xxx,
+            "notification_id" => xxx,
+            "custom_url" => 'https://custom-url',
+        ];
+
+    WebReinvent\VaahCms\Entities\Notification::send(
+    	$notification, $user, $inputs
+	);
+}
+```
+
+
+
