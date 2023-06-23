@@ -23,7 +23,9 @@ By default, `VaahCMS` have following types of `Taxonomies`:
  
 ### Create Taxonomies and Taxonomy Types via VaahSeeder
 
-Through seeds, you can create `taxonomies` and `taxonomy types`. Make two json files with the names `taxonomies.json` and `taxonomy_types.json` in the directory `.../VaahCms/Modules/{module name}/Database/Seeds/json/`.
+Through seeds, you can create `taxonomies` and `taxonomy types`. Make two json files with the names `taxonomies.json` and `taxonomy_types.json` in the directory 
+
+`.../VaahCms/Modules/{module name}/Database/Seeds/json/`.
 
 
 `taxonomies.json`
