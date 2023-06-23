@@ -343,6 +343,8 @@ public function getNotificationActions()
 ```
 
 This is how you can add custom url in method.
+ 
+ `custom_url` name based on your #!PARAM:**CUSTOM_URL**!#
 
 ```php
 $notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
