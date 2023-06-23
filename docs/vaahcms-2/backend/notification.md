@@ -171,54 +171,49 @@ public function run()
         $this->seedNotifications();
         $this->seedNotificationContent();
 }
-
-public function seedNotifications()
+ public function seedNotifications()
 {
-    $list = VaahSeeder::getListFromJson(__DIR__."/json/notifications.json");
-    VaahSeeder::storeSeedsWithUuid('vh_notifications', $list,'slug',true,'name',false);
+        $list = VaahSeeder::getListFromJson(__DIR__ . "/json/notifications.json");
+        VaahSeeder::storeSeedsWithUuid('vh_notifications', $list, 'slug', true, 'name', false);
 }
-
-
 public function seedNotificationContent()
 {
-    $list = VaahSeeder::getListFromJson(__DIR__."notification_contents.json");
+        $list = VaahSeeder::getListFromJson(__DIR__ . "/json/notification_contents.json");
 
-    foreach($list as $item)
-    {
-        $notification = \DB::table( 'vh_notifications' )
-            ->where( 'slug', $item['slug'] )
-            ->first();
+        foreach ($list as $item) {
+            $notification = \DB::table('vh_notifications')
+                ->where('slug', $item['slug'])
+                ->first();
 
-        if(!$notification){
-             continue;
+            if (!$notification) {
+                continue;
+            }
+
+            $exist = \DB::table('vh_notification_contents')
+                ->where('vh_notification_id', $notification->id)
+                ->where('sort', $item['sort'])
+                ->where('via', $item['via'])
+                ->first();
+
+            $item['vh_notification_id'] = $notification->id;
+
+            if (isset($item['meta'])) {
+                $item['meta'] = json_encode($item['meta']);
+            }
+
+            unset($item['slug']);
+
+
+            if (!$exist) {
+                DB::table('vh_notification_contents')->insert($item);
+            } else {
+                DB::table('vh_notification_contents')
+                    ->where('vh_notification_id', $notification->id)
+                    ->where('sort', $item['sort'])
+                    ->where('via', $item['via'])
+                    ->update($item);
+            }
         }
-
-        $exist = \DB::table( 'vh_notification_contents' )
-            ->where( 'vh_notification_id', $notification->id )
-            ->where('sort',  $item['sort'])
-            ->where('via',  $item['via'])
-            ->first();
-
-        $item['vh_notification_id'] = $notification->id;
-
-        if(isset($item['meta'])){
-            $item['meta'] = json_encode($item['meta']);
-        }
-
-        unset($item['slug']);
-
-
-        if(!$exist)
-        {
-            DB::table('vh_notification_contents')->insert($item);
-        } else{
-            DB::table('vh_notification_contents')
-                ->where( 'vh_notification_id', $notification->id )
-                ->where('sort',  $item['sort'])
-                ->where('via',  $item['via'])
-                ->update($item);
-        }
-    }
 }
 ...
 ```
