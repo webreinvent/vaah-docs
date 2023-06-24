@@ -125,6 +125,69 @@ If you want to add VaahCMS `Meta Tags` watch below video :
   <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_5N1FXxuZ31.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
+### How to create Setting
+
+You can create a Setting through `Seeds` and add a field on Setting Form for that Setting.
+
+Create a json file of name `settings.json` at `<module>/Database/Seeds/json/` this directory.
+
+Write this code in `settings.json` file.
+
+```php
+[
+
+    {
+        "category": "global",
+        "key": "site_title",
+        "value": "VaahCMS"
+    },
+    {
+        "category": "global",
+        "key": "site_description",
+        "value": "Another awesome site on VaahCMS"
+    }
+
+]
+```
+
+To run this seed, you have to create `seedSetting()` method in DatabaseTableSeeder.php file.
+
+```php
+public function seedSettings()
+    {
+
+
+        $list = $this->getListFromJson("settings.json");
+
+        foreach($list as $item)
+        {
+            $exist = \DB::table( 'vh_settings' )
+                ->where( 'category', $item['category'] )
+                ->where( 'key', $item['key'] )
+                ->first();
+
+            if (!$exist){
+
+                if(isset($item['type']) && $item['type']=='json')
+                {
+                    $item['value']=json_encode($item['value']);
+                }
+
+                \DB::table( 'vh_settings' )->insert( $item );
+            } else{
+                \DB::table( 'vh_settings' )
+                    ->where( 'category', $item['category'] )
+                    ->where( 'key', $item['key'] )
+                    ->update($item);
+            }
+        }
+
+    }
+```
+
+
+
+
 
 
 
