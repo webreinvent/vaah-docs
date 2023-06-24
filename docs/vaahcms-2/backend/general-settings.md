@@ -15,13 +15,13 @@ Visit following url you will see the General settings section:
 
 Below Image is a example of General settings.
 
-<img :src="$withBase('/images/general-settings-1.png')">
+<img :src="$withBase('https://img-v4.getdemo.dev/screenshot/KSq9PfZhM6.png')">
 
 ## Site Settings
 
 In this setting we are configuring the behavior of the application.
 
-Below Image is a example of Site settings.
+Below Image is a example of `Site Settings`.
 
 <img :src="$withBase('/images/general-settings-2.png')">
 
@@ -54,6 +54,16 @@ Below video will help to understand about site settings :
 <figure>
   <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_2aMY72cHW6.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
+
+## Securities 
+
+This setting provides Multi-Factor Authentication Securities to the site on login time.
+
+Below image is of `Securities` settings.
+
+<img :src="$withBase('https://img-v4.getdemo.dev/screenshot/Screenshot%202023-06-24%20121028.png')">
+
+After selecting the security feature you need to click on the `save`. 
 
 ## Date & Time
 
