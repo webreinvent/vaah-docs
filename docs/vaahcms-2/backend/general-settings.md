@@ -153,6 +153,14 @@ Write this code in `settings.json` file.
 To run this seed, you have to create `seedSetting()` method in DatabaseTableSeeder.php file.
 
 ```php
+
+public function getListFromJson($json_file_name)
+    {
+        $json_file = __DIR__."/json/".$json_file_name;
+        $jsonString = file_get_contents($json_file);
+        return json_decode($jsonString, true);
+    }
+
 public function seedSettings()
     {
 
