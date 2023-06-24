@@ -41,3 +41,14 @@ This video will help you to understand the process of auto update
 </figure>
 
 
+### How to update by CLI
+
+If you want to update VaahCms by `CLI` base directory 
+
+This will upgrade your project to the latest version
+
+```sh
+composer update 
+```
+
+
