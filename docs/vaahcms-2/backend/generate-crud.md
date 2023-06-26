@@ -18,7 +18,7 @@ To generate CRUD you will need to mention Module name. If you don't have any Mod
 Firstly need to update VaahCms self update
 Use below command for that :
 ```shell
-npm install vaah -g
+npm i vaah -g
 ```
 
 ## Step-2
@@ -33,23 +33,22 @@ npx vaah cms:crud
 ::: warning NOTE
 In this example we are going to use Travel Module and Database table name will be vh_blogs. 
 :::
-Use following procedures to set up CRUD.
+It will ask you following questions, answers also mentioned in ```highlighted text ```
+- For which you want to create CRUD: ``` Vue3 & PrimeVue ``` (This option is to build template)
 
-- For which you want to create CRUD: vue3 & PrimeVue ```This option is to build template```
+- Enter the Module/Theme/Entity name: ``` Travel ```  (Name of the module, so that it will create crud inside it)
 
-- Enter the Module/Theme/Entity name: Travel ```Name of the module, so that it will create crud inside it```
+- Enter the section name (Backend | Frontend or Folder name): ```Backend ``` (For module choose backend, for theme choose frontend)
 
-- Enter the section name (Backend | Frontend or Folder name): Backend ```For module choose backend, for theme choose frontend```
+- Vue folder name/path: ```vue ``` (The directory name where vue files and component stored)
 
-- Vue folder name/path:(vue) ```The directory name where vue files and component stored```
+- Enter your database table name: ```vh_blogs``` (Enter the table name for which you are generating crud)
 
-- Enter your database table name: vh_blogs ```Enter the table name for which you are generating crud```
+- Do you want to generate migration file (true/false): ```true``` We have to write true so that migration file will be generated
 
-- Do you want to generate migration file (true/false):  (true) ```We have to write true so that migration file will be generated```
+- Enter your model name (singular): ```Blog``` (It is asking name of the model. Use table name as singular for better understanding)
 
-- Enter your model name (singular): Blog ```It is asking name of the model. Use table name as singular for better understanding```
-
-- Enter your controller name (plural): Blogs ```It is asking name of the controller. Use table name as plural for better understanding```
+- Enter your controller name (plural): ```Blogs``` (It is asking name of the controller. Use table name as plural for better understanding)
 
 ```This video will help you to understand the generation of CRUD.```
 <figure>
