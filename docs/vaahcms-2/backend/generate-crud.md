@@ -9,6 +9,7 @@ Before jumping to crud part project should have generated module and activated.
 For the module and theme set up follow below link:-
 [https://github.com/webreinvent/vaahcli](https://github.com/webreinvent/vaahcli)
 
+[Click here to create module](https://docs.vaah.dev/vaahcms-2/backend/generate-module.html)
 ## Step-1
 Firstly need to update VaahCms self update
 Use below command for that :
