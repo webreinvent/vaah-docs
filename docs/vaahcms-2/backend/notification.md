@@ -218,6 +218,10 @@ public function seedNotificationContent()
 ...
 ```
 
+Follow below videos for better understanding:
+
+
+
 
 ### How to show notification variables?
 If you want to show variables name in notification sidebar. 
@@ -362,6 +366,10 @@ if($notification)
 Follow below videos for better understanding:
 
 <figure>
+  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
+<figure>
   <iframe src="https://img-v4.getdemo.dev/screenshot/phpstorm64_FktN7s3pEd.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
@@ -504,6 +512,65 @@ In this example, we register a greeting, a line of text, a call to action, and t
     }
 ]
 ```
+
+Use following code to seed Notification.
+
+Include use `Illuminate\Support\Facades\DB` in your `DatabaseTableSeeder.php`
+
+For run seeder Deactivate and Active your module.
+
+```php
+public function run()
+{
+        $this->seedNotifications();
+        $this->seedNotificationContent();
+}
+ public function seedNotifications()
+{
+        $list = VaahSeeder::getListFromJson(__DIR__ . "/json/notifications.json");
+        VaahSeeder::storeSeedsWithUuid('vh_notifications', $list, 'slug', true, 'name', false);
+}
+public function seedNotificationContent()
+{
+        $list = VaahSeeder::getListFromJson(__DIR__ . "/json/notification_contents.json");
+
+        foreach ($list as $item) {
+            $notification = \DB::table('vh_notifications')
+                ->where('slug', $item['slug'])
+                ->first();
+
+            if (!$notification) {
+                continue;
+            }
+
+            $exist = \DB::table('vh_notification_contents')
+                ->where('vh_notification_id', $notification->id)
+                ->where('sort', $item['sort'])
+                ->where('via', $item['via'])
+                ->first();
+
+            $item['vh_notification_id'] = $notification->id;
+
+            if (isset($item['meta'])) {
+                $item['meta'] = json_encode($item['meta']);
+            }
+
+            unset($item['slug']);
+
+
+            if (!$exist) {
+                DB::table('vh_notification_contents')->insert($item);
+            } else {
+                DB::table('vh_notification_contents')
+                    ->where('vh_notification_id', $notification->id)
+                    ->where('sort', $item['sort'])
+                    ->where('via', $item['via'])
+                    ->update($item);
+            }
+        }
+}
+```
+
 
 Use following code to send a Notification.
 
