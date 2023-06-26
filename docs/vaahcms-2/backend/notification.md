@@ -220,6 +220,10 @@ public function seedNotificationContent()
 
 Follow below videos for better understanding:
 
+<figure>
+  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
 
 
 
@@ -366,12 +370,61 @@ if($notification)
 Follow below videos for better understanding:
 
 <figure>
-  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
-</figure>
-
-<figure>
   <iframe src="https://img-v4.getdemo.dev/screenshot/phpstorm64_FktN7s3pEd.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
+
+### How to add Dynamic variable in Url 
+
+To add dynamic variable in Url, you need to add `route string` `#!ROUTE:VARIABLE_NAME!#`.
+
+```php
+ public function getNotificationActions()
+    {
+
+        $list = [
+            [
+                'name'=>'#!ROUTE:VARIABLE_NAME!#'
+            ],
+        ];
+
+        $response['success'] = true;
+        $response['data'] = $list;
+
+        return $response;
+    }
+
+```
+
+Add your variable route in `<module>/Routes/backend.php`
+
+```php
+ Route::get( '/reset/{code}', 'ExampleController@Examplefunction' )
+            ->name( 'variable_name' );
+```
+
+
+This is how you can add dynamic variable in Url.
+
+```php
+
+$notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
+
+        if($notification)
+        {
+
+            $inputs = [
+                "user_id" => xxx,
+                "notification_id" => xxx,
+                "route" => [
+                    "code" => variable,
+                ]
+            ];
+
+            \WebReinvent\VaahCms\Models\Notification::send(
+                $notification, $user, $inputs
+            );
+        }
+```
 
 ### Sending without Laravel Queues
 
