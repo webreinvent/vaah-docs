@@ -377,6 +377,9 @@ Follow below videos for better understanding:
 
 To add dynamic variable in Url, you need to add `route string` `#!ROUTE:VARIABLE_NAME!#`.
 
+For extend your `Action Variable ` You need to add `getNotificationActions` method in `ExtendController` of your  `Module`. 
+
+
 ```php
  public function getNotificationActions()
     {
@@ -395,7 +398,7 @@ To add dynamic variable in Url, you need to add `route string` `#!ROUTE:VARIABLE
 
 ```
 
-Add your variable route in `<module>/Routes/backend.php`
+Add your variable route in `<module-path>/Routes/backend.php`
 
 ```php
  Route::get( '/reset/{code}', 'ExampleController@Examplefunction' )
@@ -425,6 +428,11 @@ $notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notifi
             );
         }
 ```
+Follow below videos for better understanding:
+
+<figure>
+  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
 
 ### Sending without Laravel Queues
 
@@ -478,6 +486,36 @@ if($notification)
 | `$user`         | is the instance of `WebReinvent\VaahCms\Entities\User`       |
 | `$inputs`       | is the a data array contain values of strings. `user_id` and `notification_id` are required params. <br />Eg. <br />1. If the notification contains `#!PARAM:NAME!#` string and then the `$input` array must be:  <code>$inputs =  [ "name" => "John" ]</code> This will replace the string with value provided in the inputs. <br />2. If the notification contains `#!USER:NAME!#` string and then the `$input` array must be:  <code>$inputs =  [ "user_id" => X ]</code> This will replace the string with value provided in the `User` Entity. |
 | `$priority`     | it is the order of execution of the jobs. You can provide following values: `high` ,`medium`, `low`, & `default` |
+
+
+#### Setup Laravel Queues for VaahCMS
+
+Follow the following steps:
+
+1. Set `QUEUE_CONNECTION` to `database` in your active `env` file
+
+1. Visit `Setting > General > Site Settings > Laravel Queues` in your `backend dashboard` and enable it.
+
+3. Run or setup `cron/daemon` job for
+
+`php artisan queue:work --queue=high,medium,low,default --env=env_filename`
+
+If you want to run without cache use following command:
+
+`php artisan queue:listen --queue=high,medium,low,default --env=env_filename` eg:
+
+`php artisan queue:listen --queue=high,medium,low,default --env=develop`
+
+If you make any changes in code of your `Job` class, then you must restart the `queue:work` command.
+
+**Note**: When sending notifications, be sure to set the `MAIL_FROM_ADDRESS` and `MAIL_FROM_NAME` in your `env` file. This value will be used as the `sender` of the `email` and `name` of your mail notification messages.
+
+
+Follow below videos for better understanding:
+
+<figure>
+  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
 
 
 ### Example
