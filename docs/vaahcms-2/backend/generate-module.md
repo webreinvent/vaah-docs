@@ -140,15 +140,26 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 <public-url>/backend/product#/
 ```
 
-### Step 7: This video will help you to understand how to generate module.
+### This video will help you to understand how to generate module.
 
 <figure>
 <iframe width="740" height="393" src="https://www.youtube.com/embed/8aNtxlLY-xE" title="VaahCMS 2.x + Vue3 | How to create module and use pre-configured vue 3 app" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </figure>
 
-### Step 8: Directory Structure
+### Directory Structure of Module
 
-<img :src="$withBase('/images/module-directory-structure.png')" alt="module-directory-structure">
+```
+      config/
+      database/
+      Helpers/
+      Http/
+      Libraries/
+      Models/
+      Providers/
+      Resources/
+      Routes/
+      Vue/
+```
 
 - Config:
   Config file is present here. Config file contains all the information related to module, that was provided while creating module, such as, name, description, `is_migratable`, `is sample data available` etc.
