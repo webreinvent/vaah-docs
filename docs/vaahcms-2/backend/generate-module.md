@@ -150,15 +150,49 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 
 ```
       config/
+          ├── .gitkeep
+          ├── config.php     
       database/
+            ├── Migrations
+            ├── Seeds
       Helpers/
       Http/
+        ├── Controllers
+        ├── Middleware
+        ├── Requests
       Libraries/
       Models/
       Providers/
+             ├── .gitkeep
+             ├── EventServiceProvider.php
+             ├── ProductServiceProvider.php
+             ├── RouteServiceProvider.php
       Resources/
+             ├── assets/
+             ├── lang/
+             ├── views/
       Routes/
+           ├── api.php
+           ├── backend.php
+           ├── frontend.php
       Vue/
+        ├── components/
+        ├── layouts/
+        ├── node_modules/
+        ├── pages/
+        ├── routes/
+        ├── stores/
+        ├── vaahvue/
+        ├── index.html
+        ├── jsconfig.json
+        ├── main.js
+        ├── package.json
+        ├── package-lock.json
+        ├── README.md
+        ├── vite.config.js
+      .gitignore 
+      composer.json
+      README.md
 ```
 
 - Config:
