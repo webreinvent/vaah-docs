@@ -23,6 +23,7 @@ sidebar = [
             {text: 'Generate Theme', link: '/vaahcms-2/backend/generate-themes.md'},
             {text: 'Generate User', link: '/vaahcms-2/backend/generate-user.md'},
             {text: 'Generate Setting', link: '/vaahcms-2/backend/generate-setting.md'},
+            {text: 'Generate Taxonomies', link: '/vaahcms-2/backend/generate-taxonomies.md'},
         ]
     },
 

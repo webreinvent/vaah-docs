@@ -1,10 +1,10 @@
-# Vaahcms
+# VaahCMS
 
 [comment]: <> ([[toc]])
 
 ## Introduction
 
-This is a guide to generate user crud in module of VaahCms.
+This is a guide to generate user crud in module of VaahCMS.
 Before jumping to crud part project should have generated module and activated.
 For the module and theme set up follow below link:-
 [VaahCLI](https://github.com/webreinvent/vaahcli/tree/develop)
@@ -80,8 +80,8 @@ Add this code in above path
 
 ## Step-6
 Watch video\
-How to create user crud in module VaahCms
+How to create user crud in module VaahCMS
 
 <figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/user_docs.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+<iframe width="672" height="353" src="https://www.youtube.com/embed/egjqkWqCxKQ" title="VaahCMS 2.x + Vue3 | How to create Settings section and use pre-configured vue 3 app" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </figure>

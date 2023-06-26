@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is a guide to generate setting crud in module of VaahCms.
+This is a guide to generate setting crud in module of VaahCMS.
 Before jumping to crud part project should have generated module and activated.
 For the module and theme set up follow below link:-
 [VaahCLI](https://github.com/webreinvent/vaahcli/tree/develop)
@@ -93,8 +93,8 @@ Add this code in above path
 
 ## Step-7
 Watch video\
-How to create setting crud in module VaahCms
+How to create setting crud in module VaahCMS
 
 <figure>
-  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe width="740" height="393" src="https://www.youtube.com/embed/egjqkWqCxKQ?controls=0&amp;start=5" title="VaahCMS 2.x + Vue3 | How to create CRUD and use pre-configured vue 3 app" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> 
 </figure>
