@@ -5,12 +5,12 @@
 ## Introduction
 
 Those configurations are used to manage vaahCMS can be set in this `General settings` section.
-Here controls are segregated in 5 parts in accordion, will discuss one by one.
+Here controls are segregated in 6 parts in accordion, will discuss one by one.
 
 Visit following url you will see the General settings section:
 
 ```http request
-<public-url>/backend#/vaah/advanced/general
+<public-url>/backend#/vaah/settings/general
 ```
 
 Below Image is a example of General settings.
@@ -150,9 +150,13 @@ Write this code in `settings.json` file.
 ]
 ```
 
-To run this seed, you have to create `seedSetting()` method in DatabaseTableSeeder.php file.
+You have to create `seedSetting()` method in `DatabaseTableSeeder.php` file.To run this seed, you have to `Deactivate` and `Activate` you `Module` 
 
 ```php
+function run()
+    {
+        $this->seedSettings();
+    }
 
 public function getListFromJson($json_file_name)
     {
