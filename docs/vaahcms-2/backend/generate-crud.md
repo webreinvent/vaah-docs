@@ -27,7 +27,6 @@ Use the below command to generate CRUD :
 ```shell
 npx vaah cms:crud
 ```
-<img :src="$withBase('/images/crud-generate-2.png')">
 
 ## Step-3
 ::: warning NOTE
@@ -65,6 +64,8 @@ It will ask you following questions, answers is also mentioned here
 ``` shell
   ? Enter your controller name (plural):  Blogs
  ```
+
+<img :src="$withBase('/images/crud-generate-2.png')">
 
 ## Step-4
 Now write migrations according to schema and re-activate module to run the migration.
