@@ -151,41 +151,12 @@ const items = ref([
     },
 ]);
 ```
-```This video will help you in generating CRUD ```
+
+### This video will help you in generating CRUD
 
 <figure>
   <iframe width="740" height="393" src="https://www.youtube.com/embed/8yc_OM6pIh8" title="VaahCMS 2.x + Vue3 | How to create CRUD and use pre-configured vue 3 app" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> 
 </figure>
-
-::: warning NOTE
-If you haven't installed the dependencies for the given module then only you need to follow  step 9,10,11.
-:::
-## Step-9
-Open ```.env & .env.custom``` and paste below code
-```
-MODULE_TRAVEL_ENV=develop
-```
-<img :src="$withBase('/images/crud-generate-8-a.png')">
-<img :src="$withBase('/images/crud-generate-8-b.png')">
-
-## Step-10
-
-In this step you need to run `npm install` in terminal.
-```shell
-../<project-name>/vaahcms/Modules/Travel/Vue
-```
-<img :src="$withBase('/images/crud-generate-9.png')">
-
-## Step-11
-
-After installing dependencies for local, we need to run command `npm run dev` in Vue folder.
-```shell
-../<project-name>/vaahcms/Modules/Travel/Vue npm run dev
-```
-
-<img :src="$withBase('/images/crud-generate-10.png')">
-
-If we are deploying in production server we need to run `npm run build`.
 
 
 
