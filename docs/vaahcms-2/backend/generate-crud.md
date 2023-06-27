@@ -4,25 +4,25 @@
 
 ## Introduction
 
-This is a guide to generate crud in VaahCms. We are taking an example of Blog site.
-Before jumping to crud part project should have generated module and activated.
+This is a guide to generating crud in VaahCms. We are taking an example of a Blog site.
+Before jumping to the CRUD part project should have generated the module and activated it.
 For the module and theme set up follow below link:-
 [https://github.com/webreinvent/vaahcli](https://github.com/webreinvent/vaahcli)
 
 ::: warning NOTE
-To generate CRUD you will need to mention Module name. If you don't have any Module for the CRUD
-[click here](https://docs.vaah.dev/vaahcms-2/backend/generate-module.html)
+To generate CRUD, you will need to mention the module name. If you don't have a module for the CRUD, you will need to create one by 
+[clicking here](https://docs.vaah.dev/vaahcms-2/backend/generate-module.html)
 :::
 
 ## Step-1
-Firstly need to update VaahCms self update
-Use below command for that :
+To update VaahCms, you first need to use the self-update command. 
+use the following command for this:
 ```shell
 npm i vaah -g
 ```
 
 ## Step-2
-Use the below command to generate CRUD :
+To generate CRUD, use the following command:
 
 ```shell
 npx vaah cms:crud
@@ -30,9 +30,9 @@ npx vaah cms:crud
 
 ## Step-3
 ::: warning NOTE
-In this example we are going to use Travel Module and Database table name will be vh_blogs. 
+For this example, we will be using the Travel Module and the database table name will be vh_blogs.
 :::
-It will ask you following questions, answers is also mentioned here
+During the process, you will be asked the following questions. The answers are also provided below.
 ``` shell
   ? For which you want to create CRUD:
   > Module - Vue3 & PrimeVue...................................................0
@@ -68,8 +68,8 @@ It will ask you following questions, answers is also mentioned here
 <img :src="$withBase('/images/crud-generate-2.png')">
 
 ## Step-4
-Now write migrations according to schema and re-activate module to run the migration.
-Below link you can use to go module in your browser
+Next, write the migrations according to the schema and reactivate the module to run the migration.
+You can use the link below to access the module in your browser.
 ```http request
 <public-url>/backend#/vaah/modules/
 ```
@@ -78,8 +78,7 @@ Include the laravel router file in the module's route file
 
 ```VaahCms/Modules/Travel/Routes/backend.php```
 
-Add this code in above path
-
+use the following code snippet in the path mentioned above.
 ```php
 include('backend/routes-blogs.php');
 ```
@@ -89,7 +88,7 @@ Include the vue router file
 
 ```VaahCms/Modules/Travel/Vue/routes/routes.js```
 
-Add this code in above path
+use the following code snippet in the path mentioned above.
 ``` js
 import blog from "./vue-routes-blogs";
    
@@ -109,14 +108,15 @@ export default routes;
 ```
 
 ## Step-7
-Import the route file of vue
 
 ```modules/Travel/vue/store/store-blogs.js```
 
-Make sure that code should be like this
+To import the Vue route file,
+please use the following code in the path mentioned above.
 ```js
 let ajax_url = base_url + "/travel/blogs";
 ```
+Please ensure that the code is structured as follows.
 
 ```js
 let model_namespace = 'VaahCms\\Modules\\Travel\\Models\\Blog';
@@ -129,7 +129,7 @@ Add Crud link to your Module Dashboard
 
 ```modules/Travel/Vue/components/Aside.vue```
 
-Make sure that your code should be like this
+Please ensure that your code is structured as follows.
 
 ```js
 const items = ref([
