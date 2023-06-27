@@ -27,20 +27,21 @@ Command that is used to generate a module is:-
 npx vaah cms:m
 ```
 
-After triggering this command, it will ask for some information 
-regarding the Module,answers are also mentioned here. Like:-
+After this command, it will ask for some information 
+regarding the Module,answers are also mentioned here.
 
-Technology to be used for Frontend:-
-```
+``` 
 ? Choose the tech stack of the module:  Module - Vue3 & PrimeVue
 ```
-
 After that information related to modules such as name, title, description
 etc. of the module.
 
+- Name of The Module you want to create. For example Product.
     ```
-    ? Enter your module name:  Product
-    ```
+    ? Enter your module name: Product
+    
+  ```
+
 - Enter more relevant name for your module. Example Product Management etc.
     ```
     ? Enter meaningful title for your module:
