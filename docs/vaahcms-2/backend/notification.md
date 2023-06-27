@@ -221,7 +221,7 @@ public function seedNotificationContent()
 Follow below videos for better understanding:
 
 <figure>
-  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://www.youtube.com/embed/t3PdH_I1IdU" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 
@@ -431,7 +431,7 @@ $notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notifi
 Follow below videos for better understanding:
 
 <figure>
-  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://www.youtube.com/embed/1lzk_LQofFA" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 ### Sending without Laravel Queues
@@ -686,7 +686,3 @@ The notification channel will then translate the message components into a beaut
 
 <img :src="$withBase('https://img-v4.getdemo.dev/screenshot/chrome_bBtcAteKSK.png')">
 
-
-<figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_VkDgxCvuc1.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
-</figure>
