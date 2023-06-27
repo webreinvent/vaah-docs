@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This guide teaches `How to create MODULES in VAAH CMS`
+This guide will help you to create Module in VaahCMS
 
 ### Prerequisites
 
@@ -28,26 +28,19 @@ npx vaah cms:m
 ```
 
 After triggering this command, it will ask for some information 
-regarding the Module. Like:-
+regarding the Module,answers are also mentioned here. Like:-
 
 Technology to be used for Frontend:-
 ```
 ? Choose the tech stack of the module:  Module - Vue3 & PrimeVue
 ```
 
-You can change the option by using arrow key.
-
-Vue3 & PrimeVue will provide primevue components with vue3 for the frontend.
-Vue2 & Buefy will provide Buefy components (using Bulma css) with vue2 for the frontend.
-
 After that information related to modules such as name, title, description
 etc. of the module.
 
-- Name of The Module you want to create. For example Products.
     ```
-    ? Enter your module name:  
+    ? Enter your module name:  Product
     ```
-
 - Enter more relevant name for your module. Example Product Management etc.
     ```
     ? Enter meaningful title for your module:
