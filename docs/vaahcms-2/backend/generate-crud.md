@@ -33,27 +33,38 @@ npx vaah cms:crud
 ::: warning NOTE
 In this example we are going to use Travel Module and Database table name will be vh_blogs. 
 :::
-It will ask you following questions, answers also mentioned in ```highlighted text ```
-- For which you want to create CRUD: ``` Vue3 & PrimeVue ``` (This option is to build template)
+It will ask you following questions, answers is also mentioned here
+``` shell
+  ? For which you want to create CRUD:
+  > Module - Vue3 & PrimeVue...................................................0
+    Module - Vue2 & Buefy......................................................1
+    Theme......................................................................2
+    Custom Path - Vue3 & PrimeVue..............................................3
+ ```
+``` shell
+  ? Enter the Module/Theme/Entity name : Travel
+ ```
 
-- Enter the Module/Theme/Entity name: ``` Travel ```  (Name of the module, so that it will create crud inside it)
+``` shell
+  ? Enter the section name (Backend | Frontend or Folder name):  (Backend)
+ ```
+``` shell
+  ?  Vue folder name/path:  (Vue)
+ ```
 
-- Enter the section name (Backend | Frontend or Folder name): ```Backend ``` (For module choose backend, for theme choose frontend)
+``` shell
+  ?  Enter your database table name:  vh_blogs
+ ```
 
-- Vue folder name/path: ```vue ``` (The directory name where vue files and component stored)
-
-- Enter your database table name: ```vh_blogs``` (Enter the table name for which you are generating crud)
-
-- Do you want to generate migration file (true/false): ```true``` We have to write true so that migration file will be generated
-
-- Enter your model name (singular): ```Blog``` (It is asking name of the model. Use table name as singular for better understanding)
-
-- Enter your controller name (plural): ```Blogs``` (It is asking name of the controller. Use table name as plural for better understanding)
-
-```This video will help you to understand the generation of CRUD.```
-<figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/cmd_NiBc9DdrDM.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
-</figure>
+``` shell
+  ? Do you want to generate migration file (true/false):  (true)
+ ```
+``` shell
+  ? Enter your model name (singular):  Blog
+ ```
+``` shell
+  ? Enter your controller name (plural):  Blogs
+ ```
 
 ## Step-4
 Now write migrations according to schema and re-activate module to run the migration.
@@ -61,12 +72,6 @@ Below link you can use to go module in your browser
 ```http request
 <public-url>/backend#/vaah/modules/
 ```
-```This video will help you to understand how to re-activate module.```
-
-<figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_j3WEb0p0h0.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
-</figure>
-
 ## Step-5
 Include the laravel router file in the module's route file
 
@@ -145,7 +150,7 @@ const items = ref([
     },
 ]);
 ```
-```This video covers everything about how to generate crud ```
+```This video will help you in generating CRUD ```
 
 <figure>
   <iframe width="740" height="393" src="https://www.youtube.com/embed/8yc_OM6pIh8" title="VaahCMS 2.x + Vue3 | How to create CRUD and use pre-configured vue 3 app" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> 
@@ -172,7 +177,7 @@ In this step you need to run `npm install` in terminal.
 
 ## Step-11
 
-After install dependencies for local needs to run dev server `npm run dev`.
+After installing dependencies for local, we need to run command `npm run dev` in Vue folder.
 ```shell
 ../<project-name>/vaahcms/Modules/Travel/Vue npm run dev
 ```
