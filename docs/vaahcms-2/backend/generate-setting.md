@@ -85,11 +85,14 @@ Call the router file when clicking on the users.
 Add this code in items of module (VaahCms/Modules/Helloworld/Vue/components/aside.vue)
 ```php
 //-------------------------------------------------------
-           {
-                label: 'settings',
+        label: 'HelloWorld',
+        items: [
+            {
+                label: 'Settings',
                 icon: 'fa-regular fa-chart-bar',
                 to: "/settings"
-            }
+            },
+        ]
 //-------------------------------------------------------
 ```
 
@@ -98,7 +101,7 @@ Call the seeder in DatabaseTableSeeder. Add this code to run the function.
 
 ```VaahCms/Modules/Helloworld/Database/Seeds/DatabaseTableSeeder.php```
 
-Add this code to run the function.
+Add this code to run function.
 ```php
 //-------------------------------------------------------
            {

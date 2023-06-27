@@ -88,11 +88,14 @@ Call router file when clicking on the users
 Add this code to items of the module (VaahCms/Modules/Helloworld/Vue/components/aside.vue).
 ```php
 //-------------------------------------------------------
-           {
+        label: 'HelloWorld',
+        items: [
+            {
                 label: 'Users',
                 icon: 'fa-regular fa-chart-bar',
                 to: "/users"
-            }
+            },
+        ]
 //-------------------------------------------------------
 ```
 
