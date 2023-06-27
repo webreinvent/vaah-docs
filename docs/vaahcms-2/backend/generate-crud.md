@@ -94,7 +94,7 @@ import blog from "./vue-routes-blogs";
    
 routes = routes.concat(blog);
 ```
-
+Please ensure that your code is structured as follows.
 ``` js
 let routes= [];
 
@@ -112,11 +112,11 @@ export default routes;
 ```modules/Travel/vue/store/store-blogs.js```
 
 To import the Vue route file,
-please use the following code in the path mentioned above.
+use the following code in the path mentioned above.
 ```js
 let ajax_url = base_url + "/travel/blogs";
 ```
-Please ensure that the code is structured as follows.
+Please ensure that your code is structured as follows.
 
 ```js
 let model_namespace = 'VaahCms\\Modules\\Travel\\Models\\Blog';
