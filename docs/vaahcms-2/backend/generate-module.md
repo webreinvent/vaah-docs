@@ -26,95 +26,89 @@ Command that is used to generate a module is:-
 ```terminal command
 npx vaah cms:m
 ```
-
 After this command, it will ask for some information 
 regarding the Module,answers are also mentioned here.
 
 ``` 
 ? Choose the tech stack of the module:  Module - Vue3 & PrimeVue
 ```
-After that information related to modules such as name, title, description
-etc. of the module.
-
 - Name of The Module you want to create. For example Product.
     ```
     ? Enter your module name: Product
     
   ```
 
-- Enter more relevant name for your module. Example Product Management etc.
+- Title of the Module. For example Product Management.
     ```
     ? Enter meaningful title for your module:
     ```
 
-- More details of the module. Example Product Management Module for Admin (or Seller)
+- Description about the Module. For example Product Management Module for Admin
     ```
     ? Enter your module description:
     ```
 
-- Name of the person creating the module. Or press enter to go with default value provided.
+- Name of the person creating the module or you can  press enter to go with default value provided.
     ```
     ? Enter Author name: vaah
     ```
 
-- Email of the author. Or press enter to enter default value.
+- Email of the author or press enter to go with default value provided.
     ```
     ? Enter Author email:  support@vaah.dev
     ```
-  - Press Enter for default value for Author website and Download Url.
-      ```
-      ? Enter author website:  https://vaah.dev
-      ? Enter download url: 
-      ```
-    - Enter `true` if you want to run migration for this module as soon as the module
-      is activated. Else select `false`.
-        ```
-        ? Do you want to run migration on activation (true/false):  true
-        ```
+- Author website and download url or press enter for default value.
+    ```
+    ? Enter author website:  https://vaah.dev
+    ? Enter download url: 
+    ```
+- Enter `true` if you want to run migration for this module as soon as the module
+  is activated.
+    ```
+    ? Do you want to run migration on activation (true/false):  true
+    ```
   ::: warning NOTE
   All the migration files will be found in `root/VaahCms/Modules/<module-name>/Migrations` directory
   :::
-- Select `true` if you want to activate this module with some sample data. Else
-select `false`.
+- Enter `true` if you want to activate this module with some sample data. Use SampleDataTableSeeder for seeding Sample data.
 
     ```
     ? Will your module contains sample data (true/false):  true
     ```
-    Use SampleDataTableSeeder for seeding Sample data.
+    
   ::: warning NOTE
     All the Seeds files will be found in `root/VaahCms/Modules/<module-name>/Database/Seeds` directory.
   :::
+
 After providing all the information, Module will be generated under `project-root/Vaahcms/Modules`.
+
 <img :src="$withBase('/images/module_path.png')" alt="module_path">
 
 
 `<module-root-folder>\config\config.php` contains the information that was entered while creating a module and can be changed by making changes to config.php file.
+
 <img :src="$withBase('/images/module-config-file.png')" alt="module-config-file">
 
 ### Step 3: Activating a module
-Go to:-
+To activate the module you need to visit the following url and login to the backend panel using your credentials that was created while the installation of VaahCMS.
 ```http request
 <public-url>/backend
 ```
 <img :src="$withBase('/images/vaahcms-backend-login.png')" alt="backend-login">
+After that,on the sidebar, click on `Extend` and then click on `Modules`.
 
-and login to the backend panel using credentials of the user that was created while the installation of VaahCms.
-
-After that, on the sidebar, click on `Extend` and then click on `Modules`.
 
 ```http
 <public-url>/backend#/vaah/modules/
 ```
 <img :src="$withBase('/images/module-activation-page.png')" alt="module-activation-page">
 
+
 List of all the installed modules will be displayed. From this list, 
 find your module and click on `Activate` button present on the right
 side of that same module to activate the module.
-
 After Successful activation, module name will be visible on the 
 sidebar.
-
-<img :src="$withBase('/images/module-dashboard-page.png')" alt="module-dashboard-page">
 
 ::: warning NOTE
  All migrations of that specific module will run automatically when the module is activated if `is_migratable` is set to true in config file.
@@ -189,8 +183,9 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
       README.md
 ```
 
+
 - Config:
-  Config file is present here. Config file contains all the information related to module, that was provided while creating module, such as, name, description, `is_migratable`, `is sample data available` etc.
+  Config file is present here. Config file contains all the information related to module, that was provided while creating module.
   And this information can be changed in this config file.
 
   <img :src="$withBase('/images/module-config-file.png')" alt="module-config-file">
@@ -198,50 +193,57 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 - Database:
   All the Factory, Migrations and Seeds files of this module are present in Database Folder.
 
-  - To generate Migration File:
-    ```terminal
-     npx vaah cms:m-make migration <module-folder-name> <migration-name> 
-    ```
-      <img :src="$withBase('/images/module-migration-file.png')" alt="module-migration-file"> 
-    Migration file will be generated under `Database/Migrations`.
+- Generate Migration File:
+  To generate migration file you need to provide the module name and migration name. Migration file will be generated under 
+  `Database/Migrations`. In order to run migrations, `deactivate` and `activate` the module again.
 
-  In order to run migrations, `deactivate` and `activate` module again.
 
-- To generate Seeds File:
+  ```terminal
+   npx vaah cms:m-make migration <module-folder-name> <migration-name> 
+  ```
+  
+    <img :src="$withBase('/images/module-migration-file.png')" alt="module-migration-file">
+
+  
+
+- Generate Seeds File: To generate seeds file you need to provide the module name and seeder name.
+  Seeds file will be generated under `Database/Seeds` or we can use json files to seed data into tables.
+  To use a json file, create a json file under `<module-folder>/Database/Seeds/json` folder.
+
   ```terminal
    npx vaah cms:m-make seed <module-folder-name> <seeder-name>
   ```
-
-  Seeds file will be generated under `Database/Seeders`. Or we can use json files to seed data into tables.
-  To use a json file, create a json file under `<module-folder>/Database/Seeds/json` folder.
-  Example:
   <img :src="$withBase('/images/module-json-seed-file.png')" alt="module-json-seed-file">
 
-  and this json file can be used in SampleDataTableSeeder
   <img :src="$withBase('/images/module-sample-seeder-file1.png')" alt="module-sample-seeder-file1">
 
-  and
+  
   <img :src="$withBase('/images/module-sample-seeder-file2.png')" alt="module-sample-seeder-file2">
 
-  and to run `SampleDataTableSeeder` file, click on `import sample data` button:-
+
+
+  To run `SampleDataTableSeeder` file, click on `import sample data` button.
+
   <img :src="$withBase('/images/module-sample-seeder-button.png')" alt="module-sample-seeder-button">
+
   ::: warning NOTE
   In order to run seeds, `is_sample_data_available` must be set to true in config file.
-- :::
+  :::
 - Http:
   All the Controllers,Middlewares,Requests file related to this module will be created here.
-  command used to create module controller is:-
-    ```terminal-command-for-controller 
+  Command used to create controller is:-
+    ```shell 
         vaah cms:t-make controller <module-folder-name> <controller-name>
     ```
-    ```terminal-command-for-middleware
+    ```shell
         vaah cms:t-make middleware <module-folder-name> <middleware-name>
+    ```
   ::: warning NOTE
   All the Controllers must be created in Http/Controllers/Backend for modules.
   :::
   
 - Models:
-  All the models for this module will be generated in `<module-root>/Models` using:
+  All the models for this module will be generated in `<module-root>/Models`.
 ```terminal
     npx vaah cms:t-make model <module-root> <model-name>
 ```
@@ -249,14 +251,18 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
   All the views for this module will be generated in `<module-root>/Resources/Views/backend`
   - this is the first page of the module `index.blade.php`.
 
+
 - Vue:
   This folder will contain all the vue files, vuex store, vue routes related to this module.
   - Vue components will be present under Vue/pages.
+  
     <img :src="$withBase('/images/module-vue-components-files.png')" alt="module vue components files">
 
   - Vue routes will be present under Vue/routes.
+  
     <img :src="$withBase('/images/module-vue-routes-file.png')" alt="modules vue routes file">
 
-  - Vue store will be found under Vue/stores.
+  - Vue store will be present under Vue/stores.
+  
     <img :src="$withBase('/images/module-vue-store-file.png')" alt="module vue store file">
   
