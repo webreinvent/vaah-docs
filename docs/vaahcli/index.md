@@ -1,3 +1,0 @@
-# VaahCLI
-
-Testing
