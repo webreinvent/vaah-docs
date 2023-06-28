@@ -1,0 +1,46 @@
+# Controllers
+
+[[toc]]
+
+This directory is mostly specific to project.
+
+The controller layer is high-level functions that perform a specific type of task. They typically fetch from services and inject them into models and that way they control and update app state.
+
+State management logic goes in here. You may place your logic for providers, blocs, or any other state management logic into this folder. You may even rename this as your state management architecture like providers, blocs, etc.
+
+The controller layer is represented by various controllers which contain the Application Logic of the app. controllers are used to complete any significant action within your app.
+
+Controllers remove the business logic from the Model. Models can get huge when just managing data (+ an API to work on that data). From our experience, it never scales well trying to have application logic and state combined in one class, you always need to split these up one way or another as things scale.
+
+Controllers are totally encapsulated. Because each controller is its own little object, they completely protect their own state and never collide with other Controllers. As opposed to a static function, or a Model method, you can run any number of concurrent Controllers, and they will never collide.
+
+Controllers provide a clean API for Application Logic. Because each Controller is isolated in its own file, they can grow quite complex and still be easy to work on and debug.
+
+Working with multiple data sets is easy. Controllers can access any combination of models and services to do what they need to do. This removes most dependencies between models, and creates a clear domain layer where these types of high level actions should exist.
+
+The code is easy to maintain. This is probably the biggest win for controllers. When returning to a project weeks or months later, it’s extremely easy to jump in and find what you need to work on, as all the high-level business logic is wrapped in these dedicated class files with very clear names. The value of this can not be overstated.
+
+### State Management using `Controllers`
+
+State management is essential in Flutter app development because it allows us to centralize every UI state and control data flow in the application.
+
+App state is shared across different widgets of your app and is present across complete user sessions. For example, app state appears in the form of login info, user preferences, social app notifications, e-commerce app shopping cart, articles state (read/unread) in a news app, etc.
+
+If you look at it, then there is no one rule here to use ephemeral or App state. One can change one state to another based on the requirement. You have the power to use both setState() and App State to handle every state of your app.
+
+When you are handling a global state which is across the App, setState() is not the right type.
+If you end up using setState() across the entire app, you may face a maintenance glitch, as your state will be everywhere.
+
+You have to use setState() in the UI code’s class only. This means you can end up mixing business logic and UI, which hampers code quality.
+
+##### We prefer using GetX because
+
+GetX is a fast, stable, and light state management library in flutter. There are so many State Management libraries in flutter like MobX, BLoC, Redux, Provider, etc. GetX is also a powerful micro framework and using this, we can manage states, make routing, and can perform dependency injection.
+
+Performance: As compared to other state management libraries, GetX is best because it consumes minimum resources and provides better performance.
+
+Productivity: GetX’s syntax is easy so it is productive. It saves a lot of time for the developers and increases the speed of the app because it does not use extra resources. It uses only those resources which are currently needed and after its work is done, the resources will free automatically. If all the resources are loaded into the memory then it will not be that productive. So better to use GetX for this.
+
+Organization: GetX code is organized as View, Logic, navigation, and dependency injection. So we don’t need any more context to navigate to other screen. We can navigate to screen without using the context so we are not dependent on widget tree.
+
+[Official GetX Documentation](https://pub.dev/packages/get)
