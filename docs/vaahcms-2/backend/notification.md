@@ -218,6 +218,14 @@ public function seedNotificationContent()
 ...
 ```
 
+Follow below videos for better understanding:
+
+<figure>
+  <iframe src="https://www.youtube.com/embed/t3PdH_I1IdU" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
+
+
 
 ### How to show notification variables?
 If you want to show variables name in notification sidebar. 
@@ -362,7 +370,68 @@ if($notification)
 Follow below videos for better understanding:
 
 <figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/phpstorm64_FktN7s3pEd.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://www.youtube.com/embed/1H4xyUDPAf8" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
+
+### How to add Dynamic variable in Url 
+
+To add dynamic variable in Url, you need to add `route string` `#!ROUTE:VARIABLE_NAME!#`.
+
+For extend your `Action Variable ` You need to add `getNotificationActions` method in `ExtendController` of your  `Module`. 
+
+
+```php
+ public function getNotificationActions()
+    {
+
+        $list = [
+            [
+                'name'=>'#!ROUTE:VARIABLE_NAME!#'
+            ],
+        ];
+
+        $response['success'] = true;
+        $response['data'] = $list;
+
+        return $response;
+    }
+
+```
+
+Add your variable route in `<module-path>/Routes/backend.php`
+
+```php
+ Route::get( '/reset/{code}', 'ExampleController@Examplefunction' )
+            ->name( 'variable_name' );
+```
+
+
+This is how you can add dynamic variable in Url.
+
+```php
+
+$notification = \WebReinvent\VaahCms\Models\Notification::where('slug', "<notification-slug>")->first();
+
+        if($notification)
+        {
+
+            $inputs = [
+                "user_id" => xxx,
+                "notification_id" => xxx,
+                "route" => [
+                    "code" => variable,
+                ]
+            ];
+
+            \WebReinvent\VaahCms\Models\Notification::send(
+                $notification, $user, $inputs
+            );
+        }
+```
+Follow below videos for better understanding:
+
+<figure>
+  <iframe src="https://www.youtube.com/embed/1lzk_LQofFA" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 ### Sending without Laravel Queues
@@ -417,6 +486,36 @@ if($notification)
 | `$user`         | is the instance of `WebReinvent\VaahCms\Entities\User`       |
 | `$inputs`       | is the a data array contain values of strings. `user_id` and `notification_id` are required params. <br />Eg. <br />1. If the notification contains `#!PARAM:NAME!#` string and then the `$input` array must be:  <code>$inputs =  [ "name" => "John" ]</code> This will replace the string with value provided in the inputs. <br />2. If the notification contains `#!USER:NAME!#` string and then the `$input` array must be:  <code>$inputs =  [ "user_id" => X ]</code> This will replace the string with value provided in the `User` Entity. |
 | `$priority`     | it is the order of execution of the jobs. You can provide following values: `high` ,`medium`, `low`, & `default` |
+
+
+#### Setup Laravel Queues for VaahCMS
+
+Follow the following steps:
+
+1. Set `QUEUE_CONNECTION` to `database` in your active `env` file
+
+1. Visit `Setting > General > Site Settings > Laravel Queues` in your `backend dashboard` and enable it.
+
+3. Run or setup `cron/daemon` job for
+
+`php artisan queue:work --queue=high,medium,low,default --env=env_filename`
+
+If you want to run without cache use following command:
+
+`php artisan queue:listen --queue=high,medium,low,default --env=env_filename` eg:
+
+`php artisan queue:listen --queue=high,medium,low,default --env=develop`
+
+If you make any changes in code of your `Job` class, then you must restart the `queue:work` command.
+
+**Note**: When sending notifications, be sure to set the `MAIL_FROM_ADDRESS` and `MAIL_FROM_NAME` in your `env` file. This value will be used as the `sender` of the `email` and `name` of your mail notification messages.
+
+
+Follow below videos for better understanding:
+
+<figure>
+  <iframe src="https://www.youtube.com/embed/M3-DoW6wWIU" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+</figure>
 
 
 ### Example
@@ -505,6 +604,65 @@ In this example, we register a greeting, a line of text, a call to action, and t
 ]
 ```
 
+Use following code to seed Notification.
+
+Include use `Illuminate\Support\Facades\DB` in your `DatabaseTableSeeder.php`
+
+For run seeder Deactivate and Active your module.
+
+```php
+public function run()
+{
+        $this->seedNotifications();
+        $this->seedNotificationContent();
+}
+ public function seedNotifications()
+{
+        $list = VaahSeeder::getListFromJson(__DIR__ . "/json/notifications.json");
+        VaahSeeder::storeSeedsWithUuid('vh_notifications', $list, 'slug', true, 'name', false);
+}
+public function seedNotificationContent()
+{
+        $list = VaahSeeder::getListFromJson(__DIR__ . "/json/notification_contents.json");
+
+        foreach ($list as $item) {
+            $notification = \DB::table('vh_notifications')
+                ->where('slug', $item['slug'])
+                ->first();
+
+            if (!$notification) {
+                continue;
+            }
+
+            $exist = \DB::table('vh_notification_contents')
+                ->where('vh_notification_id', $notification->id)
+                ->where('sort', $item['sort'])
+                ->where('via', $item['via'])
+                ->first();
+
+            $item['vh_notification_id'] = $notification->id;
+
+            if (isset($item['meta'])) {
+                $item['meta'] = json_encode($item['meta']);
+            }
+
+            unset($item['slug']);
+
+
+            if (!$exist) {
+                DB::table('vh_notification_contents')->insert($item);
+            } else {
+                DB::table('vh_notification_contents')
+                    ->where('vh_notification_id', $notification->id)
+                    ->where('sort', $item['sort'])
+                    ->where('via', $item['via'])
+                    ->update($item);
+            }
+        }
+}
+```
+
+
 Use following code to send a Notification.
 
 ```php
@@ -526,9 +684,5 @@ if($notification)
 
 The notification channel will then translate the message components into a beautiful, responsive HTML email template with a plain-text counterpart. Here is an example of an email generated by the notification:
 
-<img :src="$withBase('https://img-v4.getdemo.dev/screenshot/chrome_bBtcAteKSK.png')">
+<img :src="$withBase('https://img-v5.getdemo.dev/screenshot/Screenshot%202023-06-28%20143811.png')">
 
-
-<figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/chrome_VkDgxCvuc1.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
-</figure>
