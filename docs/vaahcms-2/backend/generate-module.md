@@ -184,9 +184,10 @@ Now run 'npm run dev' at VaahCms/Modules/Product/Vue folder
 ```
 
 
-- Config:
+- ### Config:
   Config file is present here. Config file contains all the information related to module, that was provided while creating module.
   And this information can be changed in this config file.
+
 
   <img :src="$withBase('/images/module-config-file.png')" alt="module-config-file">
 
