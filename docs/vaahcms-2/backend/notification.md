@@ -370,7 +370,7 @@ if($notification)
 Follow below videos for better understanding:
 
 <figure>
-  <iframe src="https://img-v4.getdemo.dev/screenshot/phpstorm64_FktN7s3pEd.mp4" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://www.youtube.com/embed/1H4xyUDPAf8" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 ### How to add Dynamic variable in Url 
@@ -514,7 +514,7 @@ If you make any changes in code of your `Job` class, then you must restart the `
 Follow below videos for better understanding:
 
 <figure>
-  <iframe src="" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
+  <iframe src="https://www.youtube.com/embed/M3-DoW6wWIU" frameborder="0" allowfullscreen="true" style="width: 100%; aspect-ratio: 16/9;"> </iframe>
 </figure>
 
 
