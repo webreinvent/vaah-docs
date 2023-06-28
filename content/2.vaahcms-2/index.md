@@ -1,6 +1,13 @@
-# VaahCMS
+---
+toc: true
+---
 
-[[toc]]
+# VaahCMS 2.x
+
+
+::alert{type="info"}
+Check out an **info** alert with `code` and a [link](/).
+::
 
 <p align="center">
 <a href="https://webreinvent.com/contact-us?utm_source=docs.vaah.dev&utm_medium=vaahcms&utm_campaign=docs"><img src="https://raw.githubusercontent.com/webreinvent/.github/master/images/banner.png" width="850"></a>
