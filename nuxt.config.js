@@ -1,4 +1,9 @@
 export default defineNuxtConfig({
+
+  devtools: {
+    enabled: false,
+  },
+
   // https://github.com/nuxt-themes/docus
   extends: '@nuxt-themes/docus',
 
