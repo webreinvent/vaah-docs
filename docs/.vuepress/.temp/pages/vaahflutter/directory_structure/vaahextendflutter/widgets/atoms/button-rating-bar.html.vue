@@ -1,0 +1,402 @@
+<template><div><h1 id="rating-bar" tabindex="-1"><a class="header-anchor" href="#rating-bar" aria-hidden="true">#</a> Rating Bar</h1>
+<nav class="table-of-contents"><ul><li><router-link to="#how-to-use">How to use</router-link><ul><li><router-link to="#simple-rating-bar">Simple rating bar</router-link></li><li><router-link to="#complicated-rating-bar">Complicated rating bar</router-link></li><li><router-link to="#other-properties-of-ratingbar">Other properties of RatingBar</router-link></li></ul></li><li><router-link to="#source-code">Source code</router-link></li></ul></nav>
+<h2 id="how-to-use" tabindex="-1"><a class="header-anchor" href="#how-to-use" aria-hidden="true">#</a> How to use</h2>
+<h3 id="simple-rating-bar" tabindex="-1"><a class="header-anchor" href="#simple-rating-bar" aria-hidden="true">#</a> Simple rating bar</h3>
+<p>Let's say I want to create simple rating bar</p>
+<div class="language-dart line-numbers-mode" data-ext="dart"><pre v-pre class="language-dart"><code><span class="token class-name">RatingBar</span><span class="token punctuation">(</span>
+    onRatingUpdate<span class="token punctuation">:</span> <span class="token punctuation">(</span>rating<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Log</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>rating<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> disableCloudLogging<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">,</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="complicated-rating-bar" tabindex="-1"><a class="header-anchor" href="#complicated-rating-bar" aria-hidden="true">#</a> Complicated rating bar</h3>
+<p>Let's say I want to create complicated rating bar with different icons</p>
+<div class="language-dart line-numbers-mode" data-ext="dart"><pre v-pre class="language-dart"><code><span class="token keyword">const</span> icons <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token class-name">Icon</span><span class="token punctuation">(</span><span class="token class-name">FontAwesomeIcons</span><span class="token punctuation">.</span>faceAngry<span class="token punctuation">,</span> color<span class="token punctuation">:</span> <span class="token class-name">Colors</span><span class="token punctuation">.</span>red<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token class-name">Icon</span><span class="token punctuation">(</span><span class="token class-name">FontAwesomeIcons</span><span class="token punctuation">.</span>faceMeh<span class="token punctuation">,</span> color<span class="token punctuation">:</span> <span class="token class-name">Colors</span><span class="token punctuation">.</span>orange<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token class-name">Icon</span><span class="token punctuation">(</span><span class="token class-name">FontAwesomeIcons</span><span class="token punctuation">.</span>faceSmileBeam<span class="token punctuation">,</span> color<span class="token punctuation">:</span> <span class="token class-name">Colors</span><span class="token punctuation">.</span>green<span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-dart line-numbers-mode" data-ext="dart"><pre v-pre class="language-dart"><code><span class="token class-name">RatingBar</span><span class="token punctuation">(</span>
+    itemBuilder<span class="token punctuation">:</span> <span class="token punctuation">(</span>context<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> icons<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    itemCount<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    padding<span class="token punctuation">:</span> rightPadding8<span class="token punctuation">,</span>
+    onRatingUpdate<span class="token punctuation">:</span> <span class="token punctuation">(</span>rating<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Log</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>rating<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> disableCloudLogging<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">,</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="other-properties-of-ratingbar" tabindex="-1"><a class="header-anchor" href="#other-properties-of-ratingbar" aria-hidden="true">#</a> Other properties of RatingBar</h3>
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Property Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>itemBuilder</td>
+<td>To build different items in rating bar, refer complicated rating bar with different icons</td>
+</tr>
+<tr>
+<td>onRatingUpdate</td>
+<td>Callback function called when rating is changed</td>
+</tr>
+<tr>
+<td>allowHalfRating</td>
+<td>To enable/ disable half rating</td>
+</tr>
+<tr>
+<td>unratedColor</td>
+<td>To change color of unrated items</td>
+</tr>
+<tr>
+<td>ratedColor</td>
+<td>To change color of rated items</td>
+</tr>
+<tr>
+<td>size</td>
+<td>To change size of items</td>
+</tr>
+<tr>
+<td>isDisabled</td>
+<td>To enable/ disable rating bar</td>
+</tr>
+<tr>
+<td>padding</td>
+<td>To change padding between items</td>
+</tr>
+<tr>
+<td>direction</td>
+<td>To change direction of rating bar (horizonatal and vertical)</td>
+</tr>
+<tr>
+<td>textDirection</td>
+<td>To change textDirection of rating bar (left to right and right to left)</td>
+</tr>
+<tr>
+<td>itemCount</td>
+<td>To change item counts</td>
+</tr>
+<tr>
+<td>initialRating</td>
+<td>To change initial rating of rating bar</td>
+</tr>
+<tr>
+<td>minRatingAllowed</td>
+<td>To change minimum rating user can give</td>
+</tr>
+<tr>
+<td>maxRatingAllowed</td>
+<td>To change maximum rating user can give</td>
+</tr>
+<tr>
+<td>updateRatingMode</td>
+<td>To change type using which rating can be updated (e.g. tap, drag, tapAndDrag)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code" tabindex="-1"><a class="header-anchor" href="#source-code" aria-hidden="true">#</a> Source code</h2>
+<div class="language-dart line-numbers-mode" data-ext="dart"><pre v-pre class="language-dart"><code><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">enum</span> <span class="token class-name">UpdateRatingMode</span> <span class="token punctuation">{</span>
+  tap<span class="token punctuation">,</span>
+  drag<span class="token punctuation">,</span>
+  tapAndDrag<span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">RatingBar</span> <span class="token keyword">extends</span> <span class="token class-name">StatefulWidget</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token class-name">RatingBar</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token class-name">Key</span><span class="token operator">?</span> key<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>itemBuilder<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>onRatingUpdate<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>allowHalfRating <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>unratedColor<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>ratedColor<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>size <span class="token operator">=</span> <span class="token number">28.0</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>isDisabled <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>padding <span class="token operator">=</span> <span class="token class-name">EdgeInsets</span><span class="token punctuation">.</span>zero<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>direction <span class="token operator">=</span> <span class="token class-name">Axis</span><span class="token punctuation">.</span>horizontal<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>textDirection<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>itemCount <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>initialRating <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>minRatingAllowed <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>maxRatingAllowed<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>updateRatingMode <span class="token operator">=</span> <span class="token class-name">UpdateRatingMode</span><span class="token punctuation">.</span>tapAndDrag<span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">final</span> <span class="token class-name">IndexedWidgetBuilder</span><span class="token operator">?</span> itemBuilder<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">ValueChanged</span><span class="token generics"><span class="token punctuation">&lt;</span>double<span class="token punctuation">></span></span><span class="token operator">?</span> onRatingUpdate<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> bool allowHalfRating<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">Color</span><span class="token operator">?</span> unratedColor<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">Color</span><span class="token operator">?</span> ratedColor<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> double size<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> bool isDisabled<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">EdgeInsetsGeometry</span> padding<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">Axis</span> direction<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">TextDirection</span><span class="token operator">?</span> textDirection<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> int itemCount<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> double initialRating<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> double minRatingAllowed<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> double<span class="token operator">?</span> maxRatingAllowed<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">UpdateRatingMode</span> updateRatingMode<span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">State</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RatingBar</span><span class="token punctuation">></span></span> <span class="token function">createState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token function">_RatingBarState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> _RatingBarState <span class="token keyword">extends</span> <span class="token class-name">State</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RatingBar</span><span class="token punctuation">></span></span> <span class="token punctuation">{</span>
+  late <span class="token class-name">IndexedWidgetBuilder</span> itemBuilder<span class="token punctuation">;</span>
+
+  double _rating <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  bool _isRTL <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+  double iconRating <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  late double _minRating<span class="token punctuation">,</span> _maxRating<span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token keyword">void</span> <span class="token function">initState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">initState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _minRating <span class="token operator">=</span> widget<span class="token punctuation">.</span>minRatingAllowed<span class="token punctuation">;</span>
+    _maxRating <span class="token operator">=</span> widget<span class="token punctuation">.</span>maxRatingAllowed <span class="token operator">?</span><span class="token operator">?</span> widget<span class="token punctuation">.</span>itemCount<span class="token punctuation">.</span><span class="token function">toDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _rating <span class="token operator">=</span> widget<span class="token punctuation">.</span>initialRating<span class="token punctuation">;</span>
+    itemBuilder <span class="token operator">=</span> widget<span class="token punctuation">.</span>itemBuilder <span class="token operator">?</span><span class="token operator">?</span>
+        <span class="token punctuation">(</span>context<span class="token punctuation">,</span> _<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token class-name">Icon</span><span class="token punctuation">(</span>
+              <span class="token class-name">Icons</span><span class="token punctuation">.</span>star<span class="token punctuation">,</span>
+              color<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>ratedColor <span class="token operator">?</span><span class="token operator">?</span> <span class="token keyword">const</span> <span class="token class-name">Color</span><span class="token punctuation">(</span><span class="token number">0xFFFFC130</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token keyword">void</span> <span class="token function">didUpdateWidget</span><span class="token punctuation">(</span><span class="token class-name">RatingBar</span> oldWidget<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">didUpdateWidget</span><span class="token punctuation">(</span>oldWidget<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>oldWidget<span class="token punctuation">.</span>initialRating <span class="token operator">!=</span> widget<span class="token punctuation">.</span>initialRating<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      _rating <span class="token operator">=</span> widget<span class="token punctuation">.</span>initialRating<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    _minRating <span class="token operator">=</span> widget<span class="token punctuation">.</span>minRatingAllowed<span class="token punctuation">;</span>
+    _maxRating <span class="token operator">=</span> widget<span class="token punctuation">.</span>maxRatingAllowed <span class="token operator">?</span><span class="token operator">?</span> widget<span class="token punctuation">.</span>itemCount<span class="token punctuation">.</span><span class="token function">toDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token keyword">void</span> <span class="token function">dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">final</span> textDirection <span class="token operator">=</span> widget<span class="token punctuation">.</span>textDirection <span class="token operator">?</span><span class="token operator">?</span> <span class="token class-name">Directionality</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _isRTL <span class="token operator">=</span> textDirection <span class="token operator">==</span> <span class="token class-name">TextDirection</span><span class="token punctuation">.</span>rtl<span class="token punctuation">;</span>
+    iconRating <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token class-name">Wrap</span><span class="token punctuation">(</span>
+      textDirection<span class="token punctuation">:</span> textDirection<span class="token punctuation">,</span>
+      direction<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>direction<span class="token punctuation">,</span>
+      children<span class="token punctuation">:</span> <span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">generate</span><span class="token punctuation">(</span>
+        widget<span class="token punctuation">.</span>itemCount<span class="token punctuation">,</span>
+        <span class="token punctuation">(</span>index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token function">_buildRating</span><span class="token punctuation">(</span>itemBuilder<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token class-name">Widget</span> <span class="token function">_buildRating</span><span class="token punctuation">(</span><span class="token class-name">IndexedWidgetBuilder</span> itemBuilder<span class="token punctuation">,</span> int index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">final</span> item <span class="token operator">=</span> itemBuilder<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> ratingOffset <span class="token operator">=</span> widget<span class="token punctuation">.</span>allowHalfRating <span class="token operator">?</span> <span class="token number">0.5</span> <span class="token punctuation">:</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
+
+    late <span class="token class-name">Widget</span> updatedRatingWidget<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">>=</span> _rating<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      updatedRatingWidget <span class="token operator">=</span> <span class="token function">_NoRatingWidget</span><span class="token punctuation">(</span>
+        size<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>size<span class="token punctuation">,</span>
+        unratedColor<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>unratedColor <span class="token operator">?</span><span class="token operator">?</span> <span class="token keyword">const</span> <span class="token class-name">Color</span><span class="token punctuation">(</span><span class="token number">0xFFFFE182</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> item<span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">>=</span> _rating <span class="token operator">-</span> ratingOffset <span class="token operator">&amp;&amp;</span> widget<span class="token punctuation">.</span>allowHalfRating<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      updatedRatingWidget <span class="token operator">=</span> <span class="token function">_HalfRatingWidget</span><span class="token punctuation">(</span>
+        size<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>size<span class="token punctuation">,</span>
+        rtlMode<span class="token punctuation">:</span> _isRTL<span class="token punctuation">,</span>
+        unratedColor<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>unratedColor <span class="token operator">?</span><span class="token operator">?</span> <span class="token keyword">const</span> <span class="token class-name">Color</span><span class="token punctuation">(</span><span class="token number">0xFFFFE182</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> item<span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      iconRating <span class="token operator">+=</span> <span class="token number">0.5</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      updatedRatingWidget <span class="token operator">=</span> <span class="token class-name">SizedBox</span><span class="token punctuation">(</span>
+        width<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>size<span class="token punctuation">,</span>
+        height<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>size<span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">FittedBox</span><span class="token punctuation">(</span>
+          child<span class="token punctuation">:</span> item<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      iconRating <span class="token operator">+=</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token class-name">IgnorePointer</span><span class="token punctuation">(</span>
+      ignoring<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>isDisabled<span class="token punctuation">,</span>
+      child<span class="token punctuation">:</span> <span class="token class-name">GestureDetector</span><span class="token punctuation">(</span>
+        onTapDown<span class="token punctuation">:</span> <span class="token punctuation">(</span>details<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>updateRatingMode <span class="token operator">==</span> <span class="token class-name">UpdateRatingMode</span><span class="token punctuation">.</span>drag<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+          double value<span class="token punctuation">;</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>_rating <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">||</span> _rating <span class="token operator">==</span> <span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">final</span> double tappedPosition <span class="token operator">=</span> details<span class="token punctuation">.</span>localPosition<span class="token punctuation">.</span>dx<span class="token punctuation">;</span>
+            bool tappedOnFirstHalf <span class="token operator">=</span> tappedPosition <span class="token operator">&lt;=</span> widget<span class="token punctuation">.</span>size <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>textDirection <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> widget<span class="token punctuation">.</span>textDirection <span class="token operator">==</span> <span class="token class-name">TextDirection</span><span class="token punctuation">.</span>rtl<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              tappedOnFirstHalf <span class="token operator">=</span> <span class="token operator">!</span>tappedOnFirstHalf<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            value <span class="token operator">=</span> index <span class="token operator">+</span> <span class="token punctuation">(</span>tappedOnFirstHalf <span class="token operator">&amp;&amp;</span> widget<span class="token punctuation">.</span>allowHalfRating <span class="token operator">?</span> <span class="token number">0.5</span> <span class="token punctuation">:</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+          value <span class="token operator">=</span> value
+              <span class="token punctuation">.</span><span class="token function">clamp</span><span class="token punctuation">(</span>
+                widget<span class="token punctuation">.</span>minRatingAllowed<span class="token punctuation">,</span>
+                widget<span class="token punctuation">.</span>maxRatingAllowed <span class="token operator">?</span><span class="token operator">?</span> widget<span class="token punctuation">.</span>itemCount<span class="token punctuation">,</span>
+              <span class="token punctuation">)</span>
+              <span class="token punctuation">.</span><span class="token function">toDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            _rating <span class="token operator">=</span> value<span class="token punctuation">;</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>onRatingUpdate <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> widget<span class="token punctuation">.</span>onRatingUpdate<span class="token operator">!</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        onHorizontalDragEnd<span class="token punctuation">:</span> _isHorizontal <span class="token operator">?</span> _onDragEnd <span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+        onHorizontalDragUpdate<span class="token punctuation">:</span> _isHorizontal <span class="token operator">?</span> _onDragUpdate <span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+        onVerticalDragEnd<span class="token punctuation">:</span> _isHorizontal <span class="token operator">?</span> <span class="token keyword">null</span> <span class="token punctuation">:</span> _onDragEnd<span class="token punctuation">,</span>
+        onVerticalDragUpdate<span class="token punctuation">:</span> _isHorizontal <span class="token operator">?</span> <span class="token keyword">null</span> <span class="token punctuation">:</span> _onDragUpdate<span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">Padding</span><span class="token punctuation">(</span>
+          padding<span class="token punctuation">:</span> widget<span class="token punctuation">.</span>padding<span class="token punctuation">,</span>
+          child<span class="token punctuation">:</span> updatedRatingWidget<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  bool <span class="token keyword">get</span> _isHorizontal <span class="token operator">=</span><span class="token operator">></span> widget<span class="token punctuation">.</span>direction <span class="token operator">==</span> <span class="token class-name">Axis</span><span class="token punctuation">.</span>horizontal<span class="token punctuation">;</span>
+
+  <span class="token keyword">void</span> <span class="token function">_onDragUpdate</span><span class="token punctuation">(</span><span class="token class-name">DragUpdateDetails</span> dragDetails<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>updateRatingMode <span class="token operator">!=</span> <span class="token class-name">UpdateRatingMode</span><span class="token punctuation">.</span>tap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">final</span> box <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">findRenderObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">as</span> <span class="token class-name">RenderBox</span><span class="token operator">?</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>box <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">final</span> pos <span class="token operator">=</span> box<span class="token punctuation">.</span><span class="token function">globalToLocal</span><span class="token punctuation">(</span>dragDetails<span class="token punctuation">.</span>globalPosition<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      double i<span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>direction <span class="token operator">==</span> <span class="token class-name">Axis</span><span class="token punctuation">.</span>horizontal<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        i <span class="token operator">=</span> pos<span class="token punctuation">.</span>dx <span class="token operator">/</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>size <span class="token operator">+</span> widget<span class="token punctuation">.</span>padding<span class="token punctuation">.</span>horizontal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        i <span class="token operator">=</span> pos<span class="token punctuation">.</span>dy <span class="token operator">/</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>size <span class="token operator">+</span> widget<span class="token punctuation">.</span>padding<span class="token punctuation">.</span>vertical<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">var</span> currentRating <span class="token operator">=</span> widget<span class="token punctuation">.</span>allowHalfRating <span class="token operator">?</span> i <span class="token punctuation">:</span> i<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>currentRating <span class="token operator">></span> widget<span class="token punctuation">.</span>itemCount<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        currentRating <span class="token operator">=</span> widget<span class="token punctuation">.</span>itemCount<span class="token punctuation">.</span><span class="token function">toDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>currentRating <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        currentRating <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>_isRTL <span class="token operator">&amp;&amp;</span> widget<span class="token punctuation">.</span>direction <span class="token operator">==</span> <span class="token class-name">Axis</span><span class="token punctuation">.</span>horizontal<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        currentRating <span class="token operator">=</span> widget<span class="token punctuation">.</span>itemCount <span class="token operator">-</span> currentRating<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      _rating <span class="token operator">=</span> currentRating<span class="token punctuation">.</span><span class="token function">clamp</span><span class="token punctuation">(</span>_minRating<span class="token punctuation">,</span> _maxRating<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>onRatingUpdate <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> widget<span class="token punctuation">.</span>onRatingUpdate<span class="token operator">!</span><span class="token punctuation">(</span>iconRating<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">void</span> <span class="token function">_onDragEnd</span><span class="token punctuation">(</span><span class="token class-name">DragEndDetails</span> details<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>widget<span class="token punctuation">.</span>onRatingUpdate <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> widget<span class="token punctuation">.</span>onRatingUpdate<span class="token operator">!</span><span class="token punctuation">(</span>iconRating<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    iconRating <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> _HalfRatingWidget <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token function">_HalfRatingWidget</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    required <span class="token keyword">this</span><span class="token punctuation">.</span>size<span class="token punctuation">,</span>
+    required <span class="token keyword">this</span><span class="token punctuation">.</span>child<span class="token punctuation">,</span>
+    required <span class="token keyword">this</span><span class="token punctuation">.</span>rtlMode<span class="token punctuation">,</span>
+    required <span class="token keyword">this</span><span class="token punctuation">.</span>unratedColor<span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">final</span> <span class="token class-name">Widget</span> child<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> double size<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> bool rtlMode<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">Color</span> unratedColor<span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token class-name">SizedBox</span><span class="token punctuation">(</span>
+      height<span class="token punctuation">:</span> size<span class="token punctuation">,</span>
+      width<span class="token punctuation">:</span> size<span class="token punctuation">,</span>
+      child<span class="token punctuation">:</span> <span class="token class-name">Stack</span><span class="token punctuation">(</span>
+        fit<span class="token punctuation">:</span> <span class="token class-name">StackFit</span><span class="token punctuation">.</span>expand<span class="token punctuation">,</span>
+        children<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+          <span class="token class-name">FittedBox</span><span class="token punctuation">(</span>
+            child<span class="token punctuation">:</span> <span class="token function">_NoRatingWidget</span><span class="token punctuation">(</span>
+              size<span class="token punctuation">:</span> size<span class="token punctuation">,</span>
+              unratedColor<span class="token punctuation">:</span> unratedColor<span class="token punctuation">,</span>
+              child<span class="token punctuation">:</span> child<span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token class-name">FittedBox</span><span class="token punctuation">(</span>
+            child<span class="token punctuation">:</span> <span class="token class-name">ClipRect</span><span class="token punctuation">(</span>
+              clipper<span class="token punctuation">:</span> <span class="token function">_HalfClipper</span><span class="token punctuation">(</span>
+                rtlMode<span class="token punctuation">:</span> rtlMode<span class="token punctuation">,</span>
+              <span class="token punctuation">)</span><span class="token punctuation">,</span>
+              child<span class="token punctuation">:</span> child<span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> _HalfClipper <span class="token keyword">extends</span> <span class="token class-name">CustomClipper</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Rect</span><span class="token punctuation">></span></span> <span class="token punctuation">{</span>
+  <span class="token function">_HalfClipper</span><span class="token punctuation">(</span><span class="token punctuation">{</span>required <span class="token keyword">this</span><span class="token punctuation">.</span>rtlMode<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">final</span> bool rtlMode<span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Rect</span> <span class="token function">getClip</span><span class="token punctuation">(</span><span class="token class-name">Size</span> size<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> rtlMode
+      <span class="token operator">?</span> <span class="token class-name">Rect</span><span class="token punctuation">.</span><span class="token function">fromLTRB</span><span class="token punctuation">(</span>
+          size<span class="token punctuation">.</span>width <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span>
+          <span class="token number">0</span><span class="token punctuation">,</span>
+          size<span class="token punctuation">.</span>width<span class="token punctuation">,</span>
+          size<span class="token punctuation">.</span>height<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span>
+      <span class="token punctuation">:</span> <span class="token class-name">Rect</span><span class="token punctuation">.</span><span class="token function">fromLTRB</span><span class="token punctuation">(</span>
+          <span class="token number">0</span><span class="token punctuation">,</span>
+          <span class="token number">0</span><span class="token punctuation">,</span>
+          size<span class="token punctuation">.</span>width <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span>
+          size<span class="token punctuation">.</span>height<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  bool <span class="token function">shouldReclip</span><span class="token punctuation">(</span><span class="token class-name">CustomClipper</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Rect</span><span class="token punctuation">></span></span> oldClipper<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> _NoRatingWidget <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token function">_NoRatingWidget</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    required <span class="token keyword">this</span><span class="token punctuation">.</span>size<span class="token punctuation">,</span>
+    required <span class="token keyword">this</span><span class="token punctuation">.</span>child<span class="token punctuation">,</span>
+    required <span class="token keyword">this</span><span class="token punctuation">.</span>unratedColor<span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">final</span> double size<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">Widget</span> child<span class="token punctuation">;</span>
+  <span class="token keyword">final</span> <span class="token class-name">Color</span> unratedColor<span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token class-name">SizedBox</span><span class="token punctuation">(</span>
+      height<span class="token punctuation">:</span> size<span class="token punctuation">,</span>
+      width<span class="token punctuation">:</span> size<span class="token punctuation">,</span>
+      child<span class="token punctuation">:</span> <span class="token class-name">FittedBox</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token class-name">ColorFiltered</span><span class="token punctuation">(</span>
+          colorFilter<span class="token punctuation">:</span> <span class="token class-name">ColorFilter</span><span class="token punctuation">.</span><span class="token function">mode</span><span class="token punctuation">(</span>
+            unratedColor<span class="token punctuation">,</span>
+            <span class="token class-name">BlendMode</span><span class="token punctuation">.</span>srcIn<span class="token punctuation">,</span>
+          <span class="token punctuation">)</span><span class="token punctuation">,</span>
+          child<span class="token punctuation">:</span> child<span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
+
+

@@ -1,0 +1,56 @@
+<template><div><h1 id="vaahcms" tabindex="-1"><a class="header-anchor" href="#vaahcms" aria-hidden="true">#</a> VaahCMS</h1>
+<nav class="table-of-contents"><ul><li><router-link to="#introduction">Introduction</router-link></li><li><router-link to="#requirements">Requirements</router-link><ul><li><router-link to="#minimum-system-requirements">Minimum System Requirements</router-link></li><li><router-link to="#learning-curve">Learning Curve</router-link></li></ul></li><li><router-link to="#releases">Releases</router-link><ul><li><router-link to="#versioning-scheme">Versioning Scheme</router-link></li><li><router-link to="#support-policy">Support Policy</router-link></li></ul></li></ul></nav>
+<div class="custom-container danger"><p class="custom-container-title">NOTE</p>
+<p><strong>YOU'RE READING AN OUTDATED DOCUMENTATION.</strong></p>
+<p>Latest documentation of <code v-pre>VaahCMS 2.x</code> is available at:</p>
+<p><a href="https://docs.vaah.dev/vaahcms-2/" target="_blank" rel="noopener noreferrer">Checkout VaahCMS 2.x Documentation<ExternalLinkIcon/></a></p>
+</div>
+<h2 id="introduction" tabindex="-1"><a class="header-anchor" href="#introduction" aria-hidden="true">#</a> Introduction</h2>
+<p>VaahCMS is a web application development platform shipped with headless content management system and common features required in any web application.</p>
+<p>Built with laravel framework, vue, vuex, buefy and bulma with HMVC structured Modules &amp; Themes.</p>
+<p>The purpose of creating VaahCMS is to create a platform which can be extended in a manageable and structured way to develop large applications without reinventing extremely common functionality every time. A list of functionality are following:</p>
+<ul>
+<li>Wordpress like installation</li>
+<li>Extremely fast control/admin panel</li>
+<li>Extend control/admin panel with no major learning curve</li>
+<li>Roles &amp; Permissions</li>
+<li>Install prebuilt modules &amp; themes</li>
+<li>Modules: Build purpose specific isolated code</li>
+<li>Themes: Create frontend themes</li>
+<li><strong>VaahCLI:</strong> a CLI tool to generate modules and themes</li>
+</ul>
+<h2 id="requirements" tabindex="-1"><a class="header-anchor" href="#requirements" aria-hidden="true">#</a> Requirements</h2>
+<h3 id="minimum-system-requirements" tabindex="-1"><a class="header-anchor" href="#minimum-system-requirements" aria-hidden="true">#</a> Minimum System Requirements</h3>
+<p>The Laravel framework has a few system requirements. All of these requirements are satisfied by the <a href="https://vaah.dev/cms/docs/requirements#!" target="_blank" rel="noopener noreferrer">Laravel Homestead<ExternalLinkIcon/></a> virtual machine, so it's highly recommended that you use Homestead as your local Laravel development environment.</p>
+<p>However, if you are not using Homestead, you will need to make sure your server meets the following requirements:</p>
+<ul>
+<li>PHP &gt;= 7.4</li>
+<li>BCMath PHP Extension</li>
+<li>Ctype PHP Extension</li>
+<li>JSON PHP Extension</li>
+<li>Mbstring PHP Extension</li>
+<li>OpenSSL PHP Extension</li>
+<li>PDO PHP Extension</li>
+<li>Tokenizer PHP Extension</li>
+<li>XML PHP Extension</li>
+</ul>
+<h3 id="learning-curve" tabindex="-1"><a class="header-anchor" href="#learning-curve" aria-hidden="true">#</a> Learning Curve</h3>
+<p>If you want to quickly get started with VaahCMS, all you need to know is <a href="https://laravel.com/" target="_blank" rel="noopener noreferrer">Laravel<ExternalLinkIcon/></a>. Please go through detailed documentation on Laravel official website.</p>
+<p>But if you want to use the true potential of VaahCMS and want to develop enterprise level applications, then you must learn following technologies:</p>
+<ul>
+<li><a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">Vue<ExternalLinkIcon/></a>: Vue.js is an open-source Model–view–viewmodel JavaScript framework for building user interfaces and single-page applications. Far more popular then reactjs, angularjs or emberjs.</li>
+<li><a href="https://router.vuejs.org/" target="_blank" rel="noopener noreferrer">Vue Router<ExternalLinkIcon/></a>: Vue Router is the official router for Vue.js. It deeply integrates with Vue.js core to make building Single Page Applications with Vue.js a breeze.</li>
+<li><a href="https://vuex.vuejs.org/" target="_blank" rel="noopener noreferrer">Vuex<ExternalLinkIcon/></a>: Vuex is a state management pattern + library for Vue.js applications. It serves as a centralized store for all the components in an application, with rules ensuring that the state can only be mutated in a predictable fashion.</li>
+<li><a href="https://bulma.io/" target="_blank" rel="noopener noreferrer">Bulma<ExternalLinkIcon/></a>: Bulma is a free, open source CSS framework based on Flexbox and used by more than 200,000 developers.</li>
+<li><a href="https://buefy.org/" target="_blank" rel="noopener noreferrer">Buefy<ExternalLinkIcon/></a>: Lightweight UI components for Vue.js based on Bulma.</li>
+</ul>
+<p>You might ask why we went with <strong>Bulma instead of Bootstrap</strong> which seems much more popular. Well, that's because Bootstrap require JavaScript library and additional configuration to make it work with VueJs while Bulma is pure CSS framework.</p>
+<h2 id="releases" tabindex="-1"><a class="header-anchor" href="#releases" aria-hidden="true">#</a> Releases</h2>
+<h3 id="versioning-scheme" tabindex="-1"><a class="header-anchor" href="#versioning-scheme" aria-hidden="true">#</a> Versioning Scheme</h3>
+<p>VaahCMS and its other first-party packages follow Semantic Versioning. Major platform releases are released every 6 to 8 months, while minor and patch releases may be released as often as every month. Minor and patch releases should never contain breaking changes.</p>
+<p>The official away to report the bugs is via <a href="https://github.com/webreinvent/vaahcms/issues" target="_blank" rel="noopener noreferrer">github repo<ExternalLinkIcon/></a>.</p>
+<h3 id="support-policy" tabindex="-1"><a class="header-anchor" href="#support-policy" aria-hidden="true">#</a> Support Policy</h3>
+<p>For all major releases, bug fixes are provided for 1 years and security fixes are provided for 2 years. These releases provide the longest window of support and maintenance.</p>
+</div></template>
+
+
