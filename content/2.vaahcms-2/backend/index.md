@@ -1,6 +1,9 @@
+---
+toc: true
+---
+
 # Overview
 
-[[toc]]
 
 ## Purpose & Features
 

@@ -1,6 +1,9 @@
+---
+toc: true
+---
 # Sample
 
-[[toc]]
+
 
 ## Purpose 
 <!-- 
