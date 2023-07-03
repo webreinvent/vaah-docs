@@ -13,9 +13,10 @@ defineProps({
 
 const links = ref([
   {
-    title: 'Introduction',
+    title: 'Docs',
     path: '/introduction/getting-started',
-  }
+  },
+  
 ])
 
 </script>

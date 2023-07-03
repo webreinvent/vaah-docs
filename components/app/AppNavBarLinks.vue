@@ -14,7 +14,7 @@ const isActive = (link) => (link.exact ? route.fullPath === link.path : route.fu
 <template>
   <nav>
 
-    <ul>
+    <ul class="flex">
       <li
         v-for="link in links"
         :key="link.path"
