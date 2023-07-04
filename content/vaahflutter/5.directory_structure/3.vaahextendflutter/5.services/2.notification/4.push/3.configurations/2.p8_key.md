@@ -1,0 +1,84 @@
+# p8 Token-Based Connection to APNs
+
+::: tip Setup
+- To do the setup of remote push notification service you will need to setup one of the below thing.
+  - [.p12 Certificate](../configurations/p12_certificate.md)
+  - OR p8 Token-Based Connection to APNs (Refer this documentation)
+:::
+
+[[toc]]
+
+## Step 1. Requirements
+
+- An iOS mobile app. (This is not for websites / web push)
+- An Apple Developer Account with Admin Role.
+- A Mac computer with Xcode 11+
+- Your Xcode project should have the Push Notification capability added. Otherwise your project may not be shown in the  Apple Developer Center.
+
+## Step 2. Generate a new p8 key
+
+- Log in to your Apple Developer Account and navigate to Certificates, Identifiers & Profiles > Keys and select the Blue + button.
+
+<img :src="$withBase('/images/flutter/apple-dev-portal/p8-a.jpeg')">
+
+- Select Apple Push Notifications service (APNs), and enter a name for the key
+
+<img :src="$withBase('/images/flutter/apple-dev-portal/p8-b.jpeg')">
+
+- Select Continue and on the next page, select Register.
+
+- Download your new key and save it in a secure place. You can only download it once, so don't lose it. Then, click Done and you will have a new key.
+
+::: danger 🚧 Previous Token Revokation
+
+You can have up to two .p8 keys in your Apple account. If you need to generate a third key, you will need to revoke one of your existing keys and it can no longer be used.
+
+:::
+
+Note: .p8 keys are in the “keys” section of the Apple developer account and the .p12 certificates are under “certificates”. In your Apple account, you can only have two .p8 keys, but you can have both active .p12s and .p8s.
+
+## Step 3. Provisioning Profiles
+
+- Skip if selected "Automatically manage signing" in Xcode.
+
+- If you did not select "Automatically manage signing", then follow these steps.
+
+### Create Your Profile
+
+- Go to your **Apple Developer Account > Certificates, Identifiers & Profiles > Profiles.**
+
+<img :src="$withBase('/images/flutter/apple-dev-portal/profile.png')">
+
+- Next find any that are for your app and remove them if they do not have App Groups and Push Notifications in Enabled Capabilities:
+
+<img :src="$withBase('/images/flutter/apple-dev-portal/profile-a.png')">
+
+- Create a Profile by pressing the "+" button
+
+<img :src="$withBase('/images/flutter/apple-dev-portal/profile-b.png')">
+
+- Select the type of profile you need to create and press Continue.
+
+<img :src="$withBase('/images/flutter/apple-dev-portal/profile-c.png')">
+
+- Select the Development or Distribution Certificate to associate with the Profile. Then click Continue.
+
+<img :src="$withBase('/images/flutter/apple-dev-portal/profile-d.png')">
+
+- Name your Provisioning Profile.
+
+::: tip Best Practices
+
+When creating a new profile, make sure to enter a unique name in the "Provisioning Profile Name:" field.
+
+For example, if you are creating an Ad-Hoc Provisioning Profile to test push notifications with a Production Push Certificate .p12 file. Use the format AppName_AdHoc so you know the app and type of profile that it is.
+
+:::
+
+- Select Generate.
+
+- On the last page Download your profile.
+
+- Re-sync your Developer Account in Xcode by going to **Xcode > Preferences...** then click on the "View Details..." button. Then, click the refresh button on the bottom left of the popup. See Apple's documentation for more detailed instructions.
+
+- Make sure you pick your new provisioning profile from **Build Settings>Code Signing>Provisioning Profile** in Xcode.

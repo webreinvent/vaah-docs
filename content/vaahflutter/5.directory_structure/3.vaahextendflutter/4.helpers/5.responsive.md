@@ -1,0 +1,7 @@
+# Responsive
+
+::: danger TODO
+I don't think this file and code can be of any use, I propose that we remove this.
+:::
+
+[[toc]]
