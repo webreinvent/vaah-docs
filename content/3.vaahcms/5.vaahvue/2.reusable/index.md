@@ -1,6 +1,9 @@
+---
+toc: true
+---
+
 # VaahCMS
 
-[[toc]]
 
 ## Introduction
 Reusable components are super important in VueJS. It helps you save so much time and when done right, really makes your project more readable and maintainable.
