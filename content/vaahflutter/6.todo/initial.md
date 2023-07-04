@@ -1,6 +1,9 @@
+---
+toc: true
+---
+
 # TODO
 
-[[toc]]
 
 ## Major changes
 - Implement VaahFlutter as a package.
@@ -9,7 +12,7 @@
 - Implement local DB.
 - Implement mechanism to improve initial load time when app fetches api data. (Please refer rough diagrams for now)
 
-<img :src="$withBase('/images/flutter/planning/reducing-response-time.png')">
+<img src="/images/flutter/planning/reducing-response-time.png">
 
 ## Minor changes
 - Add formatters (helpers > input-formatters)
