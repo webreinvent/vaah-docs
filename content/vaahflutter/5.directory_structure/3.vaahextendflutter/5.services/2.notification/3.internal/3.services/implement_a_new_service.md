@@ -1,6 +1,8 @@
-# Implementing a New Internal Notification Service
+---
+toc: true
+---
 
-[[toc]]
+# Implementing a New Internal Notification Service
 
 ## Introduction
 
