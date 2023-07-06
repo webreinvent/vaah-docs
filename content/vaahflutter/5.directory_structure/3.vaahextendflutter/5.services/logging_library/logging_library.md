@@ -1,30 +1,29 @@
+---
+toc: true
+---
+
 # Logging library
 
-::: warning Dependencies
+::alert{type="warning"} 
+Dependencies   
+- Log depends [EnvironmentConfig](../../env.md).
+::
 
-- Log depends [EnvironmentConfig](../../env.md). 
-
-:::
-
-[[toc]]
 
 ## Overview
 
 - This is the central logging library which handles cloud (e.g. sentry, crashanalytics) and local (e.g. Console/Terminal and Local Files For Device) Logs.
 
-::: tip Cloud logging services
-
+::alert{type="success"} 
+ Cloud logging services
 - As of now we have implemented [Sentry](./_cloud/sentry_logging_service.md) to log and measure performance. Any other service is not available yet. To setup Sentry please check [this](./_cloud/sentry_logging_service.md#configuration).
-
 - You can check out more details about it here: [Sentry](./_cloud/sentry_logging_service.md) and [Performance](../performance_monitoring.md)
-
 - Also to enable sentry; developer will have to pass `sentryConfig` in [environment](../../env.md).
-
-:::
+::
 
 - So developer should never use individual service in their application, they should always use Logging library for logging any kind of content.
 
-<img :src="$withBase('/images/flutter/components/log/hierarchy.png')" alt="hierarchy">
+<img src="/images/flutter/components/log/hierarchy.png" alt="hierarchy">
 
 - To setup Sentry please check [this](./_cloud/sentry_logging_service.md#configuration).
 
@@ -105,7 +104,7 @@ Log.info('data', data: data);
 
 Output:
 
-<img :src="$withBase('/images/flutter/components/log/prettier-log.png')" alt="Output">
+<img src="/images/flutter/components/log/prettier-log.png" alt="Output">
 
 ### You can disable local and cloud logging for specific log
 
