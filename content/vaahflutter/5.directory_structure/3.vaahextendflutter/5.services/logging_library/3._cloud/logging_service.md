@@ -1,19 +1,24 @@
+---
+toc: true
+---
+
 # Logging Service
 
-::: warning Dependencies
+::alert{type="warning"}
+Dependencies   
 
 None
 
-:::
+::
 
-::: danger Developer Guide
+::alert{type="danger"} 
+Developer Guide   
 
 - Developer should never use this service directly, use [Logging Library](../logging_library.md) instead.
 
-:::
+::
 
 
-[[toc]]
 
 ## Log types
 
