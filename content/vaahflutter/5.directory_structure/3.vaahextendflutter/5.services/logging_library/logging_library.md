@@ -14,7 +14,7 @@ Dependencies
 
 - This is the central logging library which handles cloud (e.g. sentry, crashanalytics) and local (e.g. Console/Terminal and Local Files For Device) Logs.
 
-::alert{type="success"} 
+::alert{type="info"} 
  Cloud logging services
 - As of now we have implemented [Sentry](./_cloud/sentry_logging_service.md) to log and measure performance. Any other service is not available yet. To setup Sentry please check [this](./_cloud/sentry_logging_service.md#configuration).
 - You can check out more details about it here: [Sentry](./_cloud/sentry_logging_service.md) and [Performance](../performance_monitoring.md)
@@ -29,16 +29,15 @@ Dependencies
 
 ## Use cases
 
-::: tip use cases
-
+::alert{type="info"} 
+use cases   
 - To easily log content on cloud
 - To easily add another cloud logging service
 - To log transactions. e.g. I want to measure and log time of an api call
 - To see formatted (prettier) objects in the console easily readable by the human eye
 - To easily differentiate between different kinds of events.
 
-:::
-
+::
 ## Log types
 Currently, our logs are of six types.
 1. log
@@ -132,7 +131,7 @@ catch (error, stackTrace){
 
 #### Step 1: create a service which implements [LoggingService](./_cloud/logging_service.md), example of implemented service: [Sentry](./_cloud/sentry_logging_service.md)
 
-#### Step 2: Add that service in _services array, in [logging_library.dart](#logging-library-dart-source-code)
+#### Step 2: Add that service in _services array, in [logging_library.dart](#logging_librarydart-source-code)
 
 ```dart
   static final List<Type> _services = [
