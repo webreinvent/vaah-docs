@@ -131,7 +131,7 @@ catch (error, stackTrace){
 
 #### Step 1: create a service which implements [LoggingService](./_cloud/logging_service.md), example of implemented service: [Sentry](./_cloud/sentry_logging_service.md)
 
-#### Step 2: Add that service in _services array, in [logging_library.dart](#logging-library-dart-source-code)
+#### Step 2: Add that service in _services array, in [logging_library.dart](#logging_librarydart-source-code)
 
 ```dart
   static final List<Type> _services = [
