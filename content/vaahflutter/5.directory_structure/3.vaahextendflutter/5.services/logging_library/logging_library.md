@@ -29,16 +29,15 @@ Dependencies
 
 ## Use cases
 
-::: tip use cases
-
+::alert{type="info"} 
+use cases   
 - To easily log content on cloud
 - To easily add another cloud logging service
 - To log transactions. e.g. I want to measure and log time of an api call
 - To see formatted (prettier) objects in the console easily readable by the human eye
 - To easily differentiate between different kinds of events.
 
-:::
-
+::
 ## Log types
 Currently, our logs are of six types.
 1. log
