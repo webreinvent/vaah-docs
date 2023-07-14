@@ -133,7 +133,7 @@ catch (error, stackTrace){
 
 ### Use cases
 
-- To enable/ disable all kind of tracking, switch `enableAutoPerformanceTracking`
+- To enable/ disable all kind of tracking, switch `enableAutoPerformanceTracing`
 
 - Record cold startup time and warm startup time
 
@@ -153,7 +153,7 @@ catch (error, stackTrace){
 
 - Check [this](https://youtu.be/LWc67Vja5YA) video for, how to get config values.
 
-- To disable all kind of tracing set `enableAutoPerformanceTracking` to `false`.
+- To disable all kind of tracing set `enableAutoPerformanceTracing` to `false`.
 
 - To record cold startup time and warm startup time set `autoAppStart` to `true`, check [this](../directory_structure/vaahextendflutter/services/performance_monitoring.md#startup-time) section.
 
