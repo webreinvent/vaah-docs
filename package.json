@@ -1,19 +1,22 @@
 {
-  "name": "vuepress",
-  "version": "1.0.0",
-  "description": "Vaah.dev Documentations",
-  "main": "index.js",
+  "name": "docus-starter",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "docs:dev": "vuepress dev docs --clean-cache",
-    "docs:build": "vuepress build docs"
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi generate",
+    "preview": "nuxi preview",
+    "lint": "eslint ."
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "vuepress": "2.0.0-beta.53"
-  },
-  "engines": {
-    "node": "18.x"
-  },
-  "dependencies": {}
+    "@nuxt-themes/docus": "^1.13",
+    "@nuxt/devtools": "^0.5.5",
+    "@nuxt/eslint-config": "^0.1.1",
+    "@nuxtjs/plausible": "^0.2.1",
+    "@types/node": "^20.2.5",
+    "eslint": "^8.42.0",
+    "nuxt": "^3.5.3",
+    "@nuxthq/ui": "^2.5.0"
+  }
 }
