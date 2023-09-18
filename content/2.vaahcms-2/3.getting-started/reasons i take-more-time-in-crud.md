@@ -10,7 +10,7 @@ the users also.
 2. I also try to upload the file using the VaahCMS fileuploader and apparently it have some bugs and some time
 wasted on that.
 
-3. When i try to use faker and fill method i have to get the data from the backend in a manner that the project and enviornment will align in the create form and as for the user also.
+3. When i try to use faker and fill method  have to get the data from the backend in a manner that the project and enviornment will align in the create form and as for the user also.
 
 
 4. For the Edit option i have to convert the whole data into the requirment of the create form.
