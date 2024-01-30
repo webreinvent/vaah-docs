@@ -1,0 +1,29 @@
+title: 'Vaah Docs'
+description: 'Vaah Docs'
+navigation: false
+sections:
+  title: 'Testing'
+hero:
+  title: 'Vaah Docs'
+  description: 'Documentation of Vaah Software Products'
+  orientation: horizontal
+  headline:
+    label: Built by Vaah Team
+    to: https://vaah.dev
+    icon: i-heroicons-arrow-top-right-on-square-20-solid
+  links:
+    - label: Get started
+      icon: i-heroicons-arrow-right-20-solid
+      trailing: true
+      to: '/getting-started'
+      size: lg
+    - label: Github
+      icon: i-simple-icons-github
+      size: lg
+      color: gray
+      to: https://github.com/webreinvent
+      target: _blank
+  code: |
+    ```bash [ Install VaahCLI :  ]
+    npm i vaah -g
+    ```
