@@ -1,21 +1,27 @@
 <script setup lang="ts">
-import type { ParsedContent } from '@nuxt/content/dist/runtime/types'
-import { useRootStore } from '@/stores/root'
+import type {ParsedContent} from '@nuxt/content/dist/runtime/types'
+import {useRootStore} from '@/stores/root'
 
-const { seo } = useAppConfig()
+const searchRef = ref()
 
-const { data: navigation } = await useAsyncData('navigation', () => fetchContentNavigation())
-const { data: files } = useLazyFetch<ParsedContent[]>('/api/search.json', {
+const route = useRoute()
+const colorMode = useColorMode()
+const {branch} = useContentSource()
+
+const {seo} = useAppConfig()
+
+const {data: navigation} = await useAsyncData('navigation', () => fetchContentNavigation())
+const {data: files} = useLazyFetch<ParsedContent[]>('/api/search.json', {
   default: () => [],
   server: false
 })
 
 useHead({
   meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    {name: 'viewport', content: 'width=device-width, initial-scale=1'}
   ],
   link: [
-    { rel: 'icon', href: '/favicon.ico' }
+    {rel: 'icon', href: '/favicon.ico'}
   ],
   htmlAttrs: {
     lang: 'en'
@@ -27,6 +33,43 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
+const color = computed(() => colorMode.value === 'dark' ? '#18181b' : 'white')
+
+const links = computed(() => {
+  return [{
+    label: 'VaahCMS',
+    icon: 'i-heroicons-book-open',
+    to: branch.value?.name === 'dev' ? '/dev/getting-started' : '/getting-started',
+    active: branch.value?.name === 'dev' ? (route.path.startsWith('/dev/getting-started') || route.path.startsWith('/dev/components')) : (route.path.startsWith('/getting-started') || route.path.startsWith('/components'))
+  },
+    {
+      label: 'Guide',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/guide'
+    },
+    {
+      label: 'VaahCLI',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/vaah-cli'
+    },
+    {
+      label: 'Laravel',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/laravel'
+    },
+    {
+      label: 'VaahFlutter',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/vaah-flutter'
+    },
+    {
+      label: 'VaahStore',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/vaah-store'
+    }].filter(Boolean)
+})
+
+
 const rootStore = useRootStore()
 
 provide('navigation', navigation)
@@ -34,21 +77,21 @@ provide('navigation', navigation)
 
 <template>
   <div>
-    <Header />
+    <Header :links="links"/>
 
     <UMain>
       <NuxtLayout>
-        <NuxtPage />
+        <NuxtPage/>
       </NuxtLayout>
     </UMain>
 
-    <Footer />
+    <Footer/>
 
     <ClientOnly>
-      <LazyUDocsSearch :files="files" :navigation="navigation" />
+      <LazyUDocsSearch :files="files" :navigation="navigation"/>
     </ClientOnly>
 
-    <UNotifications />
+    <UNotifications/>
 
   </div>
 </template>

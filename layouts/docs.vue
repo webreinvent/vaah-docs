@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { NavItem } from '@nuxt/content/dist/runtime/types'
+import BranchSelect from "../components/BranchSelect.vue";
 
 const navigation = inject<Ref<NavItem[]>>('navigation')
 </script>
@@ -9,6 +10,8 @@ const navigation = inject<Ref<NavItem[]>>('navigation')
     <UPage>
       <template #left>
         <UAside>
+          <BranchSelect />
+
           <UNavigationTree :links="mapContentNavigation(navigation)" />
         </UAside>
       </template>
