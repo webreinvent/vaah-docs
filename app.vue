@@ -36,11 +36,17 @@ useSeoMeta({
 const color = computed(() => colorMode.value === 'dark' ? '#18181b' : 'white')
 
 const links = computed(() => {
-  return [{
-    label: 'VaahCMS',
+  return [
+    {
+    label: 'Docs',
     icon: 'i-heroicons-book-open',
     to: branch.value?.name === 'dev' ? '/dev/getting-started' : '/getting-started',
     active: branch.value?.name === 'dev' ? (route.path.startsWith('/dev/getting-started') || route.path.startsWith('/dev/components')) : (route.path.startsWith('/getting-started') || route.path.startsWith('/components'))
+  },
+    {
+    label: 'VaahCMS',
+    icon: 'i-heroicons-rocket-launch',
+    to: '/guide'
   },
     {
       label: 'Guide',
