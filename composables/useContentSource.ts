@@ -6,6 +6,7 @@ export const useContentSource = () => {
   const config = useRuntimeConfig().public
 
   const branches = computed(() => [{
+  const branches = computed(() => route.path !== '/vaahcms'?[]:[{
     id: 'main',
     name: 'main',
     label: 'VaahCMS',
