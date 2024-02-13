@@ -5,13 +5,10 @@ const route = useRoute()
 
 const nav = inject<Ref<NavItem[]>>('navigation')
 
-
-
 const navigation = computed(() => {
   return nav.value.filter(item => item._path.startsWith('/'+route.path.split("/")[1]));
 })
 
-console.log('navigation',navigation);
 </script>
 
 <template>
