@@ -1,9 +1,6 @@
 ---
-toc: true
+title: TODO
 ---
-
-# TODO
-
 
 ## Major changes
 - Implement VaahFlutter as a package.
