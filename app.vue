@@ -46,32 +46,38 @@ const links = computed(() => {
     {
     label: 'VaahCMS',
     icon: 'i-heroicons-rocket-launch',
-    to: '/vaahcms-2x'
+    to: '/vaahcms-2x',
+    active: route.path.startsWith('/vaahcms')
   },
     {
       label: 'Guide',
       icon: 'i-heroicons-rocket-launch',
-      to: '/guide'
+      to: '/guide',
+      active: route.path.startsWith('/guide')
     },
     {
       label: 'VaahCLI',
       icon: 'i-heroicons-rocket-launch',
-      to: '/vaahcli'
+      to: '/vaahcli',
+      active: route.path.startsWith('/vaahcli')
     },
     {
       label: 'Laravel',
       icon: 'i-heroicons-rocket-launch',
-      to: '/laravel/collections-and-arrays'
+      to: '/laravel/collections-and-arrays',
+      active: route.path.startsWith('/laravel')
     },
     {
       label: 'VaahFlutter',
       icon: 'i-heroicons-rocket-launch',
-      to: '/vaahflutter'
+      to: '/vaahflutter',
+      active: route.path.startsWith('/vaahflutter')
     },
     {
       label: 'VaahStore',
       icon: 'i-heroicons-rocket-launch',
-      to: '/vaahstore'
+      to: '/vaahstore',
+      active: route.path.startsWith('/vaahstore')
     }].filter(Boolean)
 })
 
