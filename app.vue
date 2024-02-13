@@ -46,7 +46,7 @@ const links = computed(() => {
     {
     label: 'VaahCMS',
     icon: 'i-heroicons-rocket-launch',
-    to: '/vaahcms'
+    to: '/vaahcms/2x'
   },
     {
       label: 'Guide',
