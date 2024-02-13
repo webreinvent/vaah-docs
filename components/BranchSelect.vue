@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-3 lg:mb-6">
+  <div v-if="branches && branches.length > 0" class="mb-3 lg:mb-6">
     <UDropdown
       class="w-full"
       :items="[branches]"
@@ -8,7 +8,7 @@
       :ui="{ width: 'w-full' }"
       :popper="{ strategy: 'absolute', placement: 'bottom' }"
     >
-      <UButton color="gray" class="w-full">
+      <UButton v-if="branch" color="gray" class="w-full">
         <UIcon v-if="branch.icon" :name="branch.icon" class="w-4 h-4 flex-shrink-0 text-gray-600 dark:text-gray-300" />
 
         <span class="text-gray-900 dark:text-white">{{ branch.label }}</span>
