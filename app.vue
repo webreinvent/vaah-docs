@@ -46,7 +46,7 @@ const links = computed(() => {
     {
     label: 'VaahCMS',
     icon: 'i-heroicons-rocket-launch',
-    to: '/vaahcms/2x'
+    to: '/vaahcms-2x'
   },
     {
       label: 'Guide',
@@ -56,22 +56,22 @@ const links = computed(() => {
     {
       label: 'VaahCLI',
       icon: 'i-heroicons-rocket-launch',
-      to: '/vaah-cli'
+      to: '/vaahcli'
     },
     {
       label: 'Laravel',
       icon: 'i-heroicons-rocket-launch',
-      to: '/laravel'
+      to: '/laravel/collections-and-arrays'
     },
     {
       label: 'VaahFlutter',
       icon: 'i-heroicons-rocket-launch',
-      to: '/vaah-flutter'
+      to: '/vaahflutter'
     },
     {
       label: 'VaahStore',
       icon: 'i-heroicons-rocket-launch',
-      to: '/vaah-store'
+      to: '/vaahstore'
     }].filter(Boolean)
 })
 
