@@ -1,8 +1,6 @@
 ---
-toc: true
+title:Logs and Performance Monitoring
 ---
-
-# Logs and Performance Monitoring
 
 ::alert{type="info"}
 For detailed documentation, check this: [logging_library](../directory_structure/vaahextendflutter/services/logging_library/logging_library) and [performance_monitoring](../directory_structure/vaahextendflutter/services/performance_monitoring)

@@ -1,10 +1,6 @@
 ---
-toc: true
---- 
-
-# VaahExtendFlutter
-
-
+title: VaahExtendFlutter
+---
 
 ## Waah Extend Flutter (vaahextendflutter) directory contains all the essentials any app would need.
 

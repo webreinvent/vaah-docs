@@ -1,9 +1,6 @@
 ---
-toc: true
+title: Enums
 ---
-
-# Enums
-
 
 ::alert{type="warning"}
 Dependencies   
