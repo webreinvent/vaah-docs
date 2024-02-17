@@ -25,6 +25,14 @@ const nav = inject<Ref<NavItem[]>>('navigation')
         }"
       >
 
+    <template #left>
+      <a aria-current="page" href="/"
+         class="router-link-active router-link-exact-active flex-shrink-0 font-bold
+         text-xl text-gray-900 dark:text-white flex items-end gap-1.5" aria-label="Logo">
+        Vaah Docs
+      </a>
+    </template>
+
     <template #right>
       <ColorPicker/>
 

@@ -18,6 +18,16 @@ export default defineNuxtConfig({
       globals.forEach((c) => c.global = true)
     }
   },
+  components: {
+    "dirs": [
+      {
+        path: "components",
+        global: true,
+        pathPrefix: false,
+        preload: true,
+      }
+    ]
+  },
   content:{
     highlight: {
       theme: {
