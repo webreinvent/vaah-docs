@@ -1,8 +1,8 @@
 ---
 toc: true
+title:Implementing a New Internal Notification Service
 ---
 
-# Implementing a New Internal Notification Service
 
 ## Introduction
 
