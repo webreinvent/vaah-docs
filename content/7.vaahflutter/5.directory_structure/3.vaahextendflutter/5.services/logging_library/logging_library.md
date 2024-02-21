@@ -1,7 +1,7 @@
 ---
 toc: true
-title:Logging library
----
+title: Logging library
+--- 
 
 ## Introduction
 
