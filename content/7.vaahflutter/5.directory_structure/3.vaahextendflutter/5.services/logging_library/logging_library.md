@@ -1,10 +1,11 @@
 ---
 toc: true
----
+title: Logging library
+--- 
 
-# Logging library
+## Introduction
 
-::alert{type="warning"} 
+::alert{type="warning" class="flex items-center p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800" role="alert"} 
 Dependencies   
 - Log depends [EnvironmentConfig](../../env.md).
 ::
@@ -14,7 +15,7 @@ Dependencies
 
 - This is the central logging library which handles cloud (e.g. sentry, crashanalytics) and local (e.g. Console/Terminal and Local Files For Device) Logs.
 
-::alert{type="info"} 
+::alert{type="info" class="flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert"} 
  Cloud logging services
 - As of now we have implemented [Sentry](./_cloud/sentry_logging_service.md) to log and measure performance. Any other service is not available yet. To setup Sentry please check [this](./_cloud/sentry_logging_service.md#configuration).
 - You can check out more details about it here: [Sentry](./_cloud/sentry_logging_service.md) and [Performance](../performance_monitoring.md)
@@ -29,7 +30,7 @@ Dependencies
 
 ## Use cases
 
-::alert{type="info"} 
+::alert{type="info" class="flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert"} 
 use cases   
 - To easily log content on cloud
 - To easily add another cloud logging service
