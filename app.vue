@@ -77,6 +77,12 @@ const links = computed(() => {
       icon: 'i-heroicons-rocket-launch',
       to: '/vaahstore',
       active: route.path.startsWith('/vaahstore')
+    },
+    {
+      label: 'VaahShare',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/vaahshare',
+      active: route.path.startsWith('/vaahshare')
     }].filter(Boolean)
 })
 
