@@ -2,7 +2,7 @@
 title:Logs and Performance Monitoring
 ---
 
-::alert{type="info"}
+::alert{type="info" class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
 For detailed documentation, check this: [logging_library](../directory_structure/vaahextendflutter/services/logging_library/logging_library) and [performance_monitoring](../directory_structure/vaahextendflutter/services/performance_monitoring)
 ::
 
@@ -10,7 +10,7 @@ For detailed documentation, check this: [logging_library](../directory_structure
 
 Logging library which handles cloud (e.g. sentry, crashanalytics) and local (e.g. Console/Terminal and Local Files For Device) Logs.
 
-::alert{type="info"}
+::alert{type="info" class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
 tip Cloud logging services
 
 - As of now we have implemented [Sentry](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service) to log and measure performance. Any other service is not available yet. To setup Sentry please check [this](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service.md#configuration).
@@ -29,7 +29,7 @@ tip Cloud logging services
 
 ### Use cases
 
-::alert{type="info"}
+::alert{type="info" class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
 - To easily log content on cloud
 - To easily add another cloud logging service
 - To log transactions. e.g. I want to measure and log time of an api call

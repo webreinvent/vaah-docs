@@ -1,17 +1,17 @@
 ---
 toc: true
+title: Logging Service
 ---
 
-# Logging Service
 
-::alert{type="warning"}
+::alert{type="warning" class="flex items-center p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert"}
 Dependencies   
 
 None
 
 ::
 
-::alert{type="danger"} 
+::alert{type="danger" class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert"} 
 Developer Guide   
 
 - Developer should never use this service directly, use [Logging Library](../logging_library.md) instead.
