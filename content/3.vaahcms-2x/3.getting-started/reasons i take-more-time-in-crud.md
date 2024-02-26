@@ -1,3 +1,7 @@
+---
+title: Reasons I Take More Time In Crud
+---
+
 ## CRUD TO MUCH TIME REASONS
 
 
