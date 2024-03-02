@@ -48,6 +48,19 @@ const links = computed(() => [toc?.bottom?.edit && {
     <UPageHeader :title="page.title" :description="page.description" :links="page.links" :headline="headline" />
 
     <UPageBody prose>
+      <Alert v-if="route.path.includes('vaahcms-1x')" type="warning"  class="flex flex-col px-4 py-8 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+        <div>
+          NOTE <br/>
+          YOU'RE READING AN OUTDATED DOCUMENTATION. <br/>
+          Latest documentation of <code>VaahCMS 2.x</code> is available at: <br/>
+        </div>
+        <div>
+          <ULink to="/vaahcms-2x">
+            Checkout VaahCMS 2.x Documentation
+          </ULink>
+        </div>
+      </Alert>
+
       <ContentRenderer v-if="page.body" :value="page" />
 
       <hr v-if="surround?.length">
