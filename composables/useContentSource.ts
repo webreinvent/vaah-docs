@@ -10,26 +10,27 @@ export const useContentSource = () => {
 
     if(route.path.startsWith('/vaahcms')){
       item = [{
-        id: '1',
-        name: 'vaahcms-1x',
-        label: 'VaahCMS',
-        icon: 'i-heroicons-cube',
-        suffix: `v1.x`,
-        click: () => select({ name: 'vaahcms-1x' })
-      }, {
         id: '2',
         name: 'vaahcms-2x',
         label: 'VaahCMS',
         icon: 'i-heroicons-cube-transparent',
         suffix: 'v2.x',
         click: () => select({ name: 'vaahcms-2x' })
+      },
+      {
+        id: '1',
+        name: 'vaahcms-1x',
+        label: 'VaahCMS',
+        icon: 'i-heroicons-cube',
+        suffix: `v1.x`,
+        click: () => select({ name: 'vaahcms-1x' })
       }];
     }
 
     return item;
   })
 
-  const branch = computed(() => branches.value.find(b => b.name === (route.path.startsWith('/vaahcms-1x') ? 'vaahcms-1x' : route.path.startsWith('/vaahcms-2x') ? 'vaahcms-2x' : 'main')))
+  const branch = computed(() => branches.value.find(b => b.name === (route.path.startsWith('/vaahcms-2x') ? 'vaahcms-2x' : route.path.startsWith('/vaahcms-1x') ? 'vaahcms-1x' : 'main')))
 
   function select (b) {
 
