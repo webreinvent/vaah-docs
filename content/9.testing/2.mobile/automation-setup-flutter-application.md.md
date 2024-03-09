@@ -80,3 +80,163 @@ Now, before running the test scripts we need to install several packages, config
 
 ### Install Dependencies
 To install the required dependencies and configure `package.json` file, follow the steps given below:
+
+1. Run following commands in the terminal of the Code Editor (Make sure the path is set to your project directory).
+    - First we will install `appium` in our project.
+        ```shell
+        npm i appium --save-dev
+        ```
+    - After this, `appium-flutter-driver` is installed which performs actions on mobile app. To know more, refer [npm.js](https://www.npmjs.com/package/appium-flutter-driver?activeTab=readme) 
+        ```shell
+        npm i appium-flutter-driver --save-dev
+        ```
+    - Similarly, we will install `appium-flutter-finder`. This will be used to locate elements in flutter app. To know more, refer [npm.js](https://www.npmjs.com/package/appium-flutter-finder?activeTab=explore)
+        ```shell
+        npm i appium-flutter-finder --save-dev
+        ```
+    - Next, we will install `assert` module to make assertions in out test script.
+        ```shell
+        npm i assert --save-dev
+        ```
+    - Similarly, we will install `chai` to use various expect methods in it.
+        ```shell
+        npm i chai --save-dev
+        ```
+    - Finally, run this command:
+        ```shell 
+        npm i chalk cli-color cross-env ts-node typescript --save-dev
+        ```
+2. In `package.json` file, replace the code in script with the below code:
+    ```json
+    "scripts": {
+        "wdio": "cross-env wdio run ./wdio.conf.js",
+        "wdio debug": "cross-env NODE_WDIO_DEBUG=true wdio run ./wdio.conf.js",
+        "wdio ios": "cross-env NODE_WDIO_OS=ios wdio run ./wdio.conf.js",
+        "wdio android": "cross-env NODE_WDIO_OS=android wdio run ./wdio.conf.js"
+    }
+    ```
+3. Also add `"type":"module"` inside package.json file. Refer to the code below:
+    ```json
+    ...
+    "type": "module",
+    "devDependencies": {
+        ...
+    }
+    ```
+### Configure ENV file 
+1. Create a new file in the root folder of the project, where the file `wdio.conf.js` file is located.
+2. Name the file `wdio.env.js`.
+3. Add the code given below inside the file:
+    ```js
+    class Env {
+
+        constructor() {
+
+            this.params = {
+                debug: false,
+                env: null,
+                log_level: 'error',
+                small_pause: 5000,
+                medium_pause: 10000,
+                long_pause: 25000,
+                app_id: 'com.toolstation.mobile_app.dev',
+                version: null,
+                capabilities: [{
+                        platformName: 'Android',
+                        'appium:deviceName': 'P7A34',
+                        'appium:platformVersion': '14',
+                        'appium:automationName': 'Flutter',
+                        'appium:app': '/Users/toolstation/development/toolstation/mobile_app/build/app/outputs/flutter-apk/app-ukpreprod-debug.apk',
+                        'appium:fullReset': true,
+                        'appium:noReset': false,
+                        'appium:autoGrantPermissions': true,
+                }]
+            };
+        } 
+        //-------------------------------------------------
+        setId(){
+            const env = process.argv[4];
+
+            if(env == 'ios')
+                this.params.app_id = 'com.toolstation.mobile-app.dev'
+            else
+                this.params.app_id = 'com.toolstation.mobile_app.dev'
+        }
+
+        setCapabilities()
+        {
+            const env = process.argv[4];
+
+            switch(env)
+            {
+                case 'android':
+                    this.params.capabilities = [{
+                        platformName: 'Android',
+                        'appium:deviceName': 'P7A34',
+                        'appium:platformVersion': '14',
+                        'appium:automationName': 'Flutter',
+                        'appium:app': '/Users/toolstation/development/toolstation/mobile_app/build/app/outputs/flutter-apk/app-ukpreprod-debug.apk',
+                        'appium:fullReset': true,
+                        'appium:noReset': false,
+                        'appium:autoGrantPermissions': true,
+                    }]
+                    break;
+                case 'ios':
+                    this.params.capabilities = [{
+                        platformName: 'iOS',
+                        'appium:deviceName': 'iPhone 15 Pro',
+                        'appium:platformVersion': '17.2',
+                        'appium:automationName': 'Flutter',
+                        'appium:app':'/Users/toolstation/development/toolstation/mobile_app/build/ios/iphonesimulator/Runner.app',
+                        'appium:noReset': false,
+                        'appium:autoLaunch': true,
+                        'appium:autoAcceptAlerts': true
+                    }]
+                    break;
+            }
+        }
+        //-------------------------------------------------
+        getParams () {
+            this.setId();
+            this.setCapabilities();
+            console.log('params-->', this.params);
+            return this.params;
+        }
+    }
+    export default Env;
+    ```
+
+### Configure `wdio.conf.js` file
+After this, we need to configure the `wdio.conf.js` file. Open the file and follow the steps mentioned below:
+1. Add the following code at the top of the file in order to import `wdio.env.js` file created in step 3 of Configure ENV File section.
+    ```js
+    import env from "./wdio.env.js";
+    const envObj = new env();
+    const params = envObj.getParams();
+    ```
+2. Replace `exports.config` to `export const config`. Refer to the code snippet below:
+    ```js
+    export const config = {
+        ...
+    }
+    ```
+3. Enter this code: `env: params,` inside exports.config. Refer to the code below:
+    ```js
+    export const config = {
+        env: params,
+        //
+        // ====================
+        // Runner Configuration
+        // ====================
+        ...
+    }
+    ```
+4. For the `capabilities` replace the code with `capabilities: params.capabilities,`. Refer to the code below:
+    ```js
+    export const config = {
+        ...
+        capabilities: params.capabilities,
+        ...
+    }
+    ```
+Now, the configuration is completed. But we still need to do some changes with the test files before we can start running our script. 
