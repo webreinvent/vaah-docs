@@ -1,0 +1,6 @@
+{
+  "/api/search.json": { "prerender": true },
+  "/vaahcms": { "redirect": {
+    "to": "/vaahcms-2x", "statusCode": 301
+  }}
+}

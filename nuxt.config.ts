@@ -1,4 +1,5 @@
 
+const routeRules = require("./json/routeRules.json");
 
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
@@ -64,9 +65,7 @@ export default defineNuxtConfig({
       'DM+Sans': [400, 500, 600, 700]
     }
   },
-  routeRules: {
-    '/api/search.json': { prerender: true },
-  },
+  routeRules: routeRules,
   devtools: {
     enabled: true
   },
