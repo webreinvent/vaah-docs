@@ -37,10 +37,23 @@ Open `main.dart` file and add the following statements.
     ```
 - Also add the below statement inside main() method.
     ```dart
-    enableFlutterDriverExtension();
+    enableFlutterDriverExtension();Open 
     ```
 - Refer to the screenshot given below:
   <img src="/images/webdriverio/flutter_conf_two.png">
+
+### Step 3: Add `keys` for automation testing
+Open `main.dart` file and do the following changes:
+- Add the below statement in the line number **112**. 
+    ```dart
+    key: const Key('counter'),
+    ```
+- Similarly add the code given below in line number **120**.
+    ```dart
+    key: const Key('plus_btn'),
+    ```
+    Refer to the screenshot given below:
+    <img src="/images/webdriverio/flutter_config_key.png">
 
 ### Step 3: Run the application
 To get the **apk** needed, open your Android Studio, and Launch the emulator, then run command `flutter run` in your flutter project terminal. 
@@ -54,12 +67,12 @@ To run the app on an **iOS** device. Follow the steps mentioned on this [documen
 ## Setup WebdriverIO project
 In this we are going to setup a WebdriverIO project for automating the mobile application we just created in the prior steps.
 
-To setup the project, follow the steps mentioned in the [documentation](../1.web/0.setup-new-project.md) till **Step 9** of **Setup WebdriverIO project** section. Now follow the steps given below:
+To setup the project, follow the steps mentioned in the [documentation](../1.web/0.setup-new-project.md#setup-webdriverio-project) till **Step 9** of **Setup WebdriverIO project** section. Now follow the steps given below:
 1. For "Which type of environment would you like?". Select **Mobile**.
 2. For "Which mobile environment you'ld like to automate?". Select **Android** for now. We will setup iOS automation as well.
 3. For "Which framework do you want to use?". Select **Mocha**.
 4. For "Do you want to use a compiler?". Select **No**.
-5. Press **Enter** for the four commands to generate sample test cases and page object files.
+5. For "Do you want WebdriverIO to autogenerate some test files?". Type **n** and press Enter.
 6. Choose **spec reporter**  for test case reporting.
 7. For "Do you want to add plugins to your test setup?". Select **wait-for**. Press **Space** and then **Enter**.
     <img src="/images/webdriverio/plugin.png">
@@ -146,7 +159,7 @@ To install the required dependencies and configure `package.json` file, follow t
                         'appium:deviceName': 'P7A34',
                         'appium:platformVersion': '14',
                         'appium:automationName': 'Flutter',
-                        'appium:app': '/Users/toolstation/development/toolstation/mobile_app/build/app/outputs/flutter-apk/app-ukpreprod-debug.apk',
+                        'appium:app': 'path of the apk file',
                         'appium:fullReset': true,
                         'appium:noReset': false,
                         'appium:autoGrantPermissions': true,
@@ -175,7 +188,7 @@ To install the required dependencies and configure `package.json` file, follow t
                         'appium:deviceName': 'P7A34',
                         'appium:platformVersion': '14',
                         'appium:automationName': 'Flutter',
-                        'appium:app': '/Users/toolstation/development/toolstation/mobile_app/build/app/outputs/flutter-apk/app-ukpreprod-debug.apk',
+                        'appium:app': 'path of apk file',
                         'appium:fullReset': true,
                         'appium:noReset': false,
                         'appium:autoGrantPermissions': true,
@@ -187,7 +200,7 @@ To install the required dependencies and configure `package.json` file, follow t
                         'appium:deviceName': 'iPhone 15 Pro',
                         'appium:platformVersion': '17.2',
                         'appium:automationName': 'Flutter',
-                        'appium:app':'/Users/toolstation/development/toolstation/mobile_app/build/ios/iphonesimulator/Runner.app',
+                        'appium:app':'path of the iOS runner file',
                         'appium:noReset': false,
                         'appium:autoLaunch': true,
                         'appium:autoAcceptAlerts': true
@@ -205,6 +218,13 @@ To install the required dependencies and configure `package.json` file, follow t
     }
     export default Env;
     ```
+    ::alert{type="warning" class="p-3 mb-5 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert"}
+    **Note**:
+    In the capabilities, specify value of different as per the description given below:
+    - **appium:deviceName**: Add the name of the your emulator/simulator.
+    - **appium:platformVersion'**: Add the verion of the emulation/simulator software version.
+    - **appium:app**: Add the path of the apk/app file that you want to test.
+    ::
 
 ### Configure `wdio.conf.js` file
 After this, we need to configure the `wdio.conf.js` file. Open the file and follow the steps mentioned below:
@@ -239,4 +259,41 @@ After this, we need to configure the `wdio.conf.js` file. Open the file and foll
         ...
     }
     ```
-Now, the configuration is completed. But we still need to do some changes with the test files before we can start running our script. 
+Now, the configuration is completed. But we still need to do some changes with the test files before we can start running our script.
+
+### Configure test files.
+Now, we will craete and configure the test files before working on automation script. 
+
+1. Create a directory named: `tests` in the project root directory.
+2. Create another directory named: `spec` inside `tests` directory created earlear.
+3. Create a file named: `test.e2e.js` inside `spec` directory.
+4. Configure `test.e2e.js` file
+    Open the `test.e2e.js` file. Add the code snippet given below in the file:
+    ```js
+    import find from 'appium-flutter-finder'
+    import {expect} from 'chai'
+    describe('Flutter Automation Testing', () => {
+        it('Verify if the counter button is funtional or not', async () => {
+            const plus_btn = find.byValueKey('plus_btn');
+            const counter = find.byValueKey('counter');
+            await driver.elementClick(plus_btn);
+            await driver.elementClick(plus_btn);
+            expect(await driver.getElementText(counter)).to.be.equal('2');
+        })
+    })
+    ```
+
+### Executing the test script
+Before running the test script, add the path of the test script in the `wdio.conf.js`. Open the file and locate **specs** keyword. Add the below code for the **specs**.
+```js
+specs: [
+    './tests/spec/test.e2e.js'
+],
+```
+
+Now run the test script by entering the below command in the terminal.
+```shell
+npm run wdio
+```
+If you get an `ECONNREFUSED 127.0.0.1:4723` error. Just run the script again by entering the command above.
+
