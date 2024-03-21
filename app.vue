@@ -79,9 +79,9 @@ const links = computed(() => {
       active: route.path.startsWith('/vaahstore')
     },
     {
-      label: 'WebdriverIO',
+      label: 'Testing',
       icon: 'i-heroicons-rocket-launch',
-      to: '/webdriverio/introduction',
+      to: '/testing/introduction',
       active: route.path.startsWith('/webdriverio')
     },
     {
