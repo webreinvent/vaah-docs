@@ -81,7 +81,7 @@ const links = computed(() => {
     {
       label: 'Testing',
       icon: 'i-heroicons-rocket-launch',
-      to: '/testing/introduction',
+      to: '/testing/automation/introduction',
       active: route.path.startsWith('/webdriverio')
     },
     {
