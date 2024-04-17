@@ -44,12 +44,7 @@ export default defineAppConfig({
     bottom: {
       title: 'Community',
       edit: 'https://github.com/webreinvent/webreinvent-docs/edit/develop/content',
-      links: [{
-        icon: 'i-heroicons-book-open',
-        label: 'Nuxt UI Pro docs',
-        to: 'https://ui.nuxt.com/pro/guide',
-        target: '_blank',
-      }]
+      links: []
     }
   }
 })
