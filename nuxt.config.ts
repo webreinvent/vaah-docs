@@ -3,21 +3,9 @@ const routeRules = require("./json/routeRules.json");
 
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
-  app: {
-    head: {
-      script: [
-        {
-          src: "https://www.googletagmanager.com/gtag/js?id=G-XTMX8KRPPK",
-          async: true
-        },
-        {
-          children: "window.dataLayer = window.dataLayer || [];\n" +
-            "  function gtag(){dataLayer.push(arguments);}\n" +
-            "  gtag('js', new Date());\n" +
-            "\n" +
-            "  gtag('config', 'G-XTMX8KRPPK');"
-        }
-      ]
+  runtimeConfig: {
+    public: {
+      gtagId: 'G-XTMX8KRPPK'
     }
   },
   modules: [
@@ -27,6 +15,9 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     'nuxt-og-image',
     '@pinia/nuxt',
+  ],
+  plugins: [
+    "~/plugins/gtag.client"
   ],
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
