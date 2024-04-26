@@ -3,6 +3,11 @@ const routeRules = require("./json/routeRules.json");
 
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
+  runtimeConfig: {
+    public: {
+      gtagId: 'G-XTMX8KRPPK'
+    }
+  },
   modules: [
     '@nuxt/content',
     '@nuxt/ui',
@@ -10,6 +15,9 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     'nuxt-og-image',
     '@pinia/nuxt',
+  ],
+  plugins: [
+    "~/plugins/gtag.client"
   ],
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
