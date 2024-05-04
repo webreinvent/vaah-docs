@@ -103,6 +103,7 @@ provide('navigation', navigation)
     <Header :links="links"/>
 
     <UMain>
+      <NuxtLoadingIndicator />
       <NuxtLayout>
         <NuxtPage/>
       </NuxtLayout>
