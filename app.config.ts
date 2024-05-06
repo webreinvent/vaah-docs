@@ -12,11 +12,11 @@ export default defineAppConfig({
     }
   },
   seo: {
-    siteName: 'WebReinvent Internal Docs',
+    siteName: 'Vaah Docs',
   },
   header: {
     logo: {
-      alt: 'WebReinvent Internal Docs',
+      alt: 'Vaah Docs',
       light: '/logos/light.svg',
       dark: '/logos/dark.svg'
     },
@@ -24,7 +24,7 @@ export default defineAppConfig({
     colorMode: true,
     links: [{
       icon: 'i-simple-icons-github',
-      to: 'https://github.com/webreinvent/webreinvent-docs',
+      to: 'https://github.com/webreinvent/vaah-docs',
       target: '_blank',
       'aria-label': 'Docs template on GitHub'
     }]
@@ -43,7 +43,7 @@ export default defineAppConfig({
     title: 'Table of Contents',
     bottom: {
       title: 'Community',
-      edit: 'https://github.com/webreinvent/webreinvent-docs/edit/develop/content',
+      edit: 'https://github.com/webreinvent/vaah-docs/edit/develop/content',
       links: []
     }
   }
