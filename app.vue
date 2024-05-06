@@ -73,6 +73,12 @@ const links = computed(() => {
       active: route.path.startsWith('/vaahshare')
     },
     {
+      label: 'VaahNuxt',
+      icon: 'i-heroicons-command-line',
+      to: '/vaahnuxt',
+      active: route.path.startsWith('/vaahnuxt')
+    },
+    {
       label: 'Guide',
       icon: 'i-heroicons-rocket-launch',
       to: '/guide',
