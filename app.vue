@@ -49,22 +49,10 @@ const links = computed(() => {
     active: route.path.startsWith('/vaahcms')
   },
     {
-      label: 'Guide',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/guide',
-      active: route.path.startsWith('/guide')
-    },
-    {
       label: 'VaahCLI',
       icon: 'i-heroicons-rocket-launch',
       to: '/vaahcli',
       active: route.path.startsWith('/vaahcli')
-    },
-    {
-      label: 'Laravel',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/laravel/collections-and-arrays',
-      active: route.path.startsWith('/laravel')
     },
     {
       label: 'VaahFlutter',
@@ -79,10 +67,10 @@ const links = computed(() => {
       active: route.path.startsWith('/vaahstore')
     },
     {
-      label: 'Testing',
+      label: 'VaahShare',
       icon: 'i-heroicons-rocket-launch',
-      to: '/testing/automation/introduction',
-      active: route.path.startsWith('/testing')
+      to: '/vaahshare',
+      active: route.path.startsWith('/vaahshare')
     },
     {
       label: 'VaahNuxt',
@@ -91,11 +79,23 @@ const links = computed(() => {
       active: route.path.startsWith('/vaahnuxt')
     },
     {
-      label: 'VaahShare',
+      label: 'Guide',
       icon: 'i-heroicons-rocket-launch',
-      to: '/vaahshare',
-      active: route.path.startsWith('/vaahshare')
-    }].filter(Boolean)
+      to: '/guide',
+      active: route.path.startsWith('/guide')
+    },
+    {
+      label: 'Laravel',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/laravel/collections-and-arrays',
+      active: route.path.startsWith('/laravel')
+    },
+    {
+      label: 'Testing',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/testing/automation/introduction',
+      active: route.path.startsWith('/testing')
+    },].filter(Boolean)
 })
 
 
@@ -109,6 +109,7 @@ provide('navigation', navigation)
     <Header :links="links"/>
 
     <UMain>
+      <NuxtLoadingIndicator />
       <NuxtLayout>
         <NuxtPage/>
       </NuxtLayout>
