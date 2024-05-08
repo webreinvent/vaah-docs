@@ -1,6 +1,919 @@
 {
   "/api/search.json": { "prerender": true },
-  "/vaahcms": { "redirect": {
-    "to": "/vaahcms-2x", "statusCode": 301
-  }}
+  "/vaahcms": {
+    "redirect": {
+      "to": "/vaahcms-2x",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/setting/localization": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/setting/localization",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/widgets/debug-surround": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/widgets/debug",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/create-block": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/create-block",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/user-and-access/registrations": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/user-and-access/registrations",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/users": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/users",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2x/module": {
+    "redirect": {
+      "to": "/vaahcms-2x/module/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2x/the-basics/advanced/logs-surround": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/advanced/logs",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/setup": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/advanced/logs",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/setting/env-variables": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/setting/env-variables",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/getting-started/generate-advanced-crud": {
+    "redirect": {
+      "to": "/vaahcms-2x/getting-started/generate-advanced-crud",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/setting/mails": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/setting/mails",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2x/getting-started/generate-module-surround": {
+    "redirect": {
+      "to": "/vaahcms-2x/getting-started/generate-module",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/manage/media": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/manage/media",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/advanced/logs": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/advanced/logs",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/manage/taxonomies": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/manage/taxonomies",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/acl": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/acl",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/module/activate-module": {
+    "redirect": {
+      "to": "/vaahcms-2x/module/activate-module",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/module/module-dependencies": {
+    "redirect": {
+      "to": "/vaahcms-2x/module/module-dependencies",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/module/introduction": {
+    "redirect": {
+      "to": "/vaahcms-2x/module/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/getting-started/generate-user": {
+    "redirect": {
+      "to": "/vaahcms-2x/getting-started/generate-user",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/extend/themes": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/extend/themes",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/generators": {
+    "redirect": {
+      "to": "/vaahcms-2x/generators",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/getting-started/generate-themes": {
+    "redirect": {
+      "to": "/vaahcms-2x/getting-started/generate-themes",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/directory-structure": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/directory-structure",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/api": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/api",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/module/config": {
+    "redirect": {
+      "to": "/vaahcms-2x/module/config",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/getting-started/generate-taxonomies": {
+    "redirect": {
+      "to": "/vaahcms-2x/getting-started/generate-taxonomies",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/extend/modules": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/extend/modules",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/activating-theme": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/activating-theme",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/create-content": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/create-content",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/advanced/batches": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/advanced/batches",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2": {
+    "redirect": {
+      "to": "/vaahcms-2x",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/advanced/jobs": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/advanced/jobs",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/advanced/failed-jobs": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/advanced/failed-jobs",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/user-authentication": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/user-authentication",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/create-content-type": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/create-content-type",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/module/develop-module": {
+    "redirect": {
+      "to": "/vaahcms-2x/module/develop-module",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/module": {
+    "redirect": {
+      "to": "/vaahcms-2x/module/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/create-menu": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/create-menu",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/user-and-access/users": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/user-and-access/users",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/configuration": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/configuration",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/getting-started/seeders": {
+    "redirect": {
+      "to": "/vaahcms-2x/getting-started/seeders",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme/develop-theme": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/develop-theme",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2": {
+    "redirect": {
+      "to": "/vaahcms-2x",
+      "statusCode": 301
+    }
+  },
+    "/vaahcms-2/getting-started/database": {
+      "redirect": {
+        "to": "/vaahcms-2x/getting-started/database",
+        "statusCode": 301
+      }
+    },
+      "/vaahcms-2/the-basics/user-and-access": {
+        "redirect": {
+          "to": "/vaahcms-2x/the-basics/user-and-access/registrations",
+          "statusCode": 301
+        }
+  },
+  "/vaahcms-2/the-basics": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/setup",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/extend": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/extend/modules",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/getting-started": {
+    "redirect": {
+      "to": "/vaahcms-2x/getting-started/installation",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/theme": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/advanced": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/advanced/logs",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/setting": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/setting/general-settings",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/manage": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/manage/media",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/creating-application": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/creating-application",
+      "statusCode": 301
+    }
+  },
+  "/users": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/users",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/routing": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/routing",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/define-method": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/define-method",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/configure-blade": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/configure-blade",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/the-concept": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/the-concept",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-1x/module/define-method-surround": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/define-method",
+      "statusCode": 301
+    }
+  },
+  "/testing/automation": {
+    "redirect": {
+      "to": "/testing/automation/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/setting/reset-application": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/setting/reset-application",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/develop-theme": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/develop-theme",
+      "statusCode": 301
+    }
+  },
+  "/vaahstore/basics/attributes-surround": {
+    "redirect": {
+      "to": "/vaahstore/basics/attributes",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/add-to-aside": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/add-to-aside",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/acl": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/acl",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/introduction": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/import-data": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/import-data",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/generators": {
+    "redirect": {
+      "to": "/vaahcms-1x/generators",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/directory-structure": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/directory-structure",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/modules": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/migration-and-seed": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/migration-and-seed",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/develop-module": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/develop-module",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/getting-started/installation": {
+    "redirect": {
+      "to": "/vaahcms-1x/getting-started/installation",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/getting-started/generate-themes": {
+    "redirect": {
+      "to": "/vaahcms-1x/getting-started/generate-themes",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/configuration": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/configuration",
+      "statusCode": 301
+    }
+  },
+  "/introduction/getting-started": {
+    "redirect": {
+      "to": "/vaahcms-1x/getting-started/installation",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/create-block": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/create-block",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/extends-vaahcms": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/extends-vaahcms",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/directory-structure": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/directory-structure",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/getting-started/configuration": {
+    "redirect": {
+      "to": "/vaahcms-1x/getting-started/configuration",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-1x/basic/setting/manage-env-surround": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/setting/manage-env",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/registrations": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/registrations",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/configure-vue-vuex": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/configure-vue-vuex",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/activate-cms-module": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/activate-cms-module",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/configuration": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/configuration",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/getting-started/directory-structure": {
+    "redirect": {
+      "to": "/vaahcms-1x/getting-started/directory-structure",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/setting/localization": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/setting/localization",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/setting/mails": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/setting/mails",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/setup-routes": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/setup-routes",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/setting/manage-env": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/setting/manage-env",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/setting-up-crud": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/setting-up-crud",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module/introduction": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/vaahvue/reusable": {
+    "redirect": {
+      "to": "/vaahcms-1x/vaahvue/reusable",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/themes": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/themes",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/setting/notifications": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/setting/notifications",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/create-content": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/create-content",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/cms/introduction": {
+    "redirect": {
+      "to": "/vaahcms-1x/cms/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/getting-started/database": {
+    "redirect": {
+      "to": "/vaahcms-1x/getting-started/database",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/create-menu": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/create-menu",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/basics/getting-started-surround": {
+    "redirect": {
+      "to": "/vaahflutter/basics/getting-started",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme/create-content-type": {
+    "redirect": {
+      "to": "/vaahcms-1x/theme/create-content-type",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/taxonomies": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/taxonomies",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/cms/introduction.md": {
+    "redirect": {
+      "to": "/vaahcms-1x/cms/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/media.md": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/media",
+      "statusCode": 301
+    }
+  },
+  "/vaahvue/helpers/VaahHelper": {
+    "redirect": {
+      "to": "/vaahcms-1x/vaahvue/helpers",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/generate-themes.md": {
+    "redirect": {
+      "to": "/vaahcms-1x/getting-started/generate-themes",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/lib": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/lib/models",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/vaahvue": {
+    "redirect": {
+      "to": "/vaahcms-1x/vaahvue/helpers",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/module": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/basics": {
+    "redirect": {
+      "to": "/vaahflutter/basics/getting-started",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/essentials": {
+    "redirect": {
+      "to": "/vaahflutter/essentials/app",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/getting-started": {
+    "redirect": {
+      "to": "/vaahcms-2x/getting-started/installation",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/lib/routes": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/lib/routes/middleware",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/the-concept",
+      "statusCode": 301
+    }
+  },
+  "/vaahstore/basics": {
+    "redirect": {
+      "to": "/vaahstore/basics/getting-started",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/theme": {
+    "redirect": {
+      "to": "/vaahcms-2x/theme/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/root": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/root/d_assets",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/core": {
+    "redirect": {
+      "to": "/vaahflutter/core/theme",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/cms": {
+    "redirect": {
+      "to": "/vaahcms-1x/cms/introduction",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms/basic/setting": {
+    "redirect": {
+      "to": "/vaahcms-1x/basic/setting/general",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/env.dart": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/env",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/services": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/services/local",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2/the-basics/setting/update": {
+    "redirect": {
+      "to": "/vaahcms-2x/the-basics/setting/update",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/helpers/input-formatters-surround": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/helpers/input-formatters",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/todo": {
+    "redirect": {
+      "to": "/vaahflutter/todo/initial",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/services": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/services/base_service",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/tab-options",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/widgets": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/widgets/atoms/tab-options",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services/logging_library": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/logging_library",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/notification/internal/notification",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/configurations": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/configurations/p12_certificate",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/performance_monitoring",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/overview",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structurer": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/root/d_assets",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_local": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_local/local_device_service",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services/notification/push": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/notification/push/notification",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/base": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/base/controller",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_cloud": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service",
+      "statusCode": 301
+    }
+  },
+  "/vaahflutter/directory_structure/vaahextendflutter/helpers": {
+    "redirect": {
+      "to": "/vaahflutter/directory_structure/vaahextendflutter/helpers/alerts",
+      "statusCode": 301
+    }
+  },
+  "/laravel": {
+    "redirect": {
+      "to": "/laravel/collections-and-arrays#introduction",
+      "statusCode": 301
+    }
+  },
+  "/webdriverio/introduction": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/travel/blogs": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/vendor": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-1x/module/modules/store-blogs": {
+    "redirect": {
+      "to": "/vaahcms-1x/module/introduction",
+      "statusCode": 301
+    }
+  },
+  "/android": {
+    "redirect": {
+      "to": "/vaahflutter",
+      "statusCode": 301
+    }
+  },
+  "/test-path": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/1207": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/contents": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/webdriverio/setups-and-config": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/_content": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  }
+
+
+
 }
+
