@@ -870,6 +870,12 @@
       "statusCode": 301
     }
   },
+  "/vendor*/": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
   "/vaahcms-1x/module/modules/store-blogs": {
     "redirect": {
       "to": "/vaahcms-1x/module/introduction",
@@ -909,6 +915,18 @@
   "/_content": {
     "redirect": {
       "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/backend/articles/contents": {
+    "redirect": {
+      "to": "/",
+      "statusCode": 301
+    }
+  },
+  "/vaahcms-2": {
+    "redirect": {
+      "to": "/vaahcms-2x",
       "statusCode": 301
     }
   }
