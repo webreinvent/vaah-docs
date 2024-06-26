@@ -4,6 +4,14 @@ title: Network Storage
 description: Documentation on using network storage options (Firebase Firestore and Supabase) with Vaah Flutter.
 ---
 
+::alert{type="warning" class="p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800" role="alert"} 
+Dependencies:
+
+cloud_firestore: ^5.0.2
+
+supabase_flutter: ^2.5.6
+::
+
 ## Overview
 
 Vaah Flutter provides two network storage options: Firebase FireStore and Supabase. This section guides you through setting up and using these network storage solutions.
@@ -18,13 +26,25 @@ Select one option from Firebase Firestore and Supabase.
 
 ### If you select Firebase Firestore
 
-1. Configure the storage type in the env.dart file.
+1. Add and setup the firebase using [official documentation](https://firebase.google.com/docs/flutter/setup).
+
+2. Configure the storage type in the env.dart file.
 
 ```dart
 final EnvironmentConfig defaultConfig = EnvironmentConfig(
   // other configurations
   networkStorageType: networkStorageType.firebase,
 );
+```
+
+3. In `main.dart` provide the `firebaseOptions` as shown:
+
+```dart
+await baseController.init(
+  firebaseOptions: DefaultFirebaseOptions.currentPlatform,
+    app: const AppConfig(),
+    errorApp: const ErrorAppConfig(),
+); 
 ```
 
 ::alert{type="info" class="flex flex-col p-4 mb-4 text-m text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
@@ -38,8 +58,49 @@ await NetworkStorage.create(
     'age': 30,
     'email': 'x@yz.com',
   },
-);
-final value = await NetworkStorage.read(key: 'dave');
+); // write
+
+final value = await NetworkStorage.read(key: 'dave'); // read
 ```
 ::
 
+
+### If you select Supabase
+
+1. Setup the supabase project on [supabase](https://supabase.com/dashboard/new).
+
+2. Configure the storage type and supabase configuration in the env.dart file.
+You can find the anon key and url [here](https://supabase.com/dashboard/project/embgcnouywpgunriudxi/settings/api).
+
+```dart
+final EnvironmentConfig defaultConfig = EnvironmentConfig(
+  // other configurations
+  networkStorageType: networkStorageType.supabase,
+  supabaseConfig: SupabaseConfig(
+    anonKey: 'YOUR-ANON-KEY',
+    url: 'YOUR-URL',
+  ),
+);
+```
+:::alert{type="info" class="flex flex-col p-4 mb-4 text-m text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
+If you want to perform operations (i.e., CRUD) in default collection `vaah-flutter-collection`.
+1. Create a table in the Supabase with name `vaah-flutter-collection` case sensitive.
+2. Don't pass the `collectionName` as shown in the example:
+
+```dart 
+await NetworkStorage.create(
+  key: 'dave', 
+  value: {
+    'name': 'Dave',
+    'age': 30,
+    'email': 'x@yz.com',
+  },
+); // write
+
+final value = await NetworkStorage.read(key: 'dave'); // read
+```
+:::
+
+::alert{type="info" class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
+For more information about environment configuration [click here](../../../../3.essentials/2.environments.md).
+::
