@@ -104,3 +104,59 @@ final value = await NetworkStorage.read(key: 'dave'); // read
 ::alert{type="info" class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
 For more information about environment configuration [click here](../../../../3.essentials/2.environments.md).
 ::
+
+## Usage Guide
+
+After setting up the network Storage you can use the below methods to perform operations (i.e., CRUD).
+
+### **Create Items**
+
+```dart
+await NetworkStorage.create(
+  collectionName: 'users-collection', 
+  key: 'dave', 
+  value: {'name': 'Dave', 'age': 30, 'email': 'x@yz.com'},
+); // single
+
+await NetworkStorage.createMany(
+  collectionName: 'users-collection',
+  values: {
+    'john': {'name': 'John', 'age': 30, 'email': 'gmail.com'},
+    'sina': {'name': 'Sina', 'age': 30, 'email': 'gmail.com'},
+    'rock': {'name': 'Rock', 'age': 30, 'email': 'gmail.com'},
+    'sean': {'name': 'sean', 'age': 30, 'email': 'gmail.com'},
+  },
+); // multiple
+```
+
+### **Read Items**
+
+```dart
+final value =  await NetworkStorage.read(collectionName: 'users-collection', key: 'dave'); // single
+
+final values = await NetworkStorage.readMany(
+  collectionName: 'users-collection',
+  keys: ['dave', 'john', 'sina', 'sean'],
+); // multiple
+
+final values = await networkStorage.readAll(collectionName: 'users-collection'); // all
+```
+
+### **Update Items**
+```dart
+await NetworkStorage.update(
+  collectionName: 'users-collection',
+  key: 'sean',
+  value: {'name': 'Sean'}, //updating a single field
+); //single
+
+await NetworkStorage.updateMany(
+  collectionName: 'users-collection',
+  values: {
+    'dave': {'name': 'Dave', 'age': 31, 'email': 'gmail.com'}, //updating multiple fields
+    'sina': {'name': 'Sina', 'age': 31, 'email': 'gmail.com'},
+    'rock': {'name': 'Rock', 'age': 31, 'email': 'gmail.com'},
+    'sean': {'name': 'sean', 'age': 31, 'email': 'gmail.com'},
+  },
+); // multiple
+```
