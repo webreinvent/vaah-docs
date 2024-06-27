@@ -14,7 +14,7 @@ supabase_flutter: ^2.5.6
 
 ## Overview
 
-Vaah Flutter provides two network storage options: Firebase FireStore and Supabase. This section guides you through setting up and using these network storage solutions.
+Vaah Flutter provides two network storage options: Firebase Firestore and Supabase. This section guides you through setting up and using these network storage solutions.
 
 Select one option from Firebase Firestore and Supabase.
 
@@ -147,16 +147,51 @@ final values = await networkStorage.readAll(collectionName: 'users-collection');
 await NetworkStorage.update(
   collectionName: 'users-collection',
   key: 'sean',
-  value: {'name': 'Sean'}, //updating a single field
-); //single
+  value: {'name': 'Sean'}, // updating a single field
+); // single
 
 await NetworkStorage.updateMany(
   collectionName: 'users-collection',
   values: {
-    'dave': {'name': 'Dave', 'age': 31, 'email': 'gmail.com'}, //updating multiple fields
+    'dave': {'name': 'Dave', 'age': 31, 'email': 'gmail.com'}, // updating multiple fields
     'sina': {'name': 'Sina', 'age': 31, 'email': 'gmail.com'},
     'rock': {'name': 'Rock', 'age': 31, 'email': 'gmail.com'},
     'sean': {'name': 'sean', 'age': 31, 'email': 'gmail.com'},
   },
 ); // multiple
 ```
+### **Create or Update Items**
+```dart
+NetworkStorage.createOrUpdate(
+  collectionName: 'users-collection',
+  key: 'sean',
+  value: {'age': 34, 'email': 't@email.com'},
+); // single
+
+await NetworkStorage.createOrUpdateMany(
+  collectionName: 'users-collection',
+  values: {
+    'dave': {'name': 'Dave', 'age': 38, 'email': 'gmail.com'},
+    'sina': {'name': 'Sina', 'age': 32, 'email': 'gmail.com'},
+    'rock': {'name': 'Rock', 'age': 32, 'email': 'gmail.com'},
+    'sean': {'name': 'Sean'},
+  },
+); // multiple
+```
+
+### **Delete Items**
+
+```dart
+await NetworkStorage.delete(collectionName: 'users-collection', key: 'sean'); // single
+
+await NetworkStorage.deleteMany(
+  collectionName: 'users-collection',
+  keys: ['dave', 'sean', 'sina'],
+); // multiple
+
+await NetworkStorage.deleteAll(collectionName: 'users-collection'); // all
+```
+
+::alert{type="info" class="flex flex-col items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
+No need to provide `coillectionName` if you want to use the default local storage `vaah-flutter-collection`.
+::
