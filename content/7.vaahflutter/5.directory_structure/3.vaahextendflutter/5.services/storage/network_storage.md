@@ -193,5 +193,6 @@ await NetworkStorage.deleteAll(collectionName: 'users-collection'); // all
 ```
 
 ::alert{type="info" class="flex flex-col items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
-No need to provide `coillectionName` if you want to use the default local storage `vaah-flutter-collection`.
+No need to provide `coillectionName` if you want to use the default collection in firebase or default table in supabase `vaah-flutter-collection`.
 ::
+
