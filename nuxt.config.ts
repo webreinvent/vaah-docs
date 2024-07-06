@@ -37,7 +37,7 @@ export default defineNuxtConfig({
       }
     ]
   },
-  content:{
+  content: {
     highlight: {
       theme: {
         // Default theme (same as single string)
@@ -55,7 +55,8 @@ export default defineNuxtConfig({
         'js',
         'shell',
         'bash',
-        'sh'
+        'sh',
+        'dart'
       ]
     }
   },

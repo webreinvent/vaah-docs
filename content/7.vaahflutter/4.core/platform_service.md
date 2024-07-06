@@ -9,7 +9,9 @@ The platform service is used to establish a communication channel between the Fl
 It is built on top of the Flutter framework's platform channel. You can view the official documentation [here](https://docs.flutter.dev/platform-integration/platform-channels). 
 
 ## Platform Service Class 
-The PlatformService class is an abstract class that provides static methods to interact with platform-specific services. Go to [usage guide]().
+The PlatformService class is an abstract class that provides static methods to interact with platform-specific services. 
+
+To see usage guide [click here](../5.directory_structure/3.vaahextendflutter/5.services/8.platform_channel_service.md).
 
 ### Methods
 | Name                           | Return Type      | Arguments                                            | Description                                                                                           |
