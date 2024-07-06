@@ -28,20 +28,19 @@ Select one option from Firebase Firestore and Supabase.
 
 1. Add and setup the firebase using [official documentation](https://firebase.google.com/docs/flutter/setup).
 
-2. Configure the storage type in the env.dart file.
+2. Configure the storage type in any of the environment configuration file.
 
-```dart
-final EnvironmentConfig defaultConfig = EnvironmentConfig(
-  // other configurations
-  networkStorageType: networkStorageType.firebase,
-);
+For example `assets/env/develop.json`
+
+```json
+"network_storage_type": "firebase"
 ```
 
 3. In `main.dart` provide the `firebaseOptions` as shown:
 
 ```dart
 await baseController.init(
-  firebaseOptions: DefaultFirebaseOptions.currentPlatform,
+  firebaseOptions: DefaultFirebaseOptions.currentPlatform, // provide default firebase options here 
     app: const AppConfig(),
     errorApp: const ErrorAppConfig(),
 ); 
@@ -69,18 +68,18 @@ final value = await NetworkStorage.read(key: 'dave'); // read
 
 1. Setup the supabase project on [supabase](https://supabase.com/dashboard/new).
 
-2. Configure the storage type and supabase configuration in the env.dart file.
+2. Configure the storage type in any of the environment configuration file.
+
 You can find the anon key and url [here](https://supabase.com/dashboard/project/embgcnouywpgunriudxi/settings/api).
 
-```dart
-final EnvironmentConfig defaultConfig = EnvironmentConfig(
-  // other configurations
-  networkStorageType: networkStorageType.supabase,
-  supabaseConfig: SupabaseConfig(
-    anonKey: 'YOUR-ANON-KEY',
-    url: 'YOUR-URL',
-  ),
-);
+For example `assets/env/develop.json`
+
+```json
+"network_storage_type": "supabase",
+"supabase_config": {
+  "url": "YOUR URL",
+  "anon_key": "YOUR ANON KEY"
+},
 ```
 :::alert{type="info" class="flex flex-col p-4 mb-4 text-m text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
 If you want to perform operations (i.e., CRUD) in default collection `vaah-flutter-collection`.
