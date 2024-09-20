@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     ['nuxt-openapi-docs-module',
       {
         folder: './docs',
-        name: 'VaahStore Api Docs',
+        name: 'VaahStore API Docs',
         debug: true,
         list: true,
         files: function () {

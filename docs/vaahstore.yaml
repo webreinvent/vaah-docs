@@ -1,8 +1,8 @@
-openapi: 3.1.9
+openapi: 3.0.0
 info:
   title: VaahStore
   description: |
-    The VaahStore is an example OpenAPI specification for user authentication and Store management.
+    The VaahStore is an example OpenAPI specification for user authentication and store management.
     Get started by [signing up](#tag/Authentication/POST/user/signup).
   version: 1.0.0
   contact:
@@ -19,6 +19,8 @@ tags:
     description: Endpoints for user account management including signup, sign-in, and activation.
   - name: Stores
     description: Everything about Stores
+  - name: Products
+    description: Everything about Products in VaahStore
 
 paths:
   '/user/signup':
@@ -46,6 +48,12 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/BadRequest'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
 
   '/user/signup/activate':
     post:
@@ -76,8 +84,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    examples:
-                      - Account activated successfully.
+                    example: "Account activated successfully."
         '400':
           description: Invalid Activation Code
           content:
@@ -90,6 +97,12 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
 
   '/user/signin':
     post:
@@ -122,6 +135,12 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
 
   '/store/stores/assets':
     get:
@@ -151,6 +170,12 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
 
   '/store/stores':
     get:
@@ -173,6 +198,12 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
 
     post:
       tags:
@@ -253,8 +284,113 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/BadRequest'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
 
   '/store/stores/{id}':
+    put:
+      tags:
+        - Stores
+      summary: Update an existing Store
+      description: Update a store with the specified ID using the provided details.
+      operationId: updateStore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the store to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - taxonomy_id_store_status
+                - slug
+                - is_multi_currency
+                - is_multi_lingual
+                - is_multi_vendor
+                - allowed_ips
+                - is_default
+                - is_active
+              properties:
+                name:
+                  type: string
+                  example: "Updated Store Name"
+                taxonomy_id_store_status:
+                  type: integer
+                  example: 1
+                slug:
+                  type: string
+                  example: "updated-store"
+                notes:
+                  type: string
+                  nullable: true
+                  example: "Updated notes about the store"
+                is_multi_currency:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+                is_multi_lingual:
+                  type: integer
+                  enum: [0, 1]
+                  example: 0
+                is_multi_vendor:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+                allowed_ips:
+                  type: array
+                  items:
+                    type: string
+                    format: ipv4
+                    example: "192.168.1.2"
+                status_notes:
+                  type: string
+                  nullable: true
+                  example: "Store is now active"
+                is_default:
+                  type: integer
+                  enum: [0, 1]
+                  example: 0
+                is_active:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+      responses:
+        '200':
+          description: Store Updated Successfully
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/Store'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/BadRequest'
+        '404':
+          description: Store Not Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
     get:
       tags:
         - Stores
@@ -282,6 +418,85 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+  '/store/products':
+    get:
+      tags:
+        - Products
+      summary: Get List of Products
+      description: Retrieve a list of products.
+      operationId: getProductList
+      responses:
+        '200':
+          description: Products Retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      '$ref': '#/components/schemas/Product'
+                  first_page_url:
+                    type: string
+                    example: "http://127.0.0.1:8000/backend/store/products?page=1"
+        '404':
+          description: No Products Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+  '/store/products/{id}':
+      get:
+        tags:
+          - Products
+        summary: Get Product by ID
+        description: Retrieve a product by its unique identifier.
+        operationId: getProductById
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: The unique identifier of the product
+            schema:
+              type: integer
+              format: int64
+              example: 9
+        responses:
+          '200':
+            description: Product Retrieved
+            content:
+              application/json:
+                schema:
+                  '$ref': '#/components/schemas/Product'
+          '404':
+            description: Product Not Found
+            content:
+              application/json:
+                schema:
+                  '$ref': '#/components/responses/NotFound'
+          '500':
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  '$ref': '#/components/responses/Error'
 
 components:
   securitySchemes:
@@ -323,6 +538,16 @@ components:
         application/json:
           schema:
             '$ref': '#/components/schemas/Error'
+    Error:
+      description: Generic Error Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "An error occurred"
   schemas:
     NewUser:
       type: object
@@ -404,3 +629,69 @@ components:
         description:
           type: string
           example: "Description of the store"
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - store
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 9
+        uuid:
+          type: string
+          example: "8952d982-4aca-462e-8e90-2f8340a22582"
+        name:
+          type: string
+          example: "Sony"
+        available_at:
+          type: string
+          format: date-time
+          example: "2024-10-23T00:00:00Z"
+        brand:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "Nike"
+        product_categories:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 213
+              name:
+                type: string
+                example: "Electronics"
+        product_price_range:
+          type: object
+          properties:
+            price_range:
+              type: array
+              items:
+                type: number
+              example: [ 0, 1 ]
+            quantity:
+              type: string
+              example: "7"
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 17
+            name:
+              type: string
+              example: "Active"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-09-17T10:45:06Z"
+
