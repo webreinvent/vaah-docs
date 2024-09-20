@@ -1,8 +1,8 @@
 openapi: 3.1.9
 info:
-  title: Scalar Galaxy
+  title: VaahStore
   description: |
-    The Scalar Galaxy is an example OpenAPI specification for user authentication and planet management.
+    The VaahStore is an example OpenAPI specification for user authentication and Store management.
     Get started by [signing up](#tag/Authentication/POST/user/signup).
   version: 1.0.0
   contact:
@@ -10,7 +10,7 @@ info:
     url: https://scalar.com
     email: marc@scalar.com
 servers:
-  - url: http://127.0.0.1:8000/backend
+  - url: http://127.0.0.1:8000/backend/api
 security:
   - bearerAuth: []
   - basicAuth: []
