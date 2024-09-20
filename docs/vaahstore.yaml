@@ -1,0 +1,697 @@
+openapi: 3.0.0
+info:
+  title: VaahStore
+  description: |
+    The VaahStore is an example OpenAPI specification for user authentication and store management.
+    Get started by [signing up](#tag/Authentication/POST/user/signup).
+  version: 1.0.0
+  contact:
+    name: Marc from Scalar
+    url: https://scalar.com
+    email: marc@scalar.com
+servers:
+  - url: http://127.0.0.1:8000/backend/api
+security:
+  - bearerAuth: []
+  - basicAuth: []
+tags:
+  - name: Authentication
+    description: Endpoints for user account management including signup, sign-in, and activation.
+  - name: Stores
+    description: Everything about Stores
+  - name: Products
+    description: Everything about Products in VaahStore
+
+paths:
+  '/user/signup':
+    post:
+      tags:
+        - Authentication
+      summary: Create a user account
+      description: Sign up for a new user account.
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              '$ref': '#/components/schemas/NewUser'
+      responses:
+        '201':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/BadRequest'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+  '/user/signup/activate':
+    post:
+      tags:
+        - Authentication
+      summary: Activate user account
+      description: Validate the activation code for a user account.
+      operationId: activateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - activationCode
+              properties:
+                activationCode:
+                  type: string
+                  examples:
+                    - ABC123
+      responses:
+        '200':
+          description: Activation Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Account activated successfully."
+        '400':
+          description: Invalid Activation Code
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/BadRequest'
+        '404':
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+  '/user/signin':
+    post:
+      tags:
+        - Authentication
+      summary: Sign in a user
+      description: Authenticate a user and obtain a token.
+      operationId: signInUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              '$ref': '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: Sign In Successful
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/Token'
+        '400':
+          description: Invalid Credentials
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/BadRequest'
+        '404':
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+  '/store/stores/assets':
+    get:
+      tags:
+        - Stores
+      summary: Get Assets
+      description: Retrieve assets related to stores.
+      operationId: getAssets
+      responses:
+        '200':
+          description: Assets Retrieved
+          content:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Asset Name"
+        '404':
+          description: No Assets Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+  '/store/stores':
+    get:
+      tags:
+        - Stores
+      summary: Get List of Stores
+      description: Retrieve a list of stores.
+      operationId: getStoresList
+      responses:
+        '200':
+          description: Stores Retrieved
+          content:
+            application/json:
+              type: array
+              items:
+                '$ref': '#/components/schemas/Store'
+        '404':
+          description: No Stores Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+    post:
+      tags:
+        - Stores
+      summary: Create a new Store
+      description: Create a new store with the provided details.
+      operationId: createStore
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - taxonomy_id_store_status
+                - slug
+                - is_multi_currency
+                - is_multi_lingual
+                - is_multi_vendor
+                - allowed_ips
+                - is_default
+                - is_active
+              properties:
+                name:
+                  type: string
+                  example: "My Store"
+                taxonomy_id_store_status:
+                  type: integer
+                  example: 1
+                slug:
+                  type: string
+                  example: "my-store"
+                notes:
+                  type: string
+                  nullable: true
+                  example: "Optional notes about the store"
+                is_multi_currency:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+                is_multi_lingual:
+                  type: integer
+                  enum: [0, 1]
+                  example: 0
+                is_multi_vendor:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+                allowed_ips:
+                  type: array
+                  items:
+                    type: string
+                    format: ipv4
+                    example: "192.168.1.1"
+                status_notes:
+                  type: string
+                  nullable: true
+                  example: "Store is in review"
+                is_default:
+                  type: integer
+                  enum: [0, 1]
+                  example: 0
+                is_active:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+      responses:
+        '201':
+          description: Store Created Successfully
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/Store'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/BadRequest'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+  '/store/stores/{id}':
+    put:
+      tags:
+        - Stores
+      summary: Update an existing Store
+      description: Update a store with the specified ID using the provided details.
+      operationId: updateStore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the store to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - taxonomy_id_store_status
+                - slug
+                - is_multi_currency
+                - is_multi_lingual
+                - is_multi_vendor
+                - allowed_ips
+                - is_default
+                - is_active
+              properties:
+                name:
+                  type: string
+                  example: "Updated Store Name"
+                taxonomy_id_store_status:
+                  type: integer
+                  example: 1
+                slug:
+                  type: string
+                  example: "updated-store"
+                notes:
+                  type: string
+                  nullable: true
+                  example: "Updated notes about the store"
+                is_multi_currency:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+                is_multi_lingual:
+                  type: integer
+                  enum: [0, 1]
+                  example: 0
+                is_multi_vendor:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+                allowed_ips:
+                  type: array
+                  items:
+                    type: string
+                    format: ipv4
+                    example: "192.168.1.2"
+                status_notes:
+                  type: string
+                  nullable: true
+                  example: "Store is now active"
+                is_default:
+                  type: integer
+                  enum: [0, 1]
+                  example: 0
+                is_active:
+                  type: integer
+                  enum: [0, 1]
+                  example: 1
+      responses:
+        '200':
+          description: Store Updated Successfully
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/Store'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/BadRequest'
+        '404':
+          description: Store Not Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+    get:
+      tags:
+        - Stores
+      summary: Get a Store by ID
+      description: Retrieve a single store by its ID.
+      operationId: getStoreById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the store to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Store Retrieved
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/Store'
+        '404':
+          description: Store Not Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+  '/store/products':
+    get:
+      tags:
+        - Products
+      summary: Get List of Products
+      description: Retrieve a list of products.
+      operationId: getProductList
+      responses:
+        '200':
+          description: Products Retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      '$ref': '#/components/schemas/Product'
+                  first_page_url:
+                    type: string
+                    example: "http://127.0.0.1:8000/backend/store/products?page=1"
+        '404':
+          description: No Products Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+  '/store/products/{id}':
+      get:
+        tags:
+          - Products
+        summary: Get Product by ID
+        description: Retrieve a product by its unique identifier.
+        operationId: getProductById
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: The unique identifier of the product
+            schema:
+              type: integer
+              format: int64
+              example: 9
+        responses:
+          '200':
+            description: Product Retrieved
+            content:
+              application/json:
+                schema:
+                  '$ref': '#/components/schemas/Product'
+          '404':
+            description: Product Not Found
+            content:
+              application/json:
+                schema:
+                  '$ref': '#/components/responses/NotFound'
+          '500':
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  '$ref': '#/components/responses/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    basicAuth:
+      type: http
+      scheme: basic
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: The number of items to return
+      required: false
+      schema:
+        type: integer
+        format: int64
+        default: 10
+    offset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set
+      required: false
+      schema:
+        type: integer
+        format: int64
+        default: 0
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/Error'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/Error'
+    Error:
+      description: Generic Error Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "An error occurred"
+  schemas:
+    NewUser:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          examples:
+            - Marc
+        email:
+          type: string
+          format: email
+          examples:
+            - marc@scalar.com
+        password:
+          type: string
+          minLength: 8
+          examples:
+            - i-love-scalar
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - email
+      properties:
+        id:
+          type: integer
+          format: int64
+          examples:
+            - 1
+        name:
+          type: string
+          examples:
+            - Marc
+        email:
+          type: string
+          format: email
+          examples:
+            - marc@scalar.com
+    Credentials:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          examples:
+            - marc@scalar.com
+        password:
+          type: string
+          examples:
+            - i-love-scalar
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          examples:
+            - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    Store:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Store Name"
+        description:
+          type: string
+          example: "Description of the store"
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - store
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 9
+        uuid:
+          type: string
+          example: "8952d982-4aca-462e-8e90-2f8340a22582"
+        name:
+          type: string
+          example: "Sony"
+        available_at:
+          type: string
+          format: date-time
+          example: "2024-10-23T00:00:00Z"
+        brand:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "Nike"
+        product_categories:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 213
+              name:
+                type: string
+                example: "Electronics"
+        product_price_range:
+          type: object
+          properties:
+            price_range:
+              type: array
+              items:
+                type: number
+              example: [ 0, 1 ]
+            quantity:
+              type: string
+              example: "7"
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 17
+            name:
+              type: string
+              example: "Active"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-09-17T10:45:06Z"
+
