@@ -15,6 +15,19 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     'nuxt-og-image',
     '@pinia/nuxt',
+    ['nuxt-openapi-docs-module',
+      {
+        folder: './docs',
+        name: 'VaahStore Api Docs',
+        debug: true,
+        list: true,
+        files: function () {
+          return {
+            vaahstore: 'vaahstore',
+          };
+        },
+      },
+    ]
   ],
   plugins: [
     "~/plugins/gtag.client"
