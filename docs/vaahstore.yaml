@@ -177,124 +177,211 @@ paths:
               schema:
                 '$ref': '#/components/responses/Error'
 
-  '/store/stores':
+  /store/stores:
     get:
       tags:
         - Stores
-      summary: Get List of Stores
-      description: Retrieve a list of stores.
-      operationId: getStoresList
+      summary: Retrieve a list of stores
+      description: |
+        This endpoint retrieves a list of stores with optional pagination and filtering.
+        You can filter the results using various parameters.
+
+      operationId: getStores
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve.
+          schema:
+            type: integer
+            example: 1
+        - name: rows
+          in: query
+          required: false
+          description: The number of rows to return per page.
+          schema:
+            type: integer
+            example: 20
+        - name: filter
+          in: query
+          required: false
+          description: |
+            An object containing filtering options. Each filter can be provided as an array to include multiple values.
+            Supported filters:
+            - `status`:  Filter by store status (e.g., pending, active).
+            - `is_multi_language`: Filter by multi-language support (true/false).
+            - `is_multi_currency`: Filter by multi-currency support (true/false).
+            - `is_default`: Filter for default stores (true/false).
+            - `is_multi_vendor`: Filter by multi-vendor support (true/false).
+          schema:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+
       responses:
         '200':
-          description: Stores Retrieved
+          description: List of stores retrieved successfully
           content:
             application/json:
               schema:
                 type: object
                 properties:
+                  success:
+                    type: boolean
+                    example: true
                   data:
                     type: array
                     items:
-                      '$ref': '#/components/schemas/Store'
-
-        '404':
-          description: No Stores Found
-          content:
-            application/json:
-              schema:
-                '$ref': '#/components/responses/NotFound'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                '$ref': '#/components/responses/Error'
-
-    post:
-      tags:
-        - Stores
-      summary: Create a new Store
-      description: Create a new store with the provided details.
-      operationId: createStore
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - taxonomy_id_store_status
-                - slug
-                - is_multi_currency
-                - is_multi_lingual
-                - is_multi_vendor
-                - allowed_ips
-                - is_default
-                - is_active
-              properties:
-                name:
-                  type: string
-                  example: "My Store"
-                taxonomy_id_store_status:
-                  type: integer
-                  example: 1
-                slug:
-                  type: string
-                  example: "my-store"
-                notes:
-                  type: string
-                  nullable: true
-                  example: "Optional notes about the store"
-                is_multi_currency:
-                  type: integer
-                  enum: [0, 1]
-                  example: 1
-                is_multi_lingual:
-                  type: integer
-                  enum: [0, 1]
-                  example: 0
-                is_multi_vendor:
-                  type: integer
-                  enum: [0, 1]
-                  example: 1
-                allowed_ips:
-                  type: array
-                  items:
-                    type: string
-                    format: ipv4
-                    example: "192.168.1.1"
-                status_notes:
-                  type: string
-                  nullable: true
-                  example: "Store is in review"
-                is_default:
-                  type: integer
-                  enum: [0, 1]
-                  example: 0
-                is_active:
-                  type: integer
-                  enum: [0, 1]
-                  example: 1
-      responses:
-        '201':
-          description: Store Created Successfully
-          content:
-            application/json:
-              schema:
-                '$ref': '#/components/schemas/Store'
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "My Store"
+                        status:
+                          type: string
+                          example: "pending"
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Stores retrieved successfully"
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                '$ref': '#/components/responses/BadRequest'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Invalid filter value"
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                '$ref': '#/components/responses/Error'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "An error occurred"
+
+
+
+  /store/stores/{id}/action/{action}:
+    patch: # or any other appropriate method based on your setup
+      tags:
+        - Stores
+      summary: Perform an action on a store
+      description: |
+        This endpoint allows you to perform various actions on a store item, such as activating, deactivating, trashing, or restoring a store.
+
+      operationId: itemAction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the store item to perform the action on
+          schema:
+            type: integer
+            format: int64
+        - name: action
+          in: path
+          required: true
+          description: The action to perform on the store item (activate, deactivate, trash, restore)
+          schema:
+            type: string
+            enum:
+              - activate
+              - deactivate
+              - trash
+              - restore
+
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Store activated successfully"
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied to update module"
+        '404':
+          description: Store Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Store not found"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "An error occurred"
 
   '/store/stores/{id}':
     put:
@@ -429,6 +516,54 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/Error'
+
+    delete:
+      tags:
+        - Stores
+      summary: Delete a Store by ID
+      description: Delete a single store by its ID.
+      operationId: deleteStoreById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the store to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Store Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: { }
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Record has been deleted"
+        '404':
+          description: Store Not Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+
 
   '/store/products':
     get:
