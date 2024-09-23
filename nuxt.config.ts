@@ -26,6 +26,15 @@ export default defineNuxtConfig({
             vaahstore: 'vaahstore',
           };
         },
+        logo: `
+        <svg width="180" height="30" viewBox="0 0 380 91" class="css-1j8o68f">
+          <g id="SvgjsG1669" fill="black">
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="56" font-weight="600">
+              VaahStore APIs Docs
+            </text>
+          </g>
+        </svg>
+      `, // Embed your SVG directly
       },
     ]
   ],
