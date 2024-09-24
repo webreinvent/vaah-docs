@@ -1,0 +1,98 @@
+patch: # or any other appropriate method based on your setup
+  tags:
+    - Products
+  summary: Perform an action on a product
+  description: |
+    This endpoint allows you to perform various actions on a product item, such as activating, deactivating, trashing, or restoring a product.
+
+  operationId: itemAction
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: ID of the product item to perform the action on
+      schema:
+        type: integer
+        format: int64
+    - name: action
+      in: path
+      required: true
+      description: The action to perform on the product item (activate, deactivate, trash, restore)
+      schema:
+        type: string
+        enum:
+          - activate
+          - deactivate
+          - trash
+          - restore
+
+  responses:
+    '200':
+      description: Action performed successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  is_active:
+                    type: integer
+                    example: 1
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Product activated successfully"
+    '403':
+      description: Permission Denied
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Permission denied to update module"
+    '404':
+      description: Product Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Product not found"
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "An error occurred"

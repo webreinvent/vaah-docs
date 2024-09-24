@@ -1,0 +1,177 @@
+put:
+  tags:
+    - Stores
+  summary: Update an existing Store
+  description: Update a store with the specified ID using the provided details.
+  operationId: updateStore
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the store to update.
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+            - taxonomy_id_store_status
+            - slug
+            - is_multi_currency
+            - is_multi_lingual
+            - is_multi_vendor
+            - allowed_ips
+            - is_default
+            - is_active
+          properties:
+            name:
+              type: string
+              example: "Updated Store Name"
+            taxonomy_id_store_status:
+              type: integer
+              example: 1
+            slug:
+              type: string
+              example: "updated-store"
+            notes:
+              type: string
+              nullable: true
+              example: "Updated notes about the store"
+            is_multi_currency:
+              type: integer
+              enum: [0, 1]
+              example: 1
+            is_multi_lingual:
+              type: integer
+              enum: [0, 1]
+              example: 0
+            is_multi_vendor:
+              type: integer
+              enum: [0, 1]
+              example: 1
+            allowed_ips:
+              type: array
+              items:
+                type: string
+                format: ipv4
+                example: "192.168.1.2"
+            status_notes:
+              type: string
+              nullable: true
+              example: "Store is now active"
+            is_default:
+              type: integer
+              enum: [0, 1]
+              example: 0
+            is_active:
+              type: integer
+              enum: [0, 1]
+              example: 1
+  responses:
+    '200':
+      description: Store Updated Successfully
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/Store'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/BadRequest'
+    '404':
+      description: Store Not Found
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/NotFound'
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/Error'
+get:
+  tags:
+    - Stores
+  summary: Get a Store by ID
+  description: Retrieve a single store by its ID.
+  operationId: getStoreById
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: ID of the store to retrieve
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: Store Retrieved
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/Store'
+    '404':
+      description: Store Not Found
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/NotFound'
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/Error'
+
+delete:
+    tags:
+      - Stores
+    summary: Delete a Store by ID
+    description: Delete a single store by its ID.
+    operationId: deleteStoreById
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the store to delete
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: Store Deleted
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                data:
+                  type: array
+                  items: { }
+                messages:
+                  type: array
+                  items:
+                    type: string
+                    example: "Record has been deleted"
+      '404':
+        description: Store Not Found
+        content:
+          application/json:
+            schema:
+              '$ref': '#/components/responses/NotFound'
+      '500':
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              '$ref': '#/components/responses/Error'

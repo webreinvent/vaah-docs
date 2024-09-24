@@ -1,0 +1,34 @@
+get:
+  tags:
+    - Products
+  summary: Get Product by ID
+  description: Retrieve a product by its unique identifier.
+  operationId: getProductById
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The unique identifier of the product
+      schema:
+        type: integer
+        format: int64
+        example: 9
+  responses:
+    '200':
+      description: Product Retrieved
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/Product'
+    '404':
+      description: Product Not Found
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/NotFound'
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/Error'

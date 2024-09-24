@@ -1,0 +1,545 @@
+get:
+    tags:
+      - Stores
+    summary: Retrieve a list of stores
+    description: |
+      This endpoint retrieves a list of stores with optional pagination and filtering.
+      You can filter the results using various parameters.
+
+    operationId: getStores
+    parameters:
+      - name: page
+        in: query
+        required: false
+        description: The page number to retrieve.
+        schema:
+          type: integer
+          example: 1
+      - name: rows
+        in: query
+        required: false
+        description: The number of rows to return per page.
+        schema:
+          type: integer
+          example: 20
+      - name: filter
+        in: query
+        required: false
+        description: |
+          An object containing filtering options. Each filter can be provided as an array to include multiple values.
+          Supported filters:
+          - `status`:  Filter by store status (e.g., pending, active).
+          - `is_multi_language`: Filter by multi-language support (true/false).
+          - `is_multi_currency`: Filter by multi-currency support (true/false).
+          - `is_default`: Filter for default stores (true/false).
+          - `is_multi_vendor`: Filter by multi-vendor support (true/false).
+        schema:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+
+    responses:
+      '200':
+        description: List of stores retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "My Store"
+                      status:
+                        type: string
+                        example: "pending"
+                messages:
+                  type: array
+                  items:
+                    type: string
+                    example: "Stores retrieved successfully"
+      '400':
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                messages:
+                  type: array
+                  items:
+                    type: string
+                    example: "Invalid filter value"
+      '500':
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                messages:
+                  type: array
+                  items:
+                    type: string
+                    example: "An error occurred"
+
+post:
+  tags:
+    - Stores
+  summary: Create a new Store
+  description: Create a new store with the provided details.
+  operationId: createStore
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+            - taxonomy_id_store_status
+            - slug
+            - is_multi_currency
+            - is_multi_lingual
+            - is_multi_vendor
+            - allowed_ips
+            - is_default
+            - is_active
+          properties:
+            name:
+              type: string
+              example: "My Store"
+            taxonomy_id_store_status:
+              type: integer
+              example: 1
+            slug:
+              type: string
+              example: "my-store"
+            notes:
+              type: string
+              nullable: true
+              example: "Optional notes about the store"
+            is_multi_currency:
+              type: boolean
+              example: 1  # Represents true
+            is_multi_lingual:
+              type: boolean
+              example: 0  # Represents false
+            is_multi_vendor:
+              type: boolean
+              example: 1 # Represents false
+            allowed_ips:
+              type: array
+              items:
+                type: string
+                format: ipv4
+                example: "192.168.1.1"
+            status_notes:
+              type: string
+              nullable: true
+              example: "Store is in review"
+            is_default:
+              type: boolean
+              example: 1  # Represents true
+            is_active:
+              type: boolean
+              example: 1  # Represents true
+
+  responses:
+    '200':
+      description: Store Created Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                '$ref': '#/components/schemas/Store'
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved Successfully."
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/BadRequest'
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/Error'
+
+  delete:
+    tags:
+      - Stores
+    summary: Delete a list of stores
+    description: This endpoint allows you to delete multiple store records based on the provided input.
+    operationId: deleteStoreList
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - type
+              - items
+            properties:
+              type:
+                type: string
+                description: Action type (e.g., "delete").
+                example: "delete"
+              items:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: The ID of the store to be deleted.
+                      example: 1  # Example for a single item
+                example: # Example for the entire array
+                  - id: 1
+                  - id: 2
+                  - id: 3
+    responses:
+      '200':
+        description: Action was successful and the specified stores have been deleted.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                data:
+                  type: boolean
+                  example: true
+                messages:
+                  type: array
+                  items:
+                    type: string
+                    example: "Action was successful."
+      '403':
+        description: The user does not have permission to perform this action.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                failed:
+                  type: boolean
+                  example: true
+                messages:
+                  type: array
+                  items:
+                    type: string
+                    example: "Permission denied for action 'can-update-module'."
+      '400':
+        description: Validation failed for the input parameters.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                failed:
+                  type: boolean
+                  example: true
+                messages:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - "Action type is required."
+                    - "Select items."
+
+      '404':
+        description: One or more specified store IDs were not found.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                errors:
+                  type: array
+                  items:
+                    type: string
+                    example: "Store not found."
+      '500':
+        description: An unexpected error occurred during the deletion process.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                errors:
+                  type: array
+                  items:
+                    type: string
+                    example: "An unexpected error occurred."
+
+put:
+  tags:
+    - Stores
+  summary: Update a list of stores
+  description: This endpoint allows you to update multiple store records based on the provided input, including actions like activating, deactivating, trashing, or restoring stores.
+  operationId: updateStoreList
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - type
+            - items
+          properties:
+            type:
+              type: string
+              description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+              example: "trash"
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the store to be updated.
+                    example: 1  # Example for a single item
+              example: # Example for the entire array
+                - id: 1
+                - id: 2
+                - id: 3
+  responses:
+    '200':
+      description: Action was successful and the specified stores have been updated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Action was successful."
+    '403':
+      description: The user does not have permission to perform this action.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Permission denied for action 'can-update-module'."
+    '400':
+      description: Validation failed for the input parameters.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Action type is required."
+                  - "Select items."
+    '404':
+      description: One or more specified store IDs were not found.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Store not found."
+    '500':
+      description: An unexpected error occurred during the update process.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An unexpected error occurred."
+
+delete:
+  tags:
+    - Stores
+  summary: Delete a list of stores
+  description: This endpoint allows you to delete multiple store records based on the provided input.
+  operationId: deleteStoreList
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - type
+            - items
+          properties:
+            type:
+              type: string
+              description: Action type (e.g., "delete").
+              example: "delete"
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the store to be deleted.
+                    example: 1  # Example for a single item
+              example: # Example for the entire array
+                - id: 1
+                - id: 2
+                - id: 3
+  responses:
+    '200':
+      description: Action was successful and the specified stores have been deleted.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Action was successful."
+    '403':
+      description: The user does not have permission to perform this action.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Permission denied for action 'can-update-module'."
+    '400':
+      description: Validation failed for the input parameters.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Action type is required."
+                  - "Select items."
+
+    '404':
+      description: One or more specified store IDs were not found.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Store not found."
+    '500':
+      description: An unexpected error occurred during the deletion process.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An unexpected error occurred."
