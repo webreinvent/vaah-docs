@@ -1138,21 +1138,20 @@ paths:
                 - taxonomy_id_product_status
 
       responses:
-        '201':
+        '200':
           description: Product Created Successfully
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: integer
-                    description: ID of the newly created product.
+                  product:
+                    '$ref': '#/components/schemas/Product'
                   messages:
                     type: array
                     items:
                       type: string
-                    description: Success message.
+                    example: [ "Saved successfully." ]
         '400':
           description: Validation Errors
           content:
@@ -1175,6 +1174,123 @@ paths:
               schema:
                 '$ref': '#/components/responses/Error'
 
+    delete:
+      tags:
+        - Products
+      summary: Delete a list of products
+      description: This endpoint allows you to delete multiple product records based on the provided input.
+      operationId: deleteProductList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: "delete"
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product to be deleted.
+                        example: 1  # Example for a single item
+                  example: # Example for the entire array
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified products have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied for action 'can-update-module'."
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Action type is required."
+                      - "Select items."
+
+        '404':
+          description: One or more specified product IDs were not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Product not found."
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
 
   '/store/products/{id}':
       get:
@@ -1353,13 +1469,13 @@ components:
         id:
           type: integer
           format: int64
-          example: 9
+          example: 1
         uuid:
           type: string
           example: "8952d982-4aca-462e-8e90-2f8340a22582"
         name:
           type: string
-          example: "Sony"
+          example: "My Product"
         available_at:
           type: string
           format: date-time
