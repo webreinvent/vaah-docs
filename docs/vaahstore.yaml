@@ -373,6 +373,127 @@ paths:
 
 
 
+    delete:
+      tags:
+        - Stores
+      summary: Delete a list of stores
+      description: This endpoint allows you to delete multiple store records based on the provided input.
+      operationId: deleteStoreList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: "delete"
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the store to be deleted.
+                        example: 1  # Example for a single item
+                  example: # Example for the entire array
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified stores have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied for action 'can-update-module'."
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Action type is required."
+                      - "Select items."
+
+        '404':
+          description: One or more specified store IDs were not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Store not found."
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
+
+
+
+
   /store/stores/{id}/action/{action}:
     patch: # or any other appropriate method based on your setup
       tags:
@@ -701,9 +822,6 @@ paths:
                       nullable: true
                       example: "updated_at:desc"
                       description: Sorting parameter (optional).
-
-
-
       responses:
         '200':
           description: Action was successful
