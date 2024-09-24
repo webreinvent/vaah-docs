@@ -1292,6 +1292,123 @@ paths:
                       type: string
                       example: "An unexpected error occurred."
 
+    put:
+      tags:
+        - Products
+      summary: Update a list of products
+      description: This endpoint allows you to update multiple product records based on the provided input, including actions like activating, deactivating, trashing, or restoring products.
+      operationId: updateProductList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: "trash"
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product to be updated.
+                        example: 1  # Example for a single item
+                  example: # Example for the entire array
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified stores have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied for action 'can-update-module'."
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Action type is required."
+                      - "Select items."
+        '404':
+          description: One or more specified product IDs were not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Prdouct not found."
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
+
   '/store/products/{id}':
       get:
         tags:
@@ -1328,6 +1445,105 @@ paths:
                 schema:
                   '$ref': '#/components/responses/Error'
 
+  /store/products/{id}/action/{action}:
+    patch: # or any other appropriate method based on your setup
+      tags:
+        - Products
+      summary: Perform an action on a product
+      description: |
+        This endpoint allows you to perform various actions on a product item, such as activating, deactivating, trashing, or restoring a product.
+
+      operationId: itemAction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the product item to perform the action on
+          schema:
+            type: integer
+            format: int64
+        - name: action
+          in: path
+          required: true
+          description: The action to perform on the product item (activate, deactivate, trash, restore)
+          schema:
+            type: string
+            enum:
+              - activate
+              - deactivate
+              - trash
+              - restore
+
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Product activated successfully"
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied to update module"
+        '404':
+          description: Product Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Product not found"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "An error occurred"
 components:
   securitySchemes:
     bearerAuth:
