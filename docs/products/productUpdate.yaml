@@ -168,3 +168,49 @@ put:
         application/json:
           schema:
             '$ref': '#/components/responses/Error'
+
+delete:
+  tags:
+    - Products
+  summary: Delete a Product by ID
+  description: Delete a single product by its ID.
+  operationId: deleteProductById
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: ID of the product to delete
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: Product Deleted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items: { }
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Record has been deleted"
+    '404':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/RecordNotExist'
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/responses/Error'

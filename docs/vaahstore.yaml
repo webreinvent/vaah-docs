@@ -85,6 +85,16 @@ components:
         application/json:
           schema:
             '$ref': '#/components/schemas/Error'
+    RecordNotExist:
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Record does not exist"
     Error:
       description: Generic Error Response
       content:
@@ -96,6 +106,7 @@ components:
                 type: string
                 example: "An error occurred"
   schemas:
+
     NewUser:
       type: object
       required:
