@@ -2,8 +2,149 @@ get:
   tags:
     - Products
   summary: Get List of Products
-  description: Retrieve a list of products.
+  description: |
+    Retrieve a list of products with various filtering options. You can filter by:
+     - **Active Status**
+     - **Vendor**
+     - **Store**
+     - **Brand**
+     - **Product Type**
+     - **And More**
+
+     ### Filter Format
+     - **Single-Value Filters:**
+       Use the format `?filter[filter_name]=value`
+
+     - **Multi-Value Filters:**
+       Use the format `?filter[filter_name][]=value1&filter[filter_name][]=value2`
   operationId: getProductList
+  parameters:
+    - name: page
+      in: query
+      required: false
+      description: The page number for pagination.
+      schema:
+        type: integer
+        example: 1
+    - name: rows
+      in: query
+      required: false
+      description: The number of products to return per page.
+      schema:
+        type: integer
+        example: 20
+    - name: is_active
+      in: query
+      required: false
+      description: Filter products by active status.
+      schema:
+        type: boolean
+        example: false
+    - name: trashed
+      in: query
+      required: false
+      description: Include or exclude trashed products.
+      schema:
+        type: string
+        enum: [include, exclude]
+        example: "include"
+    - name: sort
+      in: query
+      required: false
+      description: Sort the products by a specified field.
+      schema:
+        type: string
+        example: "updated_at"
+    - name: product_variations
+      in: query
+      required: false
+      description: Filter products by specific variations.
+      schema:
+        type: string
+        example: "variation-slug"
+    - name: vendors
+      in: query
+      required: false
+      description: Filter products by associated vendors.
+      schema:
+        type: string
+        example: "vendor-slug"
+    - name: stores
+      in: query
+      required: false
+      description: Filter products by associated stores.
+      schema:
+        type: string
+        example: "store-slug"
+    - name: brands
+      in: query
+      required: false
+      description: Filter products by brand.
+      schema:
+        type: string
+        example: "brand-slug"
+    - name: product_types
+      in: query
+      required: false
+      description: Filter products by type.
+      schema:
+        type: string
+        example: "product-type-slug"
+    - name: status
+      in: query
+      required: false
+      description: Filter products by status.
+      schema:
+        type: string
+        example: "status-slug"
+    - name: min_quantity
+      in: query
+      required: false
+      description: Minimum quantity of products to filter.
+      schema:
+        type: integer
+        example: 1
+    - name: max_quantity
+      in: query
+      required: false
+      description: Maximum quantity of products to filter.
+      schema:
+        type: integer
+        example: 12
+    - name: min_price
+      in: query
+      required: false
+      description: Minimum price of products to filter.
+      schema:
+        type: number
+        format: float
+        example: 1.0
+    - name: max_price
+      in: query
+      required: false
+      description: Maximum price of products to filter.
+      schema:
+        type: number
+        format: float
+        example: 2.0
+    - name: category
+      in: query
+      required: false
+      description: Filter products by categories.
+      schema:
+        type: string
+        example: "category-slug"
+    - name: date
+      in: query
+      required: false
+      description: Filter products by date.
+      schema:
+        type: array
+        items:
+          type: string
+          format: date
+        example: ["2024-09-18", "2024-09-26"]
+
   responses:
     '200':
       description: Products Retrieved
@@ -21,7 +162,7 @@ get:
                   '$ref': '#/components/schemas/Product'
               first_page_url:
                 type: string
-                example: "http://127.0.0.1:8000/backend/store/products?page=1"
+                example: "http://127.0.0.1:8000/api/store/products?page=1"
     '404':
       description: No Products Found
       content:
