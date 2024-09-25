@@ -10,7 +10,7 @@ info:
     url: https://webreinvent.com/
     email: we@webreinvent.com
 servers:
-  - url: http://127.0.0.1:8000/api
+  - url: http://127.0.0.1:8000/api/store
 security:
   - bearerAuth: []
   - basicAuth: []
@@ -21,35 +21,38 @@ tags:
     description: Everything about Products in VaahStore
 
 paths:
-  '/store/stores':
+  '/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
 
-  /store/stores/{id}/action/{action}:
+  /stores/{id}/action/{action}:
     $ref: './stores/storeAction.yaml'  # Reference to the stores file
 
-  /store/stores/{id}:
+  /stores/{id}:
     $ref: './stores/storeUpdate.yaml'  # Reference to the stores file
 
-  /store/stores/action/{action}:
+  /stores/action/{action}:
     $ref: './stores/storeListAction.yaml'  # Reference to the stores file
 
-  '/store/products':
+  '/products':
     $ref: './products/products.yaml'  # Reference to the create products file
 
-  '/store/products/{id}':
+  '/products/{id}':
     $ref: './products/productUpdate.yaml'  # Reference to the create products file
 
-  '/store/products/{id}/action/{action}':
+  '/products/{id}/action/{action}':
     $ref: './products/productAction.yaml'  # Reference to the create products file
 
-  '/store/products/action/{action}':
+  '/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the create products file
 
-  '/store/products/vendor':
+  '/products/vendor':
     $ref: './products/attachVendor.yaml'  # Reference to the attach product with vendor file
 
-  '/store/products/get-vendors-list/{id}':
+  '/products/get-vendors-list/{id}':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
+
+  '/products/{id}/action-for-vendor/{action}':
+    $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
 
 components:
   securitySchemes:
@@ -261,8 +264,11 @@ components:
                 type: number
               example: [ 0, 1 ]
             quantity:
-              type: string
-              example: "7"
+              type: integer
+              example: 7
+            selected_vendor:
+              type: object
+              example: {"vendor data"}
         status:
           type: object
           properties:
