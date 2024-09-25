@@ -53,6 +53,10 @@ paths:
 
   '/products/{id}/action-for-vendor/{action}':
     $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
+  '/products/getAttributeList':
+    $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
+  '/products/getAttributeValue':
+    $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
 
 components:
   securitySchemes:
