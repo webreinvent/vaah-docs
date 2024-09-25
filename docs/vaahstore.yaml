@@ -23,40 +23,33 @@ tags:
 paths:
   '/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
-
   /stores/{id}/action/{action}:
     $ref: './stores/storeAction.yaml'  # Reference to the stores file
-
   /stores/{id}:
     $ref: './stores/storeUpdate.yaml'  # Reference to the stores file
-
   /stores/action/{action}:
     $ref: './stores/storeListAction.yaml'  # Reference to the stores file
 
   '/products':
     $ref: './products/products.yaml'  # Reference to the create products file
-
   '/products/{id}':
     $ref: './products/productUpdate.yaml'  # Reference to the create products file
-
   '/products/{id}/action/{action}':
     $ref: './products/productAction.yaml'  # Reference to the create products file
-
   '/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the create products file
-
   '/products/vendor':
     $ref: './products/attachVendor.yaml'  # Reference to the attach product with vendor file
-
   '/products/get-vendors-list/{id}':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
-
   '/products/{id}/action-for-vendor/{action}':
     $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
   '/products/getAttributeList':
     $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
   '/products/getAttributeValue':
     $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
+  '/products/variation':
+    $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
 
 components:
   securitySchemes:
