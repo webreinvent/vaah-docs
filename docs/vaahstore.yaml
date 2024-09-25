@@ -50,6 +50,8 @@ paths:
     $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
   '/products/variation':
     $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
+  '/products/add/product-to-cart':
+    $ref: './products/addToCart.yaml'  # Reference to the add product to cart file
 
 components:
   securitySchemes:
