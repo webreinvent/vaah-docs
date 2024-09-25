@@ -18,16 +18,14 @@ put:
         schema:
           type: object
           required:
+            - id
             - name
             - taxonomy_id_store_status
             - slug
-            - is_multi_currency
-            - is_multi_lingual
-            - is_multi_vendor
-            - allowed_ips
-            - is_default
-            - is_active
           properties:
+            id:
+              type: integer
+              example: 1
             name:
               type: string
               example: "Updated Store Name"
@@ -42,17 +40,18 @@ put:
               nullable: true
               example: "Updated notes about the store"
             is_multi_currency:
-              type: integer
-              enum: [0, 1]
-              example: 1
+              type: boolean
+              example: 0  # 0 represents false
             is_multi_lingual:
-              type: integer
-              enum: [0, 1]
-              example: 0
+              type: boolean
+              example: 0  # 0 represents false
             is_multi_vendor:
-              type: integer
-              enum: [0, 1]
-              example: 1
+              type: boolean
+              example: 1  # 1 represents true
+            currencies:
+              type: array
+              item:
+                type: object
             allowed_ips:
               type: array
               items:
@@ -64,13 +63,11 @@ put:
               nullable: true
               example: "Store is now active"
             is_default:
-              type: integer
-              enum: [0, 1]
-              example: 0
+              type: boolean
+              example: 0  # 0 represents false
             is_active:
-              type: integer
-              enum: [0, 1]
-              example: 1
+              type: boolean
+              example: 1  # 1 represents true
   responses:
     '200':
       description: Store Updated Successfully
