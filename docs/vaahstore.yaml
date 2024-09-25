@@ -45,6 +45,12 @@ paths:
   '/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the create products file
 
+  '/store/products/vendor':
+    $ref: './products/attachVendor.yaml'  # Reference to the attach product with vendor file
+
+  '/store/products/get-vendors-list/{id}':
+    $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
+
 components:
   securitySchemes:
     bearerAuth:
