@@ -9,13 +9,13 @@ let apiConfig;
 if (process.client) {
   const baseUrl = window.location.origin; // Get the current origin
 
-  // Construct the full URL for the OpenAPI spec file
   apiConfig = {
     spec: {
       url: `${baseUrl}/vaahstore.yaml`, // Path to your OpenAPI spec file
     },
   };
 }
+console.log(apiConfig)
 </script>
 
 <template>
