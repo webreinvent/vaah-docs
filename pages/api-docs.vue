@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup >
 import { ApiReference } from '@scalar/api-reference'
 import '@scalar/api-reference/style.css'
 
@@ -15,7 +15,6 @@ if (process.client) {
     },
   };
 }
-console.log(apiConfig)
 </script>
 
 <template>
