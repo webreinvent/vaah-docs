@@ -349,17 +349,7 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: action
-          in: path
-          required: true
-          description: The action to perform on the store item (activate, deactivate, trash, restore)
-          schema:
-            type: string
-            enum:
-              - activate
-              - deactivate
-              - trash
-              - restore
+        - '$ref': '#/components/parameters/action'
 
       responses:
         '200':
@@ -631,45 +621,8 @@ paths:
       description: This endpoint allows various bulk actions to be performed on stores based on the provided action type.
       operationId: performStoreAction
       parameters:
-        - name: action
-          in: path
-          required: true
-          description: The action to perform (e.g., activate-all, deactivate-all, trash-all, restore-all, delete-all, create-100-records).
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  description: The action to perform (e.g., activate-all, deactivate-all).
-                filter:
-                  type: object
-                  properties:
-                    q:
-                      type: string
-                      nullable: true
-                      example: "my-store"
-                      description: Search query (optional).
-                    is_active:
-                      type: boolean
-                      nullable: true
-                      example: true
-                      description: Filter by active status (optional).
-                    trashed:
-                      type: boolean
-                      nullable: true
-                      example: false
-                      description: Filter by trashed status (optional).
-                    sort:
-                      type: string
-                      nullable: true
-                      example: "updated_at:desc"
-                      description: Sorting parameter (optional).
+        - '$ref': '#/components/parameters/bulk_action'
+
       responses:
         '200':
           description: Action was successful
@@ -741,7 +694,7 @@ paths:
     get:
       tags:
         - Products
-      summary: Get List of all Products
+      summary: Get List of all products
       description: Retrieve a list of products.
       operationId: getProductList
       responses:
@@ -777,7 +730,7 @@ paths:
     post:
       tags:
         - Products
-      summary: Create a new Product
+      summary: Create a new product
       description: Adds a new product to the store.
       operationId: createProduct
       requestBody:
@@ -1367,17 +1320,7 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: action
-          in: path
-          required: true
-          description: The action to perform on the product item (activate, deactivate, trash, restore)
-          schema:
-            type: string
-            enum:
-              - activate
-              - deactivate
-              - trash
-              - restore
+        - '$ref': '#/components/parameters/action'
 
       responses:
         '200':
@@ -1403,7 +1346,7 @@ paths:
                     type: array
                     items:
                       type: string
-                      example: "Product activated successfully"
+                      example: "Action was successful"
         '403':
           description: Permission Denied
           content:
@@ -1420,20 +1363,21 @@ paths:
                       type: string
                       example: "Permission denied to update module"
         '404':
-          description: Product Not Found
+          description: Record does not exist
           content:
             application/json:
               schema:
-                type: object
+                type: object  # Define the type of the response
                 properties:
-                  success:
-                    type: boolean
-                    example: false
-                  messages:
+                  errors:
                     type: array
                     items:
                       type: string
-                      example: "Product not found"
+                    example: [
+                        "Record not found with ID: {id}"
+                    ]
+                required:
+                  - errors  # Make errors a required field
         '500':
           description: Internal Server Error
           content:
@@ -1458,45 +1402,8 @@ paths:
       description: This endpoint allows various bulk actions to be performed on products based on the provided action type.
       operationId: performStoreAction
       parameters:
-        - name: action
-          in: path
-          required: true
-          description: The action to perform (e.g., activate-all, deactivate-all, trash-all, restore-all, delete-all, create-100-records).
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  description: The action to perform (e.g., activate-all, deactivate-all).
-                filter:
-                  type: object
-                  properties:
-                    q:
-                      type: string
-                      nullable: true
-                      example: "my-product"
-                      description: Search query (optional).
-                    is_active:
-                      type: boolean
-                      nullable: true
-                      example: true
-                      description: Filter by active status (optional).
-                    trashed:
-                      type: boolean
-                      nullable: true
-                      example: false
-                      description: Filter by trashed status (optional).
-                    sort:
-                      type: string
-                      nullable: true
-                      example: "updated_at:desc"
-                      description: Sorting parameter (optional).
+        - '$ref': '#/components/parameters/bulk_action'
+
       responses:
         '200':
           description: Action was successful
@@ -2140,7 +2047,7 @@ paths:
     get:
       tags:
         - Vendors
-      summary: Get List of all Vendors
+      summary: Get List of all vendors
       operationId: getVendorsList
       parameters:
         - name: filter[q]
@@ -2209,12 +2116,10 @@ paths:
           description: No vendors found.
         '500':
           description: Internal server error.
-
-
     post:
       tags:
         - Vendors
-      summary: Create a new Vendor
+      summary: Create a new vendor
       operationId: createVendors
       requestBody:
         required: true
@@ -2311,8 +2216,587 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/Error'
+    delete:
+      tags:
+        - Vendors
+      summary: Delete a list of vendors
+      description: This endpoint allows you to delete multiple vendor records based on the provided input.
+      operationId: deleteVendorList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: "delete"
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product to be deleted.
+                        example: 1  # Example for a single item
+                  example: # Example for the entire array
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified Vendors have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied for action 'can-update-module'."
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Action type is required."
+                      - "Select items."
+
+        '404':
+          description: One or more specified Vendor IDs were not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Vendors not found."
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
+    put:
+      tags:
+        - Vendors
+      summary: Update a list of vendors
+      description: This endpoint allows you to update multiple vendor records based on the provided input, including actions like activating, deactivating, trashing, or restoring vendors.
+      operationId: updateVendorList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: "trash"
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the vendor to be updated.
+                        example: 1  # Example for a single item
+                  example: # Example for the entire array
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified vendors have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied for action 'can-update-module'."
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Action type is required."
+                      - "Select items."
+        '404':
+          description: One or more specified vendor IDs were not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Vendor not found."
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
+
+  '/vendors/{id}':
+    get:
+      tags:
+        - Vendors
+      summary: Get vendor by ID
+      description: Retrieve a vendor by its unique identifier.
+      operationId: getVendorById
+      parameters:
+        - '$ref': '#/components/parameters/vendor_id'
+      responses:
+        '200':
+          description: Vendor Retrieved
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/Vendor'
+        '404':
+          description: Vendor Not Found
+          content:
+            application/json:
+              schema:
+                type: object  # Define the type of the response
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: [
+                        "Record not found with ID: {id}"
+                    ]
+                required:
+                  - errors  # Make errors a required field
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+    put:
+      tags:
+        - Vendors
+      summary: Update an existing vendor
+      description: Update a vendor with the specified ID using the provided details.
+      operationId: updateVendor
+      parameters:
+        - '$ref': '#/components/parameters/vendor_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "My vendor"
+                  description: Name of the vendor.
+                slug:
+                  type: string
+                  example: "my-vendor"
+                  description: URL-friendly identifier for the vendor.
+                vh_st_store_id:
+                  type: integer
+                  example: 1
+                  description: ID of the store the vendor belongs to.
+                is_default:
+                  type: boolean
+                  example: 1
+                  description: Is vendor is default.
+                approved_by:
+                  type: integer
+                  example: 1
+                  description: Id of the user who gone to aprove.
+                owned_by:
+                  type: integer
+                  example: 1
+                  description: id of the vendor owner.
+                taxonomy_id_vendor_status:
+                  type: integer
+                  example: 1
+                  description: Status Id of the vendor.
+                store:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                      description: id of the store.
+                    is_multi_vendor:
+                      type: enum
+                      required: true
+                      example: 1
 
 
+              required:
+                - name
+                - slug
+                - vh_st_store_id
+                - approved_by
+                - owned_by
+                - is_default
+                - taxonomy_id_vendor_status
+      responses:
+        '200':
+          description: Vendor Saved Successfully
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/Vendor'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/BadRequest'
+        '404':
+          description: Vendor Not Found
+          content:
+            application/json:
+              schema:
+                type: object  # Define the type of the response
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: [
+                        "Record not found with ID: {id}"
+                    ]
+                required:
+                  - errors  # Make errors a required field
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+    delete:
+      tags:
+        - Vendors
+      summary: Delete a vendor by ID
+      description: Delete a single vendor by its ID.
+      operationId: deleteVendorById
+      parameters:
+        - '$ref': '#/components/parameters/vendor_id'
+      responses:
+        '200':
+          description: Vendor Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: { }
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Record has been deleted"
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object  # Define the type of the response
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: [
+                        "Record not found with ID: {id}"
+                    ]
+                required:
+                  - errors  # Make errors a required field
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
+  '/vendors/{id}/action/{action}':
+    patch: # or any other appropriate method based on your setup
+      tags:
+        - Vendors
+      summary: Perform an action on a vendor
+      description: |
+        This endpoint allows you to perform various actions on a vendor item, such as activating, deactivating, trashing, or restoring a product.
+
+      operationId: itemAction
+      parameters:
+        - '$ref': '#/components/parameters/vendor_id'
+        - '$ref': '#/components/parameters/action'
+
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful"
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object  # Define the type of the response
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: [
+                        "Record not found with ID: {id}"
+                    ]
+                required:
+                  - errors  # Make errors a required field
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied to update module"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "An error occurred"
+
+  '/vendors/action/{action}':
+    put:
+      tags:
+        - Vendors
+      summary: Perform bulk actions on list of vendors
+      description: This endpoint allows various bulk actions to be performed on vendors based on the provided action type.
+      operationId: performVendorAction
+      parameters:
+        - '$ref': '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Invalid input data."
+        '404':
+          description: Vendor Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Vendor not found."
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
 
 
 
@@ -2325,6 +2809,38 @@ components:
       type: http
       scheme: basic
   parameters:
+    vendor_id:
+      name: id
+      description: The unique identifier of the vendor
+      in: path
+      required: true
+    action:
+      name: action
+      in: path
+      required: true
+      description: The action to perform on the item (activate, deactivate, trash, restore)
+      schema:
+        type: string
+        items:
+          example:
+            - activate
+            - deactivate
+            - trash
+            - restore
+    bulk_action:
+      name: action
+      in: path
+      required: true
+      description: The action to perform (e.g., activate-all, deactivate-all, trash-all, restore-all, delete-all).
+      schema:
+        type: string
+        items:
+          example:
+            - activate-all
+            - deactivate-all
+            - trash-all
+            - restore-all
+
     limit:
       name: limit
       in: query
