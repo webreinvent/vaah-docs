@@ -39,51 +39,14 @@ paths:
       description: |
         This endpoint retrieves a list of stores with optional pagination and filtering.
         You can filter the results using various parameters.
-
       operationId: getStores
       parameters:
-        - name: page
-          in: query
-          required: false
-          description: The page number to retrieve.
-          schema:
-            type: integer
-            example: 1
-        - name: rows
-          in: query
-          required: false
-          description: The number of rows to return per page.
-          schema:
-            type: integer
-            example: 20
-        - name: filter[q]
-          in: query
-          required: false
-          description: Search query for stores by name, slug, or id.
-          schema:
-            type: string
-        - name: filter[is_active]
-          in: query
-          required: false
-          schema:
-            type: boolean
-        - name: filter[trashed]
-          in: query
-          required: false
-          description: Include or exclude trashed stores.
-          schema:
-            type: string
-            enum: [ include, exclude,only ]
-        - name: filter[date][]
-          in: query
-          required: false
-          description: Filter stores by date range (start and end dates).
-          schema:
-            type: array
-            items:
-              type: string
-              format: date
-
+            - '$ref': '#/components/parameters/storeQueryParameters/page'
+            - '$ref': '#/components/parameters/storeQueryParameters/rows'
+            - '$ref': '#/components/parameters/storeQueryParameters/filter_q'
+            - '$ref': '#/components/parameters/storeQueryParameters/filter_is_active'
+            - '$ref': '#/components/parameters/storeQueryParameters/filter_trashed'
+            - '$ref': '#/components/parameters/storeQueryParameters/filter_date'
 
       responses:
         '200':
@@ -111,65 +74,7 @@ paths:
       description: Create a new store with the provided details.
       operationId: createStore
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - taxonomy_id_store_status
-                - slug
-                - is_multi_currency
-                - is_multi_lingual
-                - is_multi_vendor
-                - allowed_ips
-                - is_default
-                - is_active
-              properties:
-                name:
-                  type: string
-                  example: "My Store"
-                taxonomy_id_store_status:
-                  type: integer
-                  example: 1
-                slug:
-                  type: string
-                  example: "my-store"
-                notes:
-                  type: string
-                  nullable: true
-                  example: "Optional notes about the store"
-                is_multi_currency:
-                  type: integer
-                  enum: [0, 1]
-                  example: 1
-                is_multi_lingual:
-                  type: integer
-                  enum: [0, 1]
-                  example: 0
-                is_multi_vendor:
-                  type: integer
-                  enum: [0, 1]
-                  example: 1
-                allowed_ips:
-                  type: array
-                  items:
-                    type: string
-                    format: ipv4
-                    example: "192.168.1.1"
-                status_notes:
-                  type: string
-                  nullable: true
-                  example: "Store is in review"
-                is_default:
-                  type: integer
-                  enum: [0, 1]
-                  example: 0
-                is_active:
-                  type: integer
-                  enum: [0, 1]
-                  example: 1
+        '$ref': '#/components/requestBodies/StoreRequestBody'
       responses:
         '201':
           description: Store Created Successfully
@@ -2273,7 +2178,7 @@ paths:
             type: array
             items:
               type: string
-            
+
         - name: filter[store]
           in: query
           required: false
@@ -2297,73 +2202,116 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        slug:
-                          type: string
-                        status:
-                          type: string
-                        created_at:
-                          type: string
-                          format: date-time
-                        store:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            name:
-                              type: string
-                        approvedByUser:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            name:
-                              type: string
-                        ownedByUser:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            name:
-                              type: string
-                        vendorProducts:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              product_id:
-                                type: integer
-                              product_name:
-                                type: string
-                        users:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              id:
-                                type: integer
-                              name:
-                                type: string
-                  message:
-                    type: string
+                '$ref': '#/components/schemas/Vendor'
         '400':
           description: Bad request. Invalid filter parameters.
         '404':
           description: No vendors found.
         '500':
           description: Internal server error.
+
+
+    post:
+      tags:
+        - Vendors
+      summary: Create a new Vendor
+      operationId: createVendors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "My vendor"
+                  description: Name of the vendor.
+                slug:
+                  type: string
+                  example: "my-vendor"
+                  description: URL-friendly identifier for the vendor.
+                vh_st_store_id:
+                  type: integer
+                  example: 1
+                  description: ID of the store the vendor belongs to.
+                is_default:
+                  type: boolean
+                  example: 1
+                  description: Is vendor is default.
+                approved_by:
+                  type: integer
+                  example: 1
+                  description: Id of the user who gone to aprove.
+                owned_by:
+                  type: integer
+                  example: 1
+                  description: id of the vendor owner.
+                taxonomy_id_vendor_status:
+                  type: integer
+                  example: 1
+                  description: Status Id of the vendor.
+                store:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                      description: id of the store.
+                    is_multi_vendor:
+                      type: enum
+                      required: true
+                      example: 1
+
+
+              required:
+                - name
+                - slug
+                - vh_st_store_id
+                - approved_by
+                - owned_by
+                - is_default
+                - taxonomy_id_vendor_status
+
+      responses:
+        '200':
+          description: Vendor Created Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    '$ref': '#/components/schemas/Vendor'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example: [ "Saved successfully." ]
+        '400':
+          description: Validation Errors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    description: List of validation error messages.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+
 
 
 
@@ -2404,15 +2352,130 @@ components:
         type: integer
         example: 1
 
-  storequeryparameters:
-    planetId:
-      name: planetId
-      in: path
-      required: true
-      schema:
-        type: integer
-        format: int64
+    storeQueryParameters:
+      page:
+        name: page
+        in: query
+        required: false
+        description: The page number to retrieve.
+        schema:
+          type: integer
+          example: 1
+      rows:
+        name: rows
+        in: query
+        required: false
+        description: The number of rows to return per page.
+        schema:
+          type: integer
+          example: 20
+      filter_q:
+        name: filter[q]
+        in: query
+        required: false
+        description: Search query for stores by name, slug, or id.
+        schema:
+          type: string
+      filter_is_active:
+        name: filter[is_active]
+        in: query
+        required: false
+        schema:
+          type: boolean
+      filter_trashed:
+        name: filter[trashed]
+        in: query
+        required: false
+        description: Include or exclude trashed stores.
+        schema:
+          type: string
+          enum: [ include, exclude, only ]
+      filter_date:
+        name: filter[date][]
+        in: query
+        required: false
+        description: Filter stores by date range (start and end dates).
+        schema:
+          type: array
+          items:
+            type: string
+            format: date
+        example: [ '2024-09-03', '2024-09-11' ]
 
+  requestBodies:
+    StoreRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+              - taxonomy_id_store_status
+              - slug
+              - is_multi_currency
+              - is_multi_lingual
+              - is_multi_vendor
+              - allowed_ips
+              - is_default
+              - is_active
+            properties:
+              name:
+                type: string
+                description: The name of the store.
+                example: "My Store"
+              taxonomy_id_store_status:
+                type: integer
+                description: The taxonomy ID representing the store's status.
+                example: 1
+              slug:
+                type: string
+                description: A URL-friendly version of the store name.
+                example: "my-store"
+              notes:
+                type: string
+                description: Optional notes about the store.
+                nullable: true
+                example: "Optional notes about the store"
+              is_multi_currency:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if the store supports multiple currencies.
+                example: 1
+              is_multi_lingual:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if the store supports multiple languages.
+                example: 0
+              is_multi_vendor:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if the store supports multiple vendors.
+                example: 1
+              allowed_ips:
+                type: array
+                items:
+                  type: string
+                  format: ipv4
+                description: List of allowed IP addresses.
+                example:
+                  - "192.168.1.1"
+                  - "192.168.1.2"
+              status_notes:
+                type: string
+                description: Notes regarding the store's status.
+                nullable: true
+                example: "Store is in review"
+              is_default:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if this is the default store.
+                example: 0
+              is_active:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if the store is active.
+                example: 1
 
 
   responses:
@@ -2595,3 +2658,142 @@ components:
           format: date-time
           example: "2024-09-17T10:45:06Z"
 
+    Vendor:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+        - is_default
+        - owned_by
+        - approved_by
+        - taxonomy_id_vendor_status
+        - vh_st_store_id
+        - store
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        uuid:
+          type: string
+          example: "8952d982-4aca-462e-8e90-2f8340a22582"
+        name:
+            type: string
+        slug:
+          type: string
+        store:
+            type: object
+            properties:
+              id:
+                required: true
+                type: integer
+              name:
+                type: string
+
+        registered_at:
+          type: string
+          format: date-time
+          example: "2024-09-27 13:21:21"
+        approvedByUser:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "Admin User"
+        ownedByUser:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              name:
+                type: string
+                example: "Owner User"
+        vendorProducts:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 101
+                name:
+                  type: string
+                  example: "Sample Product"
+        users:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 3
+                name:
+                  type: string
+                  example: "User Name"
+
+        email:
+          type: string
+          nullable: true
+          example: null
+        phone_number:
+            type: string
+            nullable: true
+            example: null
+        address:
+            type: string
+            nullable: true
+            example: null
+        is_active:
+            type: integer
+            nullable: true
+            example: null
+        deleted_at:
+            type: string
+            format: date-time
+            nullable: true
+            example: null
+        deleted_by:
+            type: integer
+            nullable: true
+            example: null
+        business_document_detail:
+            type: string
+            nullable: true
+            example: null
+        business_document_file:
+            type: string
+            nullable: true
+            example: null
+        business_document_type:
+            type: string
+            nullable: true
+            example: null
+        auto_approve_products:
+            type: boolean
+            nullable: true
+            example: null
+        meta:
+            type: object
+            nullable: true
+            example: null
+        services_offered:
+            type: string
+            nullable: true
+            example: null
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-09-27T10:00:00Z"
+        approved_at:
+            type: string
+            format: date-time
+            example: "2024-09-27 13:21:21"
+        updated_at:
+            type: string
+            format: date-time
+            example: "2024-09-27 13:21:21"
