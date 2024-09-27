@@ -21,6 +21,8 @@ tags:
     description: Everything about Products in VaahStore
   - name: Vendors
     description: Everything about Vendors in VaahStore
+  - name: Product Variations
+    description: Everything about Product Variations in VaahStore
 
 paths:
 
@@ -2467,36 +2469,33 @@ paths:
       description: Retrieve a vendor by its unique identifier.
       operationId: getVendorById
       parameters:
-        - '$ref': '#/components/parameters/vendor_id'
+        - $ref: '#/components/parameters/id'
       responses:
         '200':
           description: Vendor Retrieved
           content:
             application/json:
               schema:
-                '$ref': '#/components/schemas/Vendor'
+                $ref: '#/components/schemas/Vendor'
         '404':
           description: Vendor Not Found
           content:
             application/json:
               schema:
-                type: object  # Define the type of the response
+                type: object
                 properties:
                   errors:
                     type: array
                     items:
                       type: string
-                    example: [
-                        "Record not found with ID: {id}"
-                    ]
-                required:
-                  - errors  # Make errors a required field
+                    example:
+                      - "Record not found with ID: {id}"
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                '$ref': '#/components/responses/Error'
+                $ref: '#/components/responses/Error'
 
     put:
       tags:
@@ -2505,7 +2504,7 @@ paths:
       description: Update a vendor with the specified ID using the provided details.
       operationId: updateVendor
       parameters:
-        - '$ref': '#/components/parameters/vendor_id'
+        - $ref: '#/components/parameters/id'
       requestBody:
         required: true
         content:
@@ -2527,33 +2526,31 @@ paths:
                   description: ID of the store the vendor belongs to.
                 is_default:
                   type: boolean
-                  example: 1
-                  description: Is vendor is default.
+                  example: true
+                  description: Indicates whether the vendor is the default vendor.
                 approved_by:
                   type: integer
                   example: 1
-                  description: Id of the user who gone to aprove.
+                  description: ID of the user who approved the vendor.
                 owned_by:
                   type: integer
                   example: 1
-                  description: id of the vendor owner.
+                  description: ID of the vendor owner.
                 taxonomy_id_vendor_status:
                   type: integer
                   example: 1
-                  description: Status Id of the vendor.
+                  description: Status ID of the vendor.
                 store:
                   type: object
                   properties:
                     id:
                       type: integer
                       example: 1
-                      description: id of the store.
+                      description: ID of the store.
                     is_multi_vendor:
-                      type: enum
-                      required: true
-                      example: 1
-
-
+                      type: boolean
+                      example: true
+                      description: Indicates if the store supports multiple vendors.
               required:
                 - name
                 - slug
@@ -2568,35 +2565,34 @@ paths:
           content:
             application/json:
               schema:
-                '$ref': '#/components/schemas/Vendor'
+                $ref: '#/components/schemas/Vendor'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                '$ref': '#/components/responses/BadRequest'
+                $ref: '#/components/responses/BadRequest'
         '404':
           description: Vendor Not Found
           content:
             application/json:
               schema:
-                type: object  # Define the type of the response
+                type: object
                 properties:
                   errors:
                     type: array
                     items:
                       type: string
-                    example: [
-                        "Record not found with ID: {id}"
-                    ]
+                    example:
+                      - "Record not found with ID: {id}"
                 required:
-                  - errors  # Make errors a required field
+                  - errors
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                '$ref': '#/components/responses/Error'
+                $ref: '#/components/responses/Error'
 
     delete:
       tags:
@@ -2605,7 +2601,7 @@ paths:
       description: Delete a single vendor by its ID.
       operationId: deleteVendorById
       parameters:
-        - '$ref': '#/components/parameters/vendor_id'
+        - $ref: '#/components/parameters/id'
       responses:
         '200':
           description: Vendor Deleted
@@ -2618,35 +2614,36 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    type: array
-                    items: { }
+                    type: object
+                    description: Details of the deleted vendor (optional).
                   messages:
                     type: array
                     items:
                       type: string
-                      example: "Record has been deleted"
+                    example:
+                      - "Record has been deleted"
         '404':
           description: Record does not exist
           content:
             application/json:
               schema:
-                type: object  # Define the type of the response
+                type: object
                 properties:
                   errors:
                     type: array
                     items:
                       type: string
-                    example: [
-                        "Record not found with ID: {id}"
-                    ]
+                    example:
+                      - "Record not found with ID: {id}"
                 required:
-                  - errors  # Make errors a required field
+                  - errors
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                '$ref': '#/components/responses/Error'
+                $ref: '#/components/responses/Error'
+
 
   '/vendors/{id}/action/{action}':
     patch: # or any other appropriate method based on your setup
@@ -2654,12 +2651,12 @@ paths:
         - Vendors
       summary: Perform an action on a vendor
       description: |
-        This endpoint allows you to perform various actions on a vendor item, such as activating, deactivating, trashing, or restoring a product.
+        This endpoint allows you to perform various actions on a vendor item, such as activating, deactivating, trashing, or restoring a vendor.
 
       operationId: itemAction
       parameters:
-        - '$ref': '#/components/parameters/vendor_id'
-        - '$ref': '#/components/parameters/action'
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
 
       responses:
         '200':
@@ -2691,15 +2688,14 @@ paths:
           content:
             application/json:
               schema:
-                type: object  # Define the type of the response
+                type: object
                 properties:
                   errors:
                     type: array
                     items:
                       type: string
-                    example: [
-                        "Record not found with ID: {id}"
-                    ]
+                    example:
+                      - "Record not found with ID: {id}"
                 required:
                   - errors  # Make errors a required field
         '403':
@@ -2716,7 +2712,8 @@ paths:
                     type: array
                     items:
                       type: string
-                      example: "Permission denied to update module"
+                      example:
+                        - "Permission denied to update module"
         '500':
           description: Internal Server Error
           content:
@@ -2731,7 +2728,9 @@ paths:
                     type: array
                     items:
                       type: string
-                      example: "An error occurred"
+                      example:
+                        - "An error occurred"
+
 
   '/vendors/action/{action}':
     put:
@@ -3029,7 +3028,43 @@ paths:
                     type: string
                     example: "An error occurred while adding the user."
 
-
+  '/productvariations':
+    get:
+      tags:
+        - Product Variations
+      summary: Get List of all variations
+      description: Retrieve a list of products.
+      operationId: getProductList
+      responses:
+        '200':
+          description: Products Retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      '$ref': '#/components/schemas/Product'
+                  first_page_url:
+                    type: string
+                    example: "http://127.0.0.1:8000/backend/store/products?page=1"
+        '404':
+          description: No Products Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
 
 components:
   securitySchemes:
@@ -3040,9 +3075,9 @@ components:
       type: http
       scheme: basic
   parameters:
-    vendor_id:
+    id:
       name: id
-      description: The unique identifier of the vendor
+      description: The unique identifier of the item
       in: path
       required: true
     action:
