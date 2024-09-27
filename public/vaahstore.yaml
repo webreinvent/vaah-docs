@@ -2086,7 +2086,7 @@ paths:
             items:
               type: string
 
-        - name: filter[store]
+        - name: filter[store][]
           in: query
           required: false
           description: Filter vendors by associated store name.
@@ -2095,6 +2095,15 @@ paths:
             items:
               type: string
             example: [ 'store1', 'store2' ]
+        - name: filter[product][]
+          in: query
+          required: false
+          description: Filter vendors by associated products slug.
+          schema:
+            type: array
+            items:
+              type: string
+            example: [ 'product-1', 'product-2' ]
 
         - name: rows
           in: query
@@ -2102,7 +2111,7 @@ paths:
           description: Number of rows to return per page.
           schema:
             type: integer
-            default: 10
+            default: 20
       responses:
         '200':
           description: A list of vendors.
@@ -2797,6 +2806,228 @@ paths:
                     items:
                       type: string
                       example: "An unexpected error occurred."
+
+  /vendors/add/product:
+    post:
+      tags:
+        - Vendors
+      summary: Attach products with vendor
+      description: This endpoint allows adding products to a specific vendor.
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - products
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the vendor.
+                  example: 6
+                products:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - product
+                      - can_update
+                      - status
+                    properties:
+                      product:
+                        type: object
+                        required:
+                          - id
+                          - name
+                          - vh_st_store_id
+                        properties:
+                          id:
+                            type: integer
+                            description: The ID of the product.
+                            example: 3
+                          name:
+                            type: string
+                            description: The name of the product.
+                            example: "Sony"
+                          is_default:
+                            type: integer
+                            description: Whether the product is the default (0 or 1).
+                            example: 0
+                          vh_st_store_id:
+                            type: integer
+                            description: The store ID associated with the product.
+                            example: 1
+                      can_update:
+                        type: boolean
+                        description: Determines if the product can be updated by the vendor.
+                        example: false
+                      status:
+                        type: object
+                        required:
+                          - id
+                        properties:
+                          id:
+                            type: integer
+                            description: The status ID of the product.
+                            example: 18
+                      status_notes:
+                        type: string
+                        description: Optional notes about the status of the product.
+                        example: "Product is under review"
+
+
+
+      responses:
+        '200':
+          description: Product added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    $ref: '#/components/schemas/Vendor'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Product added successfully."
+        '400':
+          description: Bad Request. Validation failed or product already exists.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "'Sample Product' already exists for this vendor."
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "An error occurred while adding the product."
+
+  /vendors/add/user:
+    post:
+      tags:
+        - Vendors
+      summary: Assign user role with vendor
+      description: Adds a user to the vendor with the specified roles.
+      operationId: createVendorUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - item
+                - user_details
+              properties:
+                item:
+                  type: object
+                  description: item containing the vendor id
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: The ID of the vendor.
+                      example: 1
+                user_details:
+                  type: array
+                  description: List of users with their roles.
+                  items:
+                    type: object
+                    required:
+                      - pivot
+                    properties:
+                      pivot:
+                        type: object
+                        required:
+                          - vh_user_id
+                          - vh_role_id
+                        properties:
+                          vh_user_id:
+                            type: integer
+                            description: The ID of the user.
+                            example: 123
+                          vh_role_id:
+                            type: integer
+                            description: The ID of the role assigned to the user.
+                            example: 456
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    description: The updated vendor data.
+                    $ref: '#/components/schemas/Vendor'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example: [ "Saved successfully." ]
+        '400':
+          description: Duplicate user-role combination or invalid request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "This Record already present in the list."
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "An error occurred while adding the user."
 
 
 
