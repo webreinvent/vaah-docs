@@ -19,6 +19,8 @@ tags:
     description: Everything about Stores
   - name: Products
     description: Everything about Products in VaahStore
+  - name: Vendors
+    description: Everything about Vendors in VaahStore
 
 paths:
 
@@ -54,23 +56,34 @@ paths:
           schema:
             type: integer
             example: 20
-        - name: filter
+        - name: filter[q]
           in: query
           required: false
-          description: |
-            An object containing filtering options. Each filter can be provided as an array to include multiple values.
-            Supported filters:
-            - `status`:  Filter by store status (e.g., pending, active).
-            - `is_multi_language`: Filter by multi-language support (true/false).
-            - `is_multi_currency`: Filter by multi-currency support (true/false).
-            - `is_default`: Filter for default stores (true/false).
-            - `is_multi_vendor`: Filter by multi-vendor support (true/false).
+          description: Search query for stores by name, slug, or id.
           schema:
-            type: object
-            additionalProperties:
-              type: array
-              items:
-                type: string
+            type: string
+        - name: filter[is_active]
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: filter[trashed]
+          in: query
+          required: false
+          description: Include or exclude trashed stores.
+          schema:
+            type: string
+            enum: [ include, exclude,only ]
+        - name: filter[date][]
+          in: query
+          required: false
+          description: Filter stores by date range (start and end dates).
+          schema:
+            type: array
+            items:
+              type: string
+              format: date
+
 
       responses:
         '200':
@@ -2218,6 +2231,142 @@ paths:
                       type: string
                       example: "An error occurred while adding the product to the cart."
 
+  '/vendors':
+    get:
+      tags:
+        - Vendors
+      summary: Get List of all Vendors
+      operationId: getVendorsList
+      parameters:
+        - name: filter[q]
+          in: query
+          required: false
+          description: Search query for vendor by name, slug, or id.
+          schema:
+            type: string
+        - name: filter[is_active]
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: filter[trashed]
+          in: query
+          required: false
+          description: Include or exclude trashed vendors.
+          schema:
+                  type: string
+                  enum: [ include, exclude,only ]
+        - name: filter[date][]
+          in: query
+          required: false
+          description: Filter vendors by date range (start and end dates).
+          schema:
+                  type: array
+                  items:
+                    type: string
+                    format: date
+        - name: filter[vendor_status][]
+          in: query
+          required: false
+          description: Filter vendors by status.
+          schema:
+            type: array
+            items:
+              type: string
+            
+        - name: filter[store]
+          in: query
+          required: false
+          description: Filter vendors by associated store name.
+          schema:
+            type: array
+            items:
+              type: string
+            example: [ 'store1', 'store2' ]
+
+        - name: rows
+          in: query
+          required: false
+          description: Number of rows to return per page.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: A list of vendors.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        slug:
+                          type: string
+                        status:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                        store:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                        approvedByUser:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                        ownedByUser:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                        vendorProducts:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              product_id:
+                                type: integer
+                              product_name:
+                                type: string
+                        users:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                  message:
+                    type: string
+        '400':
+          description: Bad request. Invalid filter parameters.
+        '404':
+          description: No vendors found.
+        '500':
+          description: Internal server error.
+
+
+
 
 components:
   securitySchemes:
@@ -2246,6 +2395,26 @@ components:
         type: integer
         format: int64
         default: 0
+    page:
+      name: page
+      in: query
+      required: false
+      description: The page number to retrieve.
+      schema:
+        type: integer
+        example: 1
+
+  storequeryparameters:
+    planetId:
+      name: planetId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+
+
   responses:
     BadRequest:
       description: Bad Request
