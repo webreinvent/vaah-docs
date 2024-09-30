@@ -40,7 +40,7 @@ get:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/Error'
+
 
 put:
   tags:
@@ -130,19 +130,19 @@ put:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/BadRequest'
+
     '404':
       description: Store Not Found
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/NotFound'
+
     '500':
       description: Internal Server Error
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/Error'
+
 delete:
   tags:
     - Stores

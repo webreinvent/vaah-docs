@@ -23,6 +23,8 @@ tags:
     description: Everything about Vendors in VaahStore
   - name: Product Variations
     description: Everything about Product Variations in VaahStore
+  - name: Vendor Products
+    description: Everything about Vendor Products in VaahStore
 
 paths:
   '/stores':
@@ -80,6 +82,8 @@ paths:
     $ref: './product-variations/addToCart.yaml'  # Reference to the vendors file
   '/productvariations/disable/active-cart':
     $ref: './product-variations/disableCart.yaml'  # Reference to the vendors file
+  '/productvendors':
+    $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
 
 components:
   securitySchemes:
@@ -433,50 +437,102 @@ components:
               - is_active
               - is_default
               - product
-
-
-
-  responses:
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-
-    NotFound:
-      description: Not Found
-      content:
-        application/json:
-          schema:
-
-    RecordNotExist:
-      description: Record does not exist
+    ProductVendorRequestBody:
       content:
         application/json:
           schema:
             type: object
+            required:
+              - added_by
+              - product
+              - vendor
+              - store_ids
+              - taxonomy_id_product_vendor_status
+              - vh_st_product_id
+              - vh_st_vendor_id
+              - can_update
             properties:
-              success:
-                type: boolean
-                example: false
-              data:
-                type: array
-                items: { }
-              message:
-                type: string
-                items:
+                added_by:
+                  type: integer
+                added_by_user:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    first_name:
+                      type: string
+                    email:
+                      type: string
+                can_update:
+                  type: integer
+                created_by:
                   type: string
-                  example: "Record does not exist."
-    Error:
-      description: Generic Error Response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: "An error occurred"
+                  nullable: true
+
+                id:
+                  type: integer
+                  nullable: true
+                is_active:
+                  type: integer
+                is_active_product_price:
+                  type: integer
+                product:
+                  type: object
+                  required:
+                    - id
+                    - name
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    slug:
+                      type: string
+                    vh_st_store_id:
+                      type: integer
+
+
+                status_notes:
+                  type: string
+                store_ids:
+                  type: array
+                  items:
+                    type: integer
+                store_vendor_product:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      slug:
+                        type: string
+                taxonomy_id_product_vendor_status:
+                  type: integer
+
+                vendor:
+                  type: object
+                  required:
+                    - id
+                    - name
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    slug:
+                      type: string
+                vh_st_product_id:
+                  type: integer
+                vh_st_vendor_id:
+                  type: integer
+
+
+
+
+
   schemas:
 
 
@@ -894,4 +950,104 @@ components:
           type: integer
           description: "User ID who deleted the variation"
           nullable: true
+    ProductVendor:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+        vh_st_vendor_id:
+          type: integer
+        vh_st_product_id:
+          type: integer
+        added_by:
+          type: string
+          nullable: true
+        added_by_user:
+          type: string
+          nullable: true
+        can_update:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          nullable: true
+        deleted_at:
+          type: string
+          nullable: true
+        deleted_by:
+          type: string
+          nullable: true
+        is_active:
+          type: integer
+
+        meta:
+          type: object
+          nullable: true
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+            deleted_at:
+              type: string
+              nullable: true
+            product_variations_for_vendor_product:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  uuid:
+                    type: string
+                  vh_st_product_id:
+                    type: integer
+        product_price_range:
+          type: array
+          items:
+            type: integer
+
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+        status_notes:
+          type: string
+          nullable: true
+
+        taxonomy_id_product_vendor_status:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          type: string
+          nullable: true
+        vendor:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+            is_default:
+              type: integer
+            deleted_at:
+              type: string
+              nullable: true
 

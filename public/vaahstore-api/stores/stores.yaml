@@ -57,7 +57,7 @@ post:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/BadRequest'
+
     '500':
       description: Internal Server Error
       content:

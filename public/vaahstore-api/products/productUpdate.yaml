@@ -24,7 +24,7 @@ get:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/Error'
+
 
 
 put:
@@ -143,7 +143,7 @@ put:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/BadRequest'
+
     '404':
       description: Product Not Found
       content:
@@ -190,7 +190,7 @@ delete:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/RecordNotExist'
+
     '500':
       description: Internal Server Error
       content:
