@@ -114,7 +114,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../vaahstore.yaml#/components/responses/BadRequest'
+
     '404':
       description: Vendor Not Found
       content:

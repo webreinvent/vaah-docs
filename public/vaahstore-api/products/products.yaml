@@ -44,7 +44,7 @@ get:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/responses/Error'
+
 post:
     tags:
       - Products
@@ -175,7 +175,7 @@ post:
         content:
           application/json:
             schema:
-              '$ref': '../vaahstore.yaml#/components/responses/Error'
+
 delete:
     tags:
       - Products

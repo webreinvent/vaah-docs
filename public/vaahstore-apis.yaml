@@ -23,6 +23,8 @@ tags:
     description: Everything about Vendors in VaahStore
   - name: Product Variations
     description: Everything about Product Variations in VaahStore
+  - name: Vendor Products
+    description: Everything about Vendor Products in VaahStore
 paths:
   /stores:
     get:
@@ -77,8 +79,7 @@ paths:
           description: Bad Request
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
+              schema: null
         '500':
           description: Internal Server Error
           content:
@@ -428,8 +429,7 @@ paths:
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+              schema: null
     put:
       tags:
         - Stores
@@ -527,20 +527,17 @@ paths:
           description: Bad Request
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
+              schema: null
         '404':
           description: Store Not Found
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
+              schema: null
         '500':
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+              schema: null
     delete:
       tags:
         - Stores
@@ -711,8 +708,7 @@ paths:
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+              schema: null
     post:
       tags:
         - Products
@@ -843,8 +839,7 @@ paths:
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+              schema: null
     delete:
       tags:
         - Products
@@ -1102,8 +1097,7 @@ paths:
           description: Internal Server Error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+              schema: null
     put:
       tags:
         - Products
@@ -1220,8 +1214,7 @@ paths:
           description: Bad Request
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
+              schema: null
         '404':
           description: Product Not Found
           content:
@@ -1263,8 +1256,7 @@ paths:
           description: Record does not exist
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/RecordNotExist'
+              schema: null
         '500':
           description: Internal Server Error
           content:
@@ -2590,8 +2582,7 @@ paths:
           description: Bad Request
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
+              schema: null
         '404':
           description: Vendor Not Found
           content:
@@ -3765,6 +3756,115 @@ paths:
                     type: string
                     description: Error trace when APP_DEBUG is true
                     example: Error trace stack...
+  /productvendors:
+    get:
+      tags:
+        - Vendor Products
+      summary: Get list of all vendor products
+      description: Retrieve a list of all the vendor products.
+      operationId: getProductVendorsList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/min_quantity'
+        - $ref: '#/components/parameters/max_quantity'
+        - name: filter[products][]
+          in: query
+          required: false
+          description: Filter by associated products slug.
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - product-1
+              - product-2
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductVendor'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/productvendors?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      summary: Create a new vendor product
+      operationId: createVendorProduct
+      tags:
+        - Vendor Products
+      requestBody:
+        $ref: '#/components/requestBodies/ProductVendorRequestBody'
+      responses:
+        '200':
+          description: Successful response with created product vendor data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully.
+                  data:
+                    $ref: '#/components/schemas/ProductVendor'
+        '400':
+          description: Validation error or slug/name already exists.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name already exists.
+                      - Validation failed.
+        '403':
+          description: Permission denied.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Permission denied: can-update-module.'
 components:
   securitySchemes:
     bearerAuth:
@@ -4117,45 +4217,93 @@ components:
               - is_active
               - is_default
               - product
-  responses:
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema: null
-    NotFound:
-      description: Not Found
-      content:
-        application/json:
-          schema: null
-    RecordNotExist:
-      description: Record does not exist
+    ProductVendorRequestBody:
       content:
         application/json:
           schema:
             type: object
+            required:
+              - added_by
+              - product
+              - vendor
+              - store_ids
+              - taxonomy_id_product_vendor_status
+              - vh_st_product_id
+              - vh_st_vendor_id
+              - can_update
             properties:
-              success:
-                type: boolean
-                example: false
-              data:
+              added_by:
+                type: integer
+              added_by_user:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  email:
+                    type: string
+              can_update:
+                type: integer
+              created_by:
+                type: string
+                nullable: true
+              id:
+                type: integer
+                nullable: true
+              is_active:
+                type: integer
+              is_active_product_price:
+                type: integer
+              product:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  slug:
+                    type: string
+                  vh_st_store_id:
+                    type: integer
+              status_notes:
+                type: string
+              store_ids:
                 type: array
-                items: {}
-              message:
-                type: string
                 items:
-                  type: string
-                  example: Record does not exist.
-    Error:
-      description: Generic Error Response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: An error occurred
+                  type: integer
+              store_vendor_product:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    slug:
+                      type: string
+              taxonomy_id_product_vendor_status:
+                type: integer
+              vendor:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  slug:
+                    type: string
+              vh_st_product_id:
+                type: integer
+              vh_st_vendor_id:
+                type: integer
   schemas:
     Credentials:
       type: object
@@ -4569,41 +4717,100 @@ components:
           type: integer
           description: User ID who deleted the variation
           nullable: true
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema: null
-    Error:
-      description: Generic Error Response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: An error occurred
-    NotFound:
-      description: Not Found
-      content:
-        application/json:
-          schema: null
-    RecordNotExist:
-      description: Record does not exist
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              success:
-                type: boolean
-                example: false
-              data:
-                type: array
-                items: {}
-              message:
-                type: string
-                items:
-                  type: string
-                  example: Record does not exist.
+    ProductVendor:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+        vh_st_vendor_id:
+          type: integer
+        vh_st_product_id:
+          type: integer
+        added_by:
+          type: string
+          nullable: true
+        added_by_user:
+          type: string
+          nullable: true
+        can_update:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          nullable: true
+        deleted_at:
+          type: string
+          nullable: true
+        deleted_by:
+          type: string
+          nullable: true
+        is_active:
+          type: integer
+        meta:
+          type: object
+          nullable: true
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+            deleted_at:
+              type: string
+              nullable: true
+            product_variations_for_vendor_product:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  uuid:
+                    type: string
+                  vh_st_product_id:
+                    type: integer
+        product_price_range:
+          type: array
+          items:
+            type: integer
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+        status_notes:
+          type: string
+          nullable: true
+        taxonomy_id_product_vendor_status:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          type: string
+          nullable: true
+        vendor:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+            is_default:
+              type: integer
+            deleted_at:
+              type: string
+              nullable: true
