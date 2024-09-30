@@ -344,13 +344,7 @@ paths:
 
       operationId: itemAction
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: ID of the store item to perform the action on
-          schema:
-            type: integer
-            format: int64
+        - '$ref': '#/components/parameters/id'
         - '$ref': '#/components/parameters/action'
 
       responses:
@@ -423,12 +417,7 @@ paths:
       description: Update a store with the specified ID using the provided details.
       operationId: updateStore
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: The ID of the store to update.
-          schema:
-            type: integer
+        - '$ref': '#/components/parameters/id'
       requestBody:
         required: true
         content:
@@ -491,11 +480,19 @@ paths:
                   example: 1
       responses:
         '200':
-          description: Store Updated Successfully
+          description: Saved Successfully
           content:
             application/json:
               schema:
-                '$ref': '#/components/schemas/Store'
+                type: object
+                properties:
+                  data:
+                    '$ref': '#/components/schemas/Store'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Saved Successfully"
         '400':
           description: Bad Request
           content:
@@ -1099,14 +1096,7 @@ paths:
       description: Retrieve a product by its unique identifier.
       operationId: getProductById
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: The unique identifier of the product
-          schema:
-            type: integer
-            format: int64
-            example: 9
+        - '$ref': '#/components/parameters/id'
       responses:
         '200':
           description: Product Retrieved
@@ -1134,12 +1124,7 @@ paths:
       description: Update a product with the specified ID using the provided details.
       operationId: updateProduct
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: The ID of the product to update.
-          schema:
-            type: integer
+        - '$ref': '#/components/parameters/id'
       requestBody:
         required: true
         content:
@@ -1230,11 +1215,19 @@ paths:
                 - taxonomy_id_product_status
       responses:
         '200':
-          description: Product Saved Successfully
+          description: Saved Successfully
           content:
             application/json:
               schema:
-                '$ref': '#/components/schemas/Product'
+                type: object
+                properties:
+                  data:
+                    '$ref': '#/components/schemas/Product'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Saved Successfully"
         '400':
           description: Bad Request
           content:
@@ -1261,13 +1254,7 @@ paths:
       description: Delete a single product by its ID.
       operationId: deleteProductById
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: ID of the product to delete
-          schema:
-            type: integer
-            format: int64
+        - '$ref': '#/components/parameters/id'
       responses:
         '200':
           description: Product Deleted
@@ -1310,13 +1297,7 @@ paths:
 
       operationId: itemAction
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: ID of the product item to perform the action on
-          schema:
-            type: integer
-            format: int64
+        - '$ref': '#/components/parameters/id'
         - '$ref': '#/components/parameters/action'
 
       responses:
@@ -2555,11 +2536,19 @@ paths:
                 - taxonomy_id_vendor_status
       responses:
         '200':
-          description: Vendor Saved Successfully
+          description: Saved Successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Vendor'
+                type: object
+                properties:
+                  data:
+                    '$ref': '#/components/schemas/Vendor'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Saved Successfully"
         '400':
           description: Bad Request
           content:
@@ -3061,7 +3050,6 @@ paths:
             application/json:
               schema:
                 '$ref': '#/components/responses/Error'
-
     post:
       summary: Create a new product variation
       operationId: createProductVariation
@@ -3117,6 +3105,477 @@ paths:
                     items:
                       type: string
                     example: [ "Permission denied: can-update-module." ]
+    put:
+      tags:
+        - Product Variations
+      summary: Update a list of product variations
+      description: This endpoint allows you to update multiple product records based on the provided input, including actions like activating, deactivating, trashing, or restoring product variations.
+      operationId: updateProductVariationList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: "trash"
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product variations to be updated.
+                        example: 1  # Example for a single item
+                  example: # Example for the entire array
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified variations have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied for action 'can-update-module'."
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Action type is required."
+
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
+    delete:
+      tags:
+        - Product Variations
+      summary: Delete a list of product variations
+      description: This endpoint allows you to delete multiple product variation records based on the provided input.
+      operationId: deleteProductVariationList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: "delete"
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product variation to be deleted.
+                        example: 1  # Example for a single item
+                  example: # Example for the entire array
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified products have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied for action 'can-update-module'."
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Action type is required."
+                      - "Select items."
+
+
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
+  '/productvariations/{id}':
+    get:
+      tags:
+        - Product Variations
+      summary: Get variation by ID
+      description: Retrieve a product variation by its unique identifier.
+      operationId: getProductVariationById
+      parameters:
+        - '$ref': '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product Variation Retrieved
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/ProductVariation'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+    put:
+      tags:
+        - Product Variations
+      summary: Update an existing  variation
+      description: Update a product variation with the specified ID using the provided details.
+      operationId: updateProduct
+      parameters:
+        - '$ref': '#/components/parameters/id'
+      requestBody:
+        '$ref': '#/components/requestBodies/ProductVariationRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    '$ref': '#/components/schemas/ProductVariation'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Saved Successfully"
+        400:
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: [ "This name/slug already exist." ]
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+    delete:
+      tags:
+        - Product Variations
+      summary: Delete a variation by ID
+      description: Delete a single product variation by its ID.
+      operationId: deleteProductVariationById
+      parameters:
+        - '$ref': '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product Variation Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: { }
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Record has been deleted"
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: "Record does not exist."
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/responses/Error'
+  '/productvariations/{id}/action/{action}':
+    patch:
+      tags:
+        - Product Variations
+      summary: Perform an action on a product variation
+      description: |
+        This endpoint allows you to perform various actions on a variation item, such as activating, deactivating, trashing, or restoring a product.
+
+      operationId: itemAction
+      parameters:
+        - '$ref': '#/components/parameters/id'
+        - '$ref': '#/components/parameters/action'
+
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful"
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Permission denied to update module"
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object  # Define the type of the response
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: [
+                        "Record not found with ID: {id}"
+                    ]
+                required:
+                  - errors  # Make errors a required field
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "An error occurred"
+  '/productvariations/action/{action}':
+    put:
+      tags:
+        - Product Variations
+      summary: Perform bulk actions on variations
+      description: This endpoint allows various bulk actions to be performed on product variations based on the provided action type.
+      operationId: performBulkAction
+      parameters:
+        - '$ref': '#/components/parameters/bulk_action'
+
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: "Action was successful."
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Invalid input data."
+
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "An unexpected error occurred."
+
 
 components:
   securitySchemes:
@@ -3414,9 +3873,17 @@ components:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: false
+              data:
+                type: array
+                items: { }
               message:
                 type: string
-                example: "Record does not exist"
+                items:
+                  type: string
+                  example: "Record does not exist."
     Error:
       description: Generic Error Response
       content:
