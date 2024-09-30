@@ -11,7 +11,7 @@ if (process.client) {
 
   apiConfig = {
     spec: {
-      url: `${baseUrl}/vaahstore.yaml`, // Path to your OpenAPI spec file
+      url: `${baseUrl}/vaahstore-apis.yaml`, // Path to your OpenAPI spec file
     },
   };
 }

@@ -1,0 +1,58 @@
+post:
+  tags:
+    - Products
+  summary: Get Attribute List
+  description: |
+    This endpoint retrieves a list of attributes or attribute groups based on the provided attribute type.
+    It can return either a list of all attributes or the attributes from a specific attribute group.
+  operationId: getAttributeList
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            attribute_type:
+              type: string
+              description: The type of attribute to retrieve. Can be "attribute" or "attribute_group".
+              example: "attribute_group"
+
+            get_attribute_from_group:
+              type: boolean
+              description: Indicates whether to retrieve attributes from a specific group.
+              example: false
+            product_id:
+              type: integer
+              description: The ID of the product related to the attributes.
+              example: 23
+            selected_attribute:
+              type: object
+              nullable: true
+              description: The selected attribute for retrieving attributes from a group. Null if not applicable.
+              example: null
+  responses:
+    '200':
+      description: Successful response with attribute list
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The ID of the attribute or attribute group.
+                      example: 1
+                    name:
+                      type: string
+                      description: The name of the attribute or attribute group.
+                      example: "Color"
+                    type:
+                      type: string
+                      description: The type of the attribute (only applicable for attributes).
+                      example: "string"

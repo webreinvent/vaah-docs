@@ -1,0 +1,92 @@
+post:
+  tags:
+    - Products
+  summary: Get Attribute Values
+  description: |
+    This endpoint retrieves attribute values for a specified product and attribute list.
+    It generates variations if the method is set to "generate" or returns a structured list of attribute values otherwise.
+  operationId: getAttributeValue
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            attribute:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  name:
+                    type: string
+                    example: "color"
+                  type:
+                    type: string
+                    example: "branded"
+            method:
+              type: string
+              example: "generate"
+            product_id:
+              type: integer
+              example: 23
+          required:
+            - attribute
+            - product_id
+
+  responses:
+    '200':
+      description: Successful retrieval of attribute values
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  all_attribute_name:
+                    type: array
+                    items:
+                      type: string
+                    example: [ "Color" ]  # Example for the all_attribute_name array
+                  structured_variation:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        variation_name:
+                          type: string
+                          example: "Sony-Blue"  # Example for the variation name
+                        is_selected:
+                          type: boolean
+                          example: false
+                        Color: # Assuming "Color" is the attribute key in structured_variation
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              example: "Blue"  # Example for the color value
+                            vh_st_attribute_id:
+                              type: integer
+                              example: 1  # Example for the attribute ID
+                            id:
+                              type: integer
+                              example: 1  # Example for the ID
+            example: # Add an example response
+              data:
+                structured_variation: [
+                  {
+                    variation_name: "Sony-Blue",
+                    is_selected: false,
+                    Color: {
+                      value: "Blue",
+                      vh_st_attribute_id: 1,
+                      id: 1
+                    }
+                  }
+                ]
+                all_attribute_name: [ "Color" ]

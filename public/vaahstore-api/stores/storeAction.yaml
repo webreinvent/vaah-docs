@@ -1,0 +1,73 @@
+patch: # or any other appropriate method based on your setup
+  tags:
+    - Stores
+  summary: Perform an action on a store
+  description: |
+    This endpoint allows you to perform various actions on a store item, such as activating, deactivating, trashing, or restoring a store.
+
+  operationId: itemAction
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+    - '$ref': '../vaahstore.yaml#/components/parameters/action'
+
+  responses:
+    '200':
+      description: Action performed successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  '$ref': '../vaahstore.yaml#/components/schemas/Store'
+
+    '403':
+      description: Permission Denied
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Permission denied to update module"
+    '404':
+      description: Store Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Store not found"
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "An error occurred"

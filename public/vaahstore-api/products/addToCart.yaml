@@ -1,0 +1,91 @@
+post:
+  tags:
+    - Products
+  summary: Add a product to the cart
+  description: |
+    This endpoint allows users to add a product to their cart. It requires user information and the product ID. If the product is out of stock or no user information is provided, an error message will be returned.
+
+  operationId: addProductToCart
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            user_info:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+            product:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                product_price_range:
+                  type: object
+                  properties:
+                    selected_vendor:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+
+  responses:
+    '200':
+      description: Product added to cart successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved successfully."
+              data:
+                type: object
+                properties:
+
+                  example: "Response data will include user information."
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Please enter valid user."
+    '404':
+      description: Product Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "This product is out of stock if no vendor is selected or quantity is zero. No product variation is default if there is no default variation for this product."
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An error occurred while adding the product to the cart."
