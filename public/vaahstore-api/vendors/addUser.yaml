@@ -1,0 +1,97 @@
+post:
+  tags:
+    - Vendors
+  summary: Assign user role with vendor
+  description: Adds a user to the vendor with the specified roles.
+  operationId: createVendorUser
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - item
+            - user_details
+          properties:
+            item:
+              type: object
+              description: item containing the vendor id
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the vendor.
+                  example: 1
+            user_details:
+              type: array
+              description: List of users with their roles.
+              items:
+                type: object
+                required:
+                  - pivot
+                properties:
+                  pivot:
+                    type: object
+                    required:
+                      - vh_user_id
+                      - vh_role_id
+                    properties:
+                      vh_user_id:
+                        type: integer
+                        description: The ID of the user.
+                        example: 123
+                      vh_role_id:
+                        type: integer
+                        description: The ID of the role assigned to the user.
+                        example: 456
+  responses:
+    200:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                description: The updated vendor data.
+                $ref: '../vaahstore.yaml#/components/schemas/Vendor'
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "Saved successfully." ]
+    '400':
+      description: Duplicate user-role combination or invalid request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "This Record already present in the list."
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "An error occurred while adding the user."

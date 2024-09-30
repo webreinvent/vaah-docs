@@ -1,0 +1,106 @@
+get:
+  tags:
+    - Vendor Products
+  summary: Get list of all vendor products
+  description: Retrieve a list of all the vendor products.
+  operationId: getProductVendorsList
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/page'
+    - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
+    - '$ref': '../vaahstore.yaml#/components/parameters/min_quantity'
+    - '$ref': '../vaahstore.yaml#/components/parameters/max_quantity'
+    - name: filter[products][]
+      in: query
+      required: false
+      description: Filter by associated products slug.
+      schema:
+        type: array
+        items:
+          type: string
+        example: [ 'product-1', 'product-2' ]
+
+
+
+  responses:
+    '200':
+      description: List retrieved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              current_page:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  '$ref': '../vaahstore.yaml#/components/schemas/ProductVendor'
+              first_page_url:
+                type: string
+                example: "http://127.0.0.1:8000/backend/store/productvendors?page=1"
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+post:
+  summary: Create a new vendor product
+  operationId: createVendorProduct
+  tags:
+    - Vendor Products
+  requestBody:
+    '$ref': '../vaahstore.yaml#/components/requestBodies/ProductVendorRequestBody'
+  responses:
+    '200':
+      description: "Successful response with created product vendor data."
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "Saved successfully." ]
+              data:
+                $ref: '../vaahstore.yaml#/components/schemas/ProductVendor'
+    '400':
+      description: "Validation error or slug/name already exists."
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "This name already exists.", "Validation failed." ]
+    '403':
+      description: "Permission denied."
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "Permission denied: can-update-module." ]

@@ -1,0 +1,59 @@
+put:
+  tags:
+    - Product Variations
+  summary: Perform bulk actions on variations
+  description: This endpoint allows various bulk actions to be performed on product variations based on the provided action type.
+  operationId: performBulkAction
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/bulk_action'
+
+  responses:
+    '200':
+      description: Action was successful
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Action was successful."
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Invalid input data."
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An unexpected error occurred."

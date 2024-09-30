@@ -9,7 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "vaahstore:api": "npx @redocly/cli bundle public/vaahstore-api/vaahstore.yaml --output public/vaahstore-apis.yaml"
+
   },
   "dependencies": {
     "@iconify-json/heroicons": "^1.1.19",

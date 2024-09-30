@@ -1,0 +1,73 @@
+patch:
+  tags:
+    - Products
+  summary: Set Vendor as Preferred or Not Preferred
+  description: |
+    This endpoint allows you to mark a specific vendor for a product as preferred or not preferred.
+    When setting a vendor as preferred, all other vendors for the same product will be marked as not preferred.
+  operationId: vendorPreferredAction
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the product vendor to update.
+      schema:
+        type: integer
+        example: 1
+    - name: action
+      in: path
+      required: true
+      description: The action to perform.
+      examples:
+        preferred: Mark as preferred.
+        notpreferred: Mark as not preferred.
+      schema:
+        type: string
+        enum: [preferred, notpreferred]
+        example: "preferred"
+
+  responses:
+    200:
+      description: Successfully updated the vendor preference status.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              messages:
+                type: string
+
+                example:  "Success"
+              data:
+                type: object
+                description: The product data.
+                additionalProperties: true
+    404:
+      description: Product vendor not found.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Product vendor not found."
+    400:
+      description: Bad Request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Invalid request."
