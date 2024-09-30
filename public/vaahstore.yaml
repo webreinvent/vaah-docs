@@ -717,12 +717,7 @@ paths:
                   first_page_url:
                     type: string
                     example: "http://127.0.0.1:8000/backend/store/products?page=1"
-        '404':
-          description: No Products Found
-          content:
-            application/json:
-              schema:
-                '$ref': '#/components/responses/NotFound'
+
         '500':
           description: Internal Server Error
           content:
@@ -2123,8 +2118,7 @@ paths:
                 '$ref': '#/components/schemas/Vendor'
         '400':
           description: Bad request. Invalid filter parameters.
-        '404':
-          description: No vendors found.
+
         '500':
           description: Internal server error.
     post:
@@ -2881,7 +2875,7 @@ paths:
 
       responses:
         '200':
-          description: Product added successfully
+          description: Product added successfully with vendor
           content:
             application/json:
               schema:
@@ -3033,11 +3027,18 @@ paths:
       tags:
         - Product Variations
       summary: Get List of all variations
-      description: Retrieve a list of products.
-      operationId: getProductList
+      description: Retrieve a list of all the product variations.
+      operationId: getProductVariationList
+      parameters:
+        - '$ref': '#/components/parameters/storeQueryParameters/page'
+        - '$ref': '#/components/parameters/storeQueryParameters/rows'
+        - '$ref': '#/components/parameters/storeQueryParameters/filter_q'
+        - '$ref': '#/components/parameters/storeQueryParameters/filter_is_active'
+        - '$ref': '#/components/parameters/storeQueryParameters/filter_trashed'
+        - '$ref': '#/components/parameters/storeQueryParameters/filter_date'
       responses:
         '200':
-          description: Products Retrieved
+          description: Product Variations Retrieved Successfully
           content:
             application/json:
               schema:
@@ -3049,22 +3050,73 @@ paths:
                   data:
                     type: array
                     items:
-                      '$ref': '#/components/schemas/Product'
+                      '$ref': '#/components/schemas/ProductVariation'
                   first_page_url:
                     type: string
                     example: "http://127.0.0.1:8000/backend/store/products?page=1"
-        '404':
-          description: No Products Found
-          content:
-            application/json:
-              schema:
-                '$ref': '#/components/responses/NotFound'
+
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
                 '$ref': '#/components/responses/Error'
+
+    post:
+      summary: Create a new product variation
+      operationId: createProductVariation
+      tags:
+        - Product Variations
+      requestBody:
+        '$ref': '#/components/requestBodies/ProductVariationRequestBody'
+      responses:
+        '200':
+          description: "Successful response with created product variation data."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example: [ "Saved successfully." ]
+                  data:
+                    $ref: '#/components/schemas/ProductVariation'
+        '400':
+          description: "Validation error or slug/name already exists."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example: [ "This name already exists.", "Validation failed." ]
+        '403':
+          description: "Permission denied."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example: [ "Permission denied: can-update-module." ]
 
 components:
   securitySchemes:
@@ -3155,7 +3207,7 @@ components:
         name: filter[q]
         in: query
         required: false
-        description: Search query for stores by name, slug, or id.
+        description: Search query by name, slug, or id.
         schema:
           type: string
       filter_is_active:
@@ -3176,7 +3228,7 @@ components:
         name: filter[date][]
         in: query
         required: false
-        description: Filter stores by date range (start and end dates).
+        description: Filter by date range (start and end dates).
         schema:
           type: array
           items:
@@ -3258,6 +3310,88 @@ components:
                 enum: [ 0, 1 ]
                 description: Indicates if the store is active.
                 example: 1
+
+    ProductVariationRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+
+                description: "Name of the product variation."
+              slug:
+                type: string
+                description: "Slug for the product variation."
+              price:
+                type: number
+                example: 59545
+                description: "Price of the product variation."
+              taxonomy_id_variation_status:
+                type: integer
+                description: "Taxonomy ID for the variation's status."
+              vh_st_product_id:
+                type: integer
+                description: "Product ID for the variation belongs to."
+              sku:
+                type: string
+                example: "Rerum sed ut eum aut."
+                description: "Stock Keeping Unit (SKU) of the product variation."
+              product:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    required: true
+                  uuid:
+                    type: string
+                description: "Product information to which the variation belongs."
+              is_active:
+                type: integer
+                example: 1
+                description: "Whether the product variation is active."
+              is_default:
+                type: integer
+                example: 0
+                description: "Flag indicating if the product variation is the default."
+              description:
+                type: string
+                description: "Description of the product variation."
+
+              meta_title:
+                type: string
+                description: "Meta title for SEO purposes."
+              meta_description:
+                type: string
+                description: "Meta description for SEO purposes."
+              meta_keywords:
+                type: array
+                items:
+                  type: string
+                description: "Meta keywords for SEO purposes."
+
+
+              status_notes:
+                type: string
+                description: "Notes related to the status."
+
+              has_media:
+                type: boolean
+                example: false
+                description: "Flag indicating if the variation has associated media."
+            required:
+              - name
+              - slug
+              - price
+              - sku
+              - taxonomy_id_variation_status
+              - vh_st_product_id
+              - is_active
+              - is_default
+              - product
+
 
 
   responses:
@@ -3579,3 +3713,135 @@ components:
             type: string
             format: date-time
             example: "2024-09-27 13:21:21"
+
+    ProductVariation:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the product variation"
+        uuid:
+          type: string
+          description: "UUID for the product variation"
+        vh_st_product_id:
+          type: integer
+          description: "Product ID to which the variation belongs"
+        name:
+          type: string
+          description: "Name of the product variation"
+        price:
+          type: number
+          description: "Price of the product variation"
+          format: float
+        sku:
+          type: string
+          description: "Stock Keeping Unit for the product variation"
+        slug:
+          type: string
+          description: "Slug identifier for the product variation"
+        quantity:
+          type: integer
+          description: "Quantity of the product variation in stock"
+        in_stock:
+          type: boolean
+          description: "Flag indicating whether the product variation is in stock"
+        is_active:
+          type: boolean
+          description: "Indicates if the product variation is active"
+        is_default:
+          type: boolean
+          description: "Indicates if this variation is the default variation"
+        is_mail_sent:
+          type: boolean
+          description: "Flag to check if email is sent regarding this variation"
+        is_quantity_low:
+          type: boolean
+          description: "Flag to check if the product variation quantity is low"
+        low_stock_at:
+          type: string
+          description: "Timestamp when the stock became low"
+          format: date-time
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier of the status"
+            name:
+              type: string
+              description: "Status name"
+            slug:
+              type: string
+              description: "Slug identifier for the status"
+        status_notes:
+          type: string
+          description: "Notes related to the status"
+          nullable: true
+        taxonomy_id_variation_status:
+          type: integer
+          description: "Taxonomy ID for the variation's status"
+        description:
+          type: string
+          description: "Description of the product variation"
+          nullable: true
+        meta:
+          type: object
+          description: "Meta information for the product variation"
+          nullable: true
+        meta_title:
+          type: string
+          description: "Meta title for SEO purposes"
+          nullable: true
+        meta_description:
+          type: string
+          description: "Meta description for SEO purposes"
+          nullable: true
+        meta_keywords:
+          type: string
+          description: "Meta keywords for SEO purposes"
+          nullable: true
+        has_media:
+          type: boolean
+          description: "Flag indicating whether the variation has associated media"
+          nullable: true
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the product"
+            name:
+              type: string
+              description: "Product name"
+            slug:
+              type: string
+              description: "Slug identifier for the product"
+            deleted_at:
+              type: string
+              description: "Timestamp when the product was deleted"
+              nullable: true
+              format: date-time
+        created_at:
+          type: string
+          description: "Timestamp when the variation was created"
+          format: date-time
+        updated_at:
+          type: string
+          description: "Timestamp when the variation was last updated"
+          format: date-time
+        created_by:
+          type: integer
+          description: "User ID of the creator of the variation"
+        updated_by:
+          type: integer
+          description: "User ID who last updated the variation"
+        deleted_at:
+          type: string
+          description: "Timestamp when the variation was deleted"
+          nullable: true
+          format: date-time
+        deleted_by:
+          type: integer
+          description: "User ID who deleted the variation"
+          nullable: true
+
