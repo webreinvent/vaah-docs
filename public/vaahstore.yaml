@@ -43,12 +43,12 @@ paths:
         You can filter the results using various parameters.
       operationId: getStores
       parameters:
-            - '$ref': '#/components/parameters/storeQueryParameters/page'
-            - '$ref': '#/components/parameters/storeQueryParameters/rows'
-            - '$ref': '#/components/parameters/storeQueryParameters/filter_q'
-            - '$ref': '#/components/parameters/storeQueryParameters/filter_is_active'
-            - '$ref': '#/components/parameters/storeQueryParameters/filter_trashed'
-            - '$ref': '#/components/parameters/storeQueryParameters/filter_date'
+            - '$ref': '#/components/parameters/page'
+            - '$ref': '#/components/parameters/rows'
+            - '$ref': '#/components/parameters/filter_q'
+            - '$ref': '#/components/parameters/filter_is_active'
+            - '$ref': '#/components/parameters/filter_trashed'
+            - '$ref': '#/components/parameters/filter_date'
 
       responses:
         '200':
@@ -697,20 +697,20 @@ paths:
       description: Retrieve a list of products.
       operationId: getProductList
       parameters:
-        - '$ref': '#/components/parameters/storeQueryParameters/page'
-        - '$ref': '#/components/parameters/storeQueryParameters/rows'
-        - '$ref': '#/components/parameters/storeQueryParameters/filter_q'
-        - '$ref': '#/components/parameters/storeQueryParameters/filter_is_active'
-        - '$ref': '#/components/parameters/storeQueryParameters/filter_trashed'
-        - '$ref': '#/components/parameters/storeQueryParameters/filter_date'
-        - '$ref': '#/components/parameters/storeQueryParameters/min_price'
-        - '$ref': '#/components/parameters/storeQueryParameters/max_price'
-        - '$ref': '#/components/parameters/storeQueryParameters/category'
-        - '$ref': '#/components/parameters/storeQueryParameters/product_variations'
-        - '$ref': '#/components/parameters/storeQueryParameters/stores'
-        - '$ref': '#/components/parameters/storeQueryParameters/vendors'
-        - '$ref': '#/components/parameters/storeQueryParameters/min_quantity'
-        - '$ref': '#/components/parameters/storeQueryParameters/max_quantity'
+        - '$ref': '#/components/parameters/page'
+        - '$ref': '#/components/parameters/rows'
+        - '$ref': '#/components/parameters/filter_q'
+        - '$ref': '#/components/parameters/filter_is_active'
+        - '$ref': '#/components/parameters/filter_trashed'
+        - '$ref': '#/components/parameters/filter_date'
+        - '$ref': '#/components/parameters/min_price'
+        - '$ref': '#/components/parameters/max_price'
+        - '$ref': '#/components/parameters/category'
+        - '$ref': '#/components/parameters/product_variations'
+        - '$ref': '#/components/parameters/stores'
+        - '$ref': '#/components/parameters/vendors'
+        - '$ref': '#/components/parameters/min_quantity'
+        - '$ref': '#/components/parameters/max_quantity'
 
       responses:
         '200':
@@ -3035,14 +3035,14 @@ paths:
       description: Retrieve a list of all the product variations.
       operationId: getProductVariationList
       parameters:
-        - '$ref': '#/components/parameters/storeQueryParameters/page'
-        - '$ref': '#/components/parameters/storeQueryParameters/rows'
-        - '$ref': '#/components/parameters/storeQueryParameters/filter_q'
-        - '$ref': '#/components/parameters/storeQueryParameters/filter_is_active'
-        - '$ref': '#/components/parameters/storeQueryParameters/filter_trashed'
-        - '$ref': '#/components/parameters/storeQueryParameters/filter_date'
-        - '$ref': '#/components/parameters/storeQueryParameters/min_quantity'
-        - '$ref': '#/components/parameters/storeQueryParameters/max_quantity'
+        - '$ref': '#/components/parameters/page'
+        - '$ref': '#/components/parameters/rows'
+        - '$ref': '#/components/parameters/filter_q'
+        - '$ref': '#/components/parameters/filter_is_active'
+        - '$ref': '#/components/parameters/filter_trashed'
+        - '$ref': '#/components/parameters/filter_date'
+        - '$ref': '#/components/parameters/min_quantity'
+        - '$ref': '#/components/parameters/max_quantity'
         - name: filter[products][]
           in: query
           required: false
@@ -3812,17 +3812,9 @@ components:
         type: integer
         example: 1
 
-    storeQueryParameters:
-      page:
-        name: page
-        in: query
-        required: false
-        description: Page number to retrieve.
-        schema:
-          type: integer
-        example: 1
 
-      rows:
+
+    rows:
         name: rows
         in: query
         required: false
@@ -3831,7 +3823,7 @@ components:
           type: integer
         example: 20
 
-      filter_q:
+    filter_q:
         name: filter[q]
         in: query
         required: false
@@ -3839,14 +3831,14 @@ components:
         schema:
           type: string
 
-      filter_is_active:
+    filter_is_active:
         name: filter[is_active]
         in: query
         required: false
         schema:
           type: boolean
 
-      filter_trashed:
+    filter_trashed:
         name: filter[trashed]
         in: query
         required: false
@@ -3855,7 +3847,7 @@ components:
           type: string
           enum: [ include, exclude, only ]
 
-      filter_date:
+    filter_date:
         name: filter[date][]
         in: query
         required: false
@@ -3867,7 +3859,7 @@ components:
             format: date
         example: [ '2024-09-03', '2024-09-11' ]
 
-      min_price:
+    min_price:
         name: filter[min_price]
         in: query
         required: false
@@ -3877,7 +3869,7 @@ components:
           format: float
         example: 10.50
 
-      max_price:
+    max_price:
         name: filter[max_price]
         in: query
         required: false
@@ -3887,7 +3879,7 @@ components:
           format: float
         example: 100.00
 
-      category:
+    category:
         name: filter[category][]
         in: query
         required: false
@@ -3898,7 +3890,7 @@ components:
             type: string
         example: [ 'category-1', 'category-2' ]
 
-      product_variations:
+    product_variations:
         name: filter[product_variations][]
         in: query
         required: false
@@ -3909,7 +3901,7 @@ components:
             type: string
         example: [ 'variation-1', 'variation-2' ]
 
-      min_quantity:
+    min_quantity:
         name: filter[min_quantity]
         in: query
         required: false
@@ -3918,7 +3910,7 @@ components:
           type: integer
         example: 5
 
-      max_quantity:
+    max_quantity:
         name: filter[max_quantity]
         in: query
         required: false
@@ -3927,7 +3919,7 @@ components:
           type: integer
         example: 50
 
-      vendors:
+    vendors:
         name: filter[vendors][]
         in: query
         required: false
@@ -3938,7 +3930,7 @@ components:
             type: string
         example: [ 'vendor-1', 'vendor-2' ]
 
-      stores:
+    stores:
         name: filter[stores][]
         in: query
         required: false
