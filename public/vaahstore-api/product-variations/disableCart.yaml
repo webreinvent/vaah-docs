@@ -1,0 +1,41 @@
+post:
+  tags:
+    - Product Variations
+  summary: Disable active cart session
+  description: |
+    This endpoint disables the active cart session by removing the 'vh_user_id' from the current session.
+    It is used to clear the active cart for the user.
+  operationId: disableActiveCart
+  responses:
+    '200':
+      description: Cart session disabled successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: "Cart disabled successfully"
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Something went wrong"
+              hint:
+                type: string
+                description: "Error trace when APP_DEBUG is true"
+                example: "Error trace stack..."

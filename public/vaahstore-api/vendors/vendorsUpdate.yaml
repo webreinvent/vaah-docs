@@ -1,0 +1,187 @@
+get:
+  tags:
+    - Vendors
+  summary: Get vendor by ID
+  description: Retrieve a vendor by its unique identifier.
+  operationId: getVendorById
+  parameters:
+    - $ref: '../vaahstore.yaml#/components/parameters/id'
+  responses:
+    '200':
+      description: Vendor Retrieved
+      content:
+        application/json:
+          schema:
+            $ref: '../vaahstore.yaml#/components/schemas/Vendor'
+    '404':
+      description: Vendor Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Record not found with ID: {id}"
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+put:
+  tags:
+    - Vendors
+  summary: Update an existing vendor
+  description: Update a vendor with the specified ID using the provided details.
+  operationId: updateVendor
+  parameters:
+    - $ref: '../vaahstore.yaml#/components/parameters/id'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "My vendor"
+              description: Name of the vendor.
+            slug:
+              type: string
+              example: "my-vendor"
+              description: URL-friendly identifier for the vendor.
+            vh_st_store_id:
+              type: integer
+              example: 1
+              description: ID of the store the vendor belongs to.
+            is_default:
+              type: boolean
+              example: true
+              description: Indicates whether the vendor is the default vendor.
+            approved_by:
+              type: integer
+              example: 1
+              description: ID of the user who approved the vendor.
+            owned_by:
+              type: integer
+              example: 1
+              description: ID of the vendor owner.
+            taxonomy_id_vendor_status:
+              type: integer
+              example: 1
+              description: Status ID of the vendor.
+            store:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                  description: ID of the store.
+                is_multi_vendor:
+                  type: boolean
+                  example: true
+                  description: Indicates if the store supports multiple vendors.
+          required:
+            - name
+            - slug
+            - vh_st_store_id
+            - approved_by
+            - owned_by
+            - is_default
+            - taxonomy_id_vendor_status
+  responses:
+    '200':
+      description: Saved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/Vendor'
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved Successfully"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '../vaahstore.yaml#/components/responses/BadRequest'
+    '404':
+      description: Vendor Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Record not found with ID: {id}"
+            required:
+              - errors
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+delete:
+  tags:
+    - Vendors
+  summary: Delete a vendor by ID
+  description: Delete a single vendor by its ID.
+  operationId: deleteVendorById
+  parameters:
+    - $ref: '#/components/parameters/id'
+  responses:
+    '200':
+      description: Vendor Deleted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                description: Details of the deleted vendor (optional).
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Record has been deleted"
+    '404':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Record not found with ID: {id}"
+            required:
+              - errors
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
