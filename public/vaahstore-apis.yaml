@@ -5201,6 +5201,423 @@ paths:
           content:
             application/json:
               schema: null
+  /carts/cart-check-out/{id}:
+    get:
+      tags:
+        - Carts
+      summary: Get cart items for checkout by cart ID
+      description: Fetches the items available for checkout based on the specified cart ID. Only items with available stock will be included.
+      operationId: getItemsAtCheckOutById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Cart items retrieved successfully at checkout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      product_details:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product_id:
+                              type: integer
+                            name:
+                              type: string
+                            description:
+                              type: string
+                              nullable: true
+                            image_urls:
+                              type: array
+                              items:
+                                type: string
+                            pivot:
+                              type: object
+                              properties:
+                                cart_product_variation:
+                                  type: string
+                                product_variation_id:
+                                  type: integer
+                                price:
+                                  type: number
+                                  format: float
+                                quantity:
+                                  type: integer
+                                subtotal:
+                                  type: number
+                                  format: float
+                                selected_vendor_id:
+                                  type: integer
+                      user_addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                            vh_user_id:
+                              type: integer
+                            taxonomy_id_address_types:
+                              type: integer
+                            taxonomy_id_address_status:
+                              type: integer
+                            address_line_1:
+                              type: string
+                            address_line_2:
+                              type: string
+                              nullable: true
+                            name:
+                              type: string
+                              nullable: true
+                            phone:
+                              type: string
+                            pin_code:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            country:
+                              type: string
+                            meta:
+                              type: object
+                              nullable: true
+                            status_notes:
+                              type: string
+                              nullable: true
+                            is_default:
+                              type: boolean
+                              nullable: true
+                            created_by:
+                              type: integer
+                            updated_by:
+                              type: integer
+                            deleted_by:
+                              type: integer
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                            deleted_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            address:
+                              type: string
+                      user_billing_addresses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                            vh_user_id:
+                              type: integer
+                            taxonomy_id_address_types:
+                              type: integer
+                            taxonomy_id_address_status:
+                              type: integer
+                            address_line_1:
+                              type: string
+                            address_line_2:
+                              type: string
+                              nullable: true
+                            name:
+                              type: string
+                              nullable: true
+                            phone:
+                              type: string
+                            pin_code:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            country:
+                              type: string
+                            meta:
+                              type: object
+                              nullable: true
+                            status_notes:
+                              type: string
+                              nullable: true
+                            is_default:
+                              type: boolean
+                              nullable: true
+                            created_by:
+                              type: integer
+                            updated_by:
+                              type: integer
+                            deleted_by:
+                              type: integer
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                            deleted_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            address:
+                              type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          uuid:
+                            type: string
+                          email:
+                            type: string
+                          username:
+                            type: string
+                          display_name:
+                            type: string
+                          title:
+                            type: string
+                          designation:
+                            type: string
+                          first_name:
+                            type: string
+                          middle_name:
+                            type: string
+                            nullable: true
+                          last_name:
+                            type: string
+                          gender:
+                            type: string
+                          country_calling_code:
+                            type: string
+                          phone:
+                            type: string
+                          bio:
+                            type: string
+                          website:
+                            type: string
+                          timezone:
+                            type: string
+                          alternate_email:
+                            type: string
+                            nullable: true
+                          avatar_url:
+                            type: string
+                          birth:
+                            type: string
+                            format: date
+                          country:
+                            type: string
+                          country_code:
+                            type: string
+                            nullable: true
+                          mfa_methods:
+                            type: string
+                            nullable: true
+                          last_login_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          last_login_ip:
+                            type: string
+                            nullable: true
+                          is_active:
+                            type: integer
+                          activated_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          status:
+                            type: string
+                          security_code:
+                            type: string
+                            nullable: true
+                          security_code_expired_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          affiliate_code:
+                            type: string
+                            nullable: true
+                          affiliate_code_used_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          reset_password_code_sent_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          reset_password_code_used_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          registration_id:
+                            type: integer
+                            nullable: true
+                          foreign_user_id:
+                            type: integer
+                          meta:
+                            type: object
+                            properties:
+                              '0':
+                                type: string
+                              custom_fields:
+                                type: object
+                                properties:
+                                  state:
+                                    type: string
+                                    nullable: true
+                          created_ip:
+                            type: string
+                          created_by:
+                            type: integer
+                          updated_by:
+                            type: integer
+                          deleted_by:
+                            type: integer
+                            nullable: true
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+                          deleted_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          avatar:
+                            type: string
+                          name:
+                            type: string
+                      total_mrp:
+                        type: number
+                        format: float
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  data:
+                    type: object
+                    nullable: true
+                    example: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /carts/update/quantity:
+    post:
+      tags:
+        - Carts
+      summary: Update cart item quantity
+      description: Updates the quantity of a specified product in the cart. If the new quantity is less than 1, the product will be removed from the cart.
+      operationId: updateQuantity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cart_product_details:
+                  type: object
+                  properties:
+                    vh_st_cart_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the cart.
+                    vh_st_product_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the product.
+                    vh_st_product_variation_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the product variation.
+                    vh_st_vendor_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the vendor.
+                  required:
+                    - vh_st_cart_id
+                    - vh_st_product_id
+                    - vh_st_product_variation_id
+                    - vh_st_vendor_id
+                quantity:
+                  type: integer
+                  example: 3
+                  description: The new quantity for the product.
+              required:
+                - quantity
+                - cart_product_details
+      responses:
+        '200':
+          description: Cart item quantity updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Cart'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved successfully.
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input.
+        '404':
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Cart not found.
 components:
   securitySchemes:
     bearerAuth:
