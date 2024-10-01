@@ -1,0 +1,75 @@
+post:
+  tags:
+    - Vendor Products
+  summary: "Add product price by vendor"
+  description: This endpoint allows create the product price according to the specefic vendor.
+  operationId: "vendorProductPrice"
+  requestBody:
+    description: "Request body for adding product price by vendor"
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: string
+              description: "Unique identifier for the vendor product"
+            vh_st_vendor_id:
+              type: string
+              description: "Unique identifier for the vendor"
+            vh_st_product_id:
+              type: string
+              description: "Unique identifier for the product"
+            product_variation:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    required: true
+                    description: "Unique identifier for the product variation"
+                  name:
+                    type: string
+                    description: "Name of the product variation"
+                  amount:
+                    type: number
+                    required: true
+                    description: "Price amount for the product variation. Set to null to delete."
+            # You can add other properties if required
+          required:
+            - id
+            - vh_st_vendor_id
+            - vh_st_product_id
+            - product_variation
+  responses:
+    '200':
+      description: "Product price added or updated successfully"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                $ref: '../vaahstore.yaml#/components/schemas/ProductVendor'
+    '400':
+      description: "Validation error"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "The Product field is required",
+                    "The product_variation.0.amount field is required."
+                ]

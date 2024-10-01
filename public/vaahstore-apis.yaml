@@ -4070,7 +4070,7 @@ paths:
     get:
       tags:
         - Vendor Products
-      summary: Get record by product-vendor ID
+      summary: Get record by vendor-product ID
       description: Retrieve a product vendor by its unique identifier.
       operationId: getProductVendorsById
       parameters:
@@ -4185,6 +4185,219 @@ paths:
           content:
             application/json:
               schema: null
+  /productvendors/{id}/action/{action}:
+    patch:
+      tags:
+        - Vendor Products
+      summary: Perform an action on a vendor-product
+      description: |
+        This endpoint allows you to perform various actions on a vendor-product item, such as activating, deactivating, trashing, or restoring a vendor product.
+      operationId: itemActionVendorProducts
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /productvendors/action/{action}:
+    put:
+      tags:
+        - Vendor Products
+      summary: Perform bulk actions on vendor-products
+      description: This endpoint allows various bulk actions to be performed on vendor products based on the provided action type.
+      operationId: bulkActionsVendorProducts
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /productvendors/product/price:
+    post:
+      tags:
+        - Vendor Products
+      summary: Add product price by vendor
+      description: This endpoint allows create the product price according to the specefic vendor.
+      operationId: vendorProductPrice
+      requestBody:
+        description: Request body for adding product price by vendor
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Unique identifier for the vendor product
+                vh_st_vendor_id:
+                  type: string
+                  description: Unique identifier for the vendor
+                vh_st_product_id:
+                  type: string
+                  description: Unique identifier for the product
+                product_variation:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        required: true
+                        description: Unique identifier for the product variation
+                      name:
+                        type: string
+                        description: Name of the product variation
+                      amount:
+                        type: number
+                        required: true
+                        description: Price amount for the product variation. Set to null to delete.
+              required:
+                - id
+                - vh_st_vendor_id
+                - vh_st_product_id
+                - product_variation
+      responses:
+        '200':
+          description: Product price added or updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/ProductVendor'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The Product field is required
+                      - The product_variation.0.amount field is required.
 components:
   securitySchemes:
     bearerAuth:
