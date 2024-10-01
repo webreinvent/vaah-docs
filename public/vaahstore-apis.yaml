@@ -1094,7 +1094,17 @@ paths:
           description: Product Not Found
           content:
             application/json:
-              schema: null
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
         '500':
           description: Internal Server Error
           content:
@@ -3393,7 +3403,17 @@ paths:
           description: Record Not Found
           content:
             application/json:
-              schema: null
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
         '500':
           description: Internal Server Error
           content:
@@ -3871,7 +3891,7 @@ paths:
       tags:
         - Vendor Products
       summary: Update a list of product vendors
-      description: This endpoint allows you to update multiple product vendors records based on the provided input, including actions like activating, deactivating, trashing, or restoring product variations.
+      description: This endpoint allows you to update multiple product vendors records based on the provided input, including actions like activating, deactivating, trashing, or restoring product vendors.
       operationId: updateProductVendorsList
       requestBody:
         required: true
@@ -3896,7 +3916,7 @@ paths:
                     properties:
                       id:
                         type: integer
-                        description: The ID of the product variations to be updated.
+                        description: The ID of the product vendors to be updated.
                         example: 1
                   example:
                     - id: 1
@@ -3996,7 +4016,7 @@ paths:
                     properties:
                       id:
                         type: integer
-                        description: The ID of the product variation to be deleted.
+                        description: The ID of the product vendors to be deleted.
                         example: 1
                   example:
                     - id: 1
@@ -4004,7 +4024,7 @@ paths:
                     - id: 3
       responses:
         '200':
-          description: Action was successful and the specified products have been deleted.
+          description: Action was successful and the specified product vendors have been deleted.
           content:
             application/json:
               schema:
@@ -4088,7 +4108,17 @@ paths:
           description: Record Not Found
           content:
             application/json:
-              schema: null
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
         '500':
           description: Internal Server Error
           content:
@@ -4473,7 +4503,7 @@ paths:
                     items:
                       type: string
                     example:
-                      - Product stock created successfully
+                      - Saved successfully
                   data:
                     $ref: '#/components/schemas/ProductStock'
         '400':
@@ -4508,6 +4538,336 @@ paths:
                       type: string
                     example:
                       - Product Stock already exists for this variation.
+    put:
+      tags:
+        - Product Stocks
+      summary: Update a list of product stocks
+      description: This endpoint allows you to update multiple product stocks records based on the provided input, including actions like activating, deactivating, trashing, or restoring product stocks.
+      operationId: updateProductStocksList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product stocks to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified product stocks have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Product Stocks
+      summary: Delete a list of product stocks
+      description: This endpoint allows you to delete multiple product stocks records based on the provided input.
+      operationId: deleteProductStocksList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product stocks to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified product stocks have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /productstocks/{id}:
+    get:
+      tags:
+        - Product Stocks
+      summary: Get record by product stock ID
+      description: Retrieve a product stock by its unique identifier.
+      operationId: getProductStockById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product-stock Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductStock'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Product Stocks
+      summary: Update an existing record
+      description: Update a product vednor record with the specified ID using the provided details.
+      operationId: updateProductStock
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/ProductStocksRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProductStock'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Product Stocks
+      summary: Delete a record by ID
+      description: Delete a single product stock by its ID.
+      operationId: deleteProductStockById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product vendor Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:

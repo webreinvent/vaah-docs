@@ -108,7 +108,7 @@ put:
   tags:
     - Vendor Products
   summary: Update a list of product vendors
-  description: This endpoint allows you to update multiple product vendors records based on the provided input, including actions like activating, deactivating, trashing, or restoring product variations.
+  description: This endpoint allows you to update multiple product vendors records based on the provided input, including actions like activating, deactivating, trashing, or restoring product vendors.
   operationId: updateProductVendorsList
   requestBody:
     required: true
@@ -133,7 +133,7 @@ put:
                 properties:
                   id:
                     type: integer
-                    description: The ID of the product variations to be updated.
+                    description: The ID of the product vendors to be updated.
                     example: 1  # Example for a single item
               example: # Example for the entire array
                 - id: 1
@@ -234,7 +234,7 @@ delete:
                 properties:
                   id:
                     type: integer
-                    description: The ID of the product variation to be deleted.
+                    description: The ID of the product vendors to be deleted.
                     example: 1  # Example for a single item
               example: # Example for the entire array
                 - id: 1
@@ -242,7 +242,7 @@ delete:
                 - id: 3
   responses:
     '200':
-      description: Action was successful and the specified products have been deleted.
+      description: Action was successful and the specified product vendors have been deleted.
       content:
         application/json:
           schema:
