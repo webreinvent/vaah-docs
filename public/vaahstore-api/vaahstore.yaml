@@ -114,6 +114,8 @@ paths:
     $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
   '/carts/update/quantity':
     $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
+  '/carts/delete-cart-item':
+    $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
 
 components:
   securitySchemes:
