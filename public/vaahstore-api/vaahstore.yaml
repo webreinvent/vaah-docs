@@ -25,6 +25,8 @@ tags:
     description: Everything about Product Variations in VaahStore
   - name: Vendor Products
     description: Everything about Vendor Products in VaahStore
+  - name: Product Stocks
+    description: Everything about Product Stocks in VaahStore
 
 paths:
   '/stores':
@@ -92,6 +94,9 @@ paths:
     $ref: './product-vendors/listAction.yaml'  # Reference to the product vendor list actions file
   '/productvendors/product/price':
     $ref: './product-vendors/addProductPrice.yaml'  # Reference to the add product price file
+
+  '/productstocks':
+    $ref: './product-stocks/index.yaml'  # Reference to the product stocks file
 
 components:
   securitySchemes:
@@ -605,6 +610,55 @@ components:
               status_notes:
                 type: string
                 description: Notes related to the status of the product-vendor relationship.
+    ProductStocksRequestBody:
+      description: "Request body for creating a new product stock"
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - vh_st_vendor_id
+              - vh_st_product_id
+              - vh_st_product_variation_id
+              - vh_st_warehouse_id
+              - taxonomy_id_product_stock_status
+              - is_active
+              - quantity
+
+            properties:
+              vh_st_vendor_id:
+                type: integer
+                description: "Unique identifier for the vendor"
+                example: 1
+              vh_st_product_id:
+                type: integer
+                description: "Unique identifier for the product"
+                example: 1
+              vh_st_product_variation_id:
+                type: integer
+                description: "Unique identifier for the product variation"
+                example: 1
+              vh_st_warehouse_id:
+                type: integer
+                description: "Unique identifier for the warehouse"
+              taxonomy_id_product_stock_status:
+                type: integer
+                description: "Taxonomy status id for the product stocks"
+              quantity:
+                type: integer
+                description: "Quantity of the product in stock"
+                example: 100
+              is_active:
+                type: integer
+                description: "Indicates if the product stock is active (default is true)"
+                example: 1
+              status_notes:
+                type: string
+                description: "Additional notes for the product stock"
+                example: "Initial stock addition"
+
+
+
 
 
 
@@ -1127,4 +1181,138 @@ components:
             deleted_at:
               type: string
               nullable: true
+    ProductStock:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the product stock"
+        uuid:
+          type: string
+          description: "Unique identifier for the product stock instance"
+        vh_st_product_id:
+          type: integer
+          description: "Unique identifier for the vendor product"
+        vh_st_product_variation_id:
+            type: integer
+            description: "Unique identifier for the vendor product variation"
+        vh_st_vendor_id:
+            type: integer
+            description: "Unique identifier for the vendor"
+        vh_st_warehouse_id:
+            type: integer
+            description: "Unique identifier for the warehouse where the product stock is stored"
+        taxonomy_id_product_stock_status:
+            type: integer
+            description: "Taxonomy ID for the product stock status"
+        quantity:
+          type: integer
+          description: "Quantity of the product in stock"
+        is_active:
+          type: integer
+          description: "Indicates if the product stock is active (1 for active, 0 for inactive)"
+        status_notes:
+          type: string
+          description: "Additional notes regarding the status of the product stock"
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the stock status"
+            name:
+              type: string
+              description: "Name of the stock status"
+            slug:
+              type: string
+              description: "URL-friendly slug for the stock status"
+        meta:
+          type: object
+          description: "Meta information about the product stock"
+          nullable: true
+        vendor:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the vendor"
+            name:
+              type: string
+              description: "Name of the vendor"
+            slug:
+              type: string
+              description: "URL-friendly slug for the vendor"
+              nullable: true
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the product"
+            name:
+              type: string
+              description: "Name of the product"
+            slug:
+              type: string
+              description: "URL-friendly slug for the product"
+            deleted_at:
+              type: string
+              format: date-time
+              description: "Timestamp when the product was deleted, if applicable"
+              nullable: true
+        product_variation:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the product variation"
+            name:
+              type: string
+              description: "Name of the product variation"
+            slug:
+              type: string
+              description: "URL-friendly slug for the product variation"
+              nullable: true
+            deleted_at:
+              type: string
+              format: date-time
+              description: "Timestamp when the product variation was deleted, if applicable"
+              nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was last updated"
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the product stock"
+        created_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was created"
+        created_by:
+          type: integer
+          description: "ID of the user who created the product stock"
+        deleted_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was deleted, if applicable"
+          nullable: true
+        deleted_by:
+          type: integer
+          description: "ID of the user who deleted the product stock, if applicable"
+          nullable: true
+
+      required:
+        - id
+        - quantity
+        - product
+        - product_variation
+        - vendor
+        - vh_st_product_id
+        - vh_st_product_variation_id
+        - vh_st_vendor_id
+        - vh_st_warehouse_id
+
+
+
 
