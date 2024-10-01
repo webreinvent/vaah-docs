@@ -1,7 +1,7 @@
 get:
   tags:
     - Vendor Products
-  summary: Get record by product-vendor ID
+  summary: Get record by vendor-product ID
   description: Retrieve a product vendor by its unique identifier.
   operationId: getProductVendorsById
   parameters:

@@ -30,22 +30,22 @@ paths:
   '/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
   /stores/{id}/action/{action}:
-    $ref: './stores/storeAction.yaml'  # Reference to the stores file
+    $ref: './stores/storeAction.yaml'  # Reference to the stores item action file
   /stores/{id}:
-    $ref: './stores/storeUpdate.yaml'  # Reference to the stores file
+    $ref: './stores/storeUpdate.yaml'  # Reference to the stores item file
   /stores/action/{action}:
-    $ref: './stores/storeListAction.yaml'  # Reference to the stores file
+    $ref: './stores/storeListAction.yaml'  # Reference to the stores list action file
 
   '/products':
     $ref: './products/products.yaml'  # Reference to the create products file
   '/products/{id}':
-    $ref: './products/productUpdate.yaml'  # Reference to the create products file
+    $ref: './products/productUpdate.yaml'  # Reference to the product item file
   '/products/{id}/action/{action}':
-    $ref: './products/productAction.yaml'  # Reference to the create products file
+    $ref: './products/productAction.yaml'  # Reference to the product item action file
   '/products/action/{action}':
-    $ref: './products/productListAction.yaml'  # Reference to the create products file
+    $ref: './products/productListAction.yaml'  # Reference to the products list action file
   '/products/vendor':
-    $ref: './products/attachVendor.yaml'  # Reference to the attach product with vendor file
+    $ref: './products/attachVendor.yaml'  # Reference to the attachment with vendor file
   '/products/get-vendors-list/{id}':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
   '/products/{id}/action-for-vendor/{action}':
@@ -61,31 +61,37 @@ paths:
   '/vendors':
     $ref: './vendors/vendors.yaml'  # Reference to the vendors file
   '/vendors/{id}':
-    $ref: './vendors/vendorsUpdate.yaml'  # Reference to the vendors file
+    $ref: './vendors/vendorsUpdate.yaml'  # Reference to the vendors item file
   '/vendors/{id}/action/{action}':
-    $ref: './vendors/vendorAction.yaml'  # Reference to the vendors file
+    $ref: './vendors/vendorAction.yaml'  # Reference to the vendors item action file
   '/vendors/action/{action}':
-    $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors file
+    $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors list actions file
   '/vendors/add/product':
-    $ref: './vendors/attachProducts.yaml'  # Reference to the vendors file
+    $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
   '/vendors/add/user':
-    $ref: './vendors/attachProducts.yaml'  # Reference to the vendors file
+    $ref: './vendors/attachProducts.yaml'  # Reference to the vendors attachment with user file
   '/productvariations':
-    $ref: './product-variations/variations.yaml'  # Reference to the vendors file
+    $ref: './product-variations/variations.yaml'  # Reference to the productvariations file
   '/productvariations/{id}':
-    $ref: './product-variations/variationUpdate.yaml'  # Reference to the vendors file
+    $ref: './product-variations/variationUpdate.yaml'  # Reference to the productvariations item file
   '/productvariations/{id}/action/{action}':
-    $ref: './product-variations/variationAction.yaml'  # Reference to the vendors file
+    $ref: './product-variations/variationAction.yaml'  # Reference to the productvariations item action file
   '/productvariations/action/{action}':
-    $ref: './product-variations/variationListActions.yaml'  # Reference to the vendors file
+    $ref: './product-variations/variationListActions.yaml'  # Reference to the productvariations list actions file
   '/productvariations/add/variation-to-cart':
-    $ref: './product-variations/addToCart.yaml'  # Reference to the vendors file
+    $ref: './product-variations/addToCart.yaml'  # Reference to the add to cart file
   '/productvariations/disable/active-cart':
-    $ref: './product-variations/disableCart.yaml'  # Reference to the vendors file
+    $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
   '/productvendors':
     $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
   '/productvendors/{id}':
     $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
+  '/productvendors/{id}/action/{action}':
+    $ref: './product-vendors/itemAction.yaml'  # Reference to the product vendor item action file
+  '/productvendors/action/{action}':
+    $ref: './product-vendors/listAction.yaml'  # Reference to the product vendor list actions file
+  '/productvendors/product/price':
+    $ref: './product-vendors/addProductPrice.yaml'  # Reference to the add product price file
 
 components:
   securitySchemes:
