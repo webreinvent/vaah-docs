@@ -27,6 +27,8 @@ tags:
     description: Everything about Vendor Products in VaahStore
   - name: Product Stocks
     description: Everything about Product Stocks in VaahStore
+  - name: Carts
+    description: Everything about Cart Process in VaahStore
 
 paths:
   '/stores':
@@ -103,6 +105,11 @@ paths:
     $ref: './product-stocks/itemAction.yaml'  # Reference to the product stocks item action file
   '/productstocks/action/{action}':
     $ref: './product-stocks/listAction.yaml'  # Reference to the product stocks list action file
+
+  '/carts':
+    $ref: './carts/index.yaml'  # Reference to the carts file
+  '/carts/{id}':
+    $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
 
 components:
   securitySchemes:
@@ -1349,6 +1356,72 @@ components:
         - vh_st_product_variation_id
         - vh_st_vendor_id
         - vh_st_warehouse_id
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the cart"
+          example: 1
+        uuid:
+          type: string
+          description: "Unique UUID for the cart"
+          example: "a1d88c58-70ed-48ea-9188-7e250fa3e815"
+        vh_user_id:
+          type: integer
+          description: "Identifier of the user associated with the cart"
+          example: 121
+        user:
+          type: object
+          description: "Details of the user who owns the cart"
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the user"
+              example: 121
+            uuid:
+              type: string
+              description: "Unique UUID for the user"
+
+            email:
+              type: string
+              description: "User's email address"
+              example: "shivam1@zieme.org"
+            # Add other user-related properties as needed
+
+        created_at:
+          type: string
+          format: date-time
+          description: "The date and time when the cart was created"
+          example: "2024-10-01 16:32:56"
+        updated_at:
+          type: string
+          format: date-time
+          description: "The date and time when the cart was last updated"
+          example: "2024-10-01 16:32:56"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: "The date and time when the cart was deleted (if applicable)"
+          example: null
+        created_by:
+          type: integer
+          description: "Identifier of the user who created the cart"
+          example: 1
+        updated_by:
+          type: integer
+          description: "Identifier of the user who last updated the cart"
+          example: 1
+        deleted_by:
+          type: integer
+          nullable: true
+          description: "Identifier of the user who deleted the cart (if applicable)"
+          example: null
+      required:
+        - id
+        - vh_user_id
+        - user
 
 
 
