@@ -84,6 +84,8 @@ paths:
     $ref: './product-variations/disableCart.yaml'  # Reference to the vendors file
   '/productvendors':
     $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
+  '/productvendors/{id}':
+    $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
 
 components:
   securitySchemes:
@@ -459,6 +461,88 @@ components:
               vh_st_vendor_id:
                   type: integer
                   description: ID of the vendor being associated with the product.
+              added_by:
+                type: integer
+                description: ID of the user responsible for attaching the product to the vendor.
+              can_update:
+                type: integer
+                example: 0
+                description: Indicates whether the product can be updated by the user. A value of `0` means the product cannot be updated, while `1` means it can.
+              is_active:
+                type: integer
+                example: 1
+                description: Flag indicating if the product is active. A value of `1` means active, `0` means inactive.
+              product:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the product.
+                  name:
+                    type: string
+                    description: Name of the product.
+                  vh_st_store_id:
+                    type: integer
+                    description: ID of the store associated with the product.
+              vendor:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the vendor.
+                  name:
+                    type: string
+                    description: Name of the vendor.
+              store_vendor_product:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the store to which the product is linked.
+
+
+              taxonomy_id_product_vendor_status:
+                type: integer
+                description: ID representing the product vendor status based on the taxonomy.
+              status_notes:
+                type: string
+                description: Notes related to the status of the product-vendor relationship.
+    ProductVendorUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+              - vh_st_product_id
+              - vh_st_vendor_id
+              - added_by
+              - can_update
+              - product
+              - vendor
+              - taxonomy_id_product_vendor_status
+              - store_vendor_product
+
+            properties:
+              id:
+                type: string
+                description: "Unique identifier for the product vendor"
+              vh_st_product_id:
+                type: integer
+                description: ID of the product being associated with the vendor.
+              vh_st_vendor_id:
+                type: integer
+                description: ID of the vendor being associated with the product.
               added_by:
                 type: integer
                 description: ID of the user responsible for attaching the product to the vendor.

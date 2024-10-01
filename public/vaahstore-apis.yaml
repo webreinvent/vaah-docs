@@ -3865,6 +3865,326 @@ paths:
                       type: string
                     example:
                       - 'Permission denied: can-update-module.'
+    put:
+      tags:
+        - Vendor Products
+      summary: Update a list of product vendors
+      description: This endpoint allows you to update multiple product vendors records based on the provided input, including actions like activating, deactivating, trashing, or restoring product variations.
+      operationId: updateProductVendorsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product variations to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified product vendors have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Vendor Products
+      summary: Delete a list of product vendors
+      description: This endpoint allows you to delete multiple product vendors records based on the provided input.
+      operationId: deleteProductVendorsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product variation to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified products have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /productvendors/{id}:
+    get:
+      tags:
+        - Vendor Products
+      summary: Get record by product-vendor ID
+      description: Retrieve a product vendor by its unique identifier.
+      operationId: getProductVendorsById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product-vendor Retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVendor'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema: null
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Vendor Products
+      summary: Update an existing record
+      description: Update a product vednor record with the specified ID using the provided details.
+      operationId: updateProductVendor
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/ProductVendorUpdateRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProductVendor'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Vendor Products
+      summary: Delete a record by ID
+      description: Delete a single product vendor by its ID.
+      operationId: deleteProductVendorById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product vendor Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:
@@ -4232,6 +4552,85 @@ components:
               - taxonomy_id_product_vendor_status
               - store_vendor_product
             properties:
+              vh_st_product_id:
+                type: integer
+                description: ID of the product being associated with the vendor.
+              vh_st_vendor_id:
+                type: integer
+                description: ID of the vendor being associated with the product.
+              added_by:
+                type: integer
+                description: ID of the user responsible for attaching the product to the vendor.
+              can_update:
+                type: integer
+                example: 0
+                description: Indicates whether the product can be updated by the user. A value of `0` means the product cannot be updated, while `1` means it can.
+              is_active:
+                type: integer
+                example: 1
+                description: Flag indicating if the product is active. A value of `1` means active, `0` means inactive.
+              product:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the product.
+                  name:
+                    type: string
+                    description: Name of the product.
+                  vh_st_store_id:
+                    type: integer
+                    description: ID of the store associated with the product.
+              vendor:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the vendor.
+                  name:
+                    type: string
+                    description: Name of the vendor.
+              store_vendor_product:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the store to which the product is linked.
+              taxonomy_id_product_vendor_status:
+                type: integer
+                description: ID representing the product vendor status based on the taxonomy.
+              status_notes:
+                type: string
+                description: Notes related to the status of the product-vendor relationship.
+    ProductVendorUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+              - vh_st_product_id
+              - vh_st_vendor_id
+              - added_by
+              - can_update
+              - product
+              - vendor
+              - taxonomy_id_product_vendor_status
+              - store_vendor_product
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the product vendor
               vh_st_product_id:
                 type: integer
                 description: ID of the product being associated with the vendor.
