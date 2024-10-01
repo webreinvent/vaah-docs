@@ -25,27 +25,31 @@ tags:
     description: Everything about Product Variations in VaahStore
   - name: Vendor Products
     description: Everything about Vendor Products in VaahStore
+  - name: Product Stocks
+    description: Everything about Product Stocks in VaahStore
+  - name: Carts
+    description: Everything about Cart Process in VaahStore
 
 paths:
   '/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
   /stores/{id}/action/{action}:
-    $ref: './stores/storeAction.yaml'  # Reference to the stores file
+    $ref: './stores/storeAction.yaml'  # Reference to the stores item action file
   /stores/{id}:
-    $ref: './stores/storeUpdate.yaml'  # Reference to the stores file
+    $ref: './stores/storeUpdate.yaml'  # Reference to the stores item file
   /stores/action/{action}:
-    $ref: './stores/storeListAction.yaml'  # Reference to the stores file
+    $ref: './stores/storeListAction.yaml'  # Reference to the stores list action file
 
   '/products':
     $ref: './products/products.yaml'  # Reference to the create products file
   '/products/{id}':
-    $ref: './products/productUpdate.yaml'  # Reference to the create products file
+    $ref: './products/productUpdate.yaml'  # Reference to the product item file
   '/products/{id}/action/{action}':
-    $ref: './products/productAction.yaml'  # Reference to the create products file
+    $ref: './products/productAction.yaml'  # Reference to the product item action file
   '/products/action/{action}':
-    $ref: './products/productListAction.yaml'  # Reference to the create products file
+    $ref: './products/productListAction.yaml'  # Reference to the products list action file
   '/products/vendor':
-    $ref: './products/attachVendor.yaml'  # Reference to the attach product with vendor file
+    $ref: './products/attachVendor.yaml'  # Reference to the attachment with vendor file
   '/products/get-vendors-list/{id}':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
   '/products/{id}/action-for-vendor/{action}':
@@ -61,29 +65,57 @@ paths:
   '/vendors':
     $ref: './vendors/vendors.yaml'  # Reference to the vendors file
   '/vendors/{id}':
-    $ref: './vendors/vendorsUpdate.yaml'  # Reference to the vendors file
+    $ref: './vendors/vendorsUpdate.yaml'  # Reference to the vendors item file
   '/vendors/{id}/action/{action}':
-    $ref: './vendors/vendorAction.yaml'  # Reference to the vendors file
+    $ref: './vendors/vendorAction.yaml'  # Reference to the vendors item action file
   '/vendors/action/{action}':
-    $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors file
+    $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors list actions file
   '/vendors/add/product':
-    $ref: './vendors/attachProducts.yaml'  # Reference to the vendors file
+    $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
   '/vendors/add/user':
-    $ref: './vendors/attachProducts.yaml'  # Reference to the vendors file
+    $ref: './vendors/attachProducts.yaml'  # Reference to the vendors attachment with user file
   '/productvariations':
-    $ref: './product-variations/variations.yaml'  # Reference to the vendors file
+    $ref: './product-variations/variations.yaml'  # Reference to the productvariations file
   '/productvariations/{id}':
-    $ref: './product-variations/variationUpdate.yaml'  # Reference to the vendors file
+    $ref: './product-variations/variationUpdate.yaml'  # Reference to the productvariations item file
   '/productvariations/{id}/action/{action}':
-    $ref: './product-variations/variationAction.yaml'  # Reference to the vendors file
+    $ref: './product-variations/variationAction.yaml'  # Reference to the productvariations item action file
   '/productvariations/action/{action}':
-    $ref: './product-variations/variationListActions.yaml'  # Reference to the vendors file
+    $ref: './product-variations/variationListActions.yaml'  # Reference to the productvariations list actions file
   '/productvariations/add/variation-to-cart':
-    $ref: './product-variations/addToCart.yaml'  # Reference to the vendors file
+    $ref: './product-variations/addToCart.yaml'  # Reference to the add to cart file
   '/productvariations/disable/active-cart':
-    $ref: './product-variations/disableCart.yaml'  # Reference to the vendors file
+    $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
   '/productvendors':
     $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
+  '/productvendors/{id}':
+    $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
+  '/productvendors/{id}/action/{action}':
+    $ref: './product-vendors/itemAction.yaml'  # Reference to the product vendor item action file
+  '/productvendors/action/{action}':
+    $ref: './product-vendors/listAction.yaml'  # Reference to the product vendor list actions file
+  '/productvendors/product/price':
+    $ref: './product-vendors/addProductPrice.yaml'  # Reference to the add product price file
+
+  '/productstocks':
+    $ref: './product-stocks/index.yaml'  # Reference to the product stocks file
+  '/productstocks/{id}':
+    $ref: './product-stocks/update.yaml'  # Reference to the product stocks item file
+  '/productstocks/{id}/action/{action}':
+    $ref: './product-stocks/itemAction.yaml'  # Reference to the product stocks item action file
+  '/productstocks/action/{action}':
+    $ref: './product-stocks/listAction.yaml'  # Reference to the product stocks list action file
+
+  '/carts':
+    $ref: './carts/index.yaml'  # Reference to the carts file
+  '/carts/{id}':
+    $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
+  '/carts/cart-check-out/{id}':
+    $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
+  '/carts/update/quantity':
+    $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
+  '/carts/delete-cart-item':
+    $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
 
 components:
   securitySchemes:
@@ -281,6 +313,37 @@ components:
         items:
           type: string
       example: [ 'store-1', 'store-2' ]
+    status:
+      name: filter[status][]
+      in: query
+      required: false
+      description: Filter by status slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'pending', 'approved' ]
+
+    products:
+      name: filter[products][]
+      in: query
+      required: false
+      description: Filter by associated products slug.
+      schema:
+        type: array
+        items:
+          type: string
+        example: [ 'product-1', 'product-2' ]
+    warehouses:
+      name: filter[warehouses][]
+      in: query
+      required: false
+      description: Filter by warehouse slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'warehouses-1' ]
 
   requestBodies:
     StoreRequestBody:
@@ -443,91 +506,209 @@ components:
           schema:
             type: object
             required:
-              - added_by
-              - product
-              - vendor
-              - store_ids
-              - taxonomy_id_product_vendor_status
               - vh_st_product_id
               - vh_st_vendor_id
+              - added_by
               - can_update
+              - product
+              - vendor
+              - taxonomy_id_product_vendor_status
+              - store_vendor_product
+
             properties:
-                added_by:
+              vh_st_product_id:
+                type: integer
+                description: ID of the product being associated with the vendor.
+              vh_st_vendor_id:
                   type: integer
-                added_by_user:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    first_name:
-                      type: string
-                    email:
-                      type: string
-                can_update:
-                  type: integer
-                created_by:
-                  type: string
-                  nullable: true
-
-                id:
-                  type: integer
-                  nullable: true
-                is_active:
-                  type: integer
-                is_active_product_price:
-                  type: integer
-                product:
-                  type: object
-                  required:
-                    - id
-                    - name
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    slug:
-                      type: string
-                    vh_st_store_id:
-                      type: integer
-
-
-                status_notes:
-                  type: string
-                store_ids:
-                  type: array
-                  items:
+                  description: ID of the vendor being associated with the product.
+              added_by:
+                type: integer
+                description: ID of the user responsible for attaching the product to the vendor.
+              can_update:
+                type: integer
+                example: 0
+                description: Indicates whether the product can be updated by the user. A value of `0` means the product cannot be updated, while `1` means it can.
+              is_active:
+                type: integer
+                example: 1
+                description: Flag indicating if the product is active. A value of `1` means active, `0` means inactive.
+              product:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
                     type: integer
-                store_vendor_product:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      slug:
-                        type: string
-                taxonomy_id_product_vendor_status:
-                  type: integer
-
-                vendor:
+                    description: Unique identifier of the product.
+                  name:
+                    type: string
+                    description: Name of the product.
+                  vh_st_store_id:
+                    type: integer
+                    description: ID of the store associated with the product.
+              vendor:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the vendor.
+                  name:
+                    type: string
+                    description: Name of the vendor.
+              store_vendor_product:
+                type: array
+                items:
                   type: object
                   required:
                     - id
-                    - name
                   properties:
                     id:
                       type: integer
-                    name:
-                      type: string
-                    slug:
-                      type: string
-                vh_st_product_id:
-                  type: integer
-                vh_st_vendor_id:
-                  type: integer
+                      description: ID of the store to which the product is linked.
+
+
+              taxonomy_id_product_vendor_status:
+                type: integer
+                description: ID representing the product vendor status based on the taxonomy.
+              status_notes:
+                type: string
+                description: Notes related to the status of the product-vendor relationship.
+    ProductVendorUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+              - vh_st_product_id
+              - vh_st_vendor_id
+              - added_by
+              - can_update
+              - product
+              - vendor
+              - taxonomy_id_product_vendor_status
+              - store_vendor_product
+
+            properties:
+              id:
+                type: string
+                description: "Unique identifier for the product vendor"
+              vh_st_product_id:
+                type: integer
+                description: ID of the product being associated with the vendor.
+              vh_st_vendor_id:
+                type: integer
+                description: ID of the vendor being associated with the product.
+              added_by:
+                type: integer
+                description: ID of the user responsible for attaching the product to the vendor.
+              can_update:
+                type: integer
+                example: 0
+                description: Indicates whether the product can be updated by the user. A value of `0` means the product cannot be updated, while `1` means it can.
+              is_active:
+                type: integer
+                example: 1
+                description: Flag indicating if the product is active. A value of `1` means active, `0` means inactive.
+              product:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the product.
+                  name:
+                    type: string
+                    description: Name of the product.
+                  vh_st_store_id:
+                    type: integer
+                    description: ID of the store associated with the product.
+              vendor:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the vendor.
+                  name:
+                    type: string
+                    description: Name of the vendor.
+              store_vendor_product:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the store to which the product is linked.
+
+
+              taxonomy_id_product_vendor_status:
+                type: integer
+                description: ID representing the product vendor status based on the taxonomy.
+              status_notes:
+                type: string
+                description: Notes related to the status of the product-vendor relationship.
+    ProductStocksRequestBody:
+      description: "Request body for creating a new product stock"
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - vh_st_vendor_id
+              - vh_st_product_id
+              - vh_st_product_variation_id
+              - vh_st_warehouse_id
+              - taxonomy_id_product_stock_status
+              - is_active
+              - quantity
+
+            properties:
+              vh_st_vendor_id:
+                type: integer
+                description: "Unique identifier for the vendor"
+                example: 1
+              vh_st_product_id:
+                type: integer
+                description: "Unique identifier for the product"
+                example: 1
+              vh_st_product_variation_id:
+                type: integer
+                description: "Unique identifier for the product variation"
+                example: 1
+              vh_st_warehouse_id:
+                type: integer
+                description: "Unique identifier for the warehouse"
+              taxonomy_id_product_stock_status:
+                type: integer
+                description: "Taxonomy status id for the product stocks"
+              quantity:
+                type: integer
+                description: "Quantity of the product in stock"
+                example: 100
+              is_active:
+                type: integer
+                description: "Indicates if the product stock is active (default is true)"
+                example: 1
+              status_notes:
+                type: string
+                description: "Additional notes for the product stock"
+                example: "Initial stock addition"
+
+
+
 
 
 
@@ -1050,4 +1231,204 @@ components:
             deleted_at:
               type: string
               nullable: true
+    ProductStock:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the product stock"
+        uuid:
+          type: string
+          description: "Unique identifier for the product stock instance"
+        vh_st_product_id:
+          type: integer
+          description: "Unique identifier for the vendor product"
+        vh_st_product_variation_id:
+            type: integer
+            description: "Unique identifier for the vendor product variation"
+        vh_st_vendor_id:
+            type: integer
+            description: "Unique identifier for the vendor"
+        vh_st_warehouse_id:
+            type: integer
+            description: "Unique identifier for the warehouse where the product stock is stored"
+        taxonomy_id_product_stock_status:
+            type: integer
+            description: "Taxonomy ID for the product stock status"
+        quantity:
+          type: integer
+          description: "Quantity of the product in stock"
+        is_active:
+          type: integer
+          description: "Indicates if the product stock is active (1 for active, 0 for inactive)"
+        status_notes:
+          type: string
+          description: "Additional notes regarding the status of the product stock"
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the stock status"
+            name:
+              type: string
+              description: "Name of the stock status"
+            slug:
+              type: string
+              description: "URL-friendly slug for the stock status"
+        meta:
+          type: object
+          description: "Meta information about the product stock"
+          nullable: true
+        vendor:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the vendor"
+            name:
+              type: string
+              description: "Name of the vendor"
+            slug:
+              type: string
+              description: "URL-friendly slug for the vendor"
+              nullable: true
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the product"
+            name:
+              type: string
+              description: "Name of the product"
+            slug:
+              type: string
+              description: "URL-friendly slug for the product"
+            deleted_at:
+              type: string
+              format: date-time
+              description: "Timestamp when the product was deleted, if applicable"
+              nullable: true
+        product_variation:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the product variation"
+            name:
+              type: string
+              description: "Name of the product variation"
+            slug:
+              type: string
+              description: "URL-friendly slug for the product variation"
+              nullable: true
+            deleted_at:
+              type: string
+              format: date-time
+              description: "Timestamp when the product variation was deleted, if applicable"
+              nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was last updated"
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the product stock"
+        created_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was created"
+        created_by:
+          type: integer
+          description: "ID of the user who created the product stock"
+        deleted_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was deleted, if applicable"
+          nullable: true
+        deleted_by:
+          type: integer
+          description: "ID of the user who deleted the product stock, if applicable"
+          nullable: true
+
+      required:
+        - id
+        - quantity
+        - product
+        - product_variation
+        - vendor
+        - vh_st_product_id
+        - vh_st_product_variation_id
+        - vh_st_vendor_id
+        - vh_st_warehouse_id
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the cart"
+          example: 1
+        uuid:
+          type: string
+          description: "Unique UUID for the cart"
+          example: "a1d88c58-70ed-48ea-9188-7e250fa3e815"
+        vh_user_id:
+          type: integer
+          description: "Identifier of the user associated with the cart"
+          example: 121
+        user:
+          type: object
+          description: "Details of the user who owns the cart"
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the user"
+              example: 121
+            uuid:
+              type: string
+              description: "Unique UUID for the user"
+
+            email:
+              type: string
+              description: "User's email address"
+              example: "shivam1@zieme.org"
+            # Add other user-related properties as needed
+
+        created_at:
+          type: string
+          format: date-time
+          description: "The date and time when the cart was created"
+          example: "2024-10-01 16:32:56"
+        updated_at:
+          type: string
+          format: date-time
+          description: "The date and time when the cart was last updated"
+          example: "2024-10-01 16:32:56"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: "The date and time when the cart was deleted (if applicable)"
+          example: null
+        created_by:
+          type: integer
+          description: "Identifier of the user who created the cart"
+          example: 1
+        updated_by:
+          type: integer
+          description: "Identifier of the user who last updated the cart"
+          example: 1
+        deleted_by:
+          type: integer
+          nullable: true
+          description: "Identifier of the user who deleted the cart (if applicable)"
+          example: null
+      required:
+        - id
+        - vh_user_id
+        - user
+
+
+
 

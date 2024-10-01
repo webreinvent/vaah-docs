@@ -1,0 +1,85 @@
+post:
+  tags:
+    - Carts
+  summary: Delete cart item
+  description: Removes a specified product or product variation from the cart. If no variation ID is provided, the entire product will be removed.
+  operationId: deleteCartItem
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            cart_product_details:
+              type: object
+              properties:
+                vh_st_cart_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the cart.
+                vh_st_product_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the product to be deleted.
+                vh_st_product_variation_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the product variation to be deleted (optional).
+                vh_st_vendor_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the vendor associated with the product.
+              required:
+                - vh_st_cart_id
+                - vh_st_product_id
+                - vh_st_vendor_id
+  responses:
+    '200':
+      description: Cart item deleted successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  cart:
+                    type: object
+                    description: The updated cart object.
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Record deleted."
+    '400':
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Invalid input."
+    '404':
+      description: Cart not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Cart not found."

@@ -1,9 +1,9 @@
 get:
   tags:
-    - Vendor Products
-  summary: Get list of all vendor products
-  description: Retrieve a list of all the vendor products.
-  operationId: getProductVendorsList
+    - Product Stocks
+  summary: Get list of all product stocks
+  description: Retrieve list of all the product stocks.
+  operationId: getProductStocksList
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/page'
     - '$ref': '../vaahstore.yaml#/components/parameters/rows'
@@ -11,8 +11,16 @@ get:
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
+    - '$ref': '../vaahstore.yaml#/components/parameters/min_quantity'
+    - '$ref': '../vaahstore.yaml#/components/parameters/max_quantity'
     - '$ref': '../vaahstore.yaml#/components/parameters/status'
     - '$ref': '../vaahstore.yaml#/components/parameters/products'
+    - '$ref': '../vaahstore.yaml#/components/parameters/product_variations'
+    - '$ref': '../vaahstore.yaml#/components/parameters/vendors'
+    - '$ref': '../vaahstore.yaml#/components/parameters/warehouses'
+
+
+
 
   responses:
     '200':
@@ -28,26 +36,27 @@ get:
               data:
                 type: array
                 items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/ProductVendor'
+                  '$ref': '../vaahstore.yaml#/components/schemas/ProductStock'
               first_page_url:
                 type: string
-                example: "http://127.0.0.1:8000/backend/store/productvendors?page=1"
+                example: "http://127.0.0.1:8000/backend/store/productstocks?page=1"
 
     '500':
       description: Internal Server Error
       content:
         application/json:
           schema:
+
 post:
-  summary: Create a new vendor product
-  operationId: createVendorProduct
   tags:
-    - Vendor Products
+    - Product Stocks
+  summary: "Create Product Stock"
+  operationId: "createItem"
   requestBody:
-    '$ref': '../vaahstore.yaml#/components/requestBodies/ProductVendorRequestBody'
+    '$ref': '../vaahstore.yaml#/components/requestBodies/ProductStocksRequestBody'
   responses:
     '200':
-      description: "Successful response with created product vendor data."
+      description: "Product stock created successfully"
       content:
         application/json:
           schema:
@@ -60,11 +69,13 @@ post:
                 type: array
                 items:
                   type: string
-                example: [ "Saved successfully." ]
+                example: [
+                    "Saved successfully"
+                ]
               data:
-                $ref: '../vaahstore.yaml#/components/schemas/ProductVendor'
+                $ref: '../vaahstore.yaml#/components/schemas/ProductStock'
     '400':
-      description: "Validation error or slug/name already exists."
+      description: "Validation error"
       content:
         application/json:
           schema:
@@ -73,13 +84,15 @@ post:
               success:
                 type: boolean
                 example: false
-              messages:
+              errors:
                 type: array
                 items:
                   type: string
-                example: [ "This name already exists.", "Validation failed." ]
-    '403':
-      description: "Permission denied."
+                example: [
+                    "Product Stock already exists for this variation."
+                ]
+    '409':
+      description: "Conflict error if product stock already exists"
       content:
         application/json:
           schema:
@@ -88,17 +101,19 @@ post:
               success:
                 type: boolean
                 example: false
-              messages:
+              errors:
                 type: array
                 items:
                   type: string
-                example: [ "Permission denied: can-update-module." ]
+                example: [
+                    "Product Stock already exists for this variation."
+                ]
 put:
   tags:
-    - Vendor Products
-  summary: Update a list of product vendors
-  description: This endpoint allows you to update multiple product vendors records based on the provided input, including actions like activating, deactivating, trashing, or restoring product vendors.
-  operationId: updateProductVendorsList
+    - Product Stocks
+  summary: Update a list of product stocks
+  description: This endpoint allows you to update multiple product stocks records based on the provided input, including actions like activating, deactivating, trashing, or restoring product stocks.
+  operationId: updateProductStocksList
   requestBody:
     required: true
     content:
@@ -122,7 +137,7 @@ put:
                 properties:
                   id:
                     type: integer
-                    description: The ID of the product vendors to be updated.
+                    description: The ID of the product stocks to be updated.
                     example: 1  # Example for a single item
               example: # Example for the entire array
                 - id: 1
@@ -130,7 +145,7 @@ put:
                 - id: 3
   responses:
     '200':
-      description: Action was successful and the specified product vendors have been updated.
+      description: Action was successful and the specified product stocks have been updated.
       content:
         application/json:
           schema:
@@ -196,10 +211,10 @@ put:
                   example: "An unexpected error occurred."
 delete:
   tags:
-    - Vendor Products
-  summary: Delete a list of product vendors
-  description: This endpoint allows you to delete multiple product vendors records based on the provided input.
-  operationId: deleteProductVendorsList
+    - Product Stocks
+  summary: Delete a list of product stocks
+  description: This endpoint allows you to delete multiple product stocks records based on the provided input.
+  operationId: deleteProductStocksList
   requestBody:
     required: true
     content:
@@ -223,7 +238,7 @@ delete:
                 properties:
                   id:
                     type: integer
-                    description: The ID of the product vendors to be deleted.
+                    description: The ID of the product stocks to be deleted.
                     example: 1  # Example for a single item
               example: # Example for the entire array
                 - id: 1
@@ -231,7 +246,7 @@ delete:
                 - id: 3
   responses:
     '200':
-      description: Action was successful and the specified product vendors have been deleted.
+      description: Action was successful and the specified product stocks have been deleted.
       content:
         application/json:
           schema:
