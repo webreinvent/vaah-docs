@@ -97,6 +97,8 @@ paths:
 
   '/productstocks':
     $ref: './product-stocks/index.yaml'  # Reference to the product stocks file
+  '/productstocks/{id}':
+    $ref: './product-stocks/update.yaml'  # Reference to the product stocks item file
 
 components:
   securitySchemes:

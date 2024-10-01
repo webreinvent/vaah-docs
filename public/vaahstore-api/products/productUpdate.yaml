@@ -18,6 +18,17 @@ get:
       content:
         application/json:
           schema:
+            type: object  # Define the type of the response
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Record not found with ID: {id}"
+                ]
+            required:
+              - errors  # Make errors a required field
 
     '500':
       description: Internal Server Error
