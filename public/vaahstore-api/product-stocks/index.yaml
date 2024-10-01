@@ -13,15 +13,12 @@ get:
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
     - '$ref': '../vaahstore.yaml#/components/parameters/min_quantity'
     - '$ref': '../vaahstore.yaml#/components/parameters/max_quantity'
-    - name: filter[products][]
-      in: query
-      required: false
-      description: Filter by associated products slug.
-      schema:
-        type: array
-        items:
-          type: string
-        example: [ 'product-1', 'product-2' ]
+    - '$ref': '../vaahstore.yaml#/components/parameters/status'
+    - '$ref': '../vaahstore.yaml#/components/parameters/products'
+    - '$ref': '../vaahstore.yaml#/components/parameters/product_variations'
+    - '$ref': '../vaahstore.yaml#/components/parameters/vendors'
+    - '$ref': '../vaahstore.yaml#/components/parameters/warehouses'
+
 
 
 
