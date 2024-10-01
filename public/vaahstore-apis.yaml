@@ -4223,38 +4223,32 @@ components:
           schema:
             type: object
             required:
-              - added_by
-              - product
-              - vendor
-              - store_ids
-              - taxonomy_id_product_vendor_status
               - vh_st_product_id
               - vh_st_vendor_id
+              - added_by
               - can_update
+              - product
+              - vendor
+              - taxonomy_id_product_vendor_status
+              - store_vendor_product
             properties:
+              vh_st_product_id:
+                type: integer
+                description: ID of the product being associated with the vendor.
+              vh_st_vendor_id:
+                type: integer
+                description: ID of the vendor being associated with the product.
               added_by:
                 type: integer
-              added_by_user:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  first_name:
-                    type: string
-                  email:
-                    type: string
+                description: ID of the user responsible for attaching the product to the vendor.
               can_update:
                 type: integer
-              created_by:
-                type: string
-                nullable: true
-              id:
-                type: integer
-                nullable: true
+                example: 0
+                description: Indicates whether the product can be updated by the user. A value of `0` means the product cannot be updated, while `1` means it can.
               is_active:
                 type: integer
-              is_active_product_price:
-                type: integer
+                example: 1
+                description: Flag indicating if the product is active. A value of `1` means active, `0` means inactive.
               product:
                 type: object
                 required:
@@ -4263,31 +4257,13 @@ components:
                 properties:
                   id:
                     type: integer
+                    description: Unique identifier of the product.
                   name:
                     type: string
-                  slug:
-                    type: string
+                    description: Name of the product.
                   vh_st_store_id:
                     type: integer
-              status_notes:
-                type: string
-              store_ids:
-                type: array
-                items:
-                  type: integer
-              store_vendor_product:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    slug:
-                      type: string
-              taxonomy_id_product_vendor_status:
-                type: integer
+                    description: ID of the store associated with the product.
               vendor:
                 type: object
                 required:
@@ -4296,14 +4272,26 @@ components:
                 properties:
                   id:
                     type: integer
+                    description: Unique identifier of the vendor.
                   name:
                     type: string
-                  slug:
-                    type: string
-              vh_st_product_id:
+                    description: Name of the vendor.
+              store_vendor_product:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the store to which the product is linked.
+              taxonomy_id_product_vendor_status:
                 type: integer
-              vh_st_vendor_id:
-                type: integer
+                description: ID representing the product vendor status based on the taxonomy.
+              status_notes:
+                type: string
+                description: Notes related to the status of the product-vendor relationship.
   schemas:
     Credentials:
       type: object
