@@ -34,6 +34,46 @@ yarn install
 bun install
 ```
 
+## Vaahstore API Bundling
+
+**Install the Package:** If you haven't already installed the `@redocly/cli`, you can do so with the
+following command:
+
+
+```bash
+# npm
+npm install --save-dev @redocly/cli
+
+# pnpm
+pnpm add -D @redocly/cli
+
+# yarn
+yarn add -D @redocly/cli
+
+# bun
+bun add -d @redocly/cli
+
+```
+
+**Run the Bundling Script:** Once you have the script set up in your package.json, you can run it using your package manager:
+
+```bash
+# npm
+npm run vaahstore:api
+
+# pnpm
+pnpm run vaahstore:api
+
+# yarn
+yarn vaahstore:api
+
+# bun
+bun run vaahstore:api
+
+```
+
+**Output:** This command will take the VaahStore OpenAPI specification files located at public/vaahstore-api/vaahstore.yaml and bundle it into a single file named vaahstore-apis.yaml, which will be output to the public directory.
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
