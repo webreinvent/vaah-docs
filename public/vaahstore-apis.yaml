@@ -5631,8 +5631,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties: null
-              required:
+              properties:
                 cart_product_details:
                   type: object
                   properties:

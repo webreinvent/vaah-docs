@@ -11,7 +11,6 @@ post:
         schema:
           type: object
           properties:
-          required:
             cart_product_details:
               type: object
               properties:
