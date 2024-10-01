@@ -110,6 +110,10 @@ paths:
     $ref: './carts/index.yaml'  # Reference to the carts file
   '/carts/{id}':
     $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
+  '/carts/cart-check-out/{id}':
+    $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
+  '/carts/update/quantity':
+    $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
 
 components:
   securitySchemes:
