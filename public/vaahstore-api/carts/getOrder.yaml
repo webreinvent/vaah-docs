@@ -3,6 +3,7 @@ get:
   operationId: getOrderDetails
   tags:
     - Carts
+    - Orders
   parameters:
     - name: order_id
       in: path

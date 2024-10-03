@@ -29,6 +29,12 @@ tags:
     description: Everything about Product Stocks in VaahStore
   - name: Carts
     description: Everything about Cart Process in VaahStore
+  - name: Orders
+    description: Everything about Order Process in VaahStore
+  - name: Payments
+    description: Everything about Payments in VaahStore
+  - name: Product Attributes
+    description: Everything about Product Attributes in VaahStore
 paths:
   /stores:
     get:
@@ -6359,6 +6365,7 @@ paths:
       operationId: getOrderDetails
       tags:
         - Carts
+        - Orders
       parameters:
         - name: order_id
           in: path
@@ -6496,6 +6503,2355 @@ paths:
                     example: Order not found.
                   data:
                     type: null
+  /orders:
+    get:
+      tags:
+        - Orders
+      summary: Get list of all orders
+      description: Retrieve list of all the orders.
+      operationId: getOrdersList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/orders?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Orders
+      summary: Update list of orders
+      description: This endpoint allows you to update multiple product stocks records based on the provided input, including actions like activating, deactivating, trashing, or restoring orders.
+      operationId: updateOrdersList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the orders to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified orders have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Orders
+      summary: Delete list of orders
+      description: This endpoint allows you to delete multiple order records based on the provided input.
+      operationId: deleteOrdersList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the orders to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified orders have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /orders/{id}:
+    get:
+      tags:
+        - Orders
+      summary: Get record by order ID
+      description: Retrieve a order by its unique identifier.
+      operationId: getOrderById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Order Retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 6
+                              description: The ID of the order.
+                            uuid:
+                              type: string
+                              example: b067e5fa-bfbc-4e91-beb2-ca0b1000cd53
+                              description: A unique identifier for the order.
+                            vh_user_id:
+                              type: integer
+                              example: 121
+                              description: The ID of the user associated with the order.
+                            order_status:
+                              type: string
+                              example: Placed
+                              description: The current status of the order.
+                            taxonomy_id_payment_status:
+                              type: integer
+                              description: The ID of the order payment status.
+                            order_shipment_status:
+                              type: string
+                              example: Pending
+                              description: The current shipment status of the order.
+                            amount:
+                              type: number
+                              format: float
+                              example: 25
+                              description: The total amount for the order.
+                            delivery_fee:
+                              type: number
+                              format: float
+                              example: 0
+                              description: The delivery fee associated with the order.
+                            taxes:
+                              type: number
+                              format: float
+                              example: 0
+                              description: The total taxes applied to the order.
+                            discount:
+                              type: number
+                              format: float
+                              example: 0
+                              description: The total discount applied to the order.
+                            payable:
+                              type: number
+                              format: float
+                              example: 25
+                              description: The total amount that needs to be paid for the order.
+                            paid:
+                              type: number
+                              format: float
+                              example: 0
+                              description: The amount that has been paid for the order.
+                            is_paid:
+                              type: integer
+                              nullable: true
+                              example: 1
+                              description: Indicates if the order has been paid for.
+                            is_active:
+                              type: integer
+                              example: 1
+                              description: Indicates if the order is currently active.
+                            items_count:
+                              type: integer
+                              example: 2
+                              description: The total number of items in the order.
+                            payment_method:
+                              type: string
+                              nullable: true
+                              example: null
+                              description: The payment method used for the order.
+                            order_payment_status:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 64
+                                  description: The ID of the payment status.
+                                name:
+                                  type: string
+                                  example: Pending
+                                  description: The name of the payment status.
+                                slug:
+                                  type: string
+                                  example: pending
+                                  description: A URL-friendly version of the payment status name.
+                            status:
+                              type: string
+                              nullable: true
+                              example: null
+                              description: Additional status information for the order.
+                            status_notes:
+                              type: string
+                              nullable: true
+                              example: null
+                              description: Any notes related to the status of the order.
+                            user:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 121
+                                  description: The ID of the user.
+                                first_name:
+                                  type: string
+                                  example: Olin
+                                  description: The first name of the user.
+                                email:
+                                  type: string
+                                  example: shivam1@zieme.org
+                                  description: The email address of the user.
+                                phone:
+                                  type: string
+                                  example: '2509077310'
+                                  description: The phone number of the user.
+                                display_name:
+                                  type: string
+                                  example: shivam
+                                  description: The display name of the user.
+                            payments:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  uuid:
+                                    type: string
+                                  vh_st_payment_method_id:
+                                    type: integer
+                                    nullable: true
+                                  transaction_id:
+                                    type: string
+                                  taxonomy_id_payment_status:
+                                    type: integer
+                                  amount:
+                                    type: string
+                                  status_notes:
+                                    type: string
+                                  notes:
+                                    type: string
+                                    nullable: true
+                                  payment_gate_response:
+                                    type: string
+                                    nullable: true
+                                  payment_gate_status:
+                                    type: string
+                                    nullable: true
+                                  is_active:
+                                    type: integer
+                                    nullable: true
+                                  date:
+                                    type: string
+                                    format: date-time
+                                  meta:
+                                    type: object
+                                    additionalProperties: true
+                                  created_by:
+                                    type: integer
+                                  updated_by:
+                                    type: integer
+                                  deleted_by:
+                                    type: integer
+                                    nullable: true
+                                  created_at:
+                                    type: string
+                                    format: date-time
+                                  updated_at:
+                                    type: string
+                                    format: date-time
+                                  deleted_at:
+                                    type: string
+                                    nullable: true
+                                  pivot:
+                                    type: object
+                                    properties:
+                                      vh_st_order_id:
+                                        type: integer
+                                      vh_st_payment_id:
+                                        type: integer
+                                      payment_amount:
+                                        type: string
+                                      payable_amount:
+                                        type: string
+                                      remaining_payable_amount:
+                                        type: string
+                                      created_at:
+                                        type: string
+                                        format: date-time
+                                  created_by_user:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: integer
+                                      uuid:
+                                        type: string
+                                      first_name:
+                                        type: string
+                                      last_name:
+                                        type: string
+                                      email:
+                                        type: string
+                                      avatar:
+                                        type: string
+                                      name:
+                                        type: string
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Orders
+      summary: Update an existing record
+      description: Update a order status notes with the specified ID using the provided details.
+      operationId: updateOrderById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status_notes:
+                  type: string
+                  description: Notes related to the status of the order.
+                  maxLength: 100
+                paid:
+                  type: number
+                  format: float
+                  description: The amount that has been paid for the order for set the is paid flag.
+                  example: 25
+              required:
+                - status_notes
+                - paid
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Orders
+      summary: Delete a record by ID
+      description: Delete a single order by its ID.
+      operationId: deleteOrderById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Order Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /orders/{id}/action/{action}:
+    patch:
+      tags:
+        - Orders
+      summary: Perform an action on a order
+      description: |
+        This endpoint allows you to perform various actions on a order item, such as activating, deactivating, trashing, or restoring a order.
+      operationId: itemActiOnOrder
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /orders/action/{action}:
+    put:
+      tags:
+        - Orders
+      summary: bulk actions on orders
+      description: This endpoint allows various bulk actions to be performed on orders list based on the provided action type.
+      operationId: bulkActionsVendorProducts
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /orders/get-order-items/{id}:
+    get:
+      summary: Get shipped order items by ID
+      description: Retrieve order items shipment details for a specified order ID, including product variations, vendor information, and quantities shipped.
+      operationId: getShippedOrderItems
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the order to retrieve shipped items for.
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully retrieved shipped order items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The ID of the order item.
+                          example: 1
+                        product:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the product.
+                              example: 2
+                            name:
+                              type: string
+                              description: The name of the product.
+                              example: Sample Product
+                        product_variation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the product variation.
+                              example: 3
+                            variation_name:
+                              type: string
+                              description: The name of the product variation.
+                              example: Red - Large
+                        vendor:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the vendor.
+                              example: 4
+                            name:
+                              type: string
+                              description: The name of the vendor.
+                              example: Vendor Name
+                        quantity:
+                          type: integer
+                          description: The quantity of the product ordered.
+                          example: 2
+                        shipped_quantity:
+                          type: integer
+                          description: The total quantity shipped for this order item.
+                          example: 1
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Order not found.
+                  data:
+                    type: null
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: An unexpected error occurred.
+                  data:
+                    type: null
+  /payments:
+    get:
+      tags:
+        - Payments
+      summary: Get list of payments
+      description: Retrieve list of all the payments.
+      operationId: getPaymentsList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Payment'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/payments?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      summary: Create a new payment
+      description: This endpoint handles creating a new payment for one or more orders. Only Cash on Delivery (COD) payments are currently supported.
+      operationId: createPaymentItem
+      tags:
+        - Payments
+      requestBody:
+        description: Data required to create a payment
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_st_payment_method_id:
+                  type: integer
+                  description: The payment method ID.
+                  example: 1
+                amount:
+                  type: number
+                  format: float
+                  example: 50
+                  description: The total amount provide for the payment.
+                orders:
+                  type: array
+                  description: List of orders to be paid
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the order.
+                        example: 1
+                      user_name:
+                        type: string
+                        description: Name of the user placing the order.
+                        example: John Doe
+                      pay_amount:
+                        type: number
+                        format: float
+                        description: The amount to be paid for the order.
+                        example: 50
+                      payable_amount:
+                        type: number
+                        format: float
+                        description: The total amount payable for the order.
+                        example: 50
+                    required:
+                      - id
+                      - user_name
+                      - pay_amount
+                      - payable_amount
+                payment_method:
+                  type: object
+                  properties:
+                    slug:
+                      type: string
+                      description: The slug of the payment method (e.g., 'cod').
+                      example: cod
+                  required:
+                    - slug
+                notes:
+                  type: string
+                  description: Additional notes for the payment.
+              required:
+                - orders
+                - vh_st_payment_method_id
+                - payment_method
+                - amount
+      responses:
+        '200':
+          description: Successfully created a payment item
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      uuid:
+                        type: string
+                        nullable: true
+                      transaction_id:
+                        type: string
+                        description: The unique transaction ID.
+                      amount:
+                        type: string
+                      vh_st_payment_method_id:
+                        type: integer
+                      payment_method:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          slug:
+                            type: string
+                      taxonomy_id_payment_status:
+                        type: integer
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          slug:
+                            type: string
+                      status_notes:
+                        type: string
+                        description: Notes regarding payment status.
+                      date:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                        nullable: true
+                      created_by:
+                        type: integer
+                        nullable: true
+                      created_by_user:
+                        type: object
+                        nullable: true
+                      updated_by:
+                        type: integer
+                        nullable: true
+                      updated_by_user:
+                        type: object
+                        nullable: true
+                      deleted_by:
+                        type: integer
+                        nullable: true
+                      deleted_by_user:
+                        type: object
+                        nullable: true
+                      order_payments:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                              nullable: true
+                            vh_st_payment_id:
+                              type: integer
+                            vh_st_order_id:
+                              type: integer
+                            taxonomy_id_order_payment_status:
+                              type: integer
+                            payable_amount:
+                              type: string
+                            payment_amount:
+                              type: string
+                            remaining_payable_amount:
+                              type: string
+                            date:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            taxonomy_order_payment_status:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+                                slug:
+                                  type: string
+                            order:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                uuid:
+                                  type: string
+                                vh_user_id:
+                                  type: integer
+                                order_status:
+                                  type: string
+                                amount:
+                                  type: number
+                                payable:
+                                  type: number
+                                paid:
+                                  type: number
+                                is_paid:
+                                  type: integer
+                                is_active:
+                                  type: integer
+                                created_at:
+                                  type: string
+                                  format: date-time
+                                updated_at:
+                                  type: string
+                                  format: date-time
+                                user:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                    first_name:
+                                      type: string
+                                    email:
+                                      type: string
+                                    phone:
+                                      type: string
+                                    display_name:
+                                      type: string
+                                    avatar:
+                                      type: string
+                                    name:
+                                      type: string
+        '400':
+          description: Invalid input or validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: The payment amount for order 'John Doe' must be greater than 0.
+        '422':
+          description: Validation error for orders or payment method
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: The orders field is required.
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: An unexpected error occurred.
+    put:
+      tags:
+        - Payments
+      summary: Update list of payments
+      description: This endpoint allows you to update multiple payments records based on the provided input, including actions like activating, deactivating, trashing, or restoring payments.
+      operationId: updatePaymentsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payments to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payments have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Payments
+      summary: Delete list of payments
+      description: This endpoint allows you to delete multiple payment records based on the provided input.
+      operationId: deletePaymentsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payments to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payments have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /payments/{id}:
+    get:
+      tags:
+        - Payments
+      summary: Get record by payment ID
+      description: Retrieve a payment by its unique identifier.
+      operationId: getPaymentById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Successfully created a payment item
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      uuid:
+                        type: string
+                        nullable: true
+                      transaction_id:
+                        type: string
+                        description: The unique transaction ID.
+                      amount:
+                        type: string
+                      vh_st_payment_method_id:
+                        type: integer
+                      payment_method:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          slug:
+                            type: string
+                      taxonomy_id_payment_status:
+                        type: integer
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          slug:
+                            type: string
+                      status_notes:
+                        type: string
+                        description: Notes regarding payment status.
+                      date:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                        nullable: true
+                      created_by:
+                        type: integer
+                        nullable: true
+                      created_by_user:
+                        type: object
+                        nullable: true
+                      updated_by:
+                        type: integer
+                        nullable: true
+                      updated_by_user:
+                        type: object
+                        nullable: true
+                      deleted_by:
+                        type: integer
+                        nullable: true
+                      deleted_by_user:
+                        type: object
+                        nullable: true
+                      order_payments:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                              nullable: true
+                            vh_st_payment_id:
+                              type: integer
+                            vh_st_order_id:
+                              type: integer
+                            taxonomy_id_order_payment_status:
+                              type: integer
+                            payable_amount:
+                              type: string
+                            payment_amount:
+                              type: string
+                            remaining_payable_amount:
+                              type: string
+                            date:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            taxonomy_order_payment_status:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+                                slug:
+                                  type: string
+                            order:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                uuid:
+                                  type: string
+                                vh_user_id:
+                                  type: integer
+                                order_status:
+                                  type: string
+                                amount:
+                                  type: number
+                                payable:
+                                  type: number
+                                paid:
+                                  type: number
+                                is_paid:
+                                  type: integer
+                                is_active:
+                                  type: integer
+                                created_at:
+                                  type: string
+                                  format: date-time
+                                updated_at:
+                                  type: string
+                                  format: date-time
+                                user:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                    first_name:
+                                      type: string
+                                    email:
+                                      type: string
+                                    phone:
+                                      type: string
+                                    display_name:
+                                      type: string
+                                    avatar:
+                                      type: string
+                                    name:
+                                      type: string
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Payments
+      summary: Update an existing record
+      description: Update a payment notes with the specified ID using the provided details.
+      operationId: updatePaymentById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: string
+                  description: Notes related to the status of the payment.
+                  maxLength: 100
+              required:
+                - notes
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Payment'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Payments
+      summary: Delete a record by ID
+      description: Delete a single payment by its ID.
+      operationId: deletePaymentById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Payment Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /payments/{id}/action/{action}:
+    patch:
+      tags:
+        - Payments
+      summary: Perform an action on a payment
+      description: |
+        This endpoint allows you to perform various actions on a payment item, such as activating, deactivating, trashing, or restoring a payment.
+      operationId: itemActiOnOrder
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /payments/action/{action}:
+    put:
+      tags:
+        - Payments
+      summary: bulk actions on orders
+      description: This endpoint allows various bulk actions to be performed on orders list based on the provided action type.
+      operationId: bulkActionsVendorProducts
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /payments/search/orders:
+    post:
+      tags:
+        - Payments
+      summary: Search active orders with unpaid balances.
+      operationId: searchOrders
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+          description: The search query to filter orders based on the user's display name, first name, or email.
+          required: false
+      responses:
+        '200':
+          description: A list of orders matching the search criteria.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the search was successful.
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The order ID.
+                        amount:
+                          type: number
+                          format: float
+                          description: The total amount of the order.
+                        paid:
+                          type: number
+                          format: float
+                          description: The amount already paid for the order.
+                        payable_amount:
+                          type: number
+                          format: float
+                          description: The remaining amount to be paid for the order.
+                        user_name:
+                          type: string
+                          description: The display name of the user who placed the order.
+                        vh_user_id:
+                          type: integer
+                          description: The user ID which the order belongs to.
+                        created_at:
+                          type: string
+                          format: date-time
+                          description: The date and time the order was created.
+                        updated_at:
+                          type: string
+                          format: date-time
+                          description: The date and time the order was last updated.
+  /productattributes:
+    get:
+      tags:
+        - Product Attributes
+      summary: Get list of product attributes
+      description: Retrieve list of all the product attributes.
+      operationId: getProductAttributesList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductAttribute'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/productattributes?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Product Attributes
+      summary: Create a new product attribute.
+      operationId: createProductAttribute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_st_product_variation_id:
+                  type: integer
+                  description: The ID of the product variation.
+                vh_st_attribute_id:
+                  type: integer
+                  description: The ID of the attribute.
+                attribute_values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute value.
+                      new_value:
+                        type: string
+                        description: The new attribute value.
+                        maxLength: 100
+                      default_value:
+                        type: string
+                        description: The default attribute value.
+                    required:
+                      - id
+                      - new_value
+                      - default_value
+              required:
+                - vh_st_product_variation_id
+                - vh_st_attribute_id
+      responses:
+        '200':
+          description: Successfully created a product attribute.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the operation was successful.
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductAttribute'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the operation was successful.
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    description: A list of validation error messages.
+                    example:
+                      - The Product Variation field is required
+                      - The Attribute field is required
+                      - The Attribute Value field should not exceed 100 characters
+    put:
+      tags:
+        - Product Attributes
+      summary: Update list of payments
+      description: This endpoint allows you to update multiple payments records based on the provided input, including actions like activating, deactivating, trashing, or restoring payments.
+      operationId: updatePaymentsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payments to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payments have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Product Attributes
+      summary: Delete list of product attributes
+      description: This endpoint allows you to delete multiple product attribute records based on the provided input.
+      operationId: deleteProductAttributesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payments to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payments have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /productattributes/{id}:
+    get:
+      tags:
+        - Product Attributes
+      summary: Get record by product attribute ID
+      description: Retrieve a product attribute by its unique identifier.
+      operationId: getProductAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product-attribute Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductAttribute'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Product Attributes
+      summary: Update an existing record
+      description: Update a product attribute record with the specified ID using the provided details.
+      operationId: updateProductAttribute
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_st_product_variation_id:
+                  type: integer
+                  description: The ID of the product variation.
+                vh_st_attribute_id:
+                  type: integer
+                  description: The ID of the attribute.
+                attribute:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the attribute.
+                    id:
+                      type: integer
+                      description: The ID of the attribute.
+                    type:
+                      type: string
+                      description: The type of the attribute.
+                    deleted_at:
+                      type: string
+                      format: date-time
+                      nullable: true
+                      description: The timestamp when the attribute was deleted.
+                  required:
+                    - id
+                    - name
+                attribute_values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute value.
+                      default_value:
+                        type: string
+                        description: The default value of the attribute.
+                      new_value:
+                        type: string
+                        description: The new value of the attribute, if provided.
+                    required:
+                      - id
+                      - default_value
+                      - new_value
+              required:
+                - vh_st_product_variation_id
+                - vh_st_attribute_id
+                - attribute
+                - attribute_values
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProductStock'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Product Attributes
+      summary: Delete a record by ID
+      description: Delete a single product attribute by its ID.
+      operationId: deleteProductAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product attribute Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:
@@ -7785,3 +10141,320 @@ components:
         - id
         - vh_user_id
         - user
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 6
+          description: The ID of the order.
+        uuid:
+          type: string
+          example: b067e5fa-bfbc-4e91-beb2-ca0b1000cd53
+          description: A unique identifier for the order.
+        vh_user_id:
+          type: integer
+          example: 121
+          description: The ID of the user associated with the order.
+        order_status:
+          type: string
+          example: Placed
+          description: The current status of the order.
+        taxonomy_id_payment_status:
+          type: integer
+          description: The id of the order payment status.
+        order_shipment_status:
+          type: string
+          example: Pending
+          description: The current shipment status of the order.
+        amount:
+          type: number
+          format: float
+          example: 25
+          description: The total amount for the order.
+        delivery_fee:
+          type: number
+          format: float
+          example: 0
+          description: The delivery fee associated with the order.
+        taxes:
+          type: number
+          format: float
+          example: 0
+          description: The total taxes applied to the order.
+        discount:
+          type: number
+          format: float
+          example: 0
+          description: The total discount applied to the order.
+        payable:
+          type: number
+          format: float
+          example: 25
+          description: The total amount that needs to be paid for the order.
+        paid:
+          type: number
+          format: float
+          example: 0
+          description: The amount that has been paid for the order.
+        is_paid:
+          type: integer
+          nullable: true
+          example: 1
+          description: Indicates if the order has been paid for.
+        is_active:
+          type: integer
+          example: 1
+          description: Indicates if the order is currently active.
+        items_count:
+          type: integer
+          example: 2
+          description: The total number of items in the order.
+        payment_method:
+          type: string
+          nullable: true
+          example: null
+          description: The payment method used for the order.
+        order_payment_status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 64
+              description: The ID of the payment status.
+            name:
+              type: string
+              example: Pending
+              description: The name of the payment status.
+            slug:
+              type: string
+              example: pending
+              description: A URL-friendly version of the payment status name.
+        status:
+          type: string
+          nullable: true
+          example: null
+          description: Additional status information for the order.
+        status_notes:
+          type: string
+          nullable: true
+          example: null
+          description: Any notes related to the status of the order.
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 121
+              description: The ID of the user.
+            first_name:
+              type: string
+              example: Olin
+              description: The first name of the user.
+            email:
+              type: string
+              example: shivam1@zieme.org
+              description: The email address of the user.
+            phone:
+              type: string
+              example: '2509077310'
+              description: The phone number of the user.
+            display_name:
+              type: string
+              example: shivam
+              description: The display name of the user.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the order.
+        created_at:
+          type: string
+          format: date-time
+          example: '2024-10-03T08:05:52Z'
+          description: The date and time when the order was created.
+        created_by:
+          type: integer
+          example: 1
+          description: The ID of the user who created the order.
+        updated_at:
+          type: string
+          format: date-time
+          example: '2024-10-03T08:05:52Z'
+          description: The date and time when the order was last updated.
+        updated_by:
+          type: integer
+          example: 1
+          description: The ID of the user who last updated the order.
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          description: Unique identifier for the payment.
+        vh_st_payment_method_id:
+          type: integer
+          description: The ID of the payment method used.
+        amount:
+          type: string
+          description: Total payment amount.
+        transaction_id:
+          type: string
+          description: Unique transaction identifier.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was last updated.
+        status:
+          type: object
+          description: Status details of the payment.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Status name of the payment.
+            slug:
+              type: string
+              description: Slug of the payment status.
+        payment_method:
+          type: object
+          description: Payment method details.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Name of the payment method.
+            slug:
+              type: string
+              description: Slug of the payment method.
+        status_notes:
+          type: string
+          description: Notes regarding the payment status.
+        orders_count:
+          type: integer
+          description: The number of orders associated with the payment.
+        meta:
+          type: object
+          description: Additional metadata for the payment.
+        is_active:
+          type: boolean
+          description: Whether the payment is active.
+          nullable: true
+        notes:
+          type: string
+          description: Additional notes regarding the payment.
+          nullable: true
+        payment_gate_status:
+          type: string
+          description: The status of the payment gateway.
+          nullable: true
+        payment_gate_response:
+          type: string
+          description: The response from the payment gateway.
+          nullable: true
+        deleted_at:
+          type: string
+          format: date-time
+          description: The date and time the payment was deleted.
+          nullable: true
+        created_by:
+          type: integer
+          description: ID of the user who created the payment.
+          nullable: true
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the payment.
+          nullable: true
+        deleted_by:
+          type: integer
+          description: ID of the user who deleted the payment.
+          nullable: true
+        date:
+          type: string
+          format: date-time
+          description: The date the payment was processed.
+    ProductAttribute:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the product attribute.
+        uuid:
+          type: string
+          description: The unique UUID for the product attribute.
+        vh_st_attribute_id:
+          type: integer
+          description: The associated attribute ID.
+        vh_st_variation_id:
+          type: integer
+          description: The associated product variation ID.
+        name:
+          type: string
+          description: Name of the product attribute.
+        type:
+          type: string
+          description: Type or category of the product attribute.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was created.
+        created_by:
+          type: integer
+          description: ID of the user who created the attribute.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was last updated.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the attribute.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the attribute was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the attribute, if applicable.
+        product_variation:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the product variation.
+            name:
+              type: string
+              description: Name of the product variation.
+            is_default:
+              type: integer
+              description: Whether this is the default variation (0 = no, 1 = yes).
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the variation was deleted, if applicable.
+        attribute:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the attribute.
+            name:
+              type: string
+              description: Name of the attribute.
+            type:
+              type: string
+              description: type of the attribute.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the attribute was deleted, if applicable.

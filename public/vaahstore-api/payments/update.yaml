@@ -1,0 +1,300 @@
+get:
+  tags:
+    - Payments
+  summary: Get record by payment ID
+  description: Retrieve a payment by its unique identifier.
+  operationId: getPaymentById
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  responses:
+    '200':
+      description: Successfully created a payment item
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  uuid:
+                    type: string
+                    nullable: true
+                  transaction_id:
+                    type: string
+                    description: The unique transaction ID.
+                  amount:
+                    type: string
+                  vh_st_payment_method_id:
+                    type: integer
+                  payment_method:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      slug:
+                        type: string
+                  taxonomy_id_payment_status:
+                    type: integer
+                  status:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      slug:
+                        type: string
+                  status_notes:
+                    type: string
+                    description: Notes regarding payment status.
+                  date:
+                    type: string
+                    format: date-time
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  created_by:
+                    type: integer
+                    nullable: true
+                  created_by_user:
+                    type: object
+                    nullable: true
+                  updated_by:
+                    type: integer
+                    nullable: true
+                  updated_by_user:
+                    type: object
+                    nullable: true
+                  deleted_by:
+                    type: integer
+                    nullable: true
+                  deleted_by_user:
+                    type: object
+                    nullable: true
+                  order_payments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        uuid:
+                          type: string
+                          nullable: true
+                        vh_st_payment_id:
+                          type: integer
+                        vh_st_order_id:
+                          type: integer
+                        taxonomy_id_order_payment_status:
+                          type: integer
+                        payable_amount:
+                          type: string
+                        payment_amount:
+                          type: string
+                        remaining_payable_amount:
+                          type: string
+                        date:
+                          type: string
+                          format: date-time
+                          nullable: true
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+                          nullable: true
+                        taxonomy_order_payment_status:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            slug:
+                              type: string
+                        order:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                            vh_user_id:
+                              type: integer
+                            order_status:
+                              type: string
+                            amount:
+                              type: number
+                            payable:
+                              type: number
+                            paid:
+                              type: number
+                            is_paid:
+                              type: integer
+                            is_active:
+                              type: integer
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                            user:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                first_name:
+                                  type: string
+                                email:
+                                  type: string
+                                phone:
+                                  type: string
+                                display_name:
+                                  type: string
+                                avatar:
+                                  type: string
+                                name:
+                                  type: string
+
+    '404':
+      description: Record Not Found
+      content:
+        application/json:
+          schema:
+            type: object  # Define the type of the response
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Record not found with ID: {id}"
+                ]
+            required:
+              - errors  # Make errors a required field
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+put:
+  tags:
+    - Payments
+  summary: Update an existing record
+  description: Update a payment notes with the specified ID using the provided details.
+  operationId: updatePaymentById
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            notes:
+              type: string
+              description: Notes related to the status of the payment.
+              maxLength: 100
+
+          required:
+            - notes
+
+
+  responses:
+    '200':
+      description: Saved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/Payment'
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved Successfully"
+    400:
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "This name/slug already exist." ]
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+delete:
+  tags:
+    - Payments
+  summary: Delete a record by ID
+  description: Delete a single payment by its ID.
+  operationId: deletePaymentById
+  parameters:
+    - '$ref': '#/components/parameters/id'
+  responses:
+    '200':
+      description: Payment Deleted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items: { }
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Record has been deleted"
+    '400':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: string
+                items:
+                  type: string
+                  example: "Record does not exist."
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
