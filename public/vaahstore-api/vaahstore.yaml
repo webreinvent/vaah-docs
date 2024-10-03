@@ -150,6 +150,8 @@ paths:
 
   '/payments':
     $ref: './payments/index.yaml'  # Reference to payments file
+  '/payments/{id}':
+    $ref: './payments/update.yaml'  # Reference to payment item file
 
 
 components:
