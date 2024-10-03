@@ -126,6 +126,8 @@ paths:
     $ref: './carts/updateAddress.yaml'  # Reference to  update cart user address  file
   '/carts/place-order':
     $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
+  '/carts/get-order-details/{order_id}':
+    $ref: './carts/getOrder.yaml'  # Reference to get order file
 
 components:
   securitySchemes:
