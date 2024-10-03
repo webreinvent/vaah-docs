@@ -5824,6 +5824,145 @@ paths:
                     items:
                       type: string
                       example: User or product not found.
+  /carts/save/cart-user-address:
+    post:
+      tags:
+        - Carts
+      summary: Save cart user address
+      description: Saves the shipping or billing address of the user for a cart. The type of address (shipping or billing) is determined by the provided input.
+      operationId: saveCartUserAddress
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_address:
+                  type: object
+                  description: Contains the address details to be saved for the user.
+                  properties:
+                    country:
+                      type: string
+                      example: India
+                      description: The country of the user's address.
+                    name:
+                      type: string
+                      example: Example Name
+                      description: The name of the user to which the record is saved in the cart.
+                    phone:
+                      type: string
+                      example: '1111111111'
+                      description: The phone number of the user.
+                    address_line_1:
+                      type: string
+                      example: 123 Main St
+                      description: The street address of the user.
+                    pin_code:
+                      type: string
+                      example: '10001'
+                      description: The postal code of the user's address.
+                    city:
+                      type: string
+                      example: New York
+                      description: The city of the user's address.
+                    state:
+                      type: string
+                      example: NY
+                      description: The state of the user's address.
+                  required:
+                    - name
+                    - phone
+                    - address_line_1
+                    - city
+                    - state
+                    - pin_code
+                    - country
+                user_data:
+                  type: object
+                  description: Information about the user.
+                  properties:
+                    id:
+                      type: integer
+                      example: 121
+                      description: The ID of the user.
+                  required:
+                    - id
+                type:
+                  type: string
+                  example: shipping
+                  description: If 'billing', the address is saved as billing. Defaults to shipping.
+              required:
+                - user_address
+                - user_data
+                - type
+      responses:
+        '200':
+          description: User address saved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved successfully.
+                  data:
+                    type: object
+                    properties:
+                      cart_id:
+                        type: integer
+                        example: 1
+                        description: The ID of the cart.
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: The Name field is required.
+                    description: |
+                      List of validation error messages. Possible errors include:
+                        - The Name field is required.
+                        - The Phone field is required.
+                        - The Country field is required.
+                        - The Address field is required.
+                        - The Pin Code field is required.
+                        - The City field is required.
+                        - The State field is required.
+                        - The Name field may not be greater than 100 characters.
+                        - The Phone field must be numeric.
+                        - The Address field may not be greater than 100 characters.
+                        - The City field may not be greater than 100 characters.
+                        - The Pin Code field may not be greater than 10 digits.
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Error saving address.
 components:
   securitySchemes:
     bearerAuth:
