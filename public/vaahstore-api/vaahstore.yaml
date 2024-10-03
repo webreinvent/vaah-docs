@@ -152,6 +152,10 @@ paths:
     $ref: './payments/index.yaml'  # Reference to payments file
   '/payments/{id}':
     $ref: './payments/update.yaml'  # Reference to payment item file
+  '/payments/{id}/action/{action}':
+    $ref: './payments/itemAction.yaml'  # Reference to payment item action file
+  '/payments/action/{action}':
+    $ref: './payments/listAction.yaml'  # Reference to payment list actions file
 
 
 components:
