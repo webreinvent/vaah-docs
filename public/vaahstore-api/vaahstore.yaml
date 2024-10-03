@@ -156,6 +156,8 @@ paths:
     $ref: './payments/itemAction.yaml'  # Reference to payment item action file
   '/payments/action/{action}':
     $ref: './payments/listAction.yaml'  # Reference to payment list actions file
+  '/payments/search/orders':
+    $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
 
 
 components:
