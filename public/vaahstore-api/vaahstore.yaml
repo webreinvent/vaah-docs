@@ -1714,6 +1714,89 @@ components:
           type: string
           format: date-time
           description: The date the payment was processed.
+    ProductAttribute:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the product attribute.
+        uuid:
+          type: string
+          description: The unique UUID for the product attribute.
+        vh_st_attribute_id:
+          type: integer
+          description: The associated attribute ID.
+        vh_st_variation_id:
+          type: integer
+          description: The associated product variation ID.
+        name:
+          type: string
+          description: Name of the product attribute.
+        type:
+          type: string
+          description: Type or category of the product attribute.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was created.
+        created_by:
+          type: integer
+          description: ID of the user who created the attribute.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was last updated.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the attribute.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the attribute was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the attribute, if applicable.
+
+        product_variation:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the product variation.
+            name:
+              type: string
+              description: Name of the product variation.
+            is_default:
+              type: integer
+              description: Whether this is the default variation (0 = no, 1 = yes).
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the variation was deleted, if applicable.
+
+        attribute:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the attribute.
+            name:
+              type: string
+              description: Name of the attribute.
+            type:
+              type: string
+              description: type of the attribute.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the attribute was deleted, if applicable.
+
+
+
 
 
 

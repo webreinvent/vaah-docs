@@ -25,7 +25,7 @@ get:
               data:
                 type: array
                 items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/Payment'
+                  '$ref': '../vaahstore.yaml#/components/schemas/ProductAttribute'
               first_page_url:
                 type: string
                 example: "http://127.0.0.1:8000/backend/store/productattributes?page=1"
@@ -37,78 +37,48 @@ get:
           schema:
 
 post:
-  summary: Create a new product attributes
-  description: This endpoint handles creating a new payment for one or more orders. Only Cash on Delivery (COD) payments are currently supported.
-  operationId: createProductAttributeItem
   tags:
     - Product Attributes
+  summary: Create a new product attribute.
+  operationId: createProductAttribute
   requestBody:
-    description: Data required to create a payment
     required: true
     content:
       application/json:
         schema:
           type: object
           properties:
-            vh_st_payment_method_id:
+            vh_st_product_variation_id:
               type: integer
-              description: The payment method ID.
-              example: 1
-            amount:
-              type: number
-              format: float
-              example: 50.00
-              description: The total amount provide for the payment.
-            orders:
+              description: The ID of the product variation.
+            vh_st_attribute_id:
+              type: integer
+              description: The ID of the attribute.
+            attribute_values:
               type: array
-              description: List of orders to be paid
               items:
                 type: object
                 properties:
                   id:
                     type: integer
-                    description: The ID of the order.
-                    example: 1
-                  user_name:
+                    description: The ID of the attribute value.
+                  new_value:
                     type: string
-                    description: Name of the user placing the order.
-                    example: "John Doe"
-                  pay_amount:
-                    type: number
-                    format: float
-                    description: The amount to be paid for the order.
-                    example: 50.00
-                  payable_amount:
-                    type: number
-                    format: float
-                    description: The total amount payable for the order.
-                    example: 50.00
+                    description: The new attribute value.
+                    maxLength: 100
+                  default_value:
+                    type: string
+                    description: The default attribute value.
                 required:
                   - id
-                  - user_name
-                  - pay_amount
-                  - payable_amount
-            payment_method:
-              type: object
-              properties:
-                slug:
-                  type: string
-                  description: The slug of the payment method (e.g., 'cod').
-                  example: "cod"
-              required:
-                - slug
-
-            notes:
-              type: string
-              description: Additional notes for the payment.
+                  - new_value
+                  - default_value
           required:
-            - orders
-            - vh_st_payment_method_id
-            - payment_method
-            - amount
+          - vh_st_product_variation_id
+          - vh_st_attribute_id
   responses:
     '200':
-      description: Successfully created a payment item
+      description: Successfully created a product attribute.
       content:
         application/json:
           schema:
@@ -116,161 +86,20 @@ post:
             properties:
               success:
                 type: boolean
+                description: Whether the operation was successful.
               data:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  uuid:
-                    type: string
-                    nullable: true
-                  transaction_id:
-                    type: string
-                    description: The unique transaction ID.
-                  amount:
-                    type: string
-                  vh_st_payment_method_id:
-                    type: integer
-                  payment_method:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      slug:
-                        type: string
-                  taxonomy_id_payment_status:
-                    type: integer
-                  status:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      slug:
-                        type: string
-                  status_notes:
-                    type: string
-                    description: Notes regarding payment status.
-                  date:
-                    type: string
-                    format: date-time
-                  created_at:
-                    type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                    nullable: true
-                  created_by:
-                    type: integer
-                    nullable: true
-                  created_by_user:
-                    type: object
-                    nullable: true
-                  updated_by:
-                    type: integer
-                    nullable: true
-                  updated_by_user:
-                    type: object
-                    nullable: true
-                  deleted_by:
-                    type: integer
-                    nullable: true
-                  deleted_by_user:
-                    type: object
-                    nullable: true
-                  order_payments:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        uuid:
-                          type: string
-                          nullable: true
-                        vh_st_payment_id:
-                          type: integer
-                        vh_st_order_id:
-                          type: integer
-                        taxonomy_id_order_payment_status:
-                          type: integer
-                        payable_amount:
-                          type: string
-                        payment_amount:
-                          type: string
-                        remaining_payable_amount:
-                          type: string
-                        date:
-                          type: string
-                          format: date-time
-                          nullable: true
-                        created_at:
-                          type: string
-                          format: date-time
-                        updated_at:
-                          type: string
-                          format: date-time
-                          nullable: true
-                        taxonomy_order_payment_status:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            name:
-                              type: string
-                            slug:
-                              type: string
-                        order:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            uuid:
-                              type: string
-                            vh_user_id:
-                              type: integer
-                            order_status:
-                              type: string
-                            amount:
-                              type: number
-                            payable:
-                              type: number
-                            paid:
-                              type: number
-                            is_paid:
-                              type: integer
-                            is_active:
-                              type: integer
-                            created_at:
-                              type: string
-                              format: date-time
-                            updated_at:
-                              type: string
-                              format: date-time
-                            user:
-                              type: object
-                              properties:
-                                id:
-                                  type: integer
-                                first_name:
-                                  type: string
-                                email:
-                                  type: string
-                                phone:
-                                  type: string
-                                display_name:
-                                  type: string
-                                avatar:
-                                  type: string
-                                name:
-                                  type: string
-
+                type: array
+                items:
+                  '$ref': '../vaahstore.yaml#/components/schemas/ProductAttribute'
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Saved successfully"
+                ]
     '400':
-      description: Invalid input or validation error
+      description: Validation error
       content:
         application/json:
           schema:
@@ -278,40 +107,17 @@ post:
             properties:
               success:
                 type: boolean
-                example: false
+                description: Whether the operation was successful.
               errors:
                 type: array
                 items:
                   type: string
-                  example: "The payment amount for order 'John Doe' must be greater than 0."
-    '422':
-      description: Validation error for orders or payment method
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              success:
-                type: boolean
-                example: false
-              errors:
-                type: array
-                items:
-                  type: string
-                  example: "The orders field is required."
-    '500':
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              success:
-                type: boolean
-                example: false
-              message:
-                type: string
-                example: "An unexpected error occurred."
+                description: A list of validation error messages.
+                example:
+                  - "The Product Variation field is required"
+                  - "The Attribute field is required"
+                  - "The Attribute Value field should not exceed 100 characters"
+
 
 
 put:
