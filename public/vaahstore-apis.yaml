@@ -5704,6 +5704,126 @@ paths:
                     items:
                       type: string
                       example: Cart not found.
+  /carts/add-to-wishlist:
+    post:
+      tags:
+        - Carts
+      summary: Add an item to the wishlist
+      description: Adds a specified product from the cart to the user's wishlist. If the item is already wishlisted, it will not be added again.
+      operationId: addToWishlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_detail:
+                  type: object
+                  description: |
+                    Contains details about the product in the cart that will be added to or removed from the wishlist.
+                    Includes information such as the cart ID, product ID, product variation ID, quantity, vendor ID, and wishlist status.
+                  properties:
+                    vh_st_cart_id:
+                      type: integer
+                      example: 3
+                      description: The ID of the cart containing the product.
+                    vh_st_product_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the product to add to the wishlist.
+                    vh_st_product_variation_id:
+                      type: integer
+                      example: 2
+                      description: The ID of the product variation.
+                    quantity:
+                      type: integer
+                      example: 1
+                      description: The quantity of the product.
+                    vh_st_vendor_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the vendor for the product.
+                    is_wishlisted:
+                      type: integer
+                      example: 0
+                      description: Indicates if the product is already in the wishlist.Set to 1 for adding the product to the wishlist, and 0 if you want to remove the product from the wishlist.
+                  required:
+                    - vh_st_cart_id
+                    - vh_st_product_id
+                    - vh_st_product_variation_id
+                    - quantity
+                    - vh_st_vendor_id
+                    - is_wishlisted
+                user_detail:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 121
+                      description: The ID of the user.
+                    username:
+                      type: string
+                      example: 58a55727-2084-448c-89bd-c3146f8d52f8
+                      description: The username of the user, it is for the purpose making new wishlist also.
+                  required:
+                    - id
+                    - username
+              required:
+                - item_detail
+                - user_detail
+      responses:
+        '200':
+          description: Item added to wishlist successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: Indicates the operation was successful.
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved successfully.
+                  data:
+                    type: object
+                    properties:
+                      cart:
+                        $ref: '#/components/schemas/Cart'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input.
+        '404':
+          description: User or product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: User or product not found.
 components:
   securitySchemes:
     bearerAuth:
