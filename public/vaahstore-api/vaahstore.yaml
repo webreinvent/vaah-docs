@@ -124,6 +124,8 @@ paths:
     $ref: './carts/removeAddress.yaml'  # Reference to  remove cart user address  file
   '/carts/update/user-shipping-address':
     $ref: './carts/updateAddress.yaml'  # Reference to  update cart user address  file
+  '/carts/place-order':
+    $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
 
 components:
   securitySchemes:
