@@ -33,6 +33,8 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
+  - name: Product Attributes
+    description: Everything about Product Attributes in VaahStore
 
 paths:
   '/stores':
@@ -159,6 +161,8 @@ paths:
   '/payments/search/orders':
     $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
 
+  '/productattributes':
+    $ref: './product-attributes/index.yaml'  # Reference to product attributes file
 
 components:
   securitySchemes:
