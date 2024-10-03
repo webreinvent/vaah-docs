@@ -133,6 +133,8 @@ paths:
 
   '/orders':
     $ref: './orders/index.yaml'  # Reference to order file
+  '/orders/{id}':
+    $ref: './orders/update.yaml'  # Reference to order item file
 
 components:
   securitySchemes:
