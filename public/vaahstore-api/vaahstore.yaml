@@ -163,6 +163,8 @@ paths:
 
   '/productattributes':
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file
+  '/productattributes/{id}':
+    $ref: './product-attributes/update.yaml'  # Reference to product attributes item file
 
 components:
   securitySchemes:

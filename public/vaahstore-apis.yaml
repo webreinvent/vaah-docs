@@ -8669,6 +8669,189 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /productattributes/{id}:
+    get:
+      tags:
+        - Product Attributes
+      summary: Get record by product attribute ID
+      description: Retrieve a product attribute by its unique identifier.
+      operationId: getProductAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product-attribute Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductAttribute'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Product Attributes
+      summary: Update an existing record
+      description: Update a product attribute record with the specified ID using the provided details.
+      operationId: updateProductAttribute
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_st_product_variation_id:
+                  type: integer
+                  description: The ID of the product variation.
+                vh_st_attribute_id:
+                  type: integer
+                  description: The ID of the attribute.
+                attribute:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the attribute.
+                    id:
+                      type: integer
+                      description: The ID of the attribute.
+                    type:
+                      type: string
+                      description: The type of the attribute.
+                    deleted_at:
+                      type: string
+                      format: date-time
+                      nullable: true
+                      description: The timestamp when the attribute was deleted.
+                  required:
+                    - id
+                    - name
+                attribute_values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute value.
+                      default_value:
+                        type: string
+                        description: The default value of the attribute.
+                      new_value:
+                        type: string
+                        description: The new value of the attribute, if provided.
+                    required:
+                      - id
+                      - default_value
+                      - new_value
+              required:
+                - vh_st_product_variation_id
+                - vh_st_attribute_id
+                - attribute
+                - attribute_values
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProductStock'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Product Attributes
+      summary: Delete a record by ID
+      description: Delete a single product attribute by its ID.
+      operationId: deleteProductAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product attribute Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:
