@@ -5967,7 +5967,7 @@ paths:
     post:
       tags:
         - Carts
-      summary: Delete cart-user address
+      summary: Remove cart-user address
       description: Deletes the user's address linked to the cart by the address ID.
       operationId: removeCartUserAddress
       requestBody:
@@ -6029,6 +6029,117 @@ paths:
                     items:
                       type: string
                       example: Invalid address ID.
+  /carts/update/user-shipping-address:
+    post:
+      tags:
+        - Carts
+      summary: Update cart-user saved address
+      description: Updates the cart user's address based on the provided address details and user information.
+      operationId: updateUserShippingAddress
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address_detail:
+                  type: object
+                  description: Contains details of the address to be updated.
+                  properties:
+                    id:
+                      type: integer
+                      example: 101
+                      description: The ID of the address to update.
+                    country:
+                      type: string
+                      example: United States
+                      description: The country of the updated address.
+                    name:
+                      type: string
+                      example: John Doe
+                      description: The updated name associated with the address.
+                    phone:
+                      type: string
+                      example: +1-555-555-5555
+                      description: The updated phone number associated with the address.
+                    address_line_1:
+                      type: string
+                      example: 123 Main St
+                      description: The updated street address.
+                    city:
+                      type: string
+                      example: Los Angeles
+                      description: The updated city.
+                    state:
+                      type: string
+                      example: CA
+                      description: The updated state.
+                    pin_code:
+                      type: string
+                      example: '90001'
+                      description: The updated postal code.
+                  required:
+                    - id
+                    - country
+                    - name
+                    - phone
+                    - address_line_1
+                    - city
+                    - state
+                    - pin_code
+                user_detail:
+                  type: object
+                  description: Contains details about the user making the request.
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                      description: The ID of the user associated with the cart.
+                  required:
+                    - id
+              required:
+                - address_detail
+                - user_detail
+      responses:
+        '200':
+          description: Address updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: Indicates if the operation was successful.
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved successfully.
+                  data:
+                    type: object
+                    properties:
+                      cart_id:
+                        type: integer
+                        example: 1
+                        description: The ID of the cart associated with the user.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Request data is incomplete.
 components:
   securitySchemes:
     bearerAuth:
