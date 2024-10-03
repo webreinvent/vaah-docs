@@ -143,7 +143,9 @@ paths:
     $ref: './orders/itemAction.yaml'  # Reference to order item action file
   '/orders/action/{action}':
     $ref: './orders/listAction.yaml'  # Reference to order list actions file
-  
+  '/orders/get-order-items/{id}':
+    $ref: './orders/getOrderItems.yaml'  # Reference to get shipped order item details file
+
 
 components:
   securitySchemes:

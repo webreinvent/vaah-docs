@@ -7239,6 +7239,112 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /orders/get-order-items/{id}:
+    get:
+      summary: Get shipped order items by ID
+      description: Retrieve order items shipment details for a specified order ID, including product variations, vendor information, and quantities shipped.
+      operationId: getShippedOrderItems
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the order to retrieve shipped items for.
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully retrieved shipped order items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The ID of the order item.
+                          example: 1
+                        product:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the product.
+                              example: 2
+                            name:
+                              type: string
+                              description: The name of the product.
+                              example: Sample Product
+                        product_variation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the product variation.
+                              example: 3
+                            variation_name:
+                              type: string
+                              description: The name of the product variation.
+                              example: Red - Large
+                        vendor:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the vendor.
+                              example: 4
+                            name:
+                              type: string
+                              description: The name of the vendor.
+                              example: Vendor Name
+                        quantity:
+                          type: integer
+                          description: The quantity of the product ordered.
+                          example: 2
+                        shipped_quantity:
+                          type: integer
+                          description: The total quantity shipped for this order item.
+                          example: 1
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Order not found.
+                  data:
+                    type: null
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: An unexpected error occurred.
+                  data:
+                    type: null
 components:
   securitySchemes:
     bearerAuth:
