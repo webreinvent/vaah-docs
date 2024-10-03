@@ -1,0 +1,211 @@
+get:
+  tags:
+    - Products
+  summary: Get Product by ID
+  description: Retrieve a product by its unique identifier.
+  operationId: getProductById
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  responses:
+    '200':
+      description: Product Retrieved
+      content:
+        application/json:
+          schema:
+            '$ref': '../vaahstore.yaml#/components/schemas/Product'
+    '404':
+      description: Product Not Found
+      content:
+        application/json:
+          schema:
+            type: object  # Define the type of the response
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Record not found with ID: {id}"
+                ]
+            required:
+              - errors  # Make errors a required field
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+
+
+put:
+  tags:
+    - Products
+  summary: Update an existing Product
+  description: Update a product with the specified ID using the provided details.
+  operationId: updateProduct
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "My Product"
+              description: Name of the product.
+            slug:
+              type: string
+              example: "my-product"
+              description: URL-friendly identifier for the product.
+            vh_st_store_id:
+              type: integer
+              example: 1
+              description: ID of the store the product belongs to.
+            taxonomy_id_product_type:
+              type: integer
+              example: 1
+              description: Product Type Id from the taxonomies.
+            taxonomy_id_product_status:
+              type: integer
+              example: 1
+              description: Status Id of the product.
+            summary:
+              type: string
+              example: "My Product Summary"
+              description: A brief summary of the product.
+            details:
+              type: string
+              example: "My Product Details"
+              description: Detailed information about the product.
+
+            seo_meta_keyword:
+              type: array
+              items:
+                type: string
+              description: SEO keywords for the product.
+              example: [ "buy products", "example" ]
+            available_at:
+              type: string
+              format: date
+              example: "2024-10-10"
+              description: Date when the product will be available.
+            launch_at:
+              type: string
+              format: date
+              example: "2025-04-18"
+              description: Date when the product will be launched.
+            categories:
+              type: object
+              description: Categories associated with the product, where keys are category IDs and values are booleans indicating selection.
+              additionalProperties:
+                type: boolean
+              example:
+                213: true
+                214: true
+                223: true
+            is_active:
+              type: integer
+              example: 1
+              description: Indicates if the product is active (1) or not (0).
+            is_featured_on_home_page:
+              type: boolean
+              example: 1
+              description: Indicates if the product is featured on the home page (1) or not (0).
+            is_featured_on_category_page:
+              type: boolean
+              example: 1
+              description: Indicates if the product is featured on the category page (1) or not (0).
+            status_notes:
+              type: string
+              example: "Example status notes"
+              description: Notes about the product's status.
+            meta:
+              type: object
+              nullable: true  # Indicates that this field can be null
+              example: null
+              description: Meta information for the product.
+          required:
+            - name
+            - slug
+            - vh_st_store_id
+            - taxonomy_id_product_type
+            - taxonomy_id_product_status
+  responses:
+    '200':
+      description: Saved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/Product'
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved Successfully"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+
+    '404':
+      description: Product Not Found
+      content:
+        application/json:
+          schema:
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+
+
+delete:
+  tags:
+    - Products
+  summary: Delete a Product by ID
+  description: Delete a single product by its ID.
+  operationId: deleteProductById
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  responses:
+    '200':
+      description: Product Deleted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items: { }
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Record has been deleted"
+    '404':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+

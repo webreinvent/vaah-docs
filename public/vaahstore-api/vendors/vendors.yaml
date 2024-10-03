@@ -1,0 +1,415 @@
+get:
+  tags:
+    - Vendors
+  summary: Get List of all vendors
+  operationId: getVendorsList
+  parameters:
+    - name: filter[q]
+      in: query
+      required: false
+      description: Search query for vendor by name, slug, or id.
+      schema:
+        type: string
+    - name: filter[is_active]
+      in: query
+      required: false
+      schema:
+        type: boolean
+    - name: filter[trashed]
+      in: query
+      required: false
+      description: Include or exclude trashed vendors.
+      schema:
+        type: string
+        enum: [ include, exclude,only ]
+    - name: filter[date][]
+      in: query
+      required: false
+      description: Filter vendors by date range (start and end dates).
+      schema:
+        type: array
+        items:
+          type: string
+          format: date
+    - name: filter[vendor_status][]
+      in: query
+      required: false
+      description: Filter vendors by status.
+      schema:
+        type: array
+        items:
+          type: string
+
+    - name: filter[store][]
+      in: query
+      required: false
+      description: Filter vendors by associated store name.
+      schema:
+        type: array
+        items:
+          type: string
+        example: [ 'store1', 'store2' ]
+    - name: filter[product][]
+      in: query
+      required: false
+      description: Filter vendors by associated products slug.
+      schema:
+        type: array
+        items:
+          type: string
+        example: [ 'product-1', 'product-2' ]
+
+    - name: rows
+      in: query
+      required: false
+      description: Number of rows to return per page.
+      schema:
+        type: integer
+        default: 20
+  responses:
+    '200':
+      description: A list of vendors.
+      content:
+        application/json:
+          schema:
+            '$ref': '../vaahstore.yaml#/components/schemas/Vendor'
+    '400':
+      description: Bad request. Invalid filter parameters.
+
+    '500':
+      description: Internal server error.
+
+post:
+  tags:
+    - Vendors
+  summary: Create a new vendor
+  operationId: createVendors
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "My vendor"
+              description: Name of the vendor.
+            slug:
+              type: string
+              example: "my-vendor"
+              description: URL-friendly identifier for the vendor.
+            vh_st_store_id:
+              type: integer
+              example: 1
+              description: ID of the store the vendor belongs to.
+            is_default:
+              type: boolean
+              example: 1
+              description: Is vendor is default.
+            approved_by:
+              type: integer
+              example: 1
+              description: Id of the user who gone to aprove.
+            owned_by:
+              type: integer
+              example: 1
+              description: id of the vendor owner.
+            taxonomy_id_vendor_status:
+              type: integer
+              example: 1
+              description: Status Id of the vendor.
+            store:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                  description: id of the store.
+                is_multi_vendor:
+                  type: enum
+                  required: true
+                  example: 1
+
+
+          required:
+            - name
+            - slug
+            - vh_st_store_id
+            - approved_by
+            - owned_by
+            - is_default
+            - taxonomy_id_vendor_status
+
+  responses:
+    '200':
+      description: Vendor Created Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/Vendor'
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "Saved successfully." ]
+    '400':
+      description: Validation Errors
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                description: List of validation error messages.
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+
+delete:
+  tags:
+    - Vendors
+  summary: Delete a list of vendors
+  description: This endpoint allows you to delete multiple vendor records based on the provided input.
+  operationId: deleteVendorList
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - type
+            - items
+          properties:
+            type:
+              type: string
+              description: Action type (e.g., "delete").
+              example: "delete"
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the product to be deleted.
+                    example: 1  # Example for a single item
+              example: # Example for the entire array
+                - id: 1
+                - id: 2
+                - id: 3
+  responses:
+    '200':
+      description: Action was successful and the specified Vendors have been deleted.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Action was successful."
+    '403':
+      description: The user does not have permission to perform this action.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Permission denied for action 'can-update-module'."
+    '400':
+      description: Validation failed for the input parameters.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Action type is required."
+                  - "Select items."
+
+    '404':
+      description: One or more specified Vendor IDs were not found.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Vendors not found."
+    '500':
+      description: An unexpected error occurred during the deletion process.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An unexpected error occurred."
+put:
+  tags:
+    - Vendors
+  summary: Update a list of vendors
+  description: This endpoint allows you to update multiple vendor records based on the provided input, including actions like activating, deactivating, trashing, or restoring vendors.
+  operationId: updateVendorList
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - type
+            - items
+          properties:
+            type:
+              type: string
+              description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+              example: "trash"
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the vendor to be updated.
+                    example: 1  # Example for a single item
+              example: # Example for the entire array
+                - id: 1
+                - id: 2
+                - id: 3
+  responses:
+    '200':
+      description: Action was successful and the specified vendors have been updated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Action was successful."
+    '403':
+      description: The user does not have permission to perform this action.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Permission denied for action 'can-update-module'."
+    '400':
+      description: Validation failed for the input parameters.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Action type is required."
+                  - "Select items."
+    '404':
+      description: One or more specified vendor IDs were not found.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Vendor not found."
+    '500':
+      description: An unexpected error occurred during the update process.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An unexpected error occurred."

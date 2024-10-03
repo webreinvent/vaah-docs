@@ -9,7 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "vaahstore:api": "npx @redocly/cli bundle public/vaahstore-api/vaahstore.yaml --output public/vaahstore-apis.yaml"
+
   },
   "dependencies": {
     "@iconify-json/heroicons": "^1.1.19",
@@ -19,6 +21,7 @@
     "@nuxtjs/fontaine": "^0.4.1",
     "@nuxtjs/google-fonts": "^3.1.3",
     "@pinia/nuxt": "^0.5.1",
+    "@scalar/api-reference": "^1.25.21",
     "medium-zoom": "^1.1.0",
     "nuxt": "^3.9.3",
     "nuxt-og-image": "^2.2.4",

@@ -1,0 +1,83 @@
+patch:
+  tags:
+    - Product Variations
+  summary: Perform an action on a product variation
+  description: |
+    This endpoint allows you to perform various actions on a variation item, such as activating, deactivating, trashing, or restoring a product.
+
+  operationId: itemAction
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+    - '$ref': '../vaahstore.yaml#/components/parameters/action'
+
+  responses:
+    '200':
+      description: Action performed successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  is_active:
+                    type: integer
+                    example: 1
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Action was successful"
+    '403':
+      description: Permission Denied
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Permission denied to update module"
+    '400':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            type: object  # Define the type of the response
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Record not found with ID: {id}"
+                ]
+            required:
+              - errors  # Make errors a required field
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "An error occurred"

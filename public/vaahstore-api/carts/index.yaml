@@ -1,0 +1,38 @@
+get:
+  tags:
+    - Carts
+  summary: Get list of all carts
+  description: Retrieve list of all the carts.
+  operationId: getProductStocksList
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/page'
+    - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
+
+  responses:
+    '200':
+      description: Cart list retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              current_page:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  '$ref': '../vaahstore.yaml#/components/schemas/Cart'
+              first_page_url:
+                type: string
+                example: "http://127.0.0.1:8000/backend/store/carts?page=1"
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:

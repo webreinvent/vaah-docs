@@ -1,0 +1,114 @@
+post:
+  tags:
+    - Products
+  summary: Create Product Variation
+  description: |
+    This endpoint allows you to create variations for a specific product.
+    Each variation can have different attributes and settings.
+    If a variation with the same name already exists for the product, an error will be returned.
+  operationId: createVariation
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - id
+            - all_variation
+          properties:
+            id:
+              type: integer
+              example: 23
+              description: The ID of the product for which the variation is being created.
+            all_variation:
+              type: object
+              required:
+                - structured_variation
+                - all_attribute_name
+              properties:
+                structured_variation:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      variation_name:
+                        type: string
+                        example: "attribute 1 - attribute value"
+                        description: "The name of the variation, typically a combination of attributes and their values."
+                      is_default:
+                        type: boolean
+                        example: 1
+                        description: "Indicates whether this variation is selected as default."
+                      attribute 1:
+                        description: "This is the name of the attribute."
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                            example: "attribute value"
+                          vh_st_attribute_id:
+                            type: integer
+                            example: 7
+                          id:
+                            type: integer
+                            example: 16
+                      attribute 2:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                            example: "attribute value"
+                          vh_st_attribute_id:
+                            type: integer
+                            example: 6
+                          id:
+                            type: integer
+                            example: 15
+
+                all_attribute_name:
+                  type: array
+                  items:
+                    type: string
+                  example: [ "attribute 1", "attribute 2" ]
+                  description: "An array of names of all attributes associated with the variations."
+
+  responses:
+    '200':
+      description: Variation created successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+                description: "Indicates if the operation was successful."
+              data:
+                type: object
+                '$ref': '../vaahstore.yaml#/components/schemas/Product'  # Assuming the Product schema is defined elsewhere
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "saved successfully." ]
+                description: "Message after successful creation."
+
+    '400':
+      description: Error in creating variation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+                description: "Indicates if the operation failed."
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "This Variation name 'Color - Blue' already exists." ]
+                description: "A list of error messages detailing the issues encountered."
