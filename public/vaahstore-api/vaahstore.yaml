@@ -29,6 +29,8 @@ tags:
     description: Everything about Product Stocks in VaahStore
   - name: Carts
     description: Everything about Cart Process in VaahStore
+  - name: Orders
+    description: Everything about Order Process in VaahStore
 
 paths:
   '/stores':
@@ -128,6 +130,9 @@ paths:
     $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
   '/carts/get-order-details/{order_id}':
     $ref: './carts/getOrder.yaml'  # Reference to get order file
+
+  '/orders':
+    $ref: './orders/index.yaml'  # Reference to order file
 
 components:
   securitySchemes:
@@ -1440,6 +1445,150 @@ components:
         - id
         - vh_user_id
         - user
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 6
+          description: The ID of the order.
+        uuid:
+          type: string
+          example: "b067e5fa-bfbc-4e91-beb2-ca0b1000cd53"
+          description: A unique identifier for the order.
+        vh_user_id:
+          type: integer
+          example: 121
+          description: The ID of the user associated with the order.
+        order_status:
+          type: string
+          example: "Placed"
+          description: The current status of the order.
+        taxonomy_id_payment_status:
+          type: integer
+          description: The id of the order payment status.
+        order_shipment_status:
+          type: string
+          example: "Pending"
+          description: The current shipment status of the order.
+        amount:
+          type: number
+          format: float
+          example: 25.00
+          description: The total amount for the order.
+        delivery_fee:
+          type: number
+          format: float
+          example: 0.00
+          description: The delivery fee associated with the order.
+        taxes:
+          type: number
+          format: float
+          example: 0.00
+          description: The total taxes applied to the order.
+        discount:
+          type: number
+          format: float
+          example: 0.00
+          description: The total discount applied to the order.
+        payable:
+          type: number
+          format: float
+          example: 25.00
+          description: The total amount that needs to be paid for the order.
+        paid:
+          type: number
+          format: float
+          example: 0.00
+          description: The amount that has been paid for the order.
+        is_paid:
+          type: integer
+          nullable: true
+          example: 1
+          description: Indicates if the order has been paid for.
+        is_active:
+          type: integer
+          example: 1
+          description: Indicates if the order is currently active.
+        items_count:
+          type: integer
+          example: 2
+          description: The total number of items in the order.
+        payment_method:
+          type: string
+          nullable: true
+          example: null
+          description: The payment method used for the order.
+        order_payment_status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 64
+              description: The ID of the payment status.
+            name:
+              type: string
+              example: "Pending"
+              description: The name of the payment status.
+            slug:
+              type: string
+              example: "pending"
+              description: A URL-friendly version of the payment status name.
+        status:
+          type: string
+          nullable: true
+          example: null
+          description: Additional status information for the order.
+        status_notes:
+          type: string
+          nullable: true
+          example: null
+          description: Any notes related to the status of the order.
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 121
+              description: The ID of the user.
+            first_name:
+              type: string
+              example: "Olin"
+              description: The first name of the user.
+            email:
+              type: string
+              example: "shivam1@zieme.org"
+              description: The email address of the user.
+            phone:
+              type: string
+              example: "2509077310"
+              description: The phone number of the user.
+            display_name:
+              type: string
+              example: "shivam"
+              description: The display name of the user.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the order.
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-10-03T08:05:52Z"
+          description: The date and time when the order was created.
+        created_by:
+          type: integer
+          example: 1
+          description: The ID of the user who created the order.
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-10-03T08:05:52Z"
+          description: The date and time when the order was last updated.
+        updated_by:
+          type: integer
+          example: 1
+          description: The ID of the user who last updated the order.
 
 
 

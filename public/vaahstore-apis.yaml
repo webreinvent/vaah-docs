@@ -29,6 +29,8 @@ tags:
     description: Everything about Product Stocks in VaahStore
   - name: Carts
     description: Everything about Cart Process in VaahStore
+  - name: Orders
+    description: Everything about Order Process in VaahStore
 paths:
   /stores:
     get:
@@ -6496,6 +6498,243 @@ paths:
                     example: Order not found.
                   data:
                     type: null
+  /orders:
+    get:
+      tags:
+        - Orders
+      summary: Get list of all orders
+      description: Retrieve list of all the orders.
+      operationId: getOrdersList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/orders?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Orders
+      summary: Update list of orders
+      description: This endpoint allows you to update multiple product stocks records based on the provided input, including actions like activating, deactivating, trashing, or restoring orders.
+      operationId: updateOrdersList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the orders to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified orders have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Orders
+      summary: Delete list of orders
+      description: This endpoint allows you to delete multiple order records based on the provided input.
+      operationId: deleteOrdersList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the orders to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified orders have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -7785,3 +8024,147 @@ components:
         - id
         - vh_user_id
         - user
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 6
+          description: The ID of the order.
+        uuid:
+          type: string
+          example: b067e5fa-bfbc-4e91-beb2-ca0b1000cd53
+          description: A unique identifier for the order.
+        vh_user_id:
+          type: integer
+          example: 121
+          description: The ID of the user associated with the order.
+        order_status:
+          type: string
+          example: Placed
+          description: The current status of the order.
+        taxonomy_id_payment_status:
+          type: integer
+          description: The id of the order payment status.
+        order_shipment_status:
+          type: string
+          example: Pending
+          description: The current shipment status of the order.
+        amount:
+          type: number
+          format: float
+          example: 25
+          description: The total amount for the order.
+        delivery_fee:
+          type: number
+          format: float
+          example: 0
+          description: The delivery fee associated with the order.
+        taxes:
+          type: number
+          format: float
+          example: 0
+          description: The total taxes applied to the order.
+        discount:
+          type: number
+          format: float
+          example: 0
+          description: The total discount applied to the order.
+        payable:
+          type: number
+          format: float
+          example: 25
+          description: The total amount that needs to be paid for the order.
+        paid:
+          type: number
+          format: float
+          example: 0
+          description: The amount that has been paid for the order.
+        is_paid:
+          type: integer
+          nullable: true
+          example: 1
+          description: Indicates if the order has been paid for.
+        is_active:
+          type: integer
+          example: 1
+          description: Indicates if the order is currently active.
+        items_count:
+          type: integer
+          example: 2
+          description: The total number of items in the order.
+        payment_method:
+          type: string
+          nullable: true
+          example: null
+          description: The payment method used for the order.
+        order_payment_status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 64
+              description: The ID of the payment status.
+            name:
+              type: string
+              example: Pending
+              description: The name of the payment status.
+            slug:
+              type: string
+              example: pending
+              description: A URL-friendly version of the payment status name.
+        status:
+          type: string
+          nullable: true
+          example: null
+          description: Additional status information for the order.
+        status_notes:
+          type: string
+          nullable: true
+          example: null
+          description: Any notes related to the status of the order.
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 121
+              description: The ID of the user.
+            first_name:
+              type: string
+              example: Olin
+              description: The first name of the user.
+            email:
+              type: string
+              example: shivam1@zieme.org
+              description: The email address of the user.
+            phone:
+              type: string
+              example: '2509077310'
+              description: The phone number of the user.
+            display_name:
+              type: string
+              example: shivam
+              description: The display name of the user.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the order.
+        created_at:
+          type: string
+          format: date-time
+          example: '2024-10-03T08:05:52Z'
+          description: The date and time when the order was created.
+        created_by:
+          type: integer
+          example: 1
+          description: The ID of the user who created the order.
+        updated_at:
+          type: string
+          format: date-time
+          example: '2024-10-03T08:05:52Z'
+          description: The date and time when the order was last updated.
+        updated_by:
+          type: integer
+          example: 1
+          description: The ID of the user who last updated the order.
