@@ -6353,6 +6353,149 @@ paths:
                     items:
                       type: string
                       example: An error occurred while placing the order.
+  /carts/get-order-details/{order_id}:
+    get:
+      summary: Get order details after placing an order
+      operationId: getOrderDetails
+      tags:
+        - Carts
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          description: The ID of the order to retrieve details for.
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully retrieved order details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      order:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                            description: The ID of the order.
+                          uuid:
+                            type: string
+                            example: some-unique-order-uuid
+                            description: The unique identifier for the order.
+                      user:
+                        type: object
+                        description: User details related to the order.
+                      ordered_at:
+                        type: string
+                        format: date-time
+                        example: '2024-10-03T12:34:56Z'
+                        description: The date and time when the order was placed.
+                      unique_order_id:
+                        type: string
+                        example: some-unique-order-uuid
+                        description: The unique order ID.
+                      product_details:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product_id:
+                              type: integer
+                              example: 1
+                              description: The ID of the product.
+                            name:
+                              type: string
+                              example: Product Name
+                              description: The name of the product.
+                            description:
+                              type: string
+                              example: Detailed description of the product.
+                              description: A description of the product.
+                            image_urls:
+                              type: array
+                              items:
+                                type: string
+                                example: http://example.com/image.jpg
+                                description: URL(s) of the product images.
+                            pivot:
+                              type: object
+                              properties:
+                                cart_product_variation:
+                                  type: string
+                                  example: Variation Name
+                                  description: The name of the product variation.
+                                product_variation_id:
+                                  type: integer
+                                  example: 2
+                                  description: The ID of the product variation.
+                                price:
+                                  type: number
+                                  format: float
+                                  example: 50
+                                  description: The price of the product.
+                                quantity:
+                                  type: integer
+                                  example: 1
+                                  description: The quantity of the product ordered.
+                                selected_vendor_id:
+                                  type: integer
+                                  example: 1
+                                  description: The ID of the selected vendor.
+                      order_items_shipping_address:
+                        type: object
+                        description: Shipping address details for the order.
+                        properties:
+                          id:
+                            type: integer
+                            example: 101
+                          vh_user_id:
+                            type: integer
+                            example: 1
+                      order_items_billing_address:
+                        type: object
+                        description: Billing address details for the order.
+                        properties:
+                          id:
+                            type: integer
+                            example: 102
+                          vh_user_id:
+                            type: integer
+                            example: 1
+                      total_mrp:
+                        type: number
+                        format: float
+                        example: 150
+                        description: Total amount for all products in the order.
+                      order_paid_amount:
+                        type: number
+                        format: float
+                        example: 150
+                        description: Total amount paid for the order.
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Order not found.
+                  data:
+                    type: null
 components:
   securitySchemes:
     bearerAuth:
