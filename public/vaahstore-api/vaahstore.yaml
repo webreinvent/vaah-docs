@@ -31,6 +31,8 @@ tags:
     description: Everything about Cart Process in VaahStore
   - name: Orders
     description: Everything about Order Process in VaahStore
+  - name: Payments
+    description: Everything about Payments in VaahStore
 
 paths:
   '/stores':
@@ -145,6 +147,9 @@ paths:
     $ref: './orders/listAction.yaml'  # Reference to order list actions file
   '/orders/get-order-items/{id}':
     $ref: './orders/getOrderItems.yaml'  # Reference to get shipped order item details file
+
+  '/payments':
+    $ref: './payments/index.yaml'  # Reference to payments file
 
 
 components:
@@ -1602,6 +1607,101 @@ components:
           type: integer
           example: 1
           description: The ID of the user who last updated the order.
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          description: Unique identifier for the payment.
+        vh_st_payment_method_id:
+          type: integer
+          description: The ID of the payment method used.
+        amount:
+          type: string
+          description: Total payment amount.
+        transaction_id:
+          type: string
+          description: Unique transaction identifier.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was last updated.
+        status:
+          type: object
+          description: Status details of the payment.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Status name of the payment.
+            slug:
+              type: string
+              description: Slug of the payment status.
+        payment_method:
+          type: object
+          description: Payment method details.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Name of the payment method.
+            slug:
+              type: string
+              description: Slug of the payment method.
+        status_notes:
+          type: string
+          description: Notes regarding the payment status.
+        orders_count:
+          type: integer
+          description: The number of orders associated with the payment.
+        meta:
+          type: object
+          description: Additional metadata for the payment.
+        is_active:
+          type: boolean
+          description: Whether the payment is active.
+          nullable: true
+        notes:
+          type: string
+          description: Additional notes regarding the payment.
+          nullable: true
+        payment_gate_status:
+          type: string
+          description: The status of the payment gateway.
+          nullable: true
+        payment_gate_response:
+          type: string
+          description: The response from the payment gateway.
+          nullable: true
+        deleted_at:
+          type: string
+          format: date-time
+          description: The date and time the payment was deleted.
+          nullable: true
+        created_by:
+          type: integer
+          description: ID of the user who created the payment.
+          nullable: true
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the payment.
+          nullable: true
+        deleted_by:
+          type: integer
+          description: ID of the user who deleted the payment.
+          nullable: true
+        date:
+          type: string
+          format: date-time
+          description: The date the payment was processed.
 
 
 

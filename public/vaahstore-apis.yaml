@@ -31,6 +31,8 @@ tags:
     description: Everything about Cart Process in VaahStore
   - name: Orders
     description: Everything about Order Process in VaahStore
+  - name: Payments
+    description: Everything about Payments in VaahStore
 paths:
   /stores:
     get:
@@ -7345,6 +7347,517 @@ paths:
                     example: An unexpected error occurred.
                   data:
                     type: null
+  /payments:
+    get:
+      tags:
+        - Payments
+      summary: Get list of payments
+      description: Retrieve list of all the payments.
+      operationId: getPaymentsList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Payment'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/payments?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      summary: Create a new payment
+      description: This endpoint handles creating a new payment for one or more orders. Only Cash on Delivery (COD) payments are currently supported.
+      operationId: createPaymentItem
+      tags:
+        - Payments
+      requestBody:
+        description: Data required to create a payment
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_st_payment_method_id:
+                  type: integer
+                  description: The payment method ID.
+                  example: 1
+                amount:
+                  type: number
+                  format: float
+                  example: 50
+                  description: The total amount provide for the payment.
+                orders:
+                  type: array
+                  description: List of orders to be paid
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the order.
+                        example: 1
+                      user_name:
+                        type: string
+                        description: Name of the user placing the order.
+                        example: John Doe
+                      pay_amount:
+                        type: number
+                        format: float
+                        description: The amount to be paid for the order.
+                        example: 50
+                      payable_amount:
+                        type: number
+                        format: float
+                        description: The total amount payable for the order.
+                        example: 50
+                    required:
+                      - id
+                      - user_name
+                      - pay_amount
+                      - payable_amount
+                payment_method:
+                  type: object
+                  properties:
+                    slug:
+                      type: string
+                      description: The slug of the payment method (e.g., 'cod').
+                      example: cod
+                  required:
+                    - slug
+                notes:
+                  type: string
+                  description: Additional notes for the payment.
+              required:
+                - orders
+                - vh_st_payment_method_id
+                - payment_method
+                - amount
+      responses:
+        '200':
+          description: Successfully created a payment item
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      uuid:
+                        type: string
+                        nullable: true
+                      transaction_id:
+                        type: string
+                        description: The unique transaction ID.
+                      amount:
+                        type: string
+                      vh_st_payment_method_id:
+                        type: integer
+                      payment_method:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          slug:
+                            type: string
+                      taxonomy_id_payment_status:
+                        type: integer
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          slug:
+                            type: string
+                      status_notes:
+                        type: string
+                        description: Notes regarding payment status.
+                      date:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                        nullable: true
+                      created_by:
+                        type: integer
+                        nullable: true
+                      created_by_user:
+                        type: object
+                        nullable: true
+                      updated_by:
+                        type: integer
+                        nullable: true
+                      updated_by_user:
+                        type: object
+                        nullable: true
+                      deleted_by:
+                        type: integer
+                        nullable: true
+                      deleted_by_user:
+                        type: object
+                        nullable: true
+                      order_payments:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                              nullable: true
+                            vh_st_payment_id:
+                              type: integer
+                            vh_st_order_id:
+                              type: integer
+                            taxonomy_id_order_payment_status:
+                              type: integer
+                            payable_amount:
+                              type: string
+                            payment_amount:
+                              type: string
+                            remaining_payable_amount:
+                              type: string
+                            date:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            taxonomy_order_payment_status:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+                                slug:
+                                  type: string
+                            order:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                uuid:
+                                  type: string
+                                vh_user_id:
+                                  type: integer
+                                order_status:
+                                  type: string
+                                amount:
+                                  type: number
+                                payable:
+                                  type: number
+                                paid:
+                                  type: number
+                                is_paid:
+                                  type: integer
+                                is_active:
+                                  type: integer
+                                created_at:
+                                  type: string
+                                  format: date-time
+                                updated_at:
+                                  type: string
+                                  format: date-time
+                                user:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                    first_name:
+                                      type: string
+                                    email:
+                                      type: string
+                                    phone:
+                                      type: string
+                                    display_name:
+                                      type: string
+                                    avatar:
+                                      type: string
+                                    name:
+                                      type: string
+        '400':
+          description: Invalid input or validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: The payment amount for order 'John Doe' must be greater than 0.
+        '422':
+          description: Validation error for orders or payment method
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: The orders field is required.
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: An unexpected error occurred.
+    put:
+      tags:
+        - Payments
+      summary: Update list of payments
+      description: This endpoint allows you to update multiple payments records based on the provided input, including actions like activating, deactivating, trashing, or restoring payments.
+      operationId: updatePaymentsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payments to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payments have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Payments
+      summary: Delete list of payments
+      description: This endpoint allows you to delete multiple payment records based on the provided input.
+      operationId: deletePaymentsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payments to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payments have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -8778,3 +9291,98 @@ components:
           type: integer
           example: 1
           description: The ID of the user who last updated the order.
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          description: Unique identifier for the payment.
+        vh_st_payment_method_id:
+          type: integer
+          description: The ID of the payment method used.
+        amount:
+          type: string
+          description: Total payment amount.
+        transaction_id:
+          type: string
+          description: Unique transaction identifier.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was last updated.
+        status:
+          type: object
+          description: Status details of the payment.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Status name of the payment.
+            slug:
+              type: string
+              description: Slug of the payment status.
+        payment_method:
+          type: object
+          description: Payment method details.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Name of the payment method.
+            slug:
+              type: string
+              description: Slug of the payment method.
+        status_notes:
+          type: string
+          description: Notes regarding the payment status.
+        orders_count:
+          type: integer
+          description: The number of orders associated with the payment.
+        meta:
+          type: object
+          description: Additional metadata for the payment.
+        is_active:
+          type: boolean
+          description: Whether the payment is active.
+          nullable: true
+        notes:
+          type: string
+          description: Additional notes regarding the payment.
+          nullable: true
+        payment_gate_status:
+          type: string
+          description: The status of the payment gateway.
+          nullable: true
+        payment_gate_response:
+          type: string
+          description: The response from the payment gateway.
+          nullable: true
+        deleted_at:
+          type: string
+          format: date-time
+          description: The date and time the payment was deleted.
+          nullable: true
+        created_by:
+          type: integer
+          description: ID of the user who created the payment.
+          nullable: true
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the payment.
+          nullable: true
+        deleted_by:
+          type: integer
+          description: ID of the user who deleted the payment.
+          nullable: true
+        date:
+          type: string
+          format: date-time
+          description: The date the payment was processed.
