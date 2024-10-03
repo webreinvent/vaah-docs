@@ -120,6 +120,8 @@ paths:
     $ref: './carts/addToWishlist.yaml'  # Reference to  add to wishlist  file
   '/carts/save/cart-user-address':
     $ref: './carts/saveAddress.yaml'  # Reference to  save cart user address  file
+  '/carts/remove/cart-user-address':
+    $ref: './carts/removeAddress.yaml'  # Reference to  remove cart user address  file
 
 components:
   securitySchemes:
