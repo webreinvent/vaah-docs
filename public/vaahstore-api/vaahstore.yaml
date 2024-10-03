@@ -64,6 +64,8 @@ paths:
     $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
   '/products/add/product-to-cart':
     $ref: './products/addToCart.yaml'  # Reference to the add product to cart file
+
+
   '/vendors':
     $ref: './vendors/vendors.yaml'  # Reference to the vendors file
   '/vendors/{id}':
@@ -76,6 +78,8 @@ paths:
     $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
   '/vendors/add/user':
     $ref: './vendors/attachProducts.yaml'  # Reference to the vendors attachment with user file
+
+
   '/productvariations':
     $ref: './product-variations/variations.yaml'  # Reference to the productvariations file
   '/productvariations/{id}':
@@ -135,6 +139,11 @@ paths:
     $ref: './orders/index.yaml'  # Reference to order file
   '/orders/{id}':
     $ref: './orders/update.yaml'  # Reference to order item file
+  '/orders/{id}/action/{action}':
+    $ref: './orders/itemAction.yaml'  # Reference to order item action file
+  '/orders/action/{action}':
+    $ref: './orders/listAction.yaml'  # Reference to order list actions file
+  
 
 components:
   securitySchemes:
