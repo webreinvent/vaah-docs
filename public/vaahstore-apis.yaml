@@ -5963,6 +5963,72 @@ paths:
                     items:
                       type: string
                       example: Error saving address.
+  /carts/remove/cart-user-address:
+    post:
+      tags:
+        - Carts
+      summary: Delete cart-user address
+      description: Deletes the user's address linked to the cart by the address ID.
+      operationId: removeCartUserAddress
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_address:
+                  type: object
+                  description: Contains details of the address to be deleted.
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                      description: The ID of the address to be deleted.
+                    vh_user_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the user owning the cart.
+                  required:
+                    - id
+                    - vh_user_id
+              required:
+                - user_address
+      responses:
+        '200':
+          description: Address deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Successfully deleted.
+                  data:
+                    type: object
+                    properties:
+                      cart_id:
+                        type: integer
+                        example: 5
+                        description: The ID of the cart associated with the user.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid address ID.
 components:
   securitySchemes:
     bearerAuth:
