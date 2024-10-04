@@ -9033,144 +9033,6 @@ paths:
           content:
             application/json:
               schema: null
-    post:
-      tags:
-        - Product Medias
-      summary: Create a product media
-      operationId: createProductMedia
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                vh_st_product_id:
-                  type: integer
-                  description: ID of the product.
-                taxonomy_id_product_media_status:
-                  type: integer
-                  description: ID of the status.
-                product:
-                  type: object
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        description: The ID of the product.
-                    required:
-                      - id
-                product_variation:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        description: The ID of the product variation.
-                    required:
-                      - id
-                images:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        description: The name of the image.
-                      slug:
-                        type: string
-                        description: The slug of the image.
-                      url:
-                        type: string
-                        description: The URL of the image.
-                      path:
-                        type: string
-                        description: The path where the image is stored.
-                      size:
-                        type: integer
-                        description: The size of the image in bytes.
-                      type:
-                        type: string
-                        description: The type of the image.
-                      extension:
-                        type: string
-                        description: The file extension of the image.
-                      mime_type:
-                        type: string
-                        description: The MIME type of the image.
-                      url_thumbnail:
-                        type: string
-                        description: The URL of the image thumbnail.
-                      thumbnail_size:
-                        type: integer
-                        description: The size of the thumbnail in bytes.
-                    required:
-                      - name
-                      - slug
-                      - url
-                      - path
-                      - size
-                      - type
-                      - extension
-                      - mime_type
-                      - url_thumbnail
-                      - thumbnail_size
-              required:
-                - taxonomy_id_product_media_status
-                - vh_st_product_id
-      responses:
-        '200':
-          description: Product media created successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  messages:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - Saved successfully
-                  data:
-                    $ref: '#/components/schemas/ProductMedia'
-        '400':
-          description: Validation error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - Product media already exists for this variation.
-        '409':
-          description: Conflict error if product media already exists
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - Product media already exists for this variation.
     put:
       tags:
         - Product Medias
@@ -9372,6 +9234,266 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /productmedias/{id}:
+    get:
+      tags:
+        - Product Medias
+      summary: Get record by product media ID
+      description: Retrieve a product media by its unique identifier.
+      operationId: getProductMediaById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product-media Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the operation was successful
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: Product media ID
+                      uuid:
+                        type: string
+                        description: Unique identifier of the product media
+                      vh_st_product_id:
+                        type: integer
+                        description: Associated product ID
+                      taxonomy_id_product_media_status:
+                        type: integer
+                        description: Status taxonomy ID of the product media
+                      name:
+                        type: string
+                        description: Name of the product media
+                      type:
+                        type: string
+                        description: Type of the media (e.g., "image")
+                      status_notes:
+                        type: string
+                        description: Additional notes on the media status
+                      is_active:
+                        type: boolean
+                        description: Whether the product media is active
+                      created_by:
+                        type: integer
+                        description: User ID who created the product media
+                      updated_by:
+                        type: integer
+                        description: User ID who last updated the product media
+                      deleted_by:
+                        type: integer
+                        nullable: true
+                        description: User ID who deleted the product media, if applicable
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: Creation timestamp
+                      updated_at:
+                        type: string
+                        format: date-time
+                        description: Last update timestamp
+                      deleted_at:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        description: Deletion timestamp, if applicable
+                      listed_variation:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Variation ID
+                            name:
+                              type: string
+                              description: Variation name
+                            slug:
+                              type: string
+                              description: Variation slug
+                      base_path:
+                        type: string
+                        description: Base path for accessing media
+                      images:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Image ID
+                            uuid:
+                              type: string
+                              description: Unique identifier of the image
+                            vh_st_product_media_id:
+                              type: integer
+                              description: Product media ID associated with the image
+                            name:
+                              type: string
+                              description: Image name
+                            slug:
+                              type: string
+                              description: Image slug
+                            url:
+                              type: string
+                              description: URL of the image
+                            path:
+                              type: string
+                              description: Path where the image is stored
+                            size:
+                              type: integer
+                              description: Size of the image in bytes
+                            type:
+                              type: string
+                              description: Type of the image (e.g., "image")
+                            extension:
+                              type: string
+                              description: File extension of the image
+                            mime_type:
+                              type: string
+                              description: MIME type of the image
+                            url_thumbnail:
+                              type: string
+                              description: Thumbnail URL of the image
+                            thumbnail_size:
+                              type: integer
+                              description: Size of the thumbnail in bytes
+                      created_by_user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: User ID
+                      updated_by_user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: User ID
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: Status ID
+                          name:
+                            type: string
+                            description: Status name
+                          slug:
+                            type: string
+                            description: Status slug
+                      product:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: Product ID
+                          name:
+                            type: string
+                            description: Product name
+                          slug:
+                            type: string
+                            description: Product slug
+                          deleted_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                            description: Product deletion timestamp
+                      product_variation_media:
+                        type: array
+                        description: This contains the variations array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Product variation media ID
+                            pivot:
+                              type: object
+                              properties:
+                                vh_st_product_media_id:
+                                  type: integer
+                                  description: Product media ID
+                                vh_st_product_variation_id:
+                                  type: integer
+                                  description: Product variation ID
+                                vh_st_product_id:
+                                  type: integer
+                                  description: Product ID associated with the pivot
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Product Medias
+      summary: Delete a record by ID
+      description: Delete a single product media by its ID.
+      operationId: deleteProductMediaById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product media Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:
