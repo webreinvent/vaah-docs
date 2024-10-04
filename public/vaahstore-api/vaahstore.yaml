@@ -165,6 +165,10 @@ paths:
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file
   '/productattributes/{id}':
     $ref: './product-attributes/update.yaml'  # Reference to product attributes item file
+  '/productattributes/{id}/action/{action}':
+    $ref: './product-attributes/itemAction.yaml'  # Reference to product attributes item action file
+  '/productattributes/action/{action}':
+    $ref: './product-attributes/listAction.yaml'  # Reference to product attributes list actions file
 
 components:
   securitySchemes:
