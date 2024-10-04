@@ -37,6 +37,8 @@ tags:
     description: Everything about Product Attributes in VaahStore
   - name: Product Medias
     description: Everything about Product Medias in VaahStore
+  - name: Categories
+    description: Everything about Categories in VaahStore
 paths:
   /stores:
     get:
@@ -9633,6 +9635,321 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /categories:
+    get:
+      tags:
+        - Categories
+      summary: Get list of all categories
+      description: Retrieve list of all the categories.
+      operationId: getCategoriesList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/categories?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Categories
+      summary: Create a category
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the category
+                slug:
+                  type: string
+                  description: Slug for the category
+                parent_id:
+                  type: integer
+                  nullable: true
+                  description: Id of the parent category
+              required:
+                - name
+                - slug
+      responses:
+        '200':
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Category'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The Name field is required.
+        '409':
+          description: Conflict error if Name already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Name already exists for this category.
+    put:
+      tags:
+        - Categories
+      summary: Update list of categories
+      description: This endpoint allows you to update multiple categories records based on the provided input, including actions like activating, deactivating, trashing, or restoring categories.
+      operationId: updateCategoriesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the categories to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified categories have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Categories
+      summary: Delete list of categories
+      description: This endpoint allows you to delete multiple categories records based on the provided input.
+      operationId: deleteCategoriesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the categories to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified categories have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -11361,3 +11678,82 @@ components:
                   vh_st_product_id:
                     type: integer
                     description: The ID of the product in the pivot table.
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the category
+        uuid:
+          type: string
+          format: uuid
+          description: UUID of the category
+        parent_id:
+          type: integer
+          nullable: true
+          description: ID of the parent category (nullable)
+        name:
+          type: string
+          description: Name of the category
+        slug:
+          type: string
+          description: Slug of the category
+        is_active:
+          type: integer
+          description: Indicates if the category is active (1 = active, 0 = inactive)
+        meta:
+          type: object
+          nullable: true
+          description: Meta information about the category (nullable)
+        parent_category:
+          type: object
+          nullable: true
+          description: Parent category details
+          properties:
+            id:
+              type: integer
+              description: ID of the parent category
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the parent category
+            parent_id:
+              type: integer
+              nullable: true
+              description: Parent ID of the parent category (nullable)
+            name:
+              type: string
+              description: Name of the parent category
+            slug:
+              type: string
+              description: Slug of the parent category
+            is_active:
+              type: integer
+              description: Indicates if the parent category is active (1 = active, 0 = inactive)
+            meta:
+              type: object
+              nullable: true
+              description: Meta information about the parent category (nullable)
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp of when the category was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of when the category was last updated
+        created_by:
+          type: integer
+          description: ID of the user who created the category
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the category
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of when the category was deleted (nullable)
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the category (nullable)
