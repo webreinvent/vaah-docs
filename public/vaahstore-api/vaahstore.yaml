@@ -176,6 +176,10 @@ paths:
     $ref: './product-medias/index.yaml'  # Reference to product medias file
   '/productmedias/{id}':
     $ref: './product-medias/update.yaml'  # Reference to product media item file
+  '/productmedias/{id}/action/{action}':
+    $ref: './product-medias/itemAction.yaml'  # Reference to product media item action file
+  '/productmedias/action/{action}':
+    $ref: './product-medias/listAction.yaml'  # Reference to product media list action file
 
 components:
   securitySchemes:
