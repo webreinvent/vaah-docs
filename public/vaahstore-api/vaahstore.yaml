@@ -29,6 +29,11 @@ tags:
     description: Everything about Product Stocks in VaahStore
   - name: Carts
     description: Everything about Cart Process in VaahStore
+  - name: Orders
+    description: Everything about Order Process in VaahStore
+  - name: Payments
+    description: Everything about Payments in VaahStore
+
 
 paths:
   '/stores':
@@ -62,6 +67,8 @@ paths:
     $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
   '/products/add/product-to-cart':
     $ref: './products/addToCart.yaml'  # Reference to the add product to cart file
+
+
   '/vendors':
     $ref: './vendors/vendors.yaml'  # Reference to the vendors file
   '/vendors/{id}':
@@ -74,6 +81,8 @@ paths:
     $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
   '/vendors/add/user':
     $ref: './vendors/attachProducts.yaml'  # Reference to the vendors attachment with user file
+
+
   '/productvariations':
     $ref: './product-variations/variations.yaml'  # Reference to the productvariations file
   '/productvariations/{id}':
@@ -128,6 +137,30 @@ paths:
     $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
   '/carts/get-order-details/{order_id}':
     $ref: './carts/getOrder.yaml'  # Reference to get order file
+
+  '/orders':
+    $ref: './orders/index.yaml'  # Reference to order file
+  '/orders/{id}':
+    $ref: './orders/update.yaml'  # Reference to order item file
+  '/orders/{id}/action/{action}':
+    $ref: './orders/itemAction.yaml'  # Reference to order item action file
+  '/orders/action/{action}':
+    $ref: './orders/listAction.yaml'  # Reference to order list actions file
+  '/orders/get-order-items/{id}':
+    $ref: './orders/getOrderItems.yaml'  # Reference to get shipped order item details file
+
+  '/payments':
+    $ref: './payments/index.yaml'  # Reference to payments file
+  '/payments/{id}':
+    $ref: './payments/update.yaml'  # Reference to payment item file
+  '/payments/{id}/action/{action}':
+    $ref: './payments/itemAction.yaml'  # Reference to payment item action file
+  '/payments/action/{action}':
+    $ref: './payments/listAction.yaml'  # Reference to payment list actions file
+  '/payments/search/orders':
+    $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
+
+
 
 components:
   securitySchemes:
@@ -1440,6 +1473,249 @@ components:
         - id
         - vh_user_id
         - user
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 6
+          description: The ID of the order.
+        uuid:
+          type: string
+          example: "b067e5fa-bfbc-4e91-beb2-ca0b1000cd53"
+          description: A unique identifier for the order.
+        vh_user_id:
+          type: integer
+          example: 121
+          description: The ID of the user associated with the order.
+        order_status:
+          type: string
+          example: "Placed"
+          description: The current status of the order.
+        taxonomy_id_payment_status:
+          type: integer
+          description: The id of the order payment status.
+        order_shipment_status:
+          type: string
+          example: "Pending"
+          description: The current shipment status of the order.
+        amount:
+          type: number
+          format: float
+          example: 25.00
+          description: The total amount for the order.
+        delivery_fee:
+          type: number
+          format: float
+          example: 0.00
+          description: The delivery fee associated with the order.
+        taxes:
+          type: number
+          format: float
+          example: 0.00
+          description: The total taxes applied to the order.
+        discount:
+          type: number
+          format: float
+          example: 0.00
+          description: The total discount applied to the order.
+        payable:
+          type: number
+          format: float
+          example: 25.00
+          description: The total amount that needs to be paid for the order.
+        paid:
+          type: number
+          format: float
+          example: 0.00
+          description: The amount that has been paid for the order.
+        is_paid:
+          type: integer
+          nullable: true
+          example: 1
+          description: Indicates if the order has been paid for.
+        is_active:
+          type: integer
+          example: 1
+          description: Indicates if the order is currently active.
+        items_count:
+          type: integer
+          example: 2
+          description: The total number of items in the order.
+        payment_method:
+          type: string
+          nullable: true
+          example: null
+          description: The payment method used for the order.
+        order_payment_status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 64
+              description: The ID of the payment status.
+            name:
+              type: string
+              example: "Pending"
+              description: The name of the payment status.
+            slug:
+              type: string
+              example: "pending"
+              description: A URL-friendly version of the payment status name.
+        status:
+          type: string
+          nullable: true
+          example: null
+          description: Additional status information for the order.
+        status_notes:
+          type: string
+          nullable: true
+          example: null
+          description: Any notes related to the status of the order.
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 121
+              description: The ID of the user.
+            first_name:
+              type: string
+              example: "Olin"
+              description: The first name of the user.
+            email:
+              type: string
+              example: "shivam1@zieme.org"
+              description: The email address of the user.
+            phone:
+              type: string
+              example: "2509077310"
+              description: The phone number of the user.
+            display_name:
+              type: string
+              example: "shivam"
+              description: The display name of the user.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the order.
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-10-03T08:05:52Z"
+          description: The date and time when the order was created.
+        created_by:
+          type: integer
+          example: 1
+          description: The ID of the user who created the order.
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-10-03T08:05:52Z"
+          description: The date and time when the order was last updated.
+        updated_by:
+          type: integer
+          example: 1
+          description: The ID of the user who last updated the order.
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          description: Unique identifier for the payment.
+        vh_st_payment_method_id:
+          type: integer
+          description: The ID of the payment method used.
+        amount:
+          type: string
+          description: Total payment amount.
+        transaction_id:
+          type: string
+          description: Unique transaction identifier.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was last updated.
+        status:
+          type: object
+          description: Status details of the payment.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Status name of the payment.
+            slug:
+              type: string
+              description: Slug of the payment status.
+        payment_method:
+          type: object
+          description: Payment method details.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Name of the payment method.
+            slug:
+              type: string
+              description: Slug of the payment method.
+        status_notes:
+          type: string
+          description: Notes regarding the payment status.
+        orders_count:
+          type: integer
+          description: The number of orders associated with the payment.
+        meta:
+          type: object
+          description: Additional metadata for the payment.
+        is_active:
+          type: boolean
+          description: Whether the payment is active.
+          nullable: true
+        notes:
+          type: string
+          description: Additional notes regarding the payment.
+          nullable: true
+        payment_gate_status:
+          type: string
+          description: The status of the payment gateway.
+          nullable: true
+        payment_gate_response:
+          type: string
+          description: The response from the payment gateway.
+          nullable: true
+        deleted_at:
+          type: string
+          format: date-time
+          description: The date and time the payment was deleted.
+          nullable: true
+        created_by:
+          type: integer
+          description: ID of the user who created the payment.
+          nullable: true
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the payment.
+          nullable: true
+        deleted_by:
+          type: integer
+          description: ID of the user who deleted the payment.
+          nullable: true
+        date:
+          type: string
+          format: date-time
+          description: The date the payment was processed.
+
+
+
+
 
 
 
