@@ -8471,9 +8471,9 @@ paths:
     put:
       tags:
         - Product Attributes
-      summary: Update list of payments
-      description: This endpoint allows you to update multiple payments records based on the provided input, including actions like activating, deactivating, trashing, or restoring payments.
-      operationId: updatePaymentsList
+      summary: Update list of product attributes
+      description: This endpoint allows you to update multiple product attributes records based on the provided input, including actions like activating, deactivating, trashing, or restoring product attributes.
+      operationId: updateProductAttributesList
       requestBody:
         required: true
         content:
@@ -8497,7 +8497,7 @@ paths:
                     properties:
                       id:
                         type: integer
-                        description: The ID of the payments to be updated.
+                        description: The ID of the product attributes to be updated.
                         example: 1
                   example:
                     - id: 1
@@ -8505,7 +8505,7 @@ paths:
                     - id: 3
       responses:
         '200':
-          description: Action was successful and the specified payments have been updated.
+          description: Action was successful and the specified product attributes have been updated.
           content:
             application/json:
               schema:
