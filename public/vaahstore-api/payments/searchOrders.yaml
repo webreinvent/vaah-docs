@@ -1,0 +1,57 @@
+post:
+  tags:
+    - Payments
+  summary: Search active orders with unpaid balances.
+  operationId: searchOrders
+  parameters:
+    - in: query
+      name: query
+      schema:
+        type: string
+      description: The search query to filter orders based on the user's display name, first name, or email.
+      required: false
+  responses:
+    '200':
+      description: A list of orders matching the search criteria.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Indicates whether the search was successful.
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The order ID.
+                    amount:
+                      type: number
+                      format: float
+                      description: The total amount of the order.
+                    paid:
+                      type: number
+                      format: float
+                      description: The amount already paid for the order.
+                    payable_amount:
+                      type: number
+                      format: float
+                      description: The remaining amount to be paid for the order.
+                    user_name:
+                      type: string
+                      description: The display name of the user who placed the order.
+                    vh_user_id:
+                      type: integer
+                      description: The user ID which the order belongs to.
+                    created_at:
+                      type: string
+                      format: date-time
+                      description: The date and time the order was created.
+                    updated_at:
+                      type: string
+                      format: date-time
+                      description: The date and time the order was last updated.
