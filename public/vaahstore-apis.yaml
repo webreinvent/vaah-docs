@@ -33,6 +33,10 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
+  - name: Product Attributes
+    description: Everything about Product Attributes in VaahStore
+  - name: Product Medias
+    description: Everything about Product Medias in VaahStore
 paths:
   /stores:
     get:
@@ -8349,6 +8353,1285 @@ paths:
                           type: string
                           format: date-time
                           description: The date and time the order was last updated.
+  /productattributes:
+    get:
+      tags:
+        - Product Attributes
+      summary: Get list of product attributes
+      description: Retrieve list of all the product attributes.
+      operationId: getProductAttributesList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductAttribute'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/productattributes?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Product Attributes
+      summary: Create a new product attribute.
+      operationId: createProductAttribute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_st_product_variation_id:
+                  type: integer
+                  description: The ID of the product variation.
+                vh_st_attribute_id:
+                  type: integer
+                  description: The ID of the attribute.
+                attribute_values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute value.
+                      new_value:
+                        type: string
+                        description: The new attribute value.
+                        maxLength: 100
+                      default_value:
+                        type: string
+                        description: The default attribute value.
+                    required:
+                      - id
+                      - new_value
+                      - default_value
+              required:
+                - vh_st_product_variation_id
+                - vh_st_attribute_id
+      responses:
+        '200':
+          description: Successfully created a product attribute.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the operation was successful.
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductAttribute'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the operation was successful.
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    description: A list of validation error messages.
+                    example:
+                      - The Product Variation field is required
+                      - The Attribute field is required
+                      - The Attribute Value field should not exceed 100 characters
+    put:
+      tags:
+        - Product Attributes
+      summary: Update list of product attributes
+      description: This endpoint allows you to update multiple product attributes records based on the provided input, including actions like activating, deactivating, trashing, or restoring product attributes.
+      operationId: updateProductAttributesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product attributes to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified product attributes have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Product Attributes
+      summary: Delete list of product attributes
+      description: This endpoint allows you to delete multiple product attribute records based on the provided input.
+      operationId: deleteProductAttributesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payments to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payments have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /productattributes/{id}:
+    get:
+      tags:
+        - Product Attributes
+      summary: Get record by product attribute ID
+      description: Retrieve a product attribute by its unique identifier.
+      operationId: getProductAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product-attribute Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductAttribute'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Product Attributes
+      summary: Update an existing record
+      description: Update a product attribute record with the specified ID using the provided details.
+      operationId: updateProductAttribute
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_st_product_variation_id:
+                  type: integer
+                  description: The ID of the product variation.
+                vh_st_attribute_id:
+                  type: integer
+                  description: The ID of the attribute.
+                attribute:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the attribute.
+                    id:
+                      type: integer
+                      description: The ID of the attribute.
+                    type:
+                      type: string
+                      description: The type of the attribute.
+                    deleted_at:
+                      type: string
+                      format: date-time
+                      nullable: true
+                      description: The timestamp when the attribute was deleted.
+                  required:
+                    - id
+                    - name
+                attribute_values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute value.
+                      default_value:
+                        type: string
+                        description: The default value of the attribute.
+                      new_value:
+                        type: string
+                        description: The new value of the attribute, if provided.
+                    required:
+                      - id
+                      - default_value
+                      - new_value
+              required:
+                - vh_st_product_variation_id
+                - vh_st_attribute_id
+                - attribute
+                - attribute_values
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProductStock'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Product Attributes
+      summary: Delete a record by ID
+      description: Delete a single product attribute by its ID.
+      operationId: deleteProductAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product attribute Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /productattributes/{id}/action/{action}:
+    patch:
+      tags:
+        - Product Attributes
+      summary: Perform an action on a product attribute
+      description: |
+        This endpoint allows you to perform various actions on a product attribute item, such as activating, deactivating, trashing, or restoring a product attribute.
+      operationId: itemActionProductAttribute
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /productattributes/action/{action}:
+    put:
+      tags:
+        - Product Attributes
+      summary: bulk actions on product attributes
+      description: This endpoint allows various bulk actions to be performed on product attributes list based on the provided action type.
+      operationId: bulkActionsProductAttributes
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /productmedias:
+    get:
+      tags:
+        - Product Medias
+      summary: Get list of all product media
+      description: Retrieve list of all the product medias.
+      operationId: getProductStocksList
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/products'
+        - $ref: '#/components/parameters/product_variations'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductMedia'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/productmedias?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Product Medias
+      summary: Update a list of product medias
+      description: This endpoint allows you to update multiple product medias records based on the provided input, including actions like activating, deactivating, trashing, or restoring product medias.
+      operationId: updateProductMediasList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product medias to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified product medias have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Product Medias
+      summary: Delete list of product medias
+      description: This endpoint allows you to delete multiple product medias records based on the provided input.
+      operationId: deleteProductMediasList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product medias to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified product medias have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /productmedias/{id}:
+    get:
+      tags:
+        - Product Medias
+      summary: Get record by product media ID
+      description: Retrieve a product media by its unique identifier.
+      operationId: getProductMediaById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product-media Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the operation was successful
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: Product media ID
+                      uuid:
+                        type: string
+                        description: Unique identifier of the product media
+                      vh_st_product_id:
+                        type: integer
+                        description: Associated product ID
+                      taxonomy_id_product_media_status:
+                        type: integer
+                        description: Status taxonomy ID of the product media
+                      name:
+                        type: string
+                        description: Name of the product media
+                      type:
+                        type: string
+                        description: Type of the media (e.g., "image")
+                      status_notes:
+                        type: string
+                        description: Additional notes on the media status
+                      is_active:
+                        type: boolean
+                        description: Whether the product media is active
+                      created_by:
+                        type: integer
+                        description: User ID who created the product media
+                      updated_by:
+                        type: integer
+                        description: User ID who last updated the product media
+                      deleted_by:
+                        type: integer
+                        nullable: true
+                        description: User ID who deleted the product media, if applicable
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: Creation timestamp
+                      updated_at:
+                        type: string
+                        format: date-time
+                        description: Last update timestamp
+                      deleted_at:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        description: Deletion timestamp, if applicable
+                      listed_variation:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Variation ID
+                            name:
+                              type: string
+                              description: Variation name
+                            slug:
+                              type: string
+                              description: Variation slug
+                      base_path:
+                        type: string
+                        description: Base path for accessing media
+                      images:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Image ID
+                            uuid:
+                              type: string
+                              description: Unique identifier of the image
+                            vh_st_product_media_id:
+                              type: integer
+                              description: Product media ID associated with the image
+                            name:
+                              type: string
+                              description: Image name
+                            slug:
+                              type: string
+                              description: Image slug
+                            url:
+                              type: string
+                              description: URL of the image
+                            path:
+                              type: string
+                              description: Path where the image is stored
+                            size:
+                              type: integer
+                              description: Size of the image in bytes
+                            type:
+                              type: string
+                              description: Type of the image (e.g., "image")
+                            extension:
+                              type: string
+                              description: File extension of the image
+                            mime_type:
+                              type: string
+                              description: MIME type of the image
+                            url_thumbnail:
+                              type: string
+                              description: Thumbnail URL of the image
+                            thumbnail_size:
+                              type: integer
+                              description: Size of the thumbnail in bytes
+                      created_by_user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: User ID
+                      updated_by_user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: User ID
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: Status ID
+                          name:
+                            type: string
+                            description: Status name
+                          slug:
+                            type: string
+                            description: Status slug
+                      product:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: Product ID
+                          name:
+                            type: string
+                            description: Product name
+                          slug:
+                            type: string
+                            description: Product slug
+                          deleted_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                            description: Product deletion timestamp
+                      product_variation_media:
+                        type: array
+                        description: This contains the variations array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Product variation media ID
+                            pivot:
+                              type: object
+                              properties:
+                                vh_st_product_media_id:
+                                  type: integer
+                                  description: Product media ID
+                                vh_st_product_variation_id:
+                                  type: integer
+                                  description: Product variation ID
+                                vh_st_product_id:
+                                  type: integer
+                                  description: Product ID associated with the pivot
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Product Medias
+      summary: Delete a record by ID
+      description: Delete a single product media by its ID.
+      operationId: deleteProductMediaById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Product media Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /productmedias/{id}/action/{action}:
+    patch:
+      tags:
+        - Product Medias
+      summary: Perform an action on a product media
+      description: |
+        This endpoint allows you to perform various actions on a product media item, such as activating, deactivating, trashing, or restoring a product media.
+      operationId: itemActionProductMedia
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /productmedias/action/{action}:
+    put:
+      tags:
+        - Product Medias
+      summary: bulk actions on product medias
+      description: This endpoint allows various bulk actions to be performed on product medias list based on the provided action type.
+      operationId: bulkActionsProductMedias
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -9877,3 +11160,203 @@ components:
           type: string
           format: date-time
           description: The date the payment was processed.
+    ProductAttribute:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the product attribute.
+        uuid:
+          type: string
+          description: The unique UUID for the product attribute.
+        vh_st_attribute_id:
+          type: integer
+          description: The associated attribute ID.
+        vh_st_variation_id:
+          type: integer
+          description: The associated product variation ID.
+        name:
+          type: string
+          description: Name of the product attribute.
+        type:
+          type: string
+          description: Type or category of the product attribute.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was created.
+        created_by:
+          type: integer
+          description: ID of the user who created the attribute.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was last updated.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the attribute.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the attribute was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the attribute, if applicable.
+        product_variation:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the product variation.
+            name:
+              type: string
+              description: Name of the product variation.
+            is_default:
+              type: integer
+              description: Whether this is the default variation (0 = no, 1 = yes).
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the variation was deleted, if applicable.
+        attribute:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the attribute.
+            name:
+              type: string
+              description: Name of the attribute.
+            type:
+              type: string
+              description: type of the attribute.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the attribute was deleted, if applicable.
+    ProductMedia:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the product media.
+        uuid:
+          type: string
+          format: uuid
+          description: The UUID of the product media.
+        vh_st_product_id:
+          type: integer
+          description: The ID of the associated product.
+        taxonomy_id_product_media_status:
+          type: integer
+          description: The taxonomy ID of the status of the product media.
+        name:
+          type: string
+          description: The name of the media file.
+        is_active:
+          type: integer
+          description: Whether the media is active.
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time when the media was created.
+        created_by:
+          type: integer
+          description: The ID of the user who created the media.
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the media was last updated.
+        updated_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who last updated the media.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the media was deleted.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who deleted the media.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier of the taxonomy status.
+            name:
+              type: string
+              description: The name of the status.
+            slug:
+              type: string
+              description: The slug for the status.
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier of the product.
+            name:
+              type: string
+              description: The name of the product.
+            slug:
+              type: string
+              description: The slug for the product.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: The timestamp when the product was deleted.
+        product_variation_media:
+          type: array
+          description: This contain the array of all the variations exist in this media
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier of the product variation media.
+              uuid:
+                type: string
+                format: uuid
+                description: The UUID of the product variation media.
+              vh_st_product_id:
+                type: integer
+                description: The ID of the associated product.
+              description:
+                type: string
+                description: A description of the product variation media.
+              is_active:
+                type: boolean
+                description: Whether the product variation media is active.
+              is_default:
+                type: boolean
+                description: Whether the product variation media is the default.
+              created_at:
+                type: string
+                format: date-time
+                description: The date and time when the variation media was created.
+              updated_at:
+                type: string
+                format: date-time
+                nullable: true
+                description: The date and time when the variation media was last updated.
+              pivot:
+                type: object
+                properties:
+                  vh_st_product_media_id:
+                    type: integer
+                    description: The ID of the product media in the pivot table.
+                  vh_st_product_variation_id:
+                    type: integer
+                    description: The ID of the product variation in the pivot table.
+                  vh_st_product_id:
+                    type: integer
+                    description: The ID of the product in the pivot table.
