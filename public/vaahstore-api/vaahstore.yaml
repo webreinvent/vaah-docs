@@ -33,7 +33,8 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
-
+  - name: Categories
+    description: Everything about Categories in VaahStore
 
 paths:
   '/stores':
@@ -159,6 +160,10 @@ paths:
     $ref: './payments/listAction.yaml'  # Reference to payment list actions file
   '/payments/search/orders':
     $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
+  '/categories':
+    $ref: './categories/index.yaml'  # Reference to the categories file
+  '/categories/{id}':
+      $ref: './categories/update.yaml'  # Reference to the category item file
 
 
 
@@ -1712,6 +1717,85 @@ components:
           type: string
           format: date-time
           description: The date the payment was processed.
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the category
+        uuid:
+          type: string
+          format: uuid
+          description: UUID of the category
+        parent_id:
+          type: integer
+          nullable: true
+          description: ID of the parent category (nullable)
+        name:
+          type: string
+          description: Name of the category
+        slug:
+          type: string
+          description: Slug of the category
+        is_active:
+          type: integer
+          description: Indicates if the category is active (1 = active, 0 = inactive)
+        meta:
+          type: object
+          nullable: true
+          description: Meta information about the category (nullable)
+        parent_category:
+          type: object
+          nullable: true
+          description: Parent category details
+          properties:
+            id:
+              type: integer
+              description: ID of the parent category
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the parent category
+            parent_id:
+              type: integer
+              nullable: true
+              description: Parent ID of the parent category (nullable)
+            name:
+              type: string
+              description: Name of the parent category
+            slug:
+              type: string
+              description: Slug of the parent category
+            is_active:
+              type: integer
+              description: Indicates if the parent category is active (1 = active, 0 = inactive)
+            meta:
+              type: object
+              nullable: true
+              description: Meta information about the parent category (nullable)
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp of when the category was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of when the category was last updated
+        created_by:
+          type: integer
+          description: ID of the user who created the category
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the category
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of when the category was deleted (nullable)
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the category (nullable)
 
 
 
