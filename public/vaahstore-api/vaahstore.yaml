@@ -185,6 +185,8 @@ paths:
 
   '/categories':
     $ref: './categories/index.yaml'  # Reference to the categories file
+  '/categories/{id}':
+    $ref: './categories/update.yaml'  # Reference to the category item file
 
 components:
   securitySchemes:
