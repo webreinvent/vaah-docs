@@ -11,6 +11,7 @@ get:
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
+    - '$ref': '../vaahstore.yaml#/components/parameters/attributes'
 
 
   responses:
