@@ -45,6 +45,8 @@ tags:
     description: Everything about Warehouses in VaahStore
   - name: Attributes
     description: Everything about Attributes in VaahStore
+  - name: Attribute Groups
+    description: Everything about Attribute Groups in VaahStore
 paths:
   /stores:
     get:
@@ -12155,6 +12157,357 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /attributegroups:
+    get:
+      tags:
+        - Attribute Groups
+      summary: Get list of attribute groups
+      description: Retrieve list of all the attribute groups.
+      operationId: getAttributeGroups
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AttributeGroup'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/attributegroups?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Attribute Groups
+      summary: Create an attribute group
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                active_attributes:
+                  type: array
+                  description: A list of active attributes.
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the attribute.
+                        example: 1
+                      name:
+                        type: string
+                        description: The name of the attribute.
+                        example: Attribute A
+                      slug:
+                        type: string
+                        description: The slug, a URL-friendly version of the name.
+                        example: attribute-a
+                      type:
+                        type: string
+                        description: The type or category of the attribute.
+                        example: property
+                    required:
+                      - id
+                      - name
+                name:
+                  type: string
+                  description: The name of the attribute group or related entity.
+                  example: As
+                slug:
+                  type: string
+                  description: The slug, a URL-friendly version of the name.
+                  example: as
+                description:
+                  type: string
+                  description: A brief description of the attribute group or related entity.
+                  example: as
+                is_active:
+                  type: integer
+                  description: Indicates if the attribute group or related entity is active (1 for active, 0 for inactive).
+                  example: 1
+              required:
+                - name
+                - slug
+                - active_attributes
+      responses:
+        '200':
+          description: Attribute Group created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/AttributeGroup'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The name field is required.
+                      - The slug field is required.
+                      - Please enter Value field.
+                      - The value may not be greater than 250 characters.
+                      - Exceeded the maximum limit of 15 values.
+        '409':
+          description: Conflict error if Attribute already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Attribute with this name already exists.
+                      - Attribute with this slug already exists.
+    put:
+      tags:
+        - Attribute Groups
+      summary: Update a list of attribute groups
+      description: This endpoint allows you to update multiple attribute groups records based on the provided input, including actions like activating, deactivating, trashing, or restoring attribute groups.
+      operationId: updateAttributeGroupsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute groups to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified attribute groups have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Attribute Groups
+      summary: Delete a list of attribute groups
+      description: This endpoint allows you to delete multiple attribute groups records based on the provided input.
+      operationId: deleteAttributeGroupsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute groups to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified attribute groups have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -14483,3 +14836,77 @@ components:
           nullable: true
           description: ID of the user who deleted the attribute, if applicable.
           example: null
+    AttributeGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the attribute group.
+        uuid:
+          type: string
+          description: The universally unique identifier (UUID) for the attribute group.
+        name:
+          type: string
+          description: The name of the attribute group.
+        slug:
+          type: string
+          description: The slug, a URL-friendly version of the name.
+        description:
+          type: string
+          description: A brief description of the attribute group.
+        is_active:
+          type: integer
+          description: Indicates if the attribute group is active (1 for active, 0 for inactive).
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time when the attribute group was created.
+        created_by:
+          type: integer
+          description: The ID of the user who created the attribute group.
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time when the attribute group was last updated.
+        updated_by:
+          type: integer
+          description: The ID of the user who last updated the attribute group.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the attribute group was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who deleted the attribute group, if applicable.
+        attributes_list:
+          type: array
+          description: A list of attributes associated with the attribute group.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier for the attribute.
+              name:
+                type: string
+                description: The name of the attribute.
+              type:
+                type: string
+                description: The type or category of the attribute.
+              deleted_at:
+                type: string
+                format: date-time
+                nullable: true
+                description: The date and time when the attribute was deleted, if applicable.
+              pivot:
+                type: object
+                description: Pivot information linking the attribute to the attribute group.
+                properties:
+                  vh_st_attribute_group_id:
+                    type: integer
+                    description: The ID of the attribute group.
+                  vh_st_attribute_id:
+                    type: integer
+                    description: The ID of the attribute.

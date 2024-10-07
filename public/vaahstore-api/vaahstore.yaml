@@ -45,6 +45,8 @@ tags:
     description: Everything about Warehouses in VaahStore
   - name: Attributes
     description: Everything about Attributes in VaahStore
+  - name: Attribute Groups
+    description: Everything about Attribute Groups in VaahStore
 
 paths:
   '/stores':
@@ -224,6 +226,9 @@ paths:
     $ref: './attributes/itemAction.yaml'  # Reference to attribute item actions file
   '/attributes/action/{action}':
     $ref: './attributes/listAction.yaml'  # Reference to attribute list actions file
+
+  '/attributegroups':
+    $ref: './attribute-groups/index.yaml'  # Reference to attribute groups file
 
 components:
   securitySchemes:
@@ -2578,6 +2583,81 @@ components:
           nullable: true
           description: ID of the user who deleted the attribute, if applicable.
           example: null
+    AttributeGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "The unique identifier for the attribute group."
+        uuid:
+          type: string
+          description: "The universally unique identifier (UUID) for the attribute group."
+        name:
+          type: string
+          description: "The name of the attribute group."
+        slug:
+          type: string
+          description: "The slug, a URL-friendly version of the name."
+        description:
+          type: string
+          description: "A brief description of the attribute group."
+        is_active:
+          type: integer
+          description: "Indicates if the attribute group is active (1 for active, 0 for inactive)."
+        created_at:
+          type: string
+          format: date-time
+          description: "The date and time when the attribute group was created."
+        created_by:
+          type: integer
+          description: "The ID of the user who created the attribute group."
+        updated_at:
+          type: string
+          format: date-time
+          description: "The date and time when the attribute group was last updated."
+        updated_by:
+          type: integer
+          description: "The ID of the user who last updated the attribute group."
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: "The date and time when the attribute group was deleted, if applicable."
+        deleted_by:
+          type: integer
+          nullable: true
+          description: "The ID of the user who deleted the attribute group, if applicable."
+        attributes_list:
+          type: array
+          description: "A list of attributes associated with the attribute group."
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: "The unique identifier for the attribute."
+              name:
+                type: string
+                description: "The name of the attribute."
+              type:
+                type: string
+                description: "The type or category of the attribute."
+              deleted_at:
+                type: string
+                format: date-time
+                nullable: true
+                description: "The date and time when the attribute was deleted, if applicable."
+              pivot:
+                type: object
+                description: "Pivot information linking the attribute to the attribute group."
+                properties:
+                  vh_st_attribute_group_id:
+                    type: integer
+                    description: "The ID of the attribute group."
+                  vh_st_attribute_id:
+                    type: integer
+                    description: "The ID of the attribute."
+
 
 
 
