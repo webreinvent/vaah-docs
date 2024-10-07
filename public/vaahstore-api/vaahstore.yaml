@@ -37,7 +37,12 @@ tags:
     description: Everything about Product Attributes in VaahStore
   - name: Product Medias
     description: Everything about Product Medias in VaahStore
-
+  - name: Categories
+    description: Everything about Categories in VaahStore
+  - name: Brands
+    description: Everything about Brands in VaahStore
+  - name: Warehouses
+    description: Everything about Warehouses in VaahStore
 
 paths:
   '/stores':
@@ -182,7 +187,32 @@ paths:
   '/productmedias/action/{action}':
     $ref: './product-medias/listAction.yaml'  # Reference to product media list action file
 
+  '/categories':
+    $ref: './categories/index.yaml'  # Reference to the categories file
+  '/categories/{id}':
+    $ref: './categories/update.yaml'  # Reference to the category item file
+  '/categories/{id}/action/{action}':
+    $ref: './categories/itemAction.yaml'  # Reference to the category item actions file
+  '/categories/action/{action}':
+    $ref: './categories/listAction.yaml'  # Reference to the category list actions file
 
+  '/brands':
+    $ref: './brands/index.yaml'  # Reference to brands  file
+  '/brands/{id}':
+    $ref: './brands/update.yaml'  # Reference to brand item  file
+  '/brands/{id}/action/{action}':
+    $ref: './brands/itemAction.yaml'  # Reference to brand item action file
+  '/brands/action/{action}':
+    $ref: './brands/listAction.yaml'  # Reference to brand list action file
+
+  '/warehouses':
+    $ref: './warehouses/index.yaml'  # Reference to warehouses  file
+  '/warehouses/{id}':
+    $ref: './warehouses/update.yaml'  # Reference to warehouse item file
+  '/warehouses/{id}/action/{action}':
+    $ref: './warehouses/itemAction.yaml'  # Reference to warehouse item action file
+  '/warehouses/action/{action}':
+    $ref: './warehouses/listAction.yaml'  # Reference to warehouse list action file
 
 components:
   securitySchemes:
@@ -411,6 +441,23 @@ components:
         items:
           type: string
       example: [ 'warehouses-1' ]
+    country:
+      name: filter[country][]
+      in: query
+      required: false
+      description: Filter record by country name
+      schema:
+        type: array
+        items:
+          type: string
+    address:
+      name: filter[state_city]
+      in: query
+      required: false
+      description: Filter records by state, city, or postal code. Partial matching is supported.
+      schema:
+        type: string
+
 
   requestBodies:
     StoreRequestBody:
@@ -773,7 +820,177 @@ components:
                 type: string
                 description: "Additional notes for the product stock"
                 example: "Initial stock addition"
+    BrandsRequestBody:
+      description: "Request body for creating ot updating a brand"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the brand
+              slug:
+                type: string
+                description: Slug for the brand (URL-friendly identifier)
+              status:
+                type: object
+                description: Status details of the brand
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the status
+                required:
+                  - id
+              image:
+                type: string
+                nullable: true
+                description: Image file name or URL for the brand
+              is_active:
+                type: integer
+                description: Indicates if the brand is active (1 = active, 0 = inactive)
+                example: 1
+              meta_title:
+                type: string
+                description: SEO title for the brand
+                example: "samsung"
+              meta_description:
+                type: string
+                description: SEO description for the brand
+                example: "as"
+              meta_keywords:
+                type: array
+                items:
+                  type: string
+                description: SEO keywords for the brand
+                example: [ "as", "as" ]
+              status_notes:
+                type: string
+                nullable: true
+                description: Notes regarding the status of the brand
+                example: "Hello"
+              registered_at:
+                type: string
+                format: date-time
+                description: Date and time when the brand was registered
+                example: "2024-10-07T06:37:58.000Z"
+              registered_by:
+                type: integer
+                description: ID of the user who registered the brand
+                example: 1
+              approved_at:
+                type: string
+                format: date-time
+                description: Date and time when the brand was approved
+                example: "2024-10-07T06:37:58.000Z"
+              approved_by:
+                type: integer
+                description: ID of the user who approved the brand
+                example: 1
+            required:
+              - name
+              - slug
+              - status
+    WarehousesRequestBody:
+      description: "Request body for creating ot updating a warehouse"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the warehouse
+                example: "Warehouse 2"
+              slug:
+                type: string
+                description: URL-friendly identifier for the warehouse
+                example: "warehouse-2"
+              address_1:
+                type: string
+                description: First line of the warehouse address
+                example: "Vitae culpa et debitis."
+              country:
+                type: string
+                description: Country where the warehouse is located
+                example: "India"
+              vendor:
+                type: object
+                description: Vendor associated with the warehouse
+                properties:
+                  id:
+                    type: integer
+                    description: Vendor ID
+                    example: 1
+                  name:
+                    type: string
+                    description: Name of the vendor
+                    example: "Suscipit quos unde quia."
+                  slug:
+                    type: string
+                    description: Slug of the vendor
+                    example: "suscipit-quos-unde-quia"
+                required:
+                  - id
+              vh_st_vendor_id:
+                type: integer
+                description: Vendor ID associated with the warehouse
+                example: 1
+              taxonomy_id_warehouse_status:
+                type: integer
+                description: Taxonomy ID for the warehouse status
+                example: 27
+              address_2:
+                type: string
+                nullable: true
+                description: Second line of the warehouse address
+                example: "Ab hic voluptatem sit."
+              city:
+                type: string
+                description: City where the warehouse is located
+                example: "Eos sint quidem nisi."
+              state:
+                type: string
+                description: State or province where the warehouse is located
+                example: "Ad facilis ut non enim."
+              postal_code:
+                type: string
+                description: Postal or ZIP code of the warehouse
+                example: "123456"
+              is_active:
+                type: integer
+                description: Indicates if the warehouse is active (1 = active, 0 = inactive)
+                example: 1
+              status:
+                type: object
+                description: Status of the warehouse
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the warehouse status
+                    example: 27
+                  uuid:
+                    type: string
+                    description: UUID of the warehouse status
+                    example: "336d82b3-d58a-45cc-9529-e3ecb53b9c4a"
+                required:
+                  - id
+              status_notes:
+                type: string
+                nullable: true
+                description: Notes or comments regarding the status
+                example: "as"
 
+
+            required:
+              - name
+              - slug
+              - vendor
+              - country
+              - address_1
+              - status
+              - vh_st_vendor_id
+              - taxonomy_id_warehouse_status
 
 
 
@@ -1937,7 +2154,352 @@ components:
                   vh_st_product_id:
                     type: integer
                     description: The ID of the product in the pivot table.
-
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the category
+        uuid:
+          type: string
+          format: uuid
+          description: UUID of the category
+        parent_id:
+          type: integer
+          nullable: true
+          description: ID of the parent category (nullable)
+        name:
+          type: string
+          description: Name of the category
+        slug:
+          type: string
+          description: Slug of the category
+        is_active:
+          type: integer
+          description: Indicates if the category is active (1 = active, 0 = inactive)
+        meta:
+          type: object
+          nullable: true
+          description: Meta information about the category (nullable)
+        parent_category:
+          type: object
+          nullable: true
+          description: Parent category details
+          properties:
+            id:
+              type: integer
+              description: ID of the parent category
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the parent category
+            parent_id:
+              type: integer
+              nullable: true
+              description: Parent ID of the parent category (nullable)
+            name:
+              type: string
+              description: Name of the parent category
+            slug:
+              type: string
+              description: Slug of the parent category
+            is_active:
+              type: integer
+              description: Indicates if the parent category is active (1 = active, 0 = inactive)
+            meta:
+              type: object
+              nullable: true
+              description: Meta information about the parent category (nullable)
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp of when the category was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of when the category was last updated
+        created_by:
+          type: integer
+          description: ID of the user who created the category
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the category
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of when the category was deleted (nullable)
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the category (nullable)
+    Warehouse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the warehouse
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier for the warehouse
+        name:
+          type: string
+          description: Name of the warehouse
+        slug:
+          type: string
+          description: URL-friendly identifier for the warehouse
+        address_1:
+          type: string
+          description: First line of the warehouse address
+        address_2:
+          type: string
+          nullable: true
+          description: Second line of the warehouse address
+        city:
+          type: string
+          description: City where the warehouse is located
+        state:
+          type: string
+          description: State or province where the warehouse is located
+        postal_code:
+          type: string
+          description: Postal or ZIP code of the warehouse
+        country:
+          type: string
+          description: Country where the warehouse is located
+        is_active:
+          type: integer
+          description: Indicates if the warehouse is active (1 = active, 0 = inactive)
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the warehouse
+        status:
+          type: object
+          description: Status of the warehouse
+          properties:
+            id:
+              type: integer
+              description: ID of the warehouse status
+            name:
+              type: string
+              description: Name of the status
+            slug:
+              type: string
+              description: Slug of the status
+              example: "approved"
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes or comments regarding the status
+        taxonomy_id_warehouse_status:
+          type: integer
+          description: Taxonomy ID for the warehouse status
+        vh_st_vendor_id:
+          type: integer
+          description: Vendor ID associated with the warehouse
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the warehouse was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the warehouse was last updated
+        created_by:
+          type: integer
+          description: ID of the user who created the warehouse
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the warehouse
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the warehouse was deleted, if applicable
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the warehouse, if applicable
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the brand
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier (UUID) for the brand
+        name:
+          type: string
+          description: Name of the brand
+        slug:
+          type: string
+          description: Slug for the brand (URL-friendly identifier)
+        image:
+          type: string
+          nullable: true
+          description: Filename of the brand's image
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the brand
+        meta_title:
+          type: string
+          nullable: true
+          description: SEO title for the brand
+        meta_description:
+          type: string
+          nullable: true
+          description: SEO description for the brand
+        meta_keywords:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: SEO keywords for the brand
+        is_active:
+          type: integer
+          description: Indicates if the brand is active (1 = active, 0 = inactive)
+        is_default:
+          type: integer
+          nullable: true
+          description: Indicates if the brand is default (1 = default, 0 = not default)
+        taxonomy_id_brand_status:
+          type: integer
+          description: Status ID for the brand taxonomy
+        status:
+          type: object
+          description: Status details of the brand
+          properties:
+            id:
+              type: integer
+              description: Status ID
+            name:
+              type: string
+              description: Status name
+            slug:
+              type: string
+              description: Status slug (URL-friendly identifier)
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes regarding the status of the brand
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was approved
+        approved_by:
+          type: integer
+          nullable: true
+          description: ID of the user who approved the brand
+        approved_by_user:
+          type: object
+          description: Details of the user who approved the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        registered_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was registered
+        registered_by:
+          type: integer
+          nullable: true
+          description: ID of the user who registered the brand
+        registered_by_user:
+          type: object
+          description: Details of the user who registered the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was created
+        created_by:
+          type: integer
+          description: ID of the user who created the brand
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was last updated
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the brand
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was deleted
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the brand
+        products:
+          type: array
+          description: List of products associated with the brand
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Unique identifier of the product
+              name:
+                type: string
+                description: Name of the product
+              slug:
+                type: string
+                description: Slug for the product
+              vh_st_brand_id:
+                type: integer
+                description: Brand ID associated with the product
+              vh_st_store_id:
+                type: integer
+                description: Store ID associated with the product
+              store:
+                type: object
+                description: Details of the store associated with the product
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the store
+                  name:
+                    type: string
+                    description: Name of the store
+                  slug:
+                    type: string
+                    description: Slug for the store
+                  is_default:
+                    type: integer
+                    nullable: true
+                    description: Indicates if the store is default (1 = default, 0 = not default)
 
 
 

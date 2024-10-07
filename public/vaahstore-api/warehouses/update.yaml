@@ -1,0 +1,130 @@
+get:
+  tags:
+    - Warehouses
+  summary: Get record by warehouse ID
+  description: Retrieve a warehouse by its unique identifier.
+  operationId: getWarehouseById
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  responses:
+    '200':
+      description: Warehouse Retrieved Succesfully
+      content:
+        application/json:
+          schema:
+            '$ref': '../vaahstore.yaml#/components/schemas/Brand'
+    '404':
+      description: Record Not Found
+      content:
+        application/json:
+          schema:
+            type: object  # Define the type of the response
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Record not found with ID: {id}"
+                ]
+            required:
+              - errors  # Make errors a required field
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+put:
+  tags:
+    - Warehouses
+  summary: Update an existing record
+  description: Update a warehouse record with the specified ID using the provided details.
+  operationId: updateWarehouse
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  requestBody:
+    '$ref': '../vaahstore.yaml#/components/requestBodies/WarehousesRequestBody'
+  responses:
+    '200':
+      description: Saved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/Warehouse'
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved Successfully"
+    400:
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "This name/slug already exist." ]
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+delete:
+  tags:
+    - Warehouses
+  summary: Delete a record by ID
+  description: Delete a single warehouse by its ID.
+  operationId: deleteWarehouseById
+  parameters:
+    - '$ref': '#/components/parameters/id'
+  responses:
+    '200':
+      description: Brand Deleted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items: { }
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Record has been deleted"
+    '400':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: string
+                items:
+                  type: string
+                  example: "Record does not exist."
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
