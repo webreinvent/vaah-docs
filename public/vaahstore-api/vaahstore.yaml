@@ -163,7 +163,11 @@ paths:
   '/categories':
     $ref: './categories/index.yaml'  # Reference to the categories file
   '/categories/{id}':
-      $ref: './categories/update.yaml'  # Reference to the category item file
+    $ref: './categories/update.yaml'  # Reference to the category item file
+  '/categories/{id}/action/{action}':
+    $ref: './categories/itemAction.yaml'  # Reference to the category item actions file
+  '/categories/action/{action}':
+    $ref: './categories/listAction.yaml'  # Reference to the category list actions file
 
 
 
