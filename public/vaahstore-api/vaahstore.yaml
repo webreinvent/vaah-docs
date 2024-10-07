@@ -43,6 +43,8 @@ tags:
     description: Everything about Brands in VaahStore
   - name: Warehouses
     description: Everything about Warehouses in VaahStore
+  - name: Addresses
+    description: Everything about Addresses in VaahStore
 
 paths:
   '/stores':
@@ -213,6 +215,9 @@ paths:
     $ref: './warehouses/itemAction.yaml'  # Reference to warehouse item action file
   '/warehouses/action/{action}':
     $ref: './warehouses/listAction.yaml'  # Reference to warehouse list action file
+
+  '/addresses':
+    $ref: './addresses/index.yaml'  # Reference to addresses file
 
 components:
   securitySchemes:
