@@ -33,6 +33,10 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
+  - name: Product Attributes
+    description: Everything about Product Attributes in VaahStore
+  - name: Product Medias
+    description: Everything about Product Medias in VaahStore
 
 
 paths:
@@ -159,6 +163,24 @@ paths:
     $ref: './payments/listAction.yaml'  # Reference to payment list actions file
   '/payments/search/orders':
     $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
+
+  '/productattributes':
+    $ref: './product-attributes/index.yaml'  # Reference to product attributes file
+  '/productattributes/{id}':
+    $ref: './product-attributes/update.yaml'  # Reference to product attributes item file
+  '/productattributes/{id}/action/{action}':
+    $ref: './product-attributes/itemAction.yaml'  # Reference to product attributes item action file
+  '/productattributes/action/{action}':
+    $ref: './product-attributes/listAction.yaml'  # Reference to product attributes list actions file
+
+  '/productmedias':
+    $ref: './product-medias/index.yaml'  # Reference to product medias file
+  '/productmedias/{id}':
+    $ref: './product-medias/update.yaml'  # Reference to product media item file
+  '/productmedias/{id}/action/{action}':
+    $ref: './product-medias/itemAction.yaml'  # Reference to product media item action file
+  '/productmedias/action/{action}':
+    $ref: './product-medias/listAction.yaml'  # Reference to product media list action file
 
 
 
@@ -1712,6 +1734,212 @@ components:
           type: string
           format: date-time
           description: The date the payment was processed.
+    ProductAttribute:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the product attribute.
+        uuid:
+          type: string
+          description: The unique UUID for the product attribute.
+        vh_st_attribute_id:
+          type: integer
+          description: The associated attribute ID.
+        vh_st_variation_id:
+          type: integer
+          description: The associated product variation ID.
+        name:
+          type: string
+          description: Name of the product attribute.
+        type:
+          type: string
+          description: Type or category of the product attribute.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was created.
+        created_by:
+          type: integer
+          description: ID of the user who created the attribute.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was last updated.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the attribute.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the attribute was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the attribute, if applicable.
+
+        product_variation:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the product variation.
+            name:
+              type: string
+              description: Name of the product variation.
+            is_default:
+              type: integer
+              description: Whether this is the default variation (0 = no, 1 = yes).
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the variation was deleted, if applicable.
+
+        attribute:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the attribute.
+            name:
+              type: string
+              description: Name of the attribute.
+            type:
+              type: string
+              description: type of the attribute.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the attribute was deleted, if applicable.
+    ProductMedia:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the product media.
+        uuid:
+          type: string
+          format: uuid
+          description: The UUID of the product media.
+        vh_st_product_id:
+          type: integer
+          description: The ID of the associated product.
+        taxonomy_id_product_media_status:
+          type: integer
+          description: The taxonomy ID of the status of the product media.
+        name:
+          type: string
+          description: The name of the media file.
+        is_active:
+          type: integer
+          description: Whether the media is active.
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time when the media was created.
+        created_by:
+          type: integer
+          description: The ID of the user who created the media.
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the media was last updated.
+        updated_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who last updated the media.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the media was deleted.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who deleted the media.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier of the taxonomy status.
+            name:
+              type: string
+              description: The name of the status.
+            slug:
+              type: string
+              description: The slug for the status.
+
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier of the product.
+            name:
+              type: string
+              description: The name of the product.
+            slug:
+              type: string
+              description: The slug for the product.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: The timestamp when the product was deleted.
+        product_variation_media:
+          type: array
+          description: "This contain the array of all the variations exist in this media"
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier of the product variation media.
+              uuid:
+                type: string
+                format: uuid
+                description: The UUID of the product variation media.
+              vh_st_product_id:
+                type: integer
+                description: The ID of the associated product.
+              description:
+                type: string
+                description: A description of the product variation media.
+              is_active:
+                type: boolean
+                description: Whether the product variation media is active.
+              is_default:
+                type: boolean
+                description: Whether the product variation media is the default.
+              created_at:
+                type: string
+                format: date-time
+                description: The date and time when the variation media was created.
+              updated_at:
+                type: string
+                format: date-time
+                nullable: true
+                description: The date and time when the variation media was last updated.
+              pivot:
+                type: object
+                properties:
+                  vh_st_product_media_id:
+                    type: integer
+                    description: The ID of the product media in the pivot table.
+                  vh_st_product_variation_id:
+                    type: integer
+                    description: The ID of the product variation in the pivot table.
+                  vh_st_product_id:
+                    type: integer
+                    description: The ID of the product in the pivot table.
+
+
+
 
 
 
