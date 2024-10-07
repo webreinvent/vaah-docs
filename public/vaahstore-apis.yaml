@@ -39,6 +39,10 @@ tags:
     description: Everything about Product Medias in VaahStore
   - name: Categories
     description: Everything about Categories in VaahStore
+  - name: Brands
+    description: Everything about Brands in VaahStore
+  - name: Warehouses
+    description: Everything about Warehouses in VaahStore
 paths:
   /stores:
     get:
@@ -10255,6 +10259,1138 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /brands:
+    get:
+      tags:
+        - Brands
+      summary: Get list of all brands
+      description: Retrieve list of all the brands.
+      operationId: getBrands
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Brand'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/brands?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Brands
+      summary: Create a brand
+      operationId: createItem
+      requestBody:
+        $ref: '#/components/requestBodies/BrandsRequestBody'
+      responses:
+        '200':
+          description: Brand created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Brand'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Brand already exists for this variation.
+        '409':
+          description: Conflict error if brand already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Brand already exists for this variation.
+    put:
+      tags:
+        - Brands
+      summary: Update a list of brands
+      description: This endpoint allows you to update multiple brands records based on the provided input, including actions like activating, deactivating, trashing, or restoring brands.
+      operationId: updateBrandsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the brands to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified brands have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Brands
+      summary: Delete a list of brands
+      description: This endpoint allows you to delete multiple brands records based on the provided input.
+      operationId: deleteBrandssList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the brands to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified brands have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /brands/{id}:
+    get:
+      tags:
+        - Brands
+      summary: Get record by brand ID
+      description: Retrieve a brand by its unique identifier.
+      operationId: getBrandById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Brand Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Brands
+      summary: Update an existing record
+      description: Update a brand record with the specified ID using the provided details.
+      operationId: updateBrand
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/BrandsRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Brand'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Brands
+      summary: Delete a record by ID
+      description: Delete a single brand by its ID.
+      operationId: deleteBrandById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Brand Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /brands/{id}/action/{action}:
+    patch:
+      tags:
+        - Brands
+      summary: Perform an action on a brand
+      description: |
+        This endpoint allows you to perform various actions on a brand item, such as activating, deactivating, trashing, or restoring a brand.
+      operationId: itemActionBrand
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /brands/action/{action}:
+    put:
+      tags:
+        - Brands
+      summary: bulk actions on brands
+      description: This endpoint allows various bulk actions to be performed on brands list based on the provided action type.
+      operationId: bulkActionsBrands
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /warehouses:
+    get:
+      tags:
+        - Warehouses
+      summary: Get list of all warehouse
+      description: Retrieve list of all the warehouses.
+      operationId: getWarehouses
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/country'
+        - $ref: '#/components/parameters/address'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Warehouse'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/warehouses?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Warehouses
+      summary: Create a warehouse
+      operationId: createItem
+      requestBody:
+        $ref: '#/components/requestBodies/WarehousesRequestBody'
+      responses:
+        '200':
+          description: warehouse created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Warehouse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - warehouse already exists for this vendor.
+        '409':
+          description: Conflict error if warehouse already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - warehouse exists for this vendor.
+    put:
+      tags:
+        - Warehouses
+      summary: Update a list of warehouses
+      description: This endpoint allows you to update multiple warehouses records based on the provided input, including actions like activating, deactivating, trashing, or restoring warehouses.
+      operationId: updateWarehousesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the warehouses to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified warehouses have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Warehouses
+      summary: Delete a list of warehouses
+      description: This endpoint allows you to delete multiple warehouses records based on the provided input.
+      operationId: deleteWarehousesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the warehouse to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified warehouses have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /warehouses/{id}:
+    get:
+      tags:
+        - Warehouses
+      summary: Get record by warehouse ID
+      description: Retrieve a warehouse by its unique identifier.
+      operationId: getWarehouseById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Warehouse Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Warehouses
+      summary: Update an existing record
+      description: Update a warehouse record with the specified ID using the provided details.
+      operationId: updateWarehouse
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/WarehousesRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Warehouse'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Warehouses
+      summary: Delete a record by ID
+      description: Delete a single warehouse by its ID.
+      operationId: deleteWarehouseById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Brand Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /warehouses/{id}/action/{action}:
+    patch:
+      tags:
+        - Warehouses
+      summary: Perform an action on a warehouse
+      description: |
+        This endpoint allows you to perform various actions on a warehouse item, such as activating, deactivating, trashing, or restoring a warehouse.
+      operationId: itemActionWarehouse
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /warehouses/action/{action}:
+    put:
+      tags:
+        - Warehouses
+      summary: bulk actions on warehouses
+      description: This endpoint allows various bulk actions to be performed on warehouses list based on the provided action type.
+      operationId: bulkActionswarehouses
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -10483,6 +11619,22 @@ components:
           type: string
       example:
         - warehouses-1
+    country:
+      name: filter[country][]
+      in: query
+      required: false
+      description: Filter record by country name
+      schema:
+        type: array
+        items:
+          type: string
+    address:
+      name: filter[state_city]
+      in: query
+      required: false
+      description: Filter records by state, city, or postal code. Partial matching is supported.
+      schema:
+        type: string
   requestBodies:
     StoreRequestBody:
       required: true
@@ -10841,6 +11993,177 @@ components:
                 type: string
                 description: Additional notes for the product stock
                 example: Initial stock addition
+    BrandsRequestBody:
+      description: Request body for creating ot updating a brand
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the brand
+              slug:
+                type: string
+                description: Slug for the brand (URL-friendly identifier)
+              status:
+                type: object
+                description: Status details of the brand
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the status
+                required:
+                  - id
+              image:
+                type: string
+                nullable: true
+                description: Image file name or URL for the brand
+              is_active:
+                type: integer
+                description: Indicates if the brand is active (1 = active, 0 = inactive)
+                example: 1
+              meta_title:
+                type: string
+                description: SEO title for the brand
+                example: samsung
+              meta_description:
+                type: string
+                description: SEO description for the brand
+                example: as
+              meta_keywords:
+                type: array
+                items:
+                  type: string
+                description: SEO keywords for the brand
+                example:
+                  - as
+                  - as
+              status_notes:
+                type: string
+                nullable: true
+                description: Notes regarding the status of the brand
+                example: Hello
+              registered_at:
+                type: string
+                format: date-time
+                description: Date and time when the brand was registered
+                example: '2024-10-07T06:37:58.000Z'
+              registered_by:
+                type: integer
+                description: ID of the user who registered the brand
+                example: 1
+              approved_at:
+                type: string
+                format: date-time
+                description: Date and time when the brand was approved
+                example: '2024-10-07T06:37:58.000Z'
+              approved_by:
+                type: integer
+                description: ID of the user who approved the brand
+                example: 1
+            required:
+              - name
+              - slug
+              - status
+    WarehousesRequestBody:
+      description: Request body for creating ot updating a warehouse
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the warehouse
+                example: Warehouse 2
+              slug:
+                type: string
+                description: URL-friendly identifier for the warehouse
+                example: warehouse-2
+              address_1:
+                type: string
+                description: First line of the warehouse address
+                example: Vitae culpa et debitis.
+              country:
+                type: string
+                description: Country where the warehouse is located
+                example: India
+              vendor:
+                type: object
+                description: Vendor associated with the warehouse
+                properties:
+                  id:
+                    type: integer
+                    description: Vendor ID
+                    example: 1
+                  name:
+                    type: string
+                    description: Name of the vendor
+                    example: Suscipit quos unde quia.
+                  slug:
+                    type: string
+                    description: Slug of the vendor
+                    example: suscipit-quos-unde-quia
+                required:
+                  - id
+              vh_st_vendor_id:
+                type: integer
+                description: Vendor ID associated with the warehouse
+                example: 1
+              taxonomy_id_warehouse_status:
+                type: integer
+                description: Taxonomy ID for the warehouse status
+                example: 27
+              address_2:
+                type: string
+                nullable: true
+                description: Second line of the warehouse address
+                example: Ab hic voluptatem sit.
+              city:
+                type: string
+                description: City where the warehouse is located
+                example: Eos sint quidem nisi.
+              state:
+                type: string
+                description: State or province where the warehouse is located
+                example: Ad facilis ut non enim.
+              postal_code:
+                type: string
+                description: Postal or ZIP code of the warehouse
+                example: '123456'
+              is_active:
+                type: integer
+                description: Indicates if the warehouse is active (1 = active, 0 = inactive)
+                example: 1
+              status:
+                type: object
+                description: Status of the warehouse
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the warehouse status
+                    example: 27
+                  uuid:
+                    type: string
+                    description: UUID of the warehouse status
+                    example: 336d82b3-d58a-45cc-9529-e3ecb53b9c4a
+                required:
+                  - id
+              status_notes:
+                type: string
+                nullable: true
+                description: Notes or comments regarding the status
+                example: as
+            required:
+              - name
+              - slug
+              - vendor
+              - country
+              - address_1
+              - status
+              - vh_st_vendor_id
+              - taxonomy_id_warehouse_status
   schemas:
     Credentials:
       type: object
@@ -12062,3 +13385,270 @@ components:
           type: integer
           nullable: true
           description: ID of the user who deleted the category (nullable)
+    Warehouse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the warehouse
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier for the warehouse
+        name:
+          type: string
+          description: Name of the warehouse
+        slug:
+          type: string
+          description: URL-friendly identifier for the warehouse
+        address_1:
+          type: string
+          description: First line of the warehouse address
+        address_2:
+          type: string
+          nullable: true
+          description: Second line of the warehouse address
+        city:
+          type: string
+          description: City where the warehouse is located
+        state:
+          type: string
+          description: State or province where the warehouse is located
+        postal_code:
+          type: string
+          description: Postal or ZIP code of the warehouse
+        country:
+          type: string
+          description: Country where the warehouse is located
+        is_active:
+          type: integer
+          description: Indicates if the warehouse is active (1 = active, 0 = inactive)
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the warehouse
+        status:
+          type: object
+          description: Status of the warehouse
+          properties:
+            id:
+              type: integer
+              description: ID of the warehouse status
+            name:
+              type: string
+              description: Name of the status
+            slug:
+              type: string
+              description: Slug of the status
+              example: approved
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes or comments regarding the status
+        taxonomy_id_warehouse_status:
+          type: integer
+          description: Taxonomy ID for the warehouse status
+        vh_st_vendor_id:
+          type: integer
+          description: Vendor ID associated with the warehouse
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the warehouse was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the warehouse was last updated
+        created_by:
+          type: integer
+          description: ID of the user who created the warehouse
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the warehouse
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the warehouse was deleted, if applicable
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the warehouse, if applicable
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the brand
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier (UUID) for the brand
+        name:
+          type: string
+          description: Name of the brand
+        slug:
+          type: string
+          description: Slug for the brand (URL-friendly identifier)
+        image:
+          type: string
+          nullable: true
+          description: Filename of the brand's image
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the brand
+        meta_title:
+          type: string
+          nullable: true
+          description: SEO title for the brand
+        meta_description:
+          type: string
+          nullable: true
+          description: SEO description for the brand
+        meta_keywords:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: SEO keywords for the brand
+        is_active:
+          type: integer
+          description: Indicates if the brand is active (1 = active, 0 = inactive)
+        is_default:
+          type: integer
+          nullable: true
+          description: Indicates if the brand is default (1 = default, 0 = not default)
+        taxonomy_id_brand_status:
+          type: integer
+          description: Status ID for the brand taxonomy
+        status:
+          type: object
+          description: Status details of the brand
+          properties:
+            id:
+              type: integer
+              description: Status ID
+            name:
+              type: string
+              description: Status name
+            slug:
+              type: string
+              description: Status slug (URL-friendly identifier)
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes regarding the status of the brand
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was approved
+        approved_by:
+          type: integer
+          nullable: true
+          description: ID of the user who approved the brand
+        approved_by_user:
+          type: object
+          description: Details of the user who approved the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        registered_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was registered
+        registered_by:
+          type: integer
+          nullable: true
+          description: ID of the user who registered the brand
+        registered_by_user:
+          type: object
+          description: Details of the user who registered the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was created
+        created_by:
+          type: integer
+          description: ID of the user who created the brand
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was last updated
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the brand
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was deleted
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the brand
+        products:
+          type: array
+          description: List of products associated with the brand
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Unique identifier of the product
+              name:
+                type: string
+                description: Name of the product
+              slug:
+                type: string
+                description: Slug for the product
+              vh_st_brand_id:
+                type: integer
+                description: Brand ID associated with the product
+              vh_st_store_id:
+                type: integer
+                description: Store ID associated with the product
+              store:
+                type: object
+                description: Details of the store associated with the product
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the store
+                  name:
+                    type: string
+                    description: Name of the store
+                  slug:
+                    type: string
+                    description: Slug for the store
+                  is_default:
+                    type: integer
+                    nullable: true
+                    description: Indicates if the store is default (1 = default, 0 = not default)
