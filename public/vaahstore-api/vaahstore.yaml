@@ -220,6 +220,10 @@ paths:
     $ref: './attributes/index.yaml'  # Reference to attributes file
   '/attributes/{id}':
     $ref: './attributes/update.yaml'  # Reference to attribute item file
+  '/attributes/{id}/action/{action}':
+    $ref: './attributes/itemAction.yaml'  # Reference to attribute item actions file
+  '/attributes/action/{action}':
+    $ref: './attributes/listAction.yaml'  # Reference to attribute list actions file
 
 components:
   securitySchemes:
