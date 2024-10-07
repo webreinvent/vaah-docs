@@ -218,6 +218,8 @@ paths:
 
   '/attributes':
     $ref: './attributes/index.yaml'  # Reference to attributes file
+  '/attributes/{id}':
+    $ref: './attributes/update.yaml'  # Reference to attribute item file
 
 components:
   securitySchemes:

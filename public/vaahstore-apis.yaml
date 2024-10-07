@@ -11744,6 +11744,279 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /attributes/{id}:
+    get:
+      tags:
+        - Attributes
+      summary: Get record by attribute ID
+      description: Retrieve a attribute by its unique identifier.
+      operationId: getAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Attribute Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  uuid:
+                    type: string
+                    example: 7412ffaa-2e95-4ee4-a470-8450f7fe9359
+                  name:
+                    type: string
+                    example: Attribute B
+                  slug:
+                    type: string
+                    example: attribute-b
+                  type:
+                    type: string
+                    example: Size
+                  description:
+                    type: string
+                    example: Et esse explicabo eos ut nemo ratione.
+                  is_active:
+                    type: integer
+                    example: 1
+                  created_at:
+                    type: string
+                    format: date-time
+                    example: '2024-10-04 10:36:56'
+                  updated_at:
+                    type: string
+                    format: date-time
+                    example: '2024-10-04 10:36:56'
+                  created_by:
+                    type: integer
+                    example: 1
+                  updated_by:
+                    type: integer
+                    example: 1
+                  created_by_user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      uuid:
+                        type: string
+                        example: e520ad9e-2315-43a3-90b7-8790eddbf120
+                      first_name:
+                        type: string
+                        example: We
+                      last_name:
+                        type: string
+                        example: Webreinvent
+                  updated_by_user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      uuid:
+                        type: string
+                        example: e520ad9e-2315-43a3-90b7-8790eddbf120
+                      first_name:
+                        type: string
+                        example: We
+                      last_name:
+                        type: string
+                        example: Webreinvent
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 4
+                        value:
+                          type: string
+                          example: xl
+                        vh_st_attribute_id:
+                          type: integer
+                          example: 2
+                        is_active:
+                          type: integer
+                          example: 1
+                  success:
+                    type: boolean
+                    example: true
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Attributes
+      summary: Update an existing record
+      description: Update a attribute record with the specified ID using the provided details.
+      operationId: updateAttribute
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Update an existing attribute and its associated values.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the attribute.
+                  example: Attribute B
+                slug:
+                  type: string
+                  description: The unique slug identifier for the attribute.
+                  example: attribute-b
+                type:
+                  type: string
+                  description: The type/category of the attribute.
+                  example: Size
+                description:
+                  type: string
+                  description: A brief description of the attribute.
+                  example: Et esse explicabo eos ut nemo ratione.
+                is_active:
+                  type: integer
+                  description: Indicates if the attribute is active (1 for active, 0 for inactive).
+                  example: 1
+                value:
+                  type: array
+                  description: Array of associated attribute values.
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the value.
+                        example: 4
+                      value:
+                        type: string
+                        description: The actual value associated with the attribute.
+                        example: xl
+                      vh_st_attribute_id:
+                        type: integer
+                        description: The ID linking the value to the attribute.
+                        example: 2
+                      is_active:
+                        type: integer
+                        description: Indicates if the value is active (1 for active, 0 for inactive).
+                        example: 1
+                    required:
+                      - id
+                      - value
+                      - vh_st_attribute_id
+                      - is_active
+              required:
+                - name
+                - slug
+                - type
+                - value
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Attribute'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Attributes
+      summary: Delete a record by ID
+      description: Delete a single attribute by its ID.
+      operationId: deleteAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Attribute Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:
