@@ -8365,7 +8365,7 @@ paths:
         - $ref: '#/components/parameters/filter_is_active'
         - $ref: '#/components/parameters/filter_trashed'
         - $ref: '#/components/parameters/filter_date'
-        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/category'
       responses:
         '200':
           description: List retrieved Successfully
