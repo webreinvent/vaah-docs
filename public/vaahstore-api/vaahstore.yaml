@@ -173,7 +173,8 @@ paths:
 
   '/warehouses':
     $ref: './warehouses/index.yaml'  # Reference to warehouses  file
-
+  '/warehouses/{id}':
+    $ref: './warehouses/update.yaml'  # Reference to warehouse item file
 
 components:
   securitySchemes:
