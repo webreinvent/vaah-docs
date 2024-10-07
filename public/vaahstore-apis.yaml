@@ -12285,28 +12285,9 @@ paths:
                     items:
                       type: string
                     example:
-                      - The name field is required.
-                      - The slug field is required.
-                      - Please enter Value field.
-                      - The value may not be greater than 250 characters.
-                      - Exceeded the maximum limit of 15 values.
-        '409':
-          description: Conflict error if Attribute already exists
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - Attribute with this name already exists.
-                      - Attribute with this slug already exists.
+                      - The Name field is required.
+                      - The Slug field is required.
+                      - The Attributes field is required.
     put:
       tags:
         - Attribute Groups
@@ -12868,6 +12849,145 @@ paths:
           content:
             application/json:
               schema: null
+  /attributegroups/{id}/action/{action}:
+    patch:
+      tags:
+        - Attribute Groups
+      summary: Perform an action on an attribute group
+      description: |
+        This endpoint allows you to perform various actions on an attribute group item, such as activating, deactivating, trashing, or restoring a attribute group.
+      operationId: itemActionAttributeGroup
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /attributegroups/action/{action}:
+    put:
+      tags:
+        - Attribute Groups
+      summary: bulk actions on attribute groups
+      description: This endpoint allows various bulk actions to be performed on attribute groups list based on the provided action type.
+      operationId: bulkActionsAttributeGroups
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:

@@ -231,6 +231,10 @@ paths:
     $ref: './attribute-groups/index.yaml'  # Reference to attribute groups file
   '/attributegroups/{id}':
     $ref: './attribute-groups/update.yaml'  # Reference to attribute groups item file
+  '/attributegroups/{id}/action/{action}':
+    $ref: './attribute-groups/itemAction.yaml'  # Reference to attribute groups item actions file
+  '/attributegroups/action/{action}':
+    $ref: './attribute-groups/listAction.yaml'  # Reference to attribute groups list actions file
 
 components:
   securitySchemes:

@@ -135,30 +135,12 @@ post:
                 items:
                   type: string
                 example: [
-                    "The name field is required.",
-                    "The slug field is required.",
-                    "Please enter Value field.",
-                    "The value may not be greater than 250 characters.",
-                    "Exceeded the maximum limit of 15 values."
+                    "The Name field is required.",
+                    "The Slug field is required.",
+                    "The Attributes field is required.",
+
                 ]
-    '409':
-      description: "Conflict error if Attribute already exists"
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              success:
-                type: boolean
-                example: false
-              errors:
-                type: array
-                items:
-                  type: string
-                example: [
-                    "Attribute with this name already exists.",
-                    "Attribute with this slug already exists."
-                ]
+
 put:
   tags:
     - Attribute Groups
