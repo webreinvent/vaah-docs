@@ -229,6 +229,8 @@ paths:
 
   '/attributegroups':
     $ref: './attribute-groups/index.yaml'  # Reference to attribute groups file
+  '/attributegroups/{id}':
+    $ref: './attribute-groups/update.yaml'  # Reference to attribute groups item file
 
 components:
   securitySchemes:
