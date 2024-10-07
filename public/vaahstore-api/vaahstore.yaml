@@ -35,7 +35,8 @@ tags:
     description: Everything about Payments in VaahStore
   - name: Brands
     description: Everything about Brands in VaahStore
-
+  - name: Warehouses
+    description: Everything about Warehouses in VaahStore
 
 paths:
   '/stores':
@@ -169,6 +170,9 @@ paths:
     $ref: './brands/itemAction.yaml'  # Reference to brand item action file
   '/brands/action/{action}':
     $ref: './brands/listAction.yaml'  # Reference to brand list action file
+
+  '/warehouses':
+    $ref: './warehouses/index.yaml'  # Reference to warehouses  file
 
 
 components:
@@ -831,6 +835,107 @@ components:
               - name
               - slug
               - status
+
+    WarehousesRequestBody:
+      description: "Request body for creating ot updating a warehouse"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the warehouse
+                example: "Warehouse 2"
+              slug:
+                type: string
+                description: URL-friendly identifier for the warehouse
+                example: "warehouse-2"
+              address_1:
+                type: string
+                description: First line of the warehouse address
+                example: "Vitae culpa et debitis."
+              country:
+                type: string
+                description: Country where the warehouse is located
+                example: "India"
+              vendor:
+                type: object
+                description: Vendor associated with the warehouse
+                properties:
+                  id:
+                    type: integer
+                    description: Vendor ID
+                    example: 1
+                  name:
+                    type: string
+                    description: Name of the vendor
+                    example: "Suscipit quos unde quia."
+                  slug:
+                    type: string
+                    description: Slug of the vendor
+                    example: "suscipit-quos-unde-quia"
+                required:
+                  - id
+              vh_st_vendor_id:
+                type: integer
+                description: Vendor ID associated with the warehouse
+                example: 1
+              taxonomy_id_warehouse_status:
+                type: integer
+                description: Taxonomy ID for the warehouse status
+                example: 27
+              address_2:
+                type: string
+                nullable: true
+                description: Second line of the warehouse address
+                example: "Ab hic voluptatem sit."
+              city:
+                type: string
+                description: City where the warehouse is located
+                example: "Eos sint quidem nisi."
+              state:
+                type: string
+                description: State or province where the warehouse is located
+                example: "Ad facilis ut non enim."
+              postal_code:
+                type: string
+                description: Postal or ZIP code of the warehouse
+                example: "123456"
+              is_active:
+                type: integer
+                description: Indicates if the warehouse is active (1 = active, 0 = inactive)
+                example: 1
+              status:
+                type: object
+                description: Status of the warehouse
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the warehouse status
+                    example: 27
+                  uuid:
+                    type: string
+                    description: UUID of the warehouse status
+                    example: "336d82b3-d58a-45cc-9529-e3ecb53b9c4a"
+                required:
+                  - id
+              status_notes:
+                type: string
+                nullable: true
+                description: Notes or comments regarding the status
+                example: "as"
+
+
+            required:
+              - name
+              - slug
+              - vendor
+              - country
+              - address_1
+              - status
+              - vh_st_vendor_id
+              - taxonomy_id_warehouse_status
 
 
 
@@ -1971,6 +2076,95 @@ components:
                     type: integer
                     nullable: true
                     description: Indicates if the store is default (1 = default, 0 = not default)
+    Warehouse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the warehouse
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier for the warehouse
+        name:
+          type: string
+          description: Name of the warehouse
+        slug:
+          type: string
+          description: URL-friendly identifier for the warehouse
+        address_1:
+          type: string
+          description: First line of the warehouse address
+        address_2:
+          type: string
+          nullable: true
+          description: Second line of the warehouse address
+        city:
+          type: string
+          description: City where the warehouse is located
+        state:
+          type: string
+          description: State or province where the warehouse is located
+        postal_code:
+          type: string
+          description: Postal or ZIP code of the warehouse
+        country:
+          type: string
+          description: Country where the warehouse is located
+        is_active:
+          type: integer
+          description: Indicates if the warehouse is active (1 = active, 0 = inactive)
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the warehouse
+        status:
+          type: object
+          description: Status of the warehouse
+          properties:
+            id:
+              type: integer
+              description: ID of the warehouse status
+            name:
+              type: string
+              description: Name of the status
+            slug:
+              type: string
+              description: Slug of the status
+              example: "approved"
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes or comments regarding the status
+        taxonomy_id_warehouse_status:
+          type: integer
+          description: Taxonomy ID for the warehouse status
+        vh_st_vendor_id:
+          type: integer
+          description: Vendor ID associated with the warehouse
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the warehouse was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the warehouse was last updated
+        created_by:
+          type: integer
+          description: ID of the user who created the warehouse
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the warehouse
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the warehouse was deleted, if applicable
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the warehouse, if applicable
 
 
 
