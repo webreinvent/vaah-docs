@@ -175,6 +175,10 @@ paths:
     $ref: './warehouses/index.yaml'  # Reference to warehouses  file
   '/warehouses/{id}':
     $ref: './warehouses/update.yaml'  # Reference to warehouse item file
+  '/warehouses/{id}/action/{action}':
+    $ref: './warehouses/itemAction.yaml'  # Reference to warehouse item action file
+  '/warehouses/action/{action}':
+    $ref: './warehouses/listAction.yaml'  # Reference to warehouse list action file
 
 components:
   securitySchemes:
