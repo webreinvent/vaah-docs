@@ -47,6 +47,8 @@ tags:
     description: Everything about Attributes in VaahStore
   - name: Attribute Groups
     description: Everything about Attribute Groups in VaahStore
+  - name: Addresses
+    description: Everything about Addresses in VaahStore
 
 paths:
   '/stores':
@@ -235,6 +237,9 @@ paths:
     $ref: './attribute-groups/itemAction.yaml'  # Reference to attribute groups item actions file
   '/attributegroups/action/{action}':
     $ref: './attribute-groups/listAction.yaml'  # Reference to attribute groups list actions file
+
+  '/addresses':
+    $ref: './addresses/index.yaml'  # Reference to addresses file
 
 components:
   securitySchemes:
