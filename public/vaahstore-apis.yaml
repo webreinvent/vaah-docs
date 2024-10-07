@@ -33,6 +33,8 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
+  - name: Brands
+    description: Everything about Brands in VaahStore
 paths:
   /stores:
     get:
@@ -8349,6 +8351,374 @@ paths:
                           type: string
                           format: date-time
                           description: The date and time the order was last updated.
+  /brands:
+    get:
+      tags:
+        - Brands
+      summary: Get list of all brands
+      description: Retrieve list of all the brands.
+      operationId: getBrands
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Brand'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/brands?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Brands
+      summary: Create a brand
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the brand
+                slug:
+                  type: string
+                  description: Slug for the brand (URL-friendly identifier)
+                status:
+                  type: object
+                  description: Status details of the brand
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the status
+                  required:
+                    - id
+                image:
+                  type: string
+                  nullable: true
+                  description: Image file name or URL for the brand
+                is_active:
+                  type: integer
+                  description: Indicates if the brand is active (1 = active, 0 = inactive)
+                  example: 1
+                meta_title:
+                  type: string
+                  description: SEO title for the brand
+                  example: samsung
+                meta_description:
+                  type: string
+                  description: SEO description for the brand
+                  example: as
+                meta_keywords:
+                  type: array
+                  items:
+                    type: string
+                  description: SEO keywords for the brand
+                  example:
+                    - as
+                    - as
+                status_notes:
+                  type: string
+                  nullable: true
+                  description: Notes regarding the status of the brand
+                  example: Hello
+                registered_at:
+                  type: string
+                  format: date-time
+                  description: Date and time when the brand was registered
+                  example: '2024-10-07T06:37:58.000Z'
+                registered_by:
+                  type: integer
+                  description: ID of the user who registered the brand
+                  example: 1
+                approved_at:
+                  type: string
+                  format: date-time
+                  description: Date and time when the brand was approved
+                  example: '2024-10-07T06:37:58.000Z'
+                approved_by:
+                  type: integer
+                  description: ID of the user who approved the brand
+                  example: 1
+              required:
+                - name
+                - slug
+                - status
+      responses:
+        '200':
+          description: Brand created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Brand'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Brand already exists for this variation.
+        '409':
+          description: Conflict error if brand already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Brand already exists for this variation.
+    put:
+      tags:
+        - Brands
+      summary: Update a list of brands
+      description: This endpoint allows you to update multiple brands records based on the provided input, including actions like activating, deactivating, trashing, or restoring brands.
+      operationId: updateBrandsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the brands to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified brands have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Brands
+      summary: Delete a list of brands
+      description: This endpoint allows you to delete multiple brands records based on the provided input.
+      operationId: deleteBrandssList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the brands to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified brands have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -9877,3 +10247,181 @@ components:
           type: string
           format: date-time
           description: The date the payment was processed.
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the brand
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier (UUID) for the brand
+        name:
+          type: string
+          description: Name of the brand
+        slug:
+          type: string
+          description: Slug for the brand (URL-friendly identifier)
+        image:
+          type: string
+          nullable: true
+          description: Filename of the brand's image
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the brand
+        meta_title:
+          type: string
+          nullable: true
+          description: SEO title for the brand
+        meta_description:
+          type: string
+          nullable: true
+          description: SEO description for the brand
+        meta_keywords:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: SEO keywords for the brand
+        is_active:
+          type: integer
+          description: Indicates if the brand is active (1 = active, 0 = inactive)
+        is_default:
+          type: integer
+          nullable: true
+          description: Indicates if the brand is default (1 = default, 0 = not default)
+        taxonomy_id_brand_status:
+          type: integer
+          description: Status ID for the brand taxonomy
+        status:
+          type: object
+          description: Status details of the brand
+          properties:
+            id:
+              type: integer
+              description: Status ID
+            name:
+              type: string
+              description: Status name
+            slug:
+              type: string
+              description: Status slug (URL-friendly identifier)
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes regarding the status of the brand
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was approved
+        approved_by:
+          type: integer
+          nullable: true
+          description: ID of the user who approved the brand
+        approved_by_user:
+          type: object
+          description: Details of the user who approved the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        registered_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was registered
+        registered_by:
+          type: integer
+          nullable: true
+          description: ID of the user who registered the brand
+        registered_by_user:
+          type: object
+          description: Details of the user who registered the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was created
+        created_by:
+          type: integer
+          description: ID of the user who created the brand
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was last updated
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the brand
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was deleted
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the brand
+        products:
+          type: array
+          description: List of products associated with the brand
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Unique identifier of the product
+              name:
+                type: string
+                description: Name of the product
+              slug:
+                type: string
+                description: Slug for the product
+              vh_st_brand_id:
+                type: integer
+                description: Brand ID associated with the product
+              vh_st_store_id:
+                type: integer
+                description: Store ID associated with the product
+              store:
+                type: object
+                description: Details of the store associated with the product
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the store
+                  name:
+                    type: string
+                    description: Name of the store
+                  slug:
+                    type: string
+                    description: Slug for the store
+                  is_default:
+                    type: integer
+                    nullable: true
+                    description: Indicates if the store is default (1 = default, 0 = not default)

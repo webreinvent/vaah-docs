@@ -33,6 +33,8 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
+  - name: Brands
+    description: Everything about Brands in VaahStore
 
 
 paths:
@@ -159,7 +161,8 @@ paths:
     $ref: './payments/listAction.yaml'  # Reference to payment list actions file
   '/payments/search/orders':
     $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
-
+  '/brands':
+    $ref: './brands/index.yaml'  # Reference to brands  file
 
 
 components:
@@ -1712,6 +1715,185 @@ components:
           type: string
           format: date-time
           description: The date the payment was processed.
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the brand
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier (UUID) for the brand
+        name:
+          type: string
+          description: Name of the brand
+        slug:
+          type: string
+          description: Slug for the brand (URL-friendly identifier)
+        image:
+          type: string
+          nullable: true
+          description: Filename of the brand's image
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the brand
+        meta_title:
+          type: string
+          nullable: true
+          description: SEO title for the brand
+        meta_description:
+          type: string
+          nullable: true
+          description: SEO description for the brand
+        meta_keywords:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: SEO keywords for the brand
+        is_active:
+          type: integer
+          description: Indicates if the brand is active (1 = active, 0 = inactive)
+        is_default:
+          type: integer
+          nullable: true
+          description: Indicates if the brand is default (1 = default, 0 = not default)
+        taxonomy_id_brand_status:
+          type: integer
+          description: Status ID for the brand taxonomy
+        status:
+          type: object
+          description: Status details of the brand
+          properties:
+            id:
+              type: integer
+              description: Status ID
+            name:
+              type: string
+              description: Status name
+            slug:
+              type: string
+              description: Status slug (URL-friendly identifier)
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes regarding the status of the brand
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was approved
+        approved_by:
+          type: integer
+          nullable: true
+          description: ID of the user who approved the brand
+        approved_by_user:
+          type: object
+          description: Details of the user who approved the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        registered_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was registered
+        registered_by:
+          type: integer
+          nullable: true
+          description: ID of the user who registered the brand
+        registered_by_user:
+          type: object
+          description: Details of the user who registered the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was created
+        created_by:
+          type: integer
+          description: ID of the user who created the brand
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was last updated
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the brand
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was deleted
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the brand
+        products:
+          type: array
+          description: List of products associated with the brand
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Unique identifier of the product
+              name:
+                type: string
+                description: Name of the product
+              slug:
+                type: string
+                description: Slug for the product
+              vh_st_brand_id:
+                type: integer
+                description: Brand ID associated with the product
+              vh_st_store_id:
+                type: integer
+                description: Store ID associated with the product
+              store:
+                type: object
+                description: Details of the store associated with the product
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the store
+                  name:
+                    type: string
+                    description: Name of the store
+                  slug:
+                    type: string
+                    description: Slug for the store
+                  is_default:
+                    type: integer
+                    nullable: true
+                    description: Indicates if the store is default (1 = default, 0 = not default)
+
 
 
 
