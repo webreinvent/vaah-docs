@@ -165,6 +165,10 @@ paths:
     $ref: './brands/index.yaml'  # Reference to brands  file
   '/brands/{id}':
     $ref: './brands/update.yaml'  # Reference to brand item  file
+  '/brands/{id}/action/{action}':
+    $ref: './brands/itemAction.yaml'  # Reference to brand item action file
+  '/brands/action/{action}':
+    $ref: './brands/listAction.yaml'  # Reference to brand list action file
 
 
 components:
