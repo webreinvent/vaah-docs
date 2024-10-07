@@ -48,76 +48,7 @@ post:
   summary: "Create a brand"
   operationId: "createItem"
   requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Name of the brand
-            slug:
-              type: string
-              description: Slug for the brand (URL-friendly identifier)
-            status:
-              type: object
-              description: Status details of the brand
-              properties:
-                id:
-                  type: integer
-                  description: ID of the status
-              required:
-                - id
-            image:
-              type: string
-              nullable: true
-              description: Image file name or URL for the brand
-            is_active:
-              type: integer
-              description: Indicates if the brand is active (1 = active, 0 = inactive)
-              example: 1
-            meta_title:
-              type: string
-              description: SEO title for the brand
-              example: "samsung"
-            meta_description:
-              type: string
-              description: SEO description for the brand
-              example: "as"
-            meta_keywords:
-              type: array
-              items:
-                type: string
-              description: SEO keywords for the brand
-              example: [ "as", "as" ]
-            status_notes:
-              type: string
-              nullable: true
-              description: Notes regarding the status of the brand
-              example: "Hello"
-            registered_at:
-              type: string
-              format: date-time
-              description: Date and time when the brand was registered
-              example: "2024-10-07T06:37:58.000Z"
-            registered_by:
-              type: integer
-              description: ID of the user who registered the brand
-              example: 1
-            approved_at:
-              type: string
-              format: date-time
-              description: Date and time when the brand was approved
-              example: "2024-10-07T06:37:58.000Z"
-            approved_by:
-              type: integer
-              description: ID of the user who approved the brand
-              example: 1
-          required:
-            - name
-            - slug
-            - status
+    '$ref': '../vaahstore.yaml#/components/requestBodies/BrandsRequestBody'
 
   responses:
     '200':

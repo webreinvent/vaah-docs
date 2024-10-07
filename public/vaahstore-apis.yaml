@@ -8719,6 +8719,135 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /brands/{id}:
+    get:
+      tags:
+        - Brands
+      summary: Get record by brand ID
+      description: Retrieve a brand by its unique identifier.
+      operationId: getBrandById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Brand Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Brands
+      summary: Update an existing record
+      description: Update a brand record with the specified ID using the provided details.
+      operationId: updateBrand
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/BrandsRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Brand'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Brands
+      summary: Delete a record by ID
+      description: Delete a single brand by its ID.
+      operationId: deleteBrandById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Brand Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:
@@ -9305,6 +9434,79 @@ components:
                 type: string
                 description: Additional notes for the product stock
                 example: Initial stock addition
+    BrandsRequestBody:
+      description: Request body for creating ot updating a brand
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the brand
+              slug:
+                type: string
+                description: Slug for the brand (URL-friendly identifier)
+              status:
+                type: object
+                description: Status details of the brand
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the status
+                required:
+                  - id
+              image:
+                type: string
+                nullable: true
+                description: Image file name or URL for the brand
+              is_active:
+                type: integer
+                description: Indicates if the brand is active (1 = active, 0 = inactive)
+                example: 1
+              meta_title:
+                type: string
+                description: SEO title for the brand
+                example: samsung
+              meta_description:
+                type: string
+                description: SEO description for the brand
+                example: as
+              meta_keywords:
+                type: array
+                items:
+                  type: string
+                description: SEO keywords for the brand
+                example:
+                  - as
+                  - as
+              status_notes:
+                type: string
+                nullable: true
+                description: Notes regarding the status of the brand
+                example: Hello
+              registered_at:
+                type: string
+                format: date-time
+                description: Date and time when the brand was registered
+                example: '2024-10-07T06:37:58.000Z'
+              registered_by:
+                type: integer
+                description: ID of the user who registered the brand
+                example: 1
+              approved_at:
+                type: string
+                format: date-time
+                description: Date and time when the brand was approved
+                example: '2024-10-07T06:37:58.000Z'
+              approved_by:
+                type: integer
+                description: ID of the user who approved the brand
+                example: 1
+            required:
+              - name
+              - slug
+              - status
   schemas:
     Credentials:
       type: object
