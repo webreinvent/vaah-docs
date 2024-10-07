@@ -43,6 +43,8 @@ tags:
     description: Everything about Brands in VaahStore
   - name: Warehouses
     description: Everything about Warehouses in VaahStore
+  - name: Attributes
+    description: Everything about Attributes in VaahStore
 
 paths:
   '/stores':
@@ -213,6 +215,9 @@ paths:
     $ref: './warehouses/itemAction.yaml'  # Reference to warehouse item action file
   '/warehouses/action/{action}':
     $ref: './warehouses/listAction.yaml'  # Reference to warehouse list action file
+
+  '/attributes':
+    $ref: './attributes/index.yaml'  # Reference to attributes file
 
 components:
   securitySchemes:
@@ -2500,6 +2505,73 @@ components:
                     type: integer
                     nullable: true
                     description: Indicates if the store is default (1 = default, 0 = not default)
+    Attribute:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the attribute.
+          example: 2
+        uuid:
+          type: string
+          format: uuid
+          description: UUID of the attribute.
+          example: "7412ffaa-2e95-4ee4-a470-8450f7fe9359"
+        name:
+          type: string
+          description: Name of the attribute.
+          example: "Attribute B"
+        slug:
+          type: string
+          description: Slug for the attribute, used for SEO-friendly URLs.
+          example: "attribute-b"
+        description:
+          type: string
+          nullable: true
+          description: Detailed description of the attribute.
+          example: "Et esse explicabo eos ut nemo ratione."
+        type:
+          type: string
+          description: Type of the attribute (e.g., Size, Color, etc.).
+          example: "Size"
+        is_active:
+          type: integer
+          description: Status of the attribute (1 = active, 0 = inactive).
+          example: 1
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata or information related to the attribute.
+          example: null
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the attribute was created.
+          example: "2024-10-04 10:36:56"
+        created_by:
+          type: integer
+          description: ID of the user who created the attribute.
+          example: 1
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the attribute was last updated.
+          example: "2024-10-04 10:36:56"
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the attribute.
+          example: 1
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the attribute was deleted, if applicable.
+          example: null
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the attribute, if applicable.
+          example: null
 
 
 
