@@ -61,9 +61,23 @@ put:
               type: integer
               nullable: true
               description: Id of the parent category
+            parent_category:
+              type: object
+              additionalProperties:
+                type: boolean
+              description: Object representing parent category mapping where keys are parent category IDs and values are boolean (true = valid relationship)
+              example:
+                15: true
+            is_active:
+              type: integer
+              nullable: true
+              description: Indicates if the category is active (1 = active, 0 = inactive, null if status is unknown or not set)
           required:
             - name
             - slug
+            - parent_id
+            - is_active
+            - parent_category
   responses:
     '200':
       description: Saved Successfully

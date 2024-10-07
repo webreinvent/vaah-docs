@@ -66,9 +66,15 @@ post:
               type: integer
               nullable: true
               description: Id of the parent category
+            is_active:
+              type: integer
+              nullable: true
+              description: Indicates if the category is active (1 = active, 0 = inactive, null if status is unknown or not set)
           required:
             - name
             - slug
+            - parent_id
+            - is_active
   responses:
     '200':
       description: "Category created successfully"
