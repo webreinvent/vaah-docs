@@ -8933,6 +8933,8 @@ paths:
         - $ref: '#/components/parameters/filter_trashed'
         - $ref: '#/components/parameters/filter_date'
         - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/country'
+        - $ref: '#/components/parameters/address'
       responses:
         '200':
           description: List retrieved Successfully
@@ -9711,6 +9713,22 @@ components:
           type: string
       example:
         - warehouses-1
+    country:
+      name: filter[country][]
+      in: query
+      required: false
+      description: Filter record by country name
+      schema:
+        type: array
+        items:
+          type: string
+    address:
+      name: filter[state_city]
+      in: query
+      required: false
+      description: Filter records by state, city, or postal code. Partial matching is supported.
+      schema:
+        type: string
   requestBodies:
     StoreRequestBody:
       required: true
