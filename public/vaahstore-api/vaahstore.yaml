@@ -334,6 +334,12 @@ components:
       required: false
       schema:
         type: boolean
+    filter_is_default:
+      name: filter[is_default]
+      in: query
+      required: false
+      schema:
+        type: boolean
 
     filter_trashed:
       name: filter[trashed]
@@ -489,6 +495,15 @@ components:
       in: query
       required: false
       description: Filter record by attributes name/slug
+      schema:
+        type: array
+        items:
+          type: string
+    users:
+      name: filter[users][]
+      in: query
+      required: false
+      description: Filter records by user first name.
       schema:
         type: array
         items:
@@ -2676,6 +2691,129 @@ components:
                   vh_st_attribute_id:
                     type: integer
                     description: "The ID of the attribute."
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "The unique identifier for the address."
+        uuid:
+          type: string
+          description: "The universally unique identifier for the address."
+        vh_user_id:
+          type: integer
+          description: "The ID of the user associated with the address."
+        name:
+          type: string
+          description: "The name of the person or entity associated with the address."
+        address:
+          type: string
+          description: "The complete address."
+        address_line_1:
+          type: string
+          description: "The first line of the address."
+        address_line_2:
+          type: string
+          nullable: true
+          description: "The second line of the address, if available."
+        city:
+          type: string
+          description: "The city of the address."
+        state:
+          type: string
+          description: "The state of the address."
+        pin_code:
+          type: string
+          description: "The postal code or ZIP code for the address."
+        country:
+          type: string
+          description: "The country of the address."
+        phone:
+          type: string
+          description: "The phone number associated with the address."
+        address_type:
+          type: object
+          description: "The type of address, such as Billing or Shipping."
+          properties:
+            id:
+              type: integer
+              description: "The unique identifier for the address type."
+            name:
+              type: string
+              description: "The name of the address type."
+            slug:
+              type: string
+              description: "The slug for the address type."
+        status:
+          type: object
+          description: "The current status of the address."
+          properties:
+            id:
+              type: integer
+              description: "The unique identifier for the address status."
+            name:
+              type: string
+              description: "The name of the address status."
+            slug:
+              type: string
+              description: "The slug for the address status."
+        is_default:
+          type: integer
+          nullable: true
+          description: "Indicates if this is the default address."
+        status_notes:
+          type: string
+          nullable: true
+          description: "Additional notes about the status of the address."
+        created_at:
+          type: string
+          format: date-time
+          description: "The date and time when the address was created."
+        updated_at:
+          type: string
+          format: date-time
+          description: "The date and time when the address was last updated."
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: "The date and time when the address was deleted, if applicable."
+        created_by:
+          type: integer
+          nullable: true
+          description: "The ID of the user who created the address."
+        updated_by:
+          type: integer
+          nullable: true
+          description: "The ID of the user who last updated the address."
+        deleted_by:
+          type: integer
+          nullable: true
+          description: "The ID of the user who deleted the address."
+        user:
+          type: object
+          description: "The user associated with the address."
+          properties:
+            id:
+              type: integer
+              description: "The unique identifier for the user."
+            uuid:
+              type: string
+              description: "The universally unique identifier for the user."
+            first_name:
+              type: string
+              description: "The first name of the user."
+            email:
+              type: string
+              description: "The email address of the user."
+            avatar:
+              type: string
+              description: "The avatar URL of the user."
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: "The date and time when the user was deleted, if applicable."
 
 
 

@@ -9,8 +9,11 @@ get:
     - '$ref': '../vaahstore.yaml#/components/parameters/rows'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_default'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
+    - '$ref': '../vaahstore.yaml#/components/parameters/status'
+    - '$ref': '../vaahstore.yaml#/components/parameters/users'
 
 
   responses:
@@ -27,10 +30,10 @@ get:
               data:
                 type: array
                 items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/Store'
+                  '$ref': '../vaahstore.yaml#/components/schemas/Address'
               first_page_url:
                 type: string
-                example: "http://127.0.0.1:8000/backend/store/attributegroups?page=1"
+                example: "http://127.0.0.1:8000/backend/store/addresses?page=1"
 
     '500':
       description: Internal Server Error
@@ -45,58 +48,63 @@ post:
   operationId: "createItem"
 
   requestBody:
+    description: "Create a new address for a user."
     required: true
     content:
       application/json:
         schema:
           type: object
           properties:
-            active_attributes:
-              type: array
-              description: "A list of active attributes."
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    description: "The unique identifier for the attribute."
-                    example: 1
-                  name:
-                    type: string
-                    description: "The name of the attribute."
-                    example: "Attribute A"
-                  slug:
-                    type: string
-                    description: "The slug, a URL-friendly version of the name."
-                    example: "attribute-a"
-                  type:
-                    type: string
-                    description: "The type or category of the attribute."
-                    example: "property"
-                required:
-                  - id
-                  - name
-
-            name:
-              type: string
-              description: "The name of the attribute group or related entity."
-              example: "As"
-            slug:
-              type: string
-              description: "The slug, a URL-friendly version of the name."
-              example: "as"
-            description:
-              type: string
-              description: "A brief description of the attribute group or related entity."
-              example: "as"
-            is_active:
+            vh_user_id:
               type: integer
-              description: "Indicates if the attribute group or related entity is active (1 for active, 0 for inactive)."
-              example: 1
+              description: "The ID of the user associated with the address."
+            address_line_1:
+              type: string
+              description: "The first line of the address."
+            address_line_2:
+              type: string
+              nullable: true
+              description: "The second line of the address."
+            city:
+              type: string
+              description: "The city of the address."
+            state:
+              type: string
+              description: "The state of the address."
+            pin_code:
+              type: string
+              description: "The postal code or ZIP code for the address."
+            country:
+              type: string
+              description: "The country of the address."
+            phone:
+              type: string
+              nullable: true
+              description: "The phone number associated with the address."
+            is_default:
+              type: integer
+              description: "Indicates whether this address should be the default address for the user."
+            taxonomy_id_address_types:
+              type: integer
+              description: "The ID representing the type of address (e.g., Billing or Shipping)."
+            taxonomy_id_address_status:
+              type: integer
+              description: "The ID representing the current status of the address (e.g., Approved or Pending)."
+            status_notes:
+              type: string
+              nullable: true
+              description: "Additional notes about the status of the address."
           required:
-            - name
-            - slug
-            - active_attributes
+            - vh_user_id
+            - address_line_1
+            - city
+            - state
+            - pin_code
+            - country
+            - is_default
+            - taxonomy_id_address_types
+            - taxonomy_id_address_status
+
 
 
 
@@ -119,7 +127,7 @@ post:
                     "Saved successfully"
                 ]
               data:
-                $ref: '../vaahstore.yaml#/components/schemas/Store'
+                $ref: '../vaahstore.yaml#/components/schemas/Address'
     '400':
       description: "Validation error"
       content:
@@ -135,9 +143,10 @@ post:
                 items:
                   type: string
                 example: [
-                    "The Name field is required.",
-                    "The Slug field is required.",
-                    "The Attributes field is required.",
+                    "The User field is required",
+                    "The Address Line 1 field is required",
+                    "The Type field is required",
+                    "The Status field is required",
 
                 ]
 
