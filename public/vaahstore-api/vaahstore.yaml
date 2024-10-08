@@ -240,6 +240,8 @@ paths:
 
   '/users/assets':
     $ref: './customers/getAssets.yaml'  # Reference to customers assets file
+  '/users':
+    $ref: './customers/index.yaml'  # Reference to customers file
 
 components:
   securitySchemes:
@@ -2676,6 +2678,179 @@ components:
                   vh_st_attribute_id:
                     type: integer
                     description: "The ID of the attribute."
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the customer."
+        uuid:
+          type: string
+          description: "Universally unique identifier (UUID) for the customer."
+        email:
+          type: string
+          description: "Email address of the customer."
+        activated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer was activated."
+          nullable: true
+        active_roles_count:
+          type: integer
+          description: "Number of active roles the customer has."
+        affiliate_code:
+          type: string
+          description: "Affiliate code of the customer."
+        affiliate_code_used_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the affiliate code was used."
+          nullable: true
+        alternate_email:
+          type: string
+          description: "Alternate email address of the customer."
+        avatar:
+          type: string
+          description: "URL to the customer's avatar."
+        avatar_url:
+          type: string
+          description: "Alternative URL for the customer's avatar."
+        bio:
+          type: string
+          description: "Biography or description of the customer."
+        birth:
+          type: string
+          format: date
+          description: "Customer's date of birth."
+        country:
+          type: string
+          description: "Country where the customer is located."
+        country_calling_code:
+          type: integer
+          description: "Country calling code for the customer."
+        country_code:
+          type: string
+          description: "ISO country code of the customer's location."
+        created_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was created."
+        created_by:
+          type: integer
+          description: "ID of the user who created the customer record."
+        created_ip:
+          type: string
+          description: "IP address of the user who created the customer record."
+        customer_groups:
+          type: array
+          description: "Array of customer groups the customer belongs to."
+          items:
+            type: object
+        deleted_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was deleted."
+          nullable: true
+        deleted_by:
+          type: integer
+          description: "ID of the user who deleted the customer record."
+          nullable: true
+        designation:
+          type: string
+          description: "Customer's designation or title."
+        display_name:
+          type: string
+          description: "Display name of the customer."
+        first_name:
+          type: string
+          description: "Customer's first name."
+        foreign_user_id:
+          type: integer
+          description: "Foreign ID for external systems."
+        gender:
+          type: string
+          description: "Gender of the customer."
+        is_active:
+          type: integer
+          description: "Indicates if the customer account is active."
+        last_login_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer last logged in."
+          nullable: true
+        last_login_ip:
+          type: string
+          description: "IP address of the customer's last login."
+        last_name:
+          type: string
+          description: "Customer's last name."
+        meta:
+          type: object
+          description: "Additional metadata about the customer."
+          properties:
+            custom_fields:
+              type: object
+              description: "Custom fields related to the customer."
+              properties:
+                state:
+                  type: string
+                  description: "Custom field for customer state."
+        mfa_methods:
+          type: string
+          description: "Multi-factor authentication methods used by the customer."
+        middle_name:
+          type: string
+          description: "Customer's middle name."
+        name:
+          type: string
+          description: "Customer's full name."
+        phone:
+          type: integer
+          description: "Customer's phone number."
+        registration_id:
+          type: integer
+          description: "Registration ID associated with the customer."
+          nullable: true
+        reset_password_code_sent_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the reset password code was sent."
+          nullable: true
+        reset_password_code_used_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the reset password code was used."
+          nullable: true
+        security_code:
+          type: string
+          description: "Security code for the customer."
+        security_code_expired_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the security code expires."
+          nullable: true
+        status:
+          type: string
+          description: "Status of the customer."
+        timezone:
+          type: string
+          description: "Timezone of the customer."
+        title:
+          type: string
+          description: "Title of the customer (e.g., Mr, Mrs, Miss)."
+        updated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was last updated."
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the customer record."
+        username:
+          type: string
+          description: "Username of the customer."
+        website:
+          type: string
+          description: "Customer's website URL."
 
 
 

@@ -13130,6 +13130,335 @@ paths:
                     items:
                       type: string
                       example: Trace details...
+  /users:
+    get:
+      tags:
+        - Customers
+      summary: Get list of all customers
+      description: Retrieve list of all the customers.
+      operationId: getCustomers
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/users?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Customers
+      summary: Create a customer
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: The user's email address.
+                  maxLength: 150
+                first_name:
+                  type: string
+                  description: The user's first name.
+                  maxLength: 150
+                username:
+                  type: string
+                  description: User username
+                password:
+                  type: string
+                  description: The user's password.
+                status:
+                  type: string
+                  description: The user's status.
+                is_active:
+                  type: integer
+                  description: Indicates whether the user is active or not.
+              required:
+                - email
+                - first_name
+                - status
+                - is_active
+                - password
+                - username
+      responses:
+        '200':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Customer'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - ' '
+        '409':
+          description: Conflict error if user/customer already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - ' '
+    put:
+      tags:
+        - Customers
+      summary: Update a list of customers
+      description: This endpoint allows you to update multiple customers records based on the provided input, including actions like activating, deactivating, trashing, or restoring customers.
+      operationId: updateCustomersList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the customers to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified customers have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Customers
+      summary: Delete a list of customers
+      description: This endpoint allows you to delete multiple customers records based on the provided input.
+      operationId: deleteCustomersList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the customers to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified customers have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -15541,3 +15870,176 @@ components:
                   vh_st_attribute_id:
                     type: integer
                     description: The ID of the attribute.
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the customer.
+        uuid:
+          type: string
+          description: Universally unique identifier (UUID) for the customer.
+        email:
+          type: string
+          description: Email address of the customer.
+        activated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer was activated.
+          nullable: true
+        active_roles_count:
+          type: integer
+          description: Number of active roles the customer has.
+        affiliate_code:
+          type: string
+          description: Affiliate code of the customer.
+        affiliate_code_used_at:
+          type: string
+          format: date-time
+          description: Timestamp when the affiliate code was used.
+          nullable: true
+        alternate_email:
+          type: string
+          description: Alternate email address of the customer.
+        avatar:
+          type: string
+          description: URL to the customer's avatar.
+        avatar_url:
+          type: string
+          description: Alternative URL for the customer's avatar.
+        bio:
+          type: string
+          description: Biography or description of the customer.
+        birth:
+          type: string
+          format: date
+          description: Customer's date of birth.
+        country:
+          type: string
+          description: Country where the customer is located.
+        country_calling_code:
+          type: integer
+          description: Country calling code for the customer.
+        country_code:
+          type: string
+          description: ISO country code of the customer's location.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer record was created.
+        created_by:
+          type: integer
+          description: ID of the user who created the customer record.
+        created_ip:
+          type: string
+          description: IP address of the user who created the customer record.
+        customer_groups:
+          type: array
+          description: Array of customer groups the customer belongs to.
+          items:
+            type: object
+        deleted_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer record was deleted.
+          nullable: true
+        deleted_by:
+          type: integer
+          description: ID of the user who deleted the customer record.
+          nullable: true
+        designation:
+          type: string
+          description: Customer's designation or title.
+        display_name:
+          type: string
+          description: Display name of the customer.
+        first_name:
+          type: string
+          description: Customer's first name.
+        foreign_user_id:
+          type: integer
+          description: Foreign ID for external systems.
+        gender:
+          type: string
+          description: Gender of the customer.
+        is_active:
+          type: integer
+          description: Indicates if the customer account is active.
+        last_login_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer last logged in.
+          nullable: true
+        last_login_ip:
+          type: string
+          description: IP address of the customer's last login.
+        last_name:
+          type: string
+          description: Customer's last name.
+        meta:
+          type: object
+          description: Additional metadata about the customer.
+          properties:
+            custom_fields:
+              type: object
+              description: Custom fields related to the customer.
+              properties:
+                state:
+                  type: string
+                  description: Custom field for customer state.
+        mfa_methods:
+          type: string
+          description: Multi-factor authentication methods used by the customer.
+        middle_name:
+          type: string
+          description: Customer's middle name.
+        name:
+          type: string
+          description: Customer's full name.
+        phone:
+          type: integer
+          description: Customer's phone number.
+        registration_id:
+          type: integer
+          description: Registration ID associated with the customer.
+          nullable: true
+        reset_password_code_sent_at:
+          type: string
+          format: date-time
+          description: Timestamp when the reset password code was sent.
+          nullable: true
+        reset_password_code_used_at:
+          type: string
+          format: date-time
+          description: Timestamp when the reset password code was used.
+          nullable: true
+        security_code:
+          type: string
+          description: Security code for the customer.
+        security_code_expired_at:
+          type: string
+          format: date-time
+          description: Timestamp when the security code expires.
+          nullable: true
+        status:
+          type: string
+          description: Status of the customer.
+        timezone:
+          type: string
+          description: Timezone of the customer.
+        title:
+          type: string
+          description: Title of the customer (e.g., Mr, Mrs, Miss).
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer record was last updated.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the customer record.
+        username:
+          type: string
+          description: Username of the customer.
+        website:
+          type: string
+          description: Customer's website URL.
