@@ -218,6 +218,8 @@ paths:
 
   '/addresses':
     $ref: './addresses/index.yaml'  # Reference to addresses file
+  '/addresses/{id}':
+    $ref: './addresses/update.yaml'  # Reference to address item file
 
 components:
   securitySchemes:

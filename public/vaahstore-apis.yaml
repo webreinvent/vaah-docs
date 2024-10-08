@@ -11734,6 +11734,207 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /addresses/{id}:
+    get:
+      tags:
+        - Addresses
+      summary: Get record by address ID
+      description: Retrieve an address by its unique identifier.
+      operationId: getAddressById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Address Retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Address'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Addresses
+      summary: Update an existing record
+      description: Update an address record with the specified ID using the provided details.
+      operationId: updateAddress
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Update an existing address and its associated values.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the address want to update.
+                vh_user_id:
+                  type: integer
+                  description: The ID of the user associated with the address.
+                address_line_1:
+                  type: string
+                  description: The first line of the address.
+                address_line_2:
+                  type: string
+                  nullable: true
+                  description: The second line of the address.
+                city:
+                  type: string
+                  description: The city of the address.
+                state:
+                  type: string
+                  description: The state of the address.
+                pin_code:
+                  type: string
+                  description: The postal code or ZIP code for the address.
+                country:
+                  type: string
+                  description: The country of the address.
+                phone:
+                  type: string
+                  nullable: true
+                  description: The phone number associated with the address.
+                is_default:
+                  type: integer
+                  description: Indicates whether this address should be the default address for the user.
+                taxonomy_id_address_types:
+                  type: integer
+                  description: The ID representing the type of address (e.g., Billing or Shipping).
+                taxonomy_id_address_status:
+                  type: integer
+                  description: The ID representing the current status of the address (e.g., Approved or Pending).
+                status_notes:
+                  type: string
+                  nullable: true
+                  description: Additional notes about the status of the address.
+              required:
+                - vh_user_id
+                - id
+                - address_line_1
+                - city
+                - state
+                - pin_code
+                - country
+                - is_default
+                - taxonomy_id_address_types
+                - taxonomy_id_address_status
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Address'
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The User field is required
+                      - The Address Line 1 field is required
+                      - The Type field is required
+                      - The Status field is required
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Addresses
+      summary: Delete a record by ID
+      description: Delete a single address by its ID.
+      operationId: deleteAddressById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Address Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:
