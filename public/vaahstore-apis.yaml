@@ -51,6 +51,8 @@ tags:
     description: Everything about Customers in VaahStore
   - name: Customer Groups
     description: Everything about Customer Groups in VaahStore
+  - name: Payment Methods
+    description: Everything about Payment Methods in VaahStore
 paths:
   /stores:
     get:
@@ -14311,6 +14313,286 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /paymentmethods:
+    get:
+      tags:
+        - Payment Methods
+      summary: Get list of all payment methods
+      description: Retrieve list of all the payment methods.
+      operationId: getPaymentMethods
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PaymentMethod'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/paymentmethods?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Payment Methods
+      summary: Create a payment method
+      operationId: createItem
+      requestBody:
+        $ref: '#/components/requestBodies/PaymentMethodRequestbody'
+      responses:
+        '200':
+          description: Payment Method created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/PaymentMethod'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The name field is required.
+                      - The slug field is required.
+    put:
+      tags:
+        - Payment Methods
+      summary: Update a list of payment methods
+      description: This endpoint allows you to update multiple payment methods records based on the provided input, including actions like activating, deactivating, trashing, or restoring payment methods.
+      operationId: updatePaymentMethodsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payment methods to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payment methods have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Payment Methods
+      summary: Delete a list of payment methods
+      description: This endpoint allows you to delete multiple payment methods records based on the provided input.
+      operationId: deletePaymentMethodsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payment methods to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payment methods have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -15134,6 +15416,30 @@ components:
                 type: string
                 description: Additional notes regarding the status of the customer group.
                 maxLength: 150
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
+    PaymentMethodRequestbody:
+      description: Request body for creating or updating a payment method
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the payment method.
+                maxLength: 250
+              slug:
+                type: string
+                description: A URL-friendly version of the payment method's name.
+                maxLength: 250
+              is_active:
+                type: integer
+                example: 1
+                description: Whether the payment method is active.
             required:
               - name
               - slug
@@ -17030,3 +17336,48 @@ components:
           type: object
           nullable: true
           description: Additional metadata associated with the customer group.
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the payment method.
+        uuid:
+          type: string
+          description: Universally Unique Identifier for the payment method.
+        name:
+          type: string
+          description: Name of the payment method.
+        slug:
+          type: string
+          description: A URL-friendly version of the payment method's name.
+        is_active:
+          type: integer
+          description: Status indicating if the payment method is active (1) or inactive (0).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was created.
+        created_by:
+          type: integer
+          description: Identifier of the user who created the payment method.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was last updated.
+        updated_by:
+          type: integer
+          description: Identifier of the user who last updated the payment method.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the payment method was deleted (if applicable).
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier of the user who deleted the payment method (if applicable).
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the payment method (optional).
