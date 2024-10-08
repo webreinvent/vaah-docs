@@ -47,6 +47,8 @@ tags:
     description: Everything about Attributes in VaahStore
   - name: Attribute Groups
     description: Everything about Attribute Groups in VaahStore
+  - name: Customers
+    description: Everything about Customers in VaahStore
 paths:
   /stores:
     get:
@@ -12989,6 +12991,145 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /users/assets:
+    get:
+      summary: Get assets for customers
+      description: Retrieve various assets related to customers, such as permissions, rows per page, fillable columns, taxonomies, and user data.
+      operationId: getCustomersAssets
+      tags:
+        - Customers
+      responses:
+        '200':
+          description: Retrieve assets related to user settings and configurations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                  data:
+                    type: object
+                    properties:
+                      permissions:
+                        type: object
+                        description: The permissions of the authenticated user.
+                      countries:
+                        type: array
+                        description: List of countries with code, name, and calling code.
+                        items:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                              description: Country code.
+                            name:
+                              type: string
+                              description: Country name.
+                            calling_code:
+                              type: string
+                              description: Country calling code.
+                      country_code:
+                        type: array
+                        description: List of country codes.
+                        items:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                              description: Country code.
+                            name:
+                              type: string
+                              description: Country name.
+                            calling_code:
+                              type: string
+                              description: Country calling code.
+                      name_titles:
+                        type: array
+                        description: List of name titles.
+                        items:
+                          type: object
+                          properties:
+                            slug:
+                              type: string
+                              description: Slug for the title.
+                            name:
+                              type: string
+                              description: Display name of the title.
+                      rows:
+                        type: integer
+                        description: The number of rows per page as defined in configuration.
+                      fillable:
+                        type: object
+                        properties:
+                          columns:
+                            type: array
+                            items:
+                              type: string
+                            description: The list of fillable columns for the User model, excluding exceptions.
+                          except:
+                            type: array
+                            items:
+                              type: string
+                            description: The list of columns excluded from fillable fields.
+                      empty_item:
+                        type: object
+                        description: An empty item template for creating new user records.
+                        properties:
+                          uuid:
+                            type: string
+                            nullable: true
+                          created_by:
+                            type: string
+                            nullable: true
+                          updated_by:
+                            type: string
+                            nullable: true
+                          deleted_by:
+                            type: string
+                            nullable: true
+                          meta:
+                            type: object
+                            properties:
+                              custom_fields:
+                                type: object
+                                description: Custom fields for the user, populated based on settings.
+                      custom_fields:
+                        type: object
+                        nullable: true
+                        description: Custom fields settings retrieved from the database.
+                      fields:
+                        type: object
+                        description: User-specific settings fields.
+                      totalRole:
+                        type: integer
+                        description: Total number of roles defined in the system.
+                      upload_url:
+                        type: string
+                        description: URL for uploading media files.
+        '500':
+          description: An error occurred while retrieving assets.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    description: List of error messages.
+                    items:
+                      type: string
+                      example: Something went wrong.
+                  hint:
+                    type: array
+                    description: Debugging hints (only in debug mode).
+                    items:
+                      type: string
+                      example: Trace details...
 components:
   securitySchemes:
     bearerAuth:
