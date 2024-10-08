@@ -264,6 +264,10 @@ paths:
     $ref: './payment-methods/index.yaml'  # Reference to payment-methods file
   '/paymentmethods/{id}':
     $ref: './payment-methods/update.yaml'  # Reference to payment-methods item file
+  '/paymentmethods/{id}/action/{action}':
+    $ref: './payment-methods/itemAction.yaml'  # Reference to payment-methods item actions file
+  '/paymentmethods/action/{action}':
+    $ref: './payment-methods/listAction.yaml'  # Reference to payment-methods list actions file
 
 components:
   securitySchemes:
