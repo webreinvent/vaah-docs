@@ -253,6 +253,10 @@ paths:
     $ref: './customer-groups/index.yaml'  # Reference to customer groups file
   '/customergroups/{id}':
     $ref: './customer-groups/update.yaml'  # Reference to customer group item file
+  '/customergroups/{id}/action/{actio}':
+    $ref: './customer-groups/itemAction.yaml'  # Reference to customer group item actions file
+  '/customergroups/action/{actio}':
+    $ref: './customer-groups/listAction.yaml'  # Reference to customer group list actions file
 
 components:
   securitySchemes:
