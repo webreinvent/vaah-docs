@@ -238,6 +238,8 @@ paths:
   '/attributegroups/action/{action}':
     $ref: './attribute-groups/listAction.yaml'  # Reference to attribute groups list actions file
 
+  '/addresses/assets':
+    $ref: './addresses/getAssets.yaml'  # Reference to addresses file
   '/addresses':
     $ref: './addresses/index.yaml'  # Reference to addresses file
   '/addresses/{id}':
