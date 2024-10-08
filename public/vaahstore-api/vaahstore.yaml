@@ -216,6 +216,8 @@ paths:
   '/warehouses/action/{action}':
     $ref: './warehouses/listAction.yaml'  # Reference to warehouse list action file
 
+  '/addresses/assets':
+    $ref: './addresses/getAssets.yaml'  # Reference to addresses file
   '/addresses':
     $ref: './addresses/index.yaml'  # Reference to addresses file
   '/addresses/{id}':
