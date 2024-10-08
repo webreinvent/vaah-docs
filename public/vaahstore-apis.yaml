@@ -12311,6 +12311,331 @@ paths:
                     items:
                       type: string
                       example: Trace details...
+  /wishlists:
+    get:
+      tags:
+        - Wishlists
+      summary: Get list of wishlists
+      description: Retrieve list of all the wishlists.
+      operationId: getWishlists
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/users'
+        - $ref: '#/components/parameters/products'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Wishlist'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/wishlists?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Wishlists
+      summary: Create an user wishlist
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_user_id:
+                  type: integer
+                  description: ID of the user creating the wishlist
+                  example: 121
+                taxonomy_id_whishlists_status:
+                  type: integer
+                  description: Status of the wishlist
+                  example: 59
+                is_default:
+                  type: integer
+                  description: Whether the wishlist is set as default (1 for true, 0 for false)
+                  example: 1
+                name:
+                  type: string
+                  description: Name of the wishlist
+                  example: Rahul
+                slug:
+                  type: string
+                  description: Slugified version of the wishlist name
+                  example: rahul
+                type:
+                  type: integer
+                  description: Type of the wishlist i.e shareable or non-shareable
+                  example: 1
+                status_notes:
+                  type: string
+                  description: Additional notes on the status
+                  example: asa
+              required:
+                - name
+                - slug
+                - vh_user_id
+                - taxonomy_id_whishlists_status
+                - is_default
+      responses:
+        '200':
+          description: Wishlist created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Wishlist'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The User field is required.
+                      - The Name field is required.
+                      - The Slug field is required.
+                      - The Status field is required.
+    put:
+      tags:
+        - Wishlists
+      summary: Update a list of wishlists
+      description: This endpoint allows you to update multiple wishlists records based on the provided input, including actions like activating, deactivating, trashing, or restoring wishlists.
+      operationId: updateWishlistsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the wishlists to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified wishlists have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Wishlists
+      summary: Delete a list of wishlists
+      description: This endpoint allows you to delete multiple wishlists records based on the provided input.
+      operationId: deleteWishlistsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the wishlists to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified wishlists have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
   /attributes:
     get:
       tags:
@@ -16454,3 +16779,107 @@ components:
               format: date-time
               nullable: true
               description: The date and time when the user was deleted, if applicable.
+    Wishlist:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the wishlist.
+        uuid:
+          type: string
+          description: Unique identifier of the wishlist.
+        name:
+          type: string
+          description: Name of the wishlist.
+        slug:
+          type: string
+          description: Slugified version of the wishlist name.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the wishlist was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: The timestamp when the wishlist was last updated.
+        created_by:
+          type: integer
+          description: ID of the user who created the wishlist.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the wishlist.
+        deleted_at:
+          type: string
+          format: date-time
+          description: The timestamp when the wishlist was deleted (if applicable).
+        is_default:
+          type: integer
+          description: Indicates if this is the default wishlist for the user.
+        meta:
+          type: object
+          description: Additional metadata associated with the wishlist.
+        status:
+          type: object
+          description: Status of the wishlist.
+          properties:
+            id:
+              type: integer
+              description: ID of the wishlist status.
+            name:
+              type: string
+              description: Name of the status.
+            slug:
+              type: string
+              description: Slug of the status.
+            status_notes:
+              type: string
+              description: Notes associated with the status.
+        taxonomy_id_whishlists_status:
+          type: integer
+          description: Taxonomy ID for the wishlist status.
+        taxonomy_id_whishlists_types:
+          type: integer
+          description: Taxonomy ID for the wishlist type (if applicable).
+        type:
+          type: string
+          description: Type of wishlist (if applicable).
+        products:
+          type: array
+          description: List of products in the wishlist.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: ID of the product.
+              name:
+                type: string
+                description: Name of the product.
+              pivot:
+                type: object
+                properties:
+                  vh_st_wishlist_id:
+                    type: integer
+                    description: ID of the wishlist associated with this product.
+                  vh_st_product_id:
+                    type: integer
+                    description: ID of the product associated with this wishlist.
+        user:
+          type: object
+          description: User who owns the wishlist.
+          properties:
+            id:
+              type: integer
+              description: ID of the user.
+            first_name:
+              type: string
+              description: First name of the user.
+            username:
+              type: string
+              description: Username of the user.
+            avatar:
+              type: string
+              description: Avatar image URL of the user.
+            uuid:
+              type: string
+              description: Unique identifier of the user.

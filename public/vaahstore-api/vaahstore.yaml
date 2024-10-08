@@ -235,6 +235,8 @@ paths:
 
   '/wishlists/assets':
     $ref: './wishlists/getAssets.yaml'  # Reference to wishlists assets file
+  '/wishlists':
+    $ref: './wishlists/index.yaml'  # Reference to wishlists file
 
   '/attributes':
     $ref: './attributes/index.yaml'  # Reference to attributes file
@@ -2831,6 +2833,110 @@ components:
               format: date-time
               nullable: true
               description: "The date and time when the user was deleted, if applicable."
+    Wishlist:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "ID of the wishlist."
+        uuid:
+          type: string
+          description: "Unique identifier of the wishlist."
+        name:
+          type: string
+          description: "Name of the wishlist."
+        slug:
+          type: string
+          description: "Slugified version of the wishlist name."
+        created_at:
+          type: string
+          format: date-time
+          description: "The timestamp when the wishlist was created."
+        updated_at:
+          type: string
+          format: date-time
+          description: "The timestamp when the wishlist was last updated."
+        created_by:
+          type: integer
+          description: "ID of the user who created the wishlist."
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the wishlist."
+        deleted_at:
+          type: string
+          format: date-time
+          description: "The timestamp when the wishlist was deleted (if applicable)."
+        is_default:
+          type: integer
+          description: "Indicates if this is the default wishlist for the user."
+        meta:
+          type: object
+          description: "Additional metadata associated with the wishlist."
+        status:
+          type: object
+          description: "Status of the wishlist."
+          properties:
+            id:
+              type: integer
+              description: "ID of the wishlist status."
+            name:
+              type: string
+              description: "Name of the status."
+            slug:
+              type: string
+              description: "Slug of the status."
+            status_notes:
+              type: string
+              description: "Notes associated with the status."
+        taxonomy_id_whishlists_status:
+          type: integer
+          description: "Taxonomy ID for the wishlist status."
+        taxonomy_id_whishlists_types:
+          type: integer
+          description: "Taxonomy ID for the wishlist type (if applicable)."
+        type:
+          type: string
+          description: "Type of wishlist (if applicable)."
+        products:
+          type: array
+          description: "List of products in the wishlist."
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: "ID of the product."
+              name:
+                type: string
+                description: "Name of the product."
+              pivot:
+                type: object
+                properties:
+                  vh_st_wishlist_id:
+                    type: integer
+                    description: "ID of the wishlist associated with this product."
+                  vh_st_product_id:
+                    type: integer
+                    description: "ID of the product associated with this wishlist."
+        user:
+          type: object
+          description: "User who owns the wishlist."
+          properties:
+            id:
+              type: integer
+              description: "ID of the user."
+            first_name:
+              type: string
+              description: "First name of the user."
+            username:
+              type: string
+              description: "Username of the user."
+            avatar:
+              type: string
+              description: "Avatar image URL of the user."
+            uuid:
+              type: string
+              description: "Unique identifier of the user."
 
 
 
