@@ -239,6 +239,10 @@ paths:
     $ref: './wishlists/index.yaml'  # Reference to wishlists file
   '/wishlists/{id}':
     $ref: './wishlists/update.yaml'  # Reference to wishlists item file
+  '/wishlists/{id}/action/{action}':
+    $ref: './wishlists/itemAction.yaml'  # Reference to wishlists item actions file
+  '/wishlists/{action/{action}':
+    $ref: './wishlists/listAction.yaml'  # Reference to wishlists list actions file
 
   '/attributes':
     $ref: './attributes/index.yaml'  # Reference to attributes file

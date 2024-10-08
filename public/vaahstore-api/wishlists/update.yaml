@@ -272,7 +272,7 @@ put:
               data:
                 type: array
                 items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/Address'
+                  '$ref': '../vaahstore.yaml#/components/schemas/Wishlist'
     400:
       description: Bad Request, validation errors occurred.
       content:
