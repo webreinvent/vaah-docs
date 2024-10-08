@@ -242,6 +242,8 @@ paths:
     $ref: './customers/getAssets.yaml'  # Reference to customers assets file
   '/users':
     $ref: './customers/index.yaml'  # Reference to customers file
+  '/users/{id}':
+    $ref: './customers/update.yaml'  # Reference to customers update file
 
 components:
   securitySchemes:
