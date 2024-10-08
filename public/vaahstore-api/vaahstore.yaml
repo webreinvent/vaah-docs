@@ -220,6 +220,10 @@ paths:
     $ref: './addresses/index.yaml'  # Reference to addresses file
   '/addresses/{id}':
     $ref: './addresses/update.yaml'  # Reference to address item file
+  '/addresses/{id}/action/{action}':
+    $ref: './addresses/itemAction.yaml'  # Reference to address item actions file
+  '/addresses/action/{action}':
+    $ref: './addresses/listAction.yaml'  # Reference to address list actions file
 
 components:
   securitySchemes:
