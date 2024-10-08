@@ -13794,42 +13794,7 @@ paths:
       description: Creates a new customer group with the specified details.
       operationId: createCustomerGroup
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The name of the customer group.
-                  maxLength: 150
-                slug:
-                  type: string
-                  description: A URL-friendly version of the customer group's name.
-                  maxLength: 150
-                customers:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        description: The unique identifier for the customer.
-                    required:
-                      - id
-                taxonomy_id_customer_groups_status:
-                  type: integer
-                  description: The identifier for the status of the customer group.
-                status_notes:
-                  type: string
-                  description: Additional notes regarding the status of the customer group.
-                  maxLength: 150
-              required:
-                - name
-                - slug
-                - customers
-                - taxonomy_id_customer_groups_status
+        $ref: '#/components/requestBodies/CustomerGroupRequestBody'
       responses:
         '200':
           description: Customer group created successfully
@@ -14078,6 +14043,135 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /customergroups/{id}:
+    get:
+      tags:
+        - Customer Groups
+      summary: Get record by customer group ID
+      description: Retrieve a customer group by its unique identifier.
+      operationId: getCustomerGroupById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Customer Group Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerGroup'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Customer Groups
+      summary: Update an existing record
+      description: Update a customer group record with the specified ID using the provided details.
+      operationId: updateCustomerGroup
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerGroupRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CustomerGroup'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Customer Groups
+      summary: Delete a record by ID
+      description: Delete a single customer group by its ID.
+      operationId: deleteCustomerGroupById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Customer Group Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
 components:
   securitySchemes:
     bearerAuth:
@@ -14869,6 +14963,43 @@ components:
               - status
               - vh_st_vendor_id
               - taxonomy_id_warehouse_status
+    CustomerGroupRequestBody:
+      description: Request body for creating or updating a customer group
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the customer group.
+                maxLength: 150
+              slug:
+                type: string
+                description: A URL-friendly version of the customer group's name.
+                maxLength: 150
+              customers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the customer.
+                  required:
+                    - id
+              taxonomy_id_customer_groups_status:
+                type: integer
+                description: The identifier for the status of the customer group.
+              status_notes:
+                type: string
+                description: Additional notes regarding the status of the customer group.
+                maxLength: 150
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
   schemas:
     Credentials:
       type: object

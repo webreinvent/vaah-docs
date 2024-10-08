@@ -251,6 +251,8 @@ paths:
     $ref: './customer-groups/getAssets.yaml'  # Reference to customer groups assets file
   '/customergroups':
     $ref: './customer-groups/index.yaml'  # Reference to customer groups file
+  '/customergroups/{id}':
+    $ref: './customer-groups/update.yaml'  # Reference to customer group item file
 
 components:
   securitySchemes:
@@ -1046,6 +1048,43 @@ components:
               - status
               - vh_st_vendor_id
               - taxonomy_id_warehouse_status
+    CustomerGroupRequestBody:
+      description: "Request body for creating or updating a customer group"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the customer group.
+                maxLength: 150
+              slug:
+                type: string
+                description: A URL-friendly version of the customer group's name.
+                maxLength: 150
+              customers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the customer.
+                  required:
+                    - id
+              taxonomy_id_customer_groups_status:
+                type: integer
+                description: The identifier for the status of the customer group.
+              status_notes:
+                type: string
+                description: Additional notes regarding the status of the customer group.
+                maxLength: 150
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
 
 
 

@@ -50,42 +50,7 @@ post:
   description: Creates a new customer group with the specified details.
   operationId: createCustomerGroup
   requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The name of the customer group.
-              maxLength: 150
-            slug:
-              type: string
-              description: A URL-friendly version of the customer group's name.
-              maxLength: 150
-            customers:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    description: The unique identifier for the customer.
-                required:
-                  - id
-            taxonomy_id_customer_groups_status:
-              type: integer
-              description: The identifier for the status of the customer group.
-            status_notes:
-              type: string
-              description: Additional notes regarding the status of the customer group.
-              maxLength: 150
-          required:
-            - name
-            - slug
-            - customers
-            - taxonomy_id_customer_groups_status
+    '$ref': '../vaahstore.yaml#/components/requestBodies/CustomerGroupRequestBody'
   responses:
     '200':
       description: Customer group created successfully
