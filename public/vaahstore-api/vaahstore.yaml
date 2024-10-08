@@ -49,6 +49,8 @@ tags:
     description: Everything about Attribute Groups in VaahStore
   - name: Customers
     description: Everything about Customers in VaahStore
+  - name: Customer Groups
+    description: Everything about Customer Groups in VaahStore
 
 paths:
   '/stores':
@@ -244,6 +246,9 @@ paths:
     $ref: './customers/index.yaml'  # Reference to customers file
   '/users/{id}':
     $ref: './customers/update.yaml'  # Reference to customers update file
+
+  '/customergroups/assets':
+    $ref: './customer-groups/getAssets.yaml'  # Reference to customer groups assets file
 
 components:
   securitySchemes:
