@@ -45,6 +45,8 @@ tags:
     description: Everything about Warehouses in VaahStore
   - name: Addresses
     description: Everything about Addresses in VaahStore
+  - name: Wishlists
+    description: Everything about Wishlists in VaahStore
 
 paths:
   '/stores':
@@ -217,7 +219,7 @@ paths:
     $ref: './warehouses/listAction.yaml'  # Reference to warehouse list action file
 
   '/addresses/assets':
-    $ref: './addresses/getAssets.yaml'  # Reference to addresses file
+    $ref: './addresses/getAssets.yaml'  # Reference to addresses assets file
   '/addresses':
     $ref: './addresses/index.yaml'  # Reference to addresses file
   '/addresses/{id}':
@@ -226,6 +228,9 @@ paths:
     $ref: './addresses/itemAction.yaml'  # Reference to address item actions file
   '/addresses/action/{action}':
     $ref: './addresses/listAction.yaml'  # Reference to address list actions file
+
+  '/wishlists/assets':
+    $ref: './wishlists/getAssets.yaml'  # Reference to wishlists assets file
 
 components:
   securitySchemes:
