@@ -47,7 +47,7 @@ post:
   summary: "Create a payment method"
   operationId: "createItem"
   requestBody:
-    '$ref': '../vaahstore.yaml#/components/requestBodies/PaymentMethodRequestbody'
+    '$ref': '../vaahstore.yaml#/components/requestBodies/PaymentMethodRequestBody'
 
   responses:
     '200':

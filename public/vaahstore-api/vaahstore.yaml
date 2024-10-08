@@ -262,6 +262,8 @@ paths:
 
   '/paymentmethods':
     $ref: './payment-methods/index.yaml'  # Reference to payment-methods file
+  '/paymentmethods/{id}':
+    $ref: './payment-methods/update.yaml'  # Reference to payment-methods item file
 
 components:
   securitySchemes:
@@ -1094,7 +1096,7 @@ components:
               - slug
               - customers
               - taxonomy_id_customer_groups_status
-    PaymentMethodRequestbody:
+    PaymentMethodRequestBody:
       description: "Request body for creating or updating a payment method"
       content:
         application/json:
