@@ -1,0 +1,109 @@
+get:
+  summary: "Get assets for wishlists"
+  description: "Retrieve various assets related to wishlists, such as permissions, rows per page, fillable columns, taxonomies, and user data."
+  operationId: "getWishlistAssets"
+  tags:
+    - "Wishlists"
+  responses:
+    '200':
+      description: "Assets retrieved successfully."
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: "Indicates if the request was successful."
+                example: true
+              data:
+                type: object
+                properties:
+                  permissions:
+                    type: array
+                    description: "A list of permissions for the current authenticated user."
+                    items:
+                      type: string
+                      example: "view-wishlists"
+                  rows:
+                    type: integer
+                    description: "Number of rows per page as configured."
+                    example: 10
+                  fillable:
+                    type: object
+                    properties:
+                      columns:
+                        type: array
+                        description: "List of fillable columns in the wishlist model."
+                        items:
+                          type: string
+                          example: "name"
+                      except:
+                        type: array
+                        description: "List of columns that are not fillable in the wishlist model."
+                        items:
+                          type: string
+                          example: "created_at"
+                  empty_item:
+                    type: object
+                    description: "An empty item structure for the wishlist model."
+                    example:
+                      name: ""
+                      description: ""
+                      created_at: ""
+                  taxonomy:
+                    type: object
+                    properties:
+                      status:
+                        type: array
+                        description: "Taxonomies related to wishlist statuses."
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: "ID of the status taxonomy."
+                              example: 60
+                            name:
+                              type: string
+                              description: "Name of the status."
+                              example: "Active"
+                  actions:
+                    type: array
+                    description: "List of available actions for the user."
+                    items:
+                      type: string
+                      example: "create-wishlist"
+                  urls:
+                    type: object
+                    description: "URLs related to wishlists."
+                    properties:
+                      public:
+                        type: string
+                        description: "Public URL for managing wishlists."
+                        example: "https://example.com/backend/store#/wishlists"
+                  user_data:
+                    type: object
+                    description: "Additional user data relevant to the wishlist management."
+    '500':
+      description: "An error occurred while retrieving assets."
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                description: "List of error messages."
+                items:
+                  type: string
+                  example: "Something went wrong."
+              hint:
+                type: array
+                description: "Debugging hints (only in debug mode)."
+                items:
+                  type: string
+                  example: "Trace details..."
