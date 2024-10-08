@@ -43,6 +43,10 @@ tags:
     description: Everything about Brands in VaahStore
   - name: Warehouses
     description: Everything about Warehouses in VaahStore
+  - name: Attributes
+    description: Everything about Attributes in VaahStore
+  - name: Attribute Groups
+    description: Everything about Attribute Groups in VaahStore
 paths:
   /stores:
     get:
@@ -11391,6 +11395,1600 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /attributes:
+    get:
+      tags:
+        - Attributes
+      summary: Get list of all attributes
+      description: Retrieve list of all the attributes.
+      operationId: getAttributes
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Attribute'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/attributes?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Attributes
+      summary: Create an attribute
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the attribute.
+                  example: Attribute C
+                slug:
+                  type: string
+                  description: Slug for the attribute, used for SEO-friendly URLs.
+                  example: attribute-c
+                type:
+                  type: string
+                  description: Type of the attribute (e.g., Size, Color, Cloth).
+                  example: Cloth
+                description:
+                  type: string
+                  nullable: true
+                  description: Detailed description of the attribute.
+                  example: asas
+                is_active:
+                  type: integer
+                  description: Status of the attribute (1 = active, 0 = inactive).
+                  example: 1
+                value:
+                  type: array
+                  description: List of attribute values.
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        description: The actual value of the attribute (e.g., "Price").
+                        example: Price
+                      is_active:
+                        type: integer
+                        description: Status of the attribute value (1 = active, 0 = inactive).
+                        example: 1
+                    required:
+                      - value
+                      - is_active
+              required:
+                - name
+                - slug
+                - type
+                - is_active
+                - value
+      responses:
+        '200':
+          description: Attribute created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Attribute'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The name field is required.
+                      - The slug field is required.
+                      - Please enter Value field.
+                      - The value may not be greater than 250 characters.
+                      - Exceeded the maximum limit of 15 values.
+        '409':
+          description: Conflict error if Attribute already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Attribute with this name already exists.
+                      - Attribute with this slug already exists.
+    put:
+      tags:
+        - Attributes
+      summary: Update a list of attributes
+      description: This endpoint allows you to update multiple attributes records based on the provided input, including actions like activating, deactivating, trashing, or restoring attributes.
+      operationId: updateAttributesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attributes to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified attributes have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Attributes
+      summary: Delete a list of attributes
+      description: This endpoint allows you to delete multiple attributes records based on the provided input.
+      operationId: deleteAttributesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the warehouse to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified attributes have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /attributes/{id}:
+    get:
+      tags:
+        - Attributes
+      summary: Get record by attribute ID
+      description: Retrieve a attribute by its unique identifier.
+      operationId: getAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Attribute Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  uuid:
+                    type: string
+                    example: 7412ffaa-2e95-4ee4-a470-8450f7fe9359
+                  name:
+                    type: string
+                    example: Attribute B
+                  slug:
+                    type: string
+                    example: attribute-b
+                  type:
+                    type: string
+                    example: Size
+                  description:
+                    type: string
+                    example: Et esse explicabo eos ut nemo ratione.
+                  is_active:
+                    type: integer
+                    example: 1
+                  created_at:
+                    type: string
+                    format: date-time
+                    example: '2024-10-04 10:36:56'
+                  updated_at:
+                    type: string
+                    format: date-time
+                    example: '2024-10-04 10:36:56'
+                  created_by:
+                    type: integer
+                    example: 1
+                  updated_by:
+                    type: integer
+                    example: 1
+                  created_by_user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      uuid:
+                        type: string
+                        example: e520ad9e-2315-43a3-90b7-8790eddbf120
+                      first_name:
+                        type: string
+                        example: We
+                      last_name:
+                        type: string
+                        example: Webreinvent
+                  updated_by_user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      uuid:
+                        type: string
+                        example: e520ad9e-2315-43a3-90b7-8790eddbf120
+                      first_name:
+                        type: string
+                        example: We
+                      last_name:
+                        type: string
+                        example: Webreinvent
+                  value:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 4
+                        value:
+                          type: string
+                          example: xl
+                        vh_st_attribute_id:
+                          type: integer
+                          example: 2
+                        is_active:
+                          type: integer
+                          example: 1
+                  success:
+                    type: boolean
+                    example: true
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Attributes
+      summary: Update an existing record
+      description: Update a attribute record with the specified ID using the provided details.
+      operationId: updateAttribute
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Update an existing attribute and its associated values.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the attribute.
+                  example: Attribute B
+                slug:
+                  type: string
+                  description: The unique slug identifier for the attribute.
+                  example: attribute-b
+                type:
+                  type: string
+                  description: The type/category of the attribute.
+                  example: Size
+                description:
+                  type: string
+                  description: A brief description of the attribute.
+                  example: Et esse explicabo eos ut nemo ratione.
+                is_active:
+                  type: integer
+                  description: Indicates if the attribute is active (1 for active, 0 for inactive).
+                  example: 1
+                value:
+                  type: array
+                  description: Array of associated attribute values.
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the value.
+                        example: 4
+                      value:
+                        type: string
+                        description: The actual value associated with the attribute.
+                        example: xl
+                      vh_st_attribute_id:
+                        type: integer
+                        description: The ID linking the value to the attribute.
+                        example: 2
+                      is_active:
+                        type: integer
+                        description: Indicates if the value is active (1 for active, 0 for inactive).
+                        example: 1
+                    required:
+                      - id
+                      - value
+                      - vh_st_attribute_id
+                      - is_active
+              required:
+                - name
+                - slug
+                - type
+                - value
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Attribute'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Attributes
+      summary: Delete a record by ID
+      description: Delete a single attribute by its ID.
+      operationId: deleteAttributeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Attribute Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /attributes/{id}/action/{action}:
+    patch:
+      tags:
+        - Attributes
+      summary: Perform an action on an attribute
+      description: |
+        This endpoint allows you to perform various actions on an attribute item, such as activating, deactivating, trashing, or restoring a attribute.
+      operationId: itemActionAttribute
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /attributes/action/{action}:
+    put:
+      tags:
+        - Attributes
+      summary: bulk actions on attributes
+      description: This endpoint allows various bulk actions to be performed on attributes list based on the provided action type.
+      operationId: bulkActionsAttributes
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /attributegroups:
+    get:
+      tags:
+        - Attribute Groups
+      summary: Get list of attribute groups
+      description: Retrieve list of all the attribute groups.
+      operationId: getAttributeGroups
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/attributes'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AttributeGroup'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/attributegroups?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Attribute Groups
+      summary: Create an attribute group
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                active_attributes:
+                  type: array
+                  description: A list of active attributes.
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the attribute.
+                        example: 1
+                      name:
+                        type: string
+                        description: The name of the attribute.
+                        example: Attribute A
+                      slug:
+                        type: string
+                        description: The slug, a URL-friendly version of the name.
+                        example: attribute-a
+                      type:
+                        type: string
+                        description: The type or category of the attribute.
+                        example: property
+                    required:
+                      - id
+                      - name
+                name:
+                  type: string
+                  description: The name of the attribute group or related entity.
+                  example: As
+                slug:
+                  type: string
+                  description: The slug, a URL-friendly version of the name.
+                  example: as
+                description:
+                  type: string
+                  description: A brief description of the attribute group or related entity.
+                  example: as
+                is_active:
+                  type: integer
+                  description: Indicates if the attribute group or related entity is active (1 for active, 0 for inactive).
+                  example: 1
+              required:
+                - name
+                - slug
+                - active_attributes
+      responses:
+        '200':
+          description: Attribute Group created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/AttributeGroup'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The Name field is required.
+                      - The Slug field is required.
+                      - The Attributes field is required.
+    put:
+      tags:
+        - Attribute Groups
+      summary: Update a list of attribute groups
+      description: This endpoint allows you to update multiple attribute groups records based on the provided input, including actions like activating, deactivating, trashing, or restoring attribute groups.
+      operationId: updateAttributeGroupsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute groups to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified attribute groups have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Attribute Groups
+      summary: Delete a list of attribute groups
+      description: This endpoint allows you to delete multiple attribute groups records based on the provided input.
+      operationId: deleteAttributeGroupsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the attribute groups to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified attribute groups have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /attributegroups/{id}:
+    get:
+      tags:
+        - Attribute Groups
+      summary: Get record by attribute group ID
+      description: Retrieve a attribute group by its unique identifier.
+      operationId: getAttributeGroupById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Attribute group Retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      active_attributes:
+                        type: array
+                        description: A list of active attributes.
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The unique identifier for the attribute.
+                              example: 1
+                            name:
+                              type: string
+                              description: The name of the attribute.
+                              example: Attribute A
+                            type:
+                              type: string
+                              description: The type or category of the attribute.
+                              example: property
+                      attributes_list:
+                        type: array
+                        description: A list of all attributes associated with the group.
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The unique identifier for the attribute.
+                              example: 1
+                            name:
+                              type: string
+                              description: The name of the attribute.
+                              example: Attribute A
+                            type:
+                              type: string
+                              description: The type or category of the attribute.
+                              example: property
+                            deleted_at:
+                              type: string
+                              nullable: true
+                              description: The date and time when the attribute was deleted, if applicable.
+                              example: null
+                            pivot:
+                              type: object
+                              description: The pivot object representing the relationship between attribute group and attribute.
+                              properties:
+                                vh_st_attribute_group_id:
+                                  type: integer
+                                  description: The ID of the associated attribute group.
+                                  example: 4
+                                vh_st_attribute_id:
+                                  type: integer
+                                  description: The ID of the associated attribute.
+                                  example: 1
+                      id:
+                        type: integer
+                        description: The unique identifier for the attribute group.
+                        example: 4
+                      name:
+                        type: string
+                        description: The name of the attribute group.
+                        example: Group Name
+                      slug:
+                        type: string
+                        description: A URL-friendly version of the name.
+                        example: group-name
+                      is_active:
+                        type: integer
+                        description: Indicates if the attribute group is active (1 for active, 0 for inactive).
+                        example: 1
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: The date and time when the attribute group was created.
+                        example: '2024-10-07 17:55:48'
+                      updated_at:
+                        type: string
+                        format: date-time
+                        description: The date and time when the attribute group was last updated.
+                        example: '2024-10-07 17:55:48'
+                      created_by:
+                        type: integer
+                        description: The identifier of the user who created the attribute group.
+                        example: 1
+                      updated_by:
+                        type: integer
+                        description: The identifier of the user who last updated the attribute group.
+                        example: 1
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Attribute Groups
+      summary: Update an existing record
+      description: Update a attribute group record with the specified ID using the provided details.
+      operationId: updateAttributeGroup
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Update an existing attribute group and its associated values.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the attribute group.
+                  example: Gp1
+                slug:
+                  type: string
+                  description: A URL-friendly version of the name.
+                  example: gp1
+                description:
+                  type: string
+                  nullable: true
+                  description: A brief description of the attribute group.
+                  example: null
+                is_active:
+                  type: integer
+                  description: Indicates if the attribute group is active (1 for active, 0 for inactive).
+                  example: null
+                active_attributes:
+                  type: array
+                  description: A list of active attributes associated with the attribute group.
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the attribute.
+                        example: 1
+                      name:
+                        type: string
+                        description: The name of the attribute.
+                        example: Attribute A
+                      type:
+                        type: string
+                        description: The type or category of the attribute.
+                        example: property
+                    required:
+                      - id
+                      - name
+                      - type
+              required:
+                - name
+                - slug
+                - active_attributes
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      active_attributes:
+                        type: array
+                        description: A list of active attributes.
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The unique identifier for the attribute.
+                              example: 1
+                            name:
+                              type: string
+                              description: The name of the attribute.
+                              example: Attribute A
+                            type:
+                              type: string
+                              description: The type or category of the attribute.
+                              example: property
+                      attributes_list:
+                        type: array
+                        description: A list of all attributes associated with the group.
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: The unique identifier for the attribute.
+                              example: 1
+                            name:
+                              type: string
+                              description: The name of the attribute.
+                              example: Attribute A
+                            type:
+                              type: string
+                              description: The type or category of the attribute.
+                              example: property
+                            deleted_at:
+                              type: string
+                              nullable: true
+                              description: The date and time when the attribute was deleted, if applicable.
+                              example: null
+                            pivot:
+                              type: object
+                              description: The pivot object representing the relationship between attribute group and attribute.
+                              properties:
+                                vh_st_attribute_group_id:
+                                  type: integer
+                                  description: The ID of the associated attribute group.
+                                  example: 4
+                                vh_st_attribute_id:
+                                  type: integer
+                                  description: The ID of the associated attribute.
+                                  example: 1
+                      id:
+                        type: integer
+                        description: The unique identifier for the attribute group.
+                        example: 4
+                      name:
+                        type: string
+                        description: The name of the attribute group.
+                        example: Group Name
+                      slug:
+                        type: string
+                        description: A URL-friendly version of the name.
+                        example: group-name
+                      is_active:
+                        type: integer
+                        description: Indicates if the attribute group is active (1 for active, 0 for inactive).
+                        example: 1
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: The date and time when the attribute group was created.
+                        example: '2024-10-07 17:55:48'
+                      updated_at:
+                        type: string
+                        format: date-time
+                        description: The date and time when the attribute group was last updated.
+                        example: '2024-10-07 17:55:48'
+                      created_by:
+                        type: integer
+                        description: The identifier of the user who created the attribute group.
+                        example: 1
+                      updated_by:
+                        type: integer
+                        description: The identifier of the user who last updated the attribute group.
+                        example: 1
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Attribute Groups
+      summary: Delete a record by ID
+      description: Delete a single attribute group by its ID.
+      operationId: deleteAttributeGroupById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Attribute group Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /attributegroups/{id}/action/{action}:
+    patch:
+      tags:
+        - Attribute Groups
+      summary: Perform an action on an attribute group
+      description: |
+        This endpoint allows you to perform various actions on an attribute group item, such as activating, deactivating, trashing, or restoring a attribute group.
+      operationId: itemActionAttributeGroup
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /attributegroups/action/{action}:
+    put:
+      tags:
+        - Attribute Groups
+      summary: bulk actions on attribute groups
+      description: This endpoint allows various bulk actions to be performed on attribute groups list based on the provided action type.
+      operationId: bulkActionsAttributeGroups
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -11635,6 +13233,15 @@ components:
       description: Filter records by state, city, or postal code. Partial matching is supported.
       schema:
         type: string
+    attributes:
+      name: filter[attributes][]
+      in: query
+      required: false
+      description: Filter record by attributes name/slug
+      schema:
+        type: array
+        items:
+          type: string
   requestBodies:
     StoreRequestBody:
       required: true
@@ -13652,3 +15259,144 @@ components:
                     type: integer
                     nullable: true
                     description: Indicates if the store is default (1 = default, 0 = not default)
+    Attribute:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the attribute.
+          example: 2
+        uuid:
+          type: string
+          format: uuid
+          description: UUID of the attribute.
+          example: 7412ffaa-2e95-4ee4-a470-8450f7fe9359
+        name:
+          type: string
+          description: Name of the attribute.
+          example: Attribute B
+        slug:
+          type: string
+          description: Slug for the attribute, used for SEO-friendly URLs.
+          example: attribute-b
+        description:
+          type: string
+          nullable: true
+          description: Detailed description of the attribute.
+          example: Et esse explicabo eos ut nemo ratione.
+        type:
+          type: string
+          description: Type of the attribute (e.g., Size, Color, etc.).
+          example: Size
+        is_active:
+          type: integer
+          description: Status of the attribute (1 = active, 0 = inactive).
+          example: 1
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata or information related to the attribute.
+          example: null
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the attribute was created.
+          example: '2024-10-04 10:36:56'
+        created_by:
+          type: integer
+          description: ID of the user who created the attribute.
+          example: 1
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the attribute was last updated.
+          example: '2024-10-04 10:36:56'
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the attribute.
+          example: 1
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the attribute was deleted, if applicable.
+          example: null
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the attribute, if applicable.
+          example: null
+    AttributeGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the attribute group.
+        uuid:
+          type: string
+          description: The universally unique identifier (UUID) for the attribute group.
+        name:
+          type: string
+          description: The name of the attribute group.
+        slug:
+          type: string
+          description: The slug, a URL-friendly version of the name.
+        description:
+          type: string
+          description: A brief description of the attribute group.
+        is_active:
+          type: integer
+          description: Indicates if the attribute group is active (1 for active, 0 for inactive).
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time when the attribute group was created.
+        created_by:
+          type: integer
+          description: The ID of the user who created the attribute group.
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time when the attribute group was last updated.
+        updated_by:
+          type: integer
+          description: The ID of the user who last updated the attribute group.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the attribute group was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who deleted the attribute group, if applicable.
+        attributes_list:
+          type: array
+          description: A list of attributes associated with the attribute group.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier for the attribute.
+              name:
+                type: string
+                description: The name of the attribute.
+              type:
+                type: string
+                description: The type or category of the attribute.
+              deleted_at:
+                type: string
+                format: date-time
+                nullable: true
+                description: The date and time when the attribute was deleted, if applicable.
+              pivot:
+                type: object
+                description: Pivot information linking the attribute to the attribute group.
+                properties:
+                  vh_st_attribute_group_id:
+                    type: integer
+                    description: The ID of the attribute group.
+                  vh_st_attribute_id:
+                    type: integer
+                    description: The ID of the attribute.
