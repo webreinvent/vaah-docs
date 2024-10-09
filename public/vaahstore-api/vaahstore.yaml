@@ -33,6 +33,8 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
+  - name: Shipments
+    description: Everything about Shipments in VaahStore
   - name: Product Attributes
     description: Everything about Product Attributes in VaahStore
   - name: Product Medias
@@ -57,6 +59,7 @@ tags:
     description: Everything about Customer Groups in VaahStore
   - name: Payment Methods
     description: Everything about Payment Methods in VaahStore
+
 
 paths:
   '/stores':
@@ -182,6 +185,9 @@ paths:
     $ref: './payments/listAction.yaml'  # Reference to payment list actions file
   '/payments/search/orders':
     $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
+
+  '/shipments':
+    $ref: './shipments/index.yaml'  # Reference to shipments file
 
   '/productattributes':
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file
@@ -3353,6 +3359,83 @@ components:
           type: object
           nullable: true
           description: Additional metadata related to the payment method (optional).
+    Shipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the shipment.
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier for the shipment.
+        taxonomy_id_shipment_status:
+          type: integer
+          description: Identifier for the shipment status taxonomy.
+        name:
+          type: string
+          description: Name of the product associated with the shipment.
+        tracking_url:
+          type: string
+          format: uri
+          description: URL for tracking the shipment.
+        tracking_key:
+          type: string
+          description: Key used for tracking the shipment.
+        tracking_value:
+          type: string
+          description: Value or description related to the tracking of the shipment.
+        is_trackable:
+          type: integer
+          description: Indicates whether the shipment is trackable (1 for true, 0 for false).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the shipment was created.
+        created_by:
+          type: integer
+          description: Identifier for the user who created the shipment.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the shipment was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier for the user who deleted the shipment, if applicable.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the shipment.
+        orders_count:
+          type: integer
+          description: Number of orders associated with the shipment.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the shipment status.
+
+            parent_id:
+              type: integer
+              nullable: true
+              description: Identifier for the parent status, if applicable.
+            vh_taxonomy_type_id:
+              type: integer
+              description: Identifier for the taxonomy type of the shipment status.
+            is_active:
+              type: integer
+              description: Indicates whether the shipment status is active (1 for true, 0 for false).
+            name:
+              type: string
+              description: Name of the shipment status.
+            slug:
+              type: string
+              description: URL-friendly version of the shipment status name.
+
+
 
 
 

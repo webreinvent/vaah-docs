@@ -33,6 +33,8 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
+  - name: Shipments
+    description: Everything about Shipments in VaahStore
   - name: Product Attributes
     description: Everything about Product Attributes in VaahStore
   - name: Product Medias
@@ -8373,6 +8375,349 @@ paths:
                           type: string
                           format: date-time
                           description: The date and time the order was last updated.
+  /shipments:
+    get:
+      tags:
+        - Shipments
+      summary: Get list of all shipments
+      description: Retrieve list of all the shipments.
+      operationId: getShipments
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Shipment'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/shipments?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Shipments
+      summary: Create a shipment
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                orders:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: Unique identifier for the order.
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Unique identifier for the order item.
+                            to_be_shipped:
+                              type: integer
+                              description: Quantity of the item to be shipped.
+                            pending:
+                              type: integer
+                              description: Pending quantity of the order item.
+                            product_variation:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  description: Name of the product variation associated with the order item.
+                                  id:
+                                    type: integer
+                                    nullable: true
+                                    description: Unique identifier for the order item or product variation.
+                              required:
+                                - name
+                          required:
+                            - id
+                            - to_be_shipped
+                            - pending
+                            - product_variation
+                    required:
+                      - id
+                taxonomy_id_shipment_status:
+                  type: integer
+                  description: Identifier for the shipment status taxonomy.
+                status:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Unique identifier for the shipment status.
+              required:
+                - name
+                - orders
+                - taxonomy_id_shipment_status
+                - status
+      responses:
+        '200':
+          description: Shipment created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Shipment'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - ''
+    put:
+      tags:
+        - Shipments
+      summary: Update a list of shipments
+      description: This endpoint allows you to update multiple shipments records based on the provided input, including actions like activating, deactivating, trashing, or restoring shipments.
+      operationId: updateShipmentsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the shipments to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified shipments have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Shipments
+      summary: Delete a list of shipments
+      description: This endpoint allows you to delete multiple shipments records based on the provided input.
+      operationId: deleteShipmentsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the shipments to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified brands have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
   /productattributes:
     get:
       tags:
@@ -19610,3 +19955,77 @@ components:
           type: object
           nullable: true
           description: Additional metadata related to the payment method (optional).
+    Shipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the shipment.
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier for the shipment.
+        taxonomy_id_shipment_status:
+          type: integer
+          description: Identifier for the shipment status taxonomy.
+        name:
+          type: string
+          description: Name of the product associated with the shipment.
+        tracking_url:
+          type: string
+          format: uri
+          description: URL for tracking the shipment.
+        tracking_key:
+          type: string
+          description: Key used for tracking the shipment.
+        tracking_value:
+          type: string
+          description: Value or description related to the tracking of the shipment.
+        is_trackable:
+          type: integer
+          description: Indicates whether the shipment is trackable (1 for true, 0 for false).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the shipment was created.
+        created_by:
+          type: integer
+          description: Identifier for the user who created the shipment.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the shipment was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier for the user who deleted the shipment, if applicable.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the shipment.
+        orders_count:
+          type: integer
+          description: Number of orders associated with the shipment.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the shipment status.
+            parent_id:
+              type: integer
+              nullable: true
+              description: Identifier for the parent status, if applicable.
+            vh_taxonomy_type_id:
+              type: integer
+              description: Identifier for the taxonomy type of the shipment status.
+            is_active:
+              type: integer
+              description: Indicates whether the shipment status is active (1 for true, 0 for false).
+            name:
+              type: string
+              description: Name of the shipment status.
+            slug:
+              type: string
+              description: URL-friendly version of the shipment status name.
