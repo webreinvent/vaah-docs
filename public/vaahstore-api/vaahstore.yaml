@@ -53,6 +53,8 @@ tags:
     description: Everything about Wishlists in VaahStore
   - name: Customers
     description: Everything about Customers in VaahStore
+  - name: Customer Groups
+    description: Everything about Customer Groups in VaahStore
 
 paths:
   '/stores':
@@ -270,6 +272,17 @@ paths:
     $ref: './customers/index.yaml'  # Reference to customers file
   '/users/{id}':
     $ref: './customers/update.yaml'  # Reference to customers update file
+
+  '/customergroups/assets':
+    $ref: './customer-groups/getAssets.yaml'  # Reference to customer groups assets file
+  '/customergroups':
+    $ref: './customer-groups/index.yaml'  # Reference to customer groups file
+  '/customergroups/{id}':
+    $ref: './customer-groups/update.yaml'  # Reference to customer group item file
+  '/customergroups/{id}/action/{actio}':
+    $ref: './customer-groups/itemAction.yaml'  # Reference to customer group item actions file
+  '/customergroups/action/{actio}':
+    $ref: './customer-groups/listAction.yaml'  # Reference to customer group list actions file
 
 
 components:
@@ -1082,6 +1095,43 @@ components:
               - status
               - vh_st_vendor_id
               - taxonomy_id_warehouse_status
+    CustomerGroupRequestBody:
+      description: "Request body for creating or updating a customer group"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the customer group.
+                maxLength: 150
+              slug:
+                type: string
+                description: A URL-friendly version of the customer group's name.
+                maxLength: 150
+              customers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the customer.
+                  required:
+                    - id
+              taxonomy_id_customer_groups_status:
+                type: integer
+                description: The identifier for the status of the customer group.
+              status_notes:
+                type: string
+                description: Additional notes regarding the status of the customer group.
+                maxLength: 150
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
 
 
 
@@ -3133,6 +3183,95 @@ components:
         website:
           type: string
           description: "Customer's website URL."
+    CustomerGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the customer group.
+        uuid:
+          type: string
+          description: The universally unique identifier for the customer group.
+        taxonomy_id_customer_groups_status:
+          type: integer
+          description: The identifier for the status of the customer group.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the customer group was created.
+        created_by:
+          type: integer
+          description: The identifier of the user who created the customer group.
+        updated_at:
+          type: string
+          format: date-time
+          description: The timestamp when the customer group was last updated.
+        updated_by:
+          type: integer
+          description: The identifier of the user who last updated the customer group.
+        deleted_at:
+          type: string
+          nullable: true
+          description: The timestamp when the customer group was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The identifier of the user who deleted the customer group, if applicable.
+        name:
+          type: string
+          description: The name of the customer group.
+        slug:
+          type: string
+          description: A URL-friendly version of the customer group's name.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier for the status of the customer group.
+            name:
+              type: string
+              description: The name of the status of the customer group.
+            slug:
+              type: string
+              description: A URL-friendly version of the status name.
+        status_notes:
+          type: string
+          description: Additional notes regarding the status of the customer group.
+        customers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier for the customer.
+              first_name:
+                type: string
+                description: The first name of the customer.
+              last_name:
+                type: string
+                description: The last name of the customer.
+              display_name:
+                type: string
+                description: The display name of the customer.
+              avatar:
+                type: string
+                format: uri
+                description: The URL of the customer's avatar image.
+              pivot:
+                type: object
+                properties:
+                  vh_st_customer_group_id:
+                    type: integer
+                    description: The identifier for the customer group in the pivot table.
+                  vh_st_user_id:
+                    type: integer
+                    description: The identifier for the user in the pivot table.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata associated with the customer group.
 
 
 
