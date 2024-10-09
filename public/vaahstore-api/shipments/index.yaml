@@ -12,6 +12,7 @@ get:
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
     - '$ref': '../vaahstore.yaml#/components/parameters/status'
+    - '$ref': '../vaahstore.yaml#/components/parameters/order'
 
 
 

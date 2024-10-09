@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: VaahStore
   description: |
-    VaahStore is an e-commerce module that provides an API specification for user authentication and store management.
+    VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
         To get started, [sign up here](#tag/Authentication/POST/user/signup).
   version: 1.0.0
   contact:
@@ -194,6 +194,10 @@ paths:
     $ref: './shipments/getShippedItem.yaml'  # Reference to get shipment by item id file
   '/shipments/update-shipped-item-quantity':
     $ref: './shipments/updateItemQuantity.yaml'  # Reference to shipments update shipped items quantity file
+  '/shipments/{id}/action/{action}':
+    $ref: './shipments/itemAction.yaml'  # Reference to payment item actions file
+  '/shipments/action/{action}':
+    $ref: './shipments/listAction.yaml'  # Reference to payment list actions file
 
   '/productattributes':
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file
@@ -580,6 +584,15 @@ components:
       in: query
       required: false
       description: Filter by associated customers.
+      schema:
+        type: array
+        items:
+          type: string
+    order:
+      name: filter[order][]
+      in: query
+      required: false
+      description: Filter by associated order.
       schema:
         type: array
         items:

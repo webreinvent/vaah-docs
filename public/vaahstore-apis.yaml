@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: VaahStore
   description: |
-    VaahStore is an e-commerce module that provides an API specification for user authentication and store management.
+    VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
         To get started, [sign up here](#tag/Authentication/POST/user/signup).
   version: 1.0.0
   contact:
@@ -8390,6 +8390,7 @@ paths:
         - $ref: '#/components/parameters/filter_trashed'
         - $ref: '#/components/parameters/filter_date'
         - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/order'
       responses:
         '200':
           description: List retrieved Successfully
@@ -9478,6 +9479,145 @@ paths:
                       type: string
                     example:
                       - The quantity cannot exceed the order item's available quantity.
+  /shipments/{id}/action/{action}:
+    patch:
+      tags:
+        - Shipments
+      summary: Perform an action on a shipment
+      description: |
+        This endpoint allows you to perform various actions on a shipment item, such as activating, deactivating, trashing, or restoring a shipment.
+      operationId: itemActionShipment
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /shipments/action/{action}:
+    put:
+      tags:
+        - Shipments
+      summary: bulk actions on shipments
+      description: This endpoint allows various bulk actions to be performed on shipments list based on the provided action type.
+      operationId: bulkActionsShipments
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
   /productattributes:
     get:
       tags:
@@ -17958,6 +18098,15 @@ components:
       in: query
       required: false
       description: Filter by associated customers.
+      schema:
+        type: array
+        items:
+          type: string
+    order:
+      name: filter[order][]
+      in: query
+      required: false
+      description: Filter by associated order.
       schema:
         type: array
         items:
