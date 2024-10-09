@@ -188,6 +188,8 @@ paths:
 
   '/shipments':
     $ref: './shipments/index.yaml'  # Reference to shipments file
+  /shipments/{id}':
+    $ref: './shipments/update.yaml'  # Reference to shipments item file
 
   '/productattributes':
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file

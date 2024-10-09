@@ -1,0 +1,609 @@
+get:
+  tags:
+    - Shipments
+  summary: Get record by shipment ID
+  description: Retrieve a shipment by its unique identifier.
+  operationId: getShipmentById
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  responses:
+    '200':
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Indicates whether the request was successful.
+              data:
+                type: object
+                description: Contains the shipment details.
+                properties:
+                  id:
+                    type: integer
+                    description: The unique ID of the shipment.
+                  uuid:
+                    type: string
+                    description: The UUID of the shipment.
+                  taxonomy_id_shipment_status:
+                    type: integer
+                    description: The ID of the taxonomy for the shipment status.
+                  name:
+                    type: string
+                    description: The name of the shipment (e.g., default product name).
+                  tracking_url:
+                    type: string
+                    description: The URL for tracking the shipment.
+                  tracking_key:
+                    type: string
+                    description: The tracking key provided by the shipping service.
+                  tracking_value:
+                    type: string
+                    description: The tracking value or message associated with the shipment.
+                  total_shipment:
+                    type: string
+                    nullable: true
+                    description: The total number of shipments (if available).
+                  is_trackable:
+                    type: integer
+                    description: Indicates whether the shipment is trackable (1 = trackable, 0 = not trackable).
+                  meta:
+                    type: object
+                    nullable: true
+                    description: Metadata for the shipment, if available.
+                  created_by:
+                    type: integer
+                    description: The ID of the user who created the shipment.
+                  updated_by:
+                    type: integer
+                    description: The ID of the user who last updated the shipment.
+                  deleted_by:
+                    type: integer
+                    nullable: true
+                    description: The ID of the user who deleted the shipment, if applicable.
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: The timestamp of when the shipment was created.
+                  updated_at:
+                    type: string
+                    format: date-time
+                    description: The timestamp of when the shipment was last updated.
+                  deleted_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: The timestamp of when the shipment was deleted, if applicable.
+                  is_items_exist_already:
+                    type: boolean
+                    description: Indicates whether the items in the shipment already exist in the order.
+                  created_by_user:
+                    type: object
+                    description: Information about the user who created the shipment.
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the user.
+                      uuid:
+                        type: string
+                        description: The UUID of the user.
+                      first_name:
+                        type: string
+                        description: The user's first name.
+                      last_name:
+                        type: string
+                        description: The user's last name.
+                      email:
+                        type: string
+                        description: The user's email address.
+                      avatar:
+                        type: string
+                        description: The URL of the user's avatar.
+                      name:
+                        type: string
+                        description: The full name of the user.
+                  updated_by_user:
+                    type: object
+                    description: Information about the user who last updated the shipment.
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the user.
+                      uuid:
+                        type: string
+                        description: The UUID of the user.
+                      first_name:
+                        type: string
+                        description: The user's first name.
+                      last_name:
+                        type: string
+                        description: The user's last name.
+                      email:
+                        type: string
+                        description: The user's email address.
+                      avatar:
+                        type: string
+                        description: The URL of the user's avatar.
+                      name:
+                        type: string
+                        description: The full name of the user.
+                  status:
+                    type: object
+                    description: The current status of the shipment.
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the shipment status.
+                      uuid:
+                        type: string
+                        description: The UUID of the shipment status.
+                      name:
+                        type: string
+                        description: The name of the shipment status (e.g., "Partially Shipped").
+                      is_active:
+                        type: integer
+                        description: Indicates whether the status is active.
+                  shipment_order_items:
+                    type: array
+                    description: A list of order items in the shipment.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The ID of the order item in the shipment.
+                        uuid:
+                          type: string
+                          description: The UUID of the order item.
+                        vh_st_order_id:
+                          type: integer
+                          description: The ID of the order associated with the item.
+                        vh_user_id:
+                          type: integer
+                          description: The ID of the user who placed the order.
+                        vh_st_product_id:
+                          type: integer
+                          description: The ID of the product in the order.
+                        quantity:
+                          type: integer
+                          description: The quantity of the product in the shipment.
+                        price:
+                          type: string
+                          description: The price of the product in the order.
+                        overall_shipped_quantity:
+                          type: string
+                          description: The total quantity of items shipped so far.
+                        pivot:
+                          type: object
+                          description: Pivot data showing the association between the shipment and the order item.
+                          properties:
+                            vh_st_shipment_id:
+                              type: integer
+                              description: The ID of the shipment.
+                            vh_st_order_item_id:
+                              type: integer
+                              description: The ID of the order item.
+                            quantity:
+                              type: integer
+                              description: The quantity of the item shipped.
+                            pending:
+                              type: integer
+                              description: The remaining quantity yet to be shipped.
+                        product_variation:
+                          type: object
+                          description: Information about the product variation.
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the product variation.
+                            name:
+                              type: string
+                              description: The name of the product variation.
+                        vendor:
+                          type: object
+                          description: Information about the vendor.
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the vendor.
+                            name:
+                              type: string
+                              description: The name of the vendor.
+    '404':
+      description: Record Not Found
+      content:
+        application/json:
+          schema:
+            type: object  # Define the type of the response
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Record not found with ID: {id}"
+                ]
+            required:
+              - errors  # Make errors a required field
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+put:
+  tags:
+    - Shipments
+  summary: Update an existing record
+  description: Update a shipment record with the specified ID using the provided details.
+  operationId: updateShipment
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the shipment.
+            is_trackable:
+              type: integer
+              description: Indicates if the shipment is trackable (1 = trackable, 0 = not trackable).
+            orders:
+              type: array
+              description: List of orders associated with the shipment.
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: The order ID.
+                  vh_user_id:
+                    type: integer
+                    description: The user ID who placed the order.
+                  order_status:
+                    type: string
+                    description: The current status of the order.
+                  items:
+                    type: array
+                    description: A list of items within the order.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The ID of the order item.
+                        to_be_shipped:
+                          type: integer
+                          nullable: true
+                          description: Quantity of the item to be shipped in this shipment.
+                        shipped:
+                          type: integer
+                          nullable: true
+                          description: Quantity of the item that has already been shipped.
+                        pending:
+                          type: integer
+                          description: The pending quantity of the item.
+                        quantity:
+                          type: integer
+                          description: The total quantity of the item.
+                      required:
+                        - id
+                        - to_be_shipped
+                        - shipped
+                        - pending
+                        - quantity
+                required:
+                  - items
+                  - id
+                  - order_status
+            taxonomy_id_shipment_status:
+              type: integer
+              description: The ID of the shipment status taxonomy.
+            status:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier for the shipment status.
+            tracking_url:
+              type: string
+              description: The tracking URL for the shipment.
+            tracking_key:
+              type: string
+              description: The tracking key for the shipment.
+            tracking_value:
+              type: string
+              description: The tracking value or message associated with the shipment.
+
+
+
+          required:
+            - name
+            - is_trackable
+            - orders
+            - taxonomy_id_shipment_status
+            - status
+  responses:
+    '200':
+      description: Saved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Indicates whether the request was successful.
+              data:
+                type: object
+                description: Contains the shipment details.
+                properties:
+                  id:
+                    type: integer
+                    description: The unique ID of the shipment.
+                  uuid:
+                    type: string
+                    description: The UUID of the shipment.
+                  taxonomy_id_shipment_status:
+                    type: integer
+                    description: The ID of the taxonomy for the shipment status.
+                  name:
+                    type: string
+                    description: The name of the shipment (e.g., default product name).
+                  tracking_url:
+                    type: string
+                    description: The URL for tracking the shipment.
+                  tracking_key:
+                    type: string
+                    description: The tracking key provided by the shipping service.
+                  tracking_value:
+                    type: string
+                    description: The tracking value or message associated with the shipment.
+                  total_shipment:
+                    type: string
+                    nullable: true
+                    description: The total number of shipments (if available).
+                  is_trackable:
+                    type: integer
+                    description: Indicates whether the shipment is trackable (1 = trackable, 0 = not trackable).
+                  meta:
+                    type: object
+                    nullable: true
+                    description: Metadata for the shipment, if available.
+                  created_by:
+                    type: integer
+                    description: The ID of the user who created the shipment.
+                  updated_by:
+                    type: integer
+                    description: The ID of the user who last updated the shipment.
+                  deleted_by:
+                    type: integer
+                    nullable: true
+                    description: The ID of the user who deleted the shipment, if applicable.
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: The timestamp of when the shipment was created.
+                  updated_at:
+                    type: string
+                    format: date-time
+                    description: The timestamp of when the shipment was last updated.
+                  deleted_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: The timestamp of when the shipment was deleted, if applicable.
+                  is_items_exist_already:
+                    type: boolean
+                    description: Indicates whether the items in the shipment already exist in the order.
+                  created_by_user:
+                    type: object
+                    description: Information about the user who created the shipment.
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the user.
+                      uuid:
+                        type: string
+                        description: The UUID of the user.
+                      first_name:
+                        type: string
+                        description: The user's first name.
+                      last_name:
+                        type: string
+                        description: The user's last name.
+                      email:
+                        type: string
+                        description: The user's email address.
+                      avatar:
+                        type: string
+                        description: The URL of the user's avatar.
+                      name:
+                        type: string
+                        description: The full name of the user.
+                  updated_by_user:
+                    type: object
+                    description: Information about the user who last updated the shipment.
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the user.
+                      uuid:
+                        type: string
+                        description: The UUID of the user.
+                      first_name:
+                        type: string
+                        description: The user's first name.
+                      last_name:
+                        type: string
+                        description: The user's last name.
+                      email:
+                        type: string
+                        description: The user's email address.
+                      avatar:
+                        type: string
+                        description: The URL of the user's avatar.
+                      name:
+                        type: string
+                        description: The full name of the user.
+                  status:
+                    type: object
+                    description: The current status of the shipment.
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the shipment status.
+                      uuid:
+                        type: string
+                        description: The UUID of the shipment status.
+                      name:
+                        type: string
+                        description: The name of the shipment status (e.g., "Partially Shipped").
+                      is_active:
+                        type: integer
+                        description: Indicates whether the status is active.
+                  shipment_order_items:
+                    type: array
+                    description: A list of order items in the shipment.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The ID of the order item in the shipment.
+                        uuid:
+                          type: string
+                          description: The UUID of the order item.
+                        vh_st_order_id:
+                          type: integer
+                          description: The ID of the order associated with the item.
+                        vh_user_id:
+                          type: integer
+                          description: The ID of the user who placed the order.
+                        vh_st_product_id:
+                          type: integer
+                          description: The ID of the product in the order.
+                        quantity:
+                          type: integer
+                          description: The quantity of the product in the shipment.
+                        price:
+                          type: string
+                          description: The price of the product in the order.
+                        overall_shipped_quantity:
+                          type: string
+                          description: The total quantity of items shipped so far.
+                        pivot:
+                          type: object
+                          description: Pivot data showing the association between the shipment and the order item.
+                          properties:
+                            vh_st_shipment_id:
+                              type: integer
+                              description: The ID of the shipment.
+                            vh_st_order_item_id:
+                              type: integer
+                              description: The ID of the order item.
+                            quantity:
+                              type: integer
+                              description: The quantity of the item shipped.
+                            pending:
+                              type: integer
+                              description: The remaining quantity yet to be shipped.
+                        product_variation:
+                          type: object
+                          description: Information about the product variation.
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the product variation.
+                            name:
+                              type: string
+                              description: The name of the product variation.
+                        vendor:
+                          type: object
+                          description: Information about the vendor.
+                          properties:
+                            id:
+                              type: integer
+                              description: The ID of the vendor.
+                            name:
+                              type: string
+                              description: The name of the vendor.
+    400:
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "The name field is required.",
+                    "The orders field is required.",
+                    "The status field is required.",
+                    "To be shipped quantity should not exceed pending quantity for item: Product Variation Name"
+                ]
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+delete:
+  tags:
+    - Shipments
+  summary: Delete a record by ID
+  description: Delete a single shipment by its ID.
+  operationId: deleteShipmentById
+  parameters:
+    - '$ref': '#/components/parameters/id'
+  responses:
+    '200':
+      description: Shipment Deleted Successfull
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items: { }
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Record has been deleted"
+    '400':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: string
+                items:
+                  type: string
+                  example: "Record does not exist."
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:

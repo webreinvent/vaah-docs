@@ -147,7 +147,10 @@ post:
                 items:
                   type: string
                 example: [
-                    ""
+                    "The name field is required.",
+                    "The orders field is required.",
+                    "The status field is required.",
+                    "To be shipped quantity should not exceed pending quantity for item: Product Variation Name"
                 ]
 
 put:
