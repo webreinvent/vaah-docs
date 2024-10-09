@@ -55,6 +55,8 @@ tags:
     description: Everything about Customers in VaahStore
   - name: Customer Groups
     description: Everything about Customer Groups in VaahStore
+  - name: Payment Methods
+    description: Everything about Payment Methods in VaahStore
 
 paths:
   '/stores':
@@ -283,6 +285,15 @@ paths:
     $ref: './customer-groups/itemAction.yaml'  # Reference to customer group item actions file
   '/customergroups/action/{actio}':
     $ref: './customer-groups/listAction.yaml'  # Reference to customer group list actions file
+
+  '/paymentmethods':
+    $ref: './payment-methods/index.yaml'  # Reference to payment-methods file
+  '/paymentmethods/{id}':
+    $ref: './payment-methods/update.yaml'  # Reference to payment-methods item file
+  '/paymentmethods/{id}/action/{action}':
+    $ref: './payment-methods/itemAction.yaml'  # Reference to payment-methods item actions file
+  '/paymentmethods/action/{action}':
+    $ref: './payment-methods/listAction.yaml'  # Reference to payment-methods list actions file
 
 
 components:
@@ -1127,6 +1138,31 @@ components:
                 type: string
                 description: Additional notes regarding the status of the customer group.
                 maxLength: 150
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
+    PaymentMethodRequestBody:
+      description: "Request body for creating or updating a payment method"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the payment method.
+                maxLength: 250
+              slug:
+                type: string
+                description: A URL-friendly version of the payment method's name.
+                maxLength: 250
+              is_active:
+                type: integer
+                example: 1
+                description: "Whether the payment method is active."
+
             required:
               - name
               - slug
@@ -3272,7 +3308,51 @@ components:
           type: object
           nullable: true
           description: Additional metadata associated with the customer group.
-
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the payment method.
+        uuid:
+          type: string
+          description: Universally Unique Identifier for the payment method.
+        name:
+          type: string
+          description: Name of the payment method.
+        slug:
+          type: string
+          description: A URL-friendly version of the payment method's name.
+        is_active:
+          type: integer
+          description: Status indicating if the payment method is active (1) or inactive (0).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was created.
+        created_by:
+          type: integer
+          description: Identifier of the user who created the payment method.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was last updated.
+        updated_by:
+          type: integer
+          description: Identifier of the user who last updated the payment method.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the payment method was deleted (if applicable).
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier of the user who deleted the payment method (if applicable).
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the payment method (optional).
 
 
 
