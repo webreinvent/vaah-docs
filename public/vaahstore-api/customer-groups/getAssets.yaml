@@ -1,0 +1,113 @@
+get:
+  summary: Retrieve assets
+  tags:
+    - "Customer Groups"
+  description: Returns a list of assets along with their permissions and statuses.
+  operationId: getAssets
+  responses:
+    '200':
+      description: Successful response with asset data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  permissions:
+                    type: array
+                    items:
+                      type: string
+                    example: ["has-access-of-dashboard", "has-access-of-setting-section", "can-login-in-backend"]
+                  actions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        # Define the properties of each action here if needed
+                        action_name:
+                          type: string
+                          example: "Edit"
+                        action_slug:
+                          type: string
+                          example: "edit"
+                  empty_item:
+                    type: object
+                    properties:
+                      uuid:
+                        type: string
+                        nullable: true
+                        example: null
+                      name:
+                        type: string
+                        nullable: true
+                        example: null
+                      slug:
+                        type: string
+                        nullable: true
+                        example: null
+                      taxonomy_id_customer_groups_status:
+                        type: string
+                        nullable: true
+                        example: null
+                      status_notes:
+                        type: string
+                        nullable: true
+                        example: null
+                      # Add additional properties here as needed
+                  fillable:
+                    type: object
+                    properties:
+                      # Define fillable properties here if needed
+                      except:
+                        type: array
+                        items:
+                          type: string
+                        example: ["uuid", "created_by", "updated_by", "deleted_by"]
+                      columns:
+                        type: array
+                        items:
+                          type: string
+                        example: ["name", "slug", "status"]
+                  rows:
+                    type: integer
+                    example: 20
+                  taxonomy:
+                    type: object
+                    properties:
+                      # Define taxonomy properties here if needed
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Customer Group"
+                  status:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 52
+                        uuid:
+                          type: string
+                          example: "aa1e3749-c9ad-4b22-8d33-e26b3070238e"
+                        parent_id:
+                          type: integer
+                          nullable: true
+                          example: null
+                        vh_taxonomy_type_id:
+                          type: integer
+                          example: 19
+                        name:
+                          type: string
+                          example: "Active"
+                        slug:
+                          type: string
+                          example: "active"
+                        # Add additional properties for the status as needed

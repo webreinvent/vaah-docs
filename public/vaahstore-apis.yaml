@@ -51,6 +51,12 @@ tags:
     description: Everything about Addresses in VaahStore
   - name: Wishlists
     description: Everything about Wishlists in VaahStore
+  - name: Customers
+    description: Everything about Customers in VaahStore
+  - name: Customer Groups
+    description: Everything about Customer Groups in VaahStore
+  - name: Payment Methods
+    description: Everything about Payment Methods in VaahStore
 paths:
   /stores:
     get:
@@ -14708,6 +14714,1872 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /users/assets:
+    get:
+      summary: Get assets for customers
+      description: Retrieve various assets related to customers, such as permissions, rows per page, fillable columns, taxonomies, and user data.
+      operationId: getCustomersAssets
+      tags:
+        - Customers
+      responses:
+        '200':
+          description: Retrieve assets related to user settings and configurations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                  data:
+                    type: object
+                    properties:
+                      permissions:
+                        type: object
+                        description: The permissions of the authenticated user.
+                      countries:
+                        type: array
+                        description: List of countries with code, name, and calling code.
+                        items:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                              description: Country code.
+                            name:
+                              type: string
+                              description: Country name.
+                            calling_code:
+                              type: string
+                              description: Country calling code.
+                      country_code:
+                        type: array
+                        description: List of country codes.
+                        items:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                              description: Country code.
+                            name:
+                              type: string
+                              description: Country name.
+                            calling_code:
+                              type: string
+                              description: Country calling code.
+                      name_titles:
+                        type: array
+                        description: List of name titles.
+                        items:
+                          type: object
+                          properties:
+                            slug:
+                              type: string
+                              description: Slug for the title.
+                            name:
+                              type: string
+                              description: Display name of the title.
+                      rows:
+                        type: integer
+                        description: The number of rows per page as defined in configuration.
+                      fillable:
+                        type: object
+                        properties:
+                          columns:
+                            type: array
+                            items:
+                              type: string
+                            description: The list of fillable columns for the User model, excluding exceptions.
+                          except:
+                            type: array
+                            items:
+                              type: string
+                            description: The list of columns excluded from fillable fields.
+                      empty_item:
+                        type: object
+                        description: An empty item template for creating new user records.
+                        properties:
+                          uuid:
+                            type: string
+                            nullable: true
+                          created_by:
+                            type: string
+                            nullable: true
+                          updated_by:
+                            type: string
+                            nullable: true
+                          deleted_by:
+                            type: string
+                            nullable: true
+                          meta:
+                            type: object
+                            properties:
+                              custom_fields:
+                                type: object
+                                description: Custom fields for the user, populated based on settings.
+                      custom_fields:
+                        type: object
+                        nullable: true
+                        description: Custom fields settings retrieved from the database.
+                      fields:
+                        type: object
+                        description: User-specific settings fields.
+                      totalRole:
+                        type: integer
+                        description: Total number of roles defined in the system.
+                      upload_url:
+                        type: string
+                        description: URL for uploading media files.
+        '500':
+          description: An error occurred while retrieving assets.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    description: List of error messages.
+                    items:
+                      type: string
+                      example: Something went wrong.
+                  hint:
+                    type: array
+                    description: Debugging hints (only in debug mode).
+                    items:
+                      type: string
+                      example: Trace details...
+  /users:
+    get:
+      tags:
+        - Customers
+      summary: Get list of all customers
+      description: Retrieve list of all the customers.
+      operationId: getCustomers
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/users?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Customers
+      summary: Create a customer
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: The user's email address.
+                  maxLength: 150
+                first_name:
+                  type: string
+                  description: The user's first name.
+                  maxLength: 150
+                username:
+                  type: string
+                  description: User username
+                password:
+                  type: string
+                  description: The user's password.
+                status:
+                  type: string
+                  description: The user's status.
+                is_active:
+                  type: integer
+                  description: Indicates whether the user is active or not.
+              required:
+                - email
+                - first_name
+                - status
+                - is_active
+                - password
+                - username
+      responses:
+        '200':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Customer'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - ' '
+        '409':
+          description: Conflict error if user/customer already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - ' '
+    put:
+      tags:
+        - Customers
+      summary: Update a list of customers
+      description: This endpoint allows you to update multiple customers records based on the provided input, including actions like activating, deactivating, trashing, or restoring customers.
+      operationId: updateCustomersList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the customers to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified customers have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Customers
+      summary: Delete a list of customers
+      description: This endpoint allows you to delete multiple customers records based on the provided input.
+      operationId: deleteCustomersList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the customers to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified customers have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /users/{id}:
+    get:
+      tags:
+        - Customers
+      summary: Get record by customer ID
+      description: Retrieve a customer by its unique identifier.
+      operationId: getCustomerById
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - name: x-xsrf-token
+          in: header
+          required: true
+          description: The XSRF token for security.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Customer Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Customers
+      summary: Update an existing record
+      description: Update a customer record with the specified ID using the provided details.
+      operationId: updateBrand
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: The user's email address.
+                  maxLength: 150
+                first_name:
+                  type: string
+                  description: The user's first name.
+                  maxLength: 150
+                username:
+                  type: string
+                  description: User username
+                password:
+                  type: string
+                  description: The user's password.
+                status:
+                  type: string
+                  description: The user's status.
+                is_active:
+                  type: integer
+                  description: Indicates whether the user is active or not.
+              required:
+                - email
+                - first_name
+                - status
+                - is_active
+                - password
+                - username
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Customer'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Customers
+      summary: Delete a record by ID
+      description: Delete a single customer by its ID.
+      operationId: deleteCustomerById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Customer Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /customergroups/assets:
+    get:
+      summary: Retrieve assets
+      tags:
+        - Customer Groups
+      description: Returns a list of assets along with their permissions and statuses.
+      operationId: getAssets
+      responses:
+        '200':
+          description: Successful response with asset data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      permissions:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - has-access-of-dashboard
+                          - has-access-of-setting-section
+                          - can-login-in-backend
+                      actions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            action_name:
+                              type: string
+                              example: Edit
+                            action_slug:
+                              type: string
+                              example: edit
+                      empty_item:
+                        type: object
+                        properties:
+                          uuid:
+                            type: string
+                            nullable: true
+                            example: null
+                          name:
+                            type: string
+                            nullable: true
+                            example: null
+                          slug:
+                            type: string
+                            nullable: true
+                            example: null
+                          taxonomy_id_customer_groups_status:
+                            type: string
+                            nullable: true
+                            example: null
+                          status_notes:
+                            type: string
+                            nullable: true
+                            example: null
+                      fillable:
+                        type: object
+                        properties:
+                          except:
+                            type: array
+                            items:
+                              type: string
+                            example:
+                              - uuid
+                              - created_by
+                              - updated_by
+                              - deleted_by
+                          columns:
+                            type: array
+                            items:
+                              type: string
+                            example:
+                              - name
+                              - slug
+                              - status
+                      rows:
+                        type: integer
+                        example: 20
+                      taxonomy:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Customer Group
+                      status:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 52
+                            uuid:
+                              type: string
+                              example: aa1e3749-c9ad-4b22-8d33-e26b3070238e
+                            parent_id:
+                              type: integer
+                              nullable: true
+                              example: null
+                            vh_taxonomy_type_id:
+                              type: integer
+                              example: 19
+                            name:
+                              type: string
+                              example: Active
+                            slug:
+                              type: string
+                              example: active
+  /customergroups:
+    get:
+      tags:
+        - Customer Groups
+      summary: Get list of all customer groups
+      description: Retrieve list of all the customer groups.
+      operationId: getBrands
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/customers'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CustomerGroup'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/customergroups?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Customer Groups
+      summary: Create a new customer group
+      description: Creates a new customer group with the specified details.
+      operationId: createCustomerGroup
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerGroupRequestBody'
+      responses:
+        '200':
+          description: Customer group created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/CustomerGroup'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The name field is required.
+                      - The slug field is required.
+                      - The customers field is required.
+                      - The taxonomy_id_customer_groups_status field is required.
+                      - The status_notes field is required when status.slug is rejected.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Internal server error.
+    put:
+      tags:
+        - Customer Groups
+      summary: Update a list of customer groups
+      description: This endpoint allows you to update multiple customer groups records based on the provided input, including actions like activating, deactivating, trashing, or restoring customer groups.
+      operationId: updateCustomerGroupsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the custormer groups to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified custormer groups have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Customer Groups
+      summary: Delete a list of custormer groups
+      description: This endpoint allows you to delete multiple custormer groups records based on the provided input.
+      operationId: deleteCustomerGroupsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the custormer groups to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified custormer groups have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /customergroups/{id}:
+    get:
+      tags:
+        - Customer Groups
+      summary: Get record by customer group ID
+      description: Retrieve a customer group by its unique identifier.
+      operationId: getCustomerGroupById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Customer Group Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerGroup'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Customer Groups
+      summary: Update an existing record
+      description: Update a customer group record with the specified ID using the provided details.
+      operationId: updateCustomerGroup
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerGroupRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CustomerGroup'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Customer Groups
+      summary: Delete a record by ID
+      description: Delete a single customer group by its ID.
+      operationId: deleteCustomerGroupById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Customer Group Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /customergroups/{id}/action/{actio}:
+    patch:
+      tags:
+        - Customer Groups
+      summary: Perform an action on a customer group
+      description: |
+        This endpoint allows you to perform various actions on a customer group item, such as activating, deactivating, trashing, or restoring a customer group.
+      operationId: itemActionCustomerGroup
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /customergroups/action/{actio}:
+    put:
+      tags:
+        - Customer Groups
+      summary: bulk actions on customer groups
+      description: This endpoint allows various bulk actions to be performed on customer groups list based on the provided action type.
+      operationId: bulkActionsCustomerGroups
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /paymentmethods:
+    get:
+      tags:
+        - Payment Methods
+      summary: Get list of all payment methods
+      description: Retrieve list of all the payment methods.
+      operationId: getPaymentMethods
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PaymentMethod'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/paymentmethods?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Payment Methods
+      summary: Create a payment method
+      operationId: createItem
+      requestBody:
+        $ref: '#/components/requestBodies/PaymentMethodRequestBody'
+      responses:
+        '200':
+          description: Payment Method created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/PaymentMethod'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The name field is required.
+                      - The slug field is required.
+    put:
+      tags:
+        - Payment Methods
+      summary: Update a list of payment methods
+      description: This endpoint allows you to update multiple payment methods records based on the provided input, including actions like activating, deactivating, trashing, or restoring payment methods.
+      operationId: updatePaymentMethodsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payment methods to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payment methods have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Payment Methods
+      summary: Delete a list of payment methods
+      description: This endpoint allows you to delete multiple payment methods records based on the provided input.
+      operationId: deletePaymentMethodsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the payment methods to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified payment methods have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /paymentmethods/{id}:
+    get:
+      tags:
+        - Payment Methods
+      summary: Get record by payment method ID
+      description: Retrieve a payment method by its unique identifier.
+      operationId: getPaymentMethodById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Payment Method Retrieved Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethod'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Payment Methods
+      summary: Update an existing record
+      description: Update a payment method record with the specified ID using the provided details.
+      operationId: updatePaymentMethod
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/PaymentMethodRequestBody'
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PaymentMethod'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved Successfully
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - This name/slug already exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Payment Methods
+      summary: Delete a record by ID
+      description: Delete a single payment method by its ID.
+      operationId: deletePaymentMethodById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Payment Method Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /paymentmethods/{id}/action/{action}:
+    patch:
+      tags:
+        - Payment Methods
+      summary: Perform an action on a payment method
+      description: |
+        This endpoint allows you to perform various actions on a payment method item, such as activating, deactivating, trashing, or restoring a payment method.
+      operationId: itemActionPaymentMethod
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /paymentmethods/action/{action}:
+    put:
+      tags:
+        - Payment Methods
+      summary: bulk actions on payment methods
+      description: This endpoint allows various bulk actions to be performed on payment methods list based on the provided action type.
+      operationId: bulkActionsPaymentMethods
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
 components:
   securitySchemes:
     bearerAuth:
@@ -14972,6 +16844,15 @@ components:
       in: query
       required: false
       description: Filter record by attributes name/slug
+      schema:
+        type: array
+        items:
+          type: string
+    customers:
+      name: filter[customers][]
+      in: query
+      required: false
+      description: Filter by associated customers.
       schema:
         type: array
         items:
@@ -15505,6 +17386,67 @@ components:
               - status
               - vh_st_vendor_id
               - taxonomy_id_warehouse_status
+    CustomerGroupRequestBody:
+      description: Request body for creating or updating a customer group
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the customer group.
+                maxLength: 150
+              slug:
+                type: string
+                description: A URL-friendly version of the customer group's name.
+                maxLength: 150
+              customers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the customer.
+                  required:
+                    - id
+              taxonomy_id_customer_groups_status:
+                type: integer
+                description: The identifier for the status of the customer group.
+              status_notes:
+                type: string
+                description: Additional notes regarding the status of the customer group.
+                maxLength: 150
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
+    PaymentMethodRequestBody:
+      description: Request body for creating or updating a payment method
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the payment method.
+                maxLength: 250
+              slug:
+                type: string
+                description: A URL-friendly version of the payment method's name.
+                maxLength: 250
+              is_active:
+                type: integer
+                example: 1
+                description: Whether the payment method is active.
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
   schemas:
     Credentials:
       type: object
@@ -17361,3 +19303,310 @@ components:
             uuid:
               type: string
               description: Unique identifier of the user.
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the customer.
+        uuid:
+          type: string
+          description: Universally unique identifier (UUID) for the customer.
+        email:
+          type: string
+          description: Email address of the customer.
+        activated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer was activated.
+          nullable: true
+        active_roles_count:
+          type: integer
+          description: Number of active roles the customer has.
+        affiliate_code:
+          type: string
+          description: Affiliate code of the customer.
+        affiliate_code_used_at:
+          type: string
+          format: date-time
+          description: Timestamp when the affiliate code was used.
+          nullable: true
+        alternate_email:
+          type: string
+          description: Alternate email address of the customer.
+        avatar:
+          type: string
+          description: URL to the customer's avatar.
+        avatar_url:
+          type: string
+          description: Alternative URL for the customer's avatar.
+        bio:
+          type: string
+          description: Biography or description of the customer.
+        birth:
+          type: string
+          format: date
+          description: Customer's date of birth.
+        country:
+          type: string
+          description: Country where the customer is located.
+        country_calling_code:
+          type: integer
+          description: Country calling code for the customer.
+        country_code:
+          type: string
+          description: ISO country code of the customer's location.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer record was created.
+        created_by:
+          type: integer
+          description: ID of the user who created the customer record.
+        created_ip:
+          type: string
+          description: IP address of the user who created the customer record.
+        customer_groups:
+          type: array
+          description: Array of customer groups the customer belongs to.
+          items:
+            type: object
+        deleted_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer record was deleted.
+          nullable: true
+        deleted_by:
+          type: integer
+          description: ID of the user who deleted the customer record.
+          nullable: true
+        designation:
+          type: string
+          description: Customer's designation or title.
+        display_name:
+          type: string
+          description: Display name of the customer.
+        first_name:
+          type: string
+          description: Customer's first name.
+        foreign_user_id:
+          type: integer
+          description: Foreign ID for external systems.
+        gender:
+          type: string
+          description: Gender of the customer.
+        is_active:
+          type: integer
+          description: Indicates if the customer account is active.
+        last_login_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer last logged in.
+          nullable: true
+        last_login_ip:
+          type: string
+          description: IP address of the customer's last login.
+        last_name:
+          type: string
+          description: Customer's last name.
+        meta:
+          type: object
+          description: Additional metadata about the customer.
+          properties:
+            custom_fields:
+              type: object
+              description: Custom fields related to the customer.
+              properties:
+                state:
+                  type: string
+                  description: Custom field for customer state.
+        mfa_methods:
+          type: string
+          description: Multi-factor authentication methods used by the customer.
+        middle_name:
+          type: string
+          description: Customer's middle name.
+        name:
+          type: string
+          description: Customer's full name.
+        phone:
+          type: integer
+          description: Customer's phone number.
+        registration_id:
+          type: integer
+          description: Registration ID associated with the customer.
+          nullable: true
+        reset_password_code_sent_at:
+          type: string
+          format: date-time
+          description: Timestamp when the reset password code was sent.
+          nullable: true
+        reset_password_code_used_at:
+          type: string
+          format: date-time
+          description: Timestamp when the reset password code was used.
+          nullable: true
+        security_code:
+          type: string
+          description: Security code for the customer.
+        security_code_expired_at:
+          type: string
+          format: date-time
+          description: Timestamp when the security code expires.
+          nullable: true
+        status:
+          type: string
+          description: Status of the customer.
+        timezone:
+          type: string
+          description: Timezone of the customer.
+        title:
+          type: string
+          description: Title of the customer (e.g., Mr, Mrs, Miss).
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the customer record was last updated.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the customer record.
+        username:
+          type: string
+          description: Username of the customer.
+        website:
+          type: string
+          description: Customer's website URL.
+    CustomerGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the customer group.
+        uuid:
+          type: string
+          description: The universally unique identifier for the customer group.
+        taxonomy_id_customer_groups_status:
+          type: integer
+          description: The identifier for the status of the customer group.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the customer group was created.
+        created_by:
+          type: integer
+          description: The identifier of the user who created the customer group.
+        updated_at:
+          type: string
+          format: date-time
+          description: The timestamp when the customer group was last updated.
+        updated_by:
+          type: integer
+          description: The identifier of the user who last updated the customer group.
+        deleted_at:
+          type: string
+          nullable: true
+          description: The timestamp when the customer group was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The identifier of the user who deleted the customer group, if applicable.
+        name:
+          type: string
+          description: The name of the customer group.
+        slug:
+          type: string
+          description: A URL-friendly version of the customer group's name.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier for the status of the customer group.
+            name:
+              type: string
+              description: The name of the status of the customer group.
+            slug:
+              type: string
+              description: A URL-friendly version of the status name.
+        status_notes:
+          type: string
+          description: Additional notes regarding the status of the customer group.
+        customers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier for the customer.
+              first_name:
+                type: string
+                description: The first name of the customer.
+              last_name:
+                type: string
+                description: The last name of the customer.
+              display_name:
+                type: string
+                description: The display name of the customer.
+              avatar:
+                type: string
+                format: uri
+                description: The URL of the customer's avatar image.
+              pivot:
+                type: object
+                properties:
+                  vh_st_customer_group_id:
+                    type: integer
+                    description: The identifier for the customer group in the pivot table.
+                  vh_st_user_id:
+                    type: integer
+                    description: The identifier for the user in the pivot table.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata associated with the customer group.
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the payment method.
+        uuid:
+          type: string
+          description: Universally Unique Identifier for the payment method.
+        name:
+          type: string
+          description: Name of the payment method.
+        slug:
+          type: string
+          description: A URL-friendly version of the payment method's name.
+        is_active:
+          type: integer
+          description: Status indicating if the payment method is active (1) or inactive (0).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was created.
+        created_by:
+          type: integer
+          description: Identifier of the user who created the payment method.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was last updated.
+        updated_by:
+          type: integer
+          description: Identifier of the user who last updated the payment method.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the payment method was deleted (if applicable).
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier of the user who deleted the payment method (if applicable).
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the payment method (optional).

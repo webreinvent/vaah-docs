@@ -51,6 +51,12 @@ tags:
     description: Everything about Addresses in VaahStore
   - name: Wishlists
     description: Everything about Wishlists in VaahStore
+  - name: Customers
+    description: Everything about Customers in VaahStore
+  - name: Customer Groups
+    description: Everything about Customer Groups in VaahStore
+  - name: Payment Methods
+    description: Everything about Payment Methods in VaahStore
 
 paths:
   '/stores':
@@ -262,6 +268,32 @@ paths:
   '/attributegroups/action/{action}':
     $ref: './attribute-groups/listAction.yaml'  # Reference to attribute groups list actions file
 
+  '/users/assets':
+    $ref: './customers/getAssets.yaml'  # Reference to customers assets file
+  '/users':
+    $ref: './customers/index.yaml'  # Reference to customers file
+  '/users/{id}':
+    $ref: './customers/update.yaml'  # Reference to customers update file
+
+  '/customergroups/assets':
+    $ref: './customer-groups/getAssets.yaml'  # Reference to customer groups assets file
+  '/customergroups':
+    $ref: './customer-groups/index.yaml'  # Reference to customer groups file
+  '/customergroups/{id}':
+    $ref: './customer-groups/update.yaml'  # Reference to customer group item file
+  '/customergroups/{id}/action/{actio}':
+    $ref: './customer-groups/itemAction.yaml'  # Reference to customer group item actions file
+  '/customergroups/action/{actio}':
+    $ref: './customer-groups/listAction.yaml'  # Reference to customer group list actions file
+
+  '/paymentmethods':
+    $ref: './payment-methods/index.yaml'  # Reference to payment-methods file
+  '/paymentmethods/{id}':
+    $ref: './payment-methods/update.yaml'  # Reference to payment-methods item file
+  '/paymentmethods/{id}/action/{action}':
+    $ref: './payment-methods/itemAction.yaml'  # Reference to payment-methods item actions file
+  '/paymentmethods/action/{action}':
+    $ref: './payment-methods/listAction.yaml'  # Reference to payment-methods list actions file
 
 
 components:
@@ -527,6 +559,15 @@ components:
       in: query
       required: false
       description: Filter record by attributes name/slug
+      schema:
+        type: array
+        items:
+          type: string
+    customers:
+      name: filter[customers][]
+      in: query
+      required: false
+      description: Filter by associated customers.
       schema:
         type: array
         items:
@@ -1065,6 +1106,68 @@ components:
               - status
               - vh_st_vendor_id
               - taxonomy_id_warehouse_status
+    CustomerGroupRequestBody:
+      description: "Request body for creating or updating a customer group"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the customer group.
+                maxLength: 150
+              slug:
+                type: string
+                description: A URL-friendly version of the customer group's name.
+                maxLength: 150
+              customers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the customer.
+                  required:
+                    - id
+              taxonomy_id_customer_groups_status:
+                type: integer
+                description: The identifier for the status of the customer group.
+              status_notes:
+                type: string
+                description: Additional notes regarding the status of the customer group.
+                maxLength: 150
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
+    PaymentMethodRequestBody:
+      description: "Request body for creating or updating a payment method"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the payment method.
+                maxLength: 250
+              slug:
+                type: string
+                description: A URL-friendly version of the payment method's name.
+                maxLength: 250
+              is_active:
+                type: integer
+                example: 1
+                description: "Whether the payment method is active."
+
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
 
 
 
@@ -2943,7 +3046,313 @@ components:
             uuid:
               type: string
               description: "Unique identifier of the user."
-
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the customer."
+        uuid:
+          type: string
+          description: "Universally unique identifier (UUID) for the customer."
+        email:
+          type: string
+          description: "Email address of the customer."
+        activated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer was activated."
+          nullable: true
+        active_roles_count:
+          type: integer
+          description: "Number of active roles the customer has."
+        affiliate_code:
+          type: string
+          description: "Affiliate code of the customer."
+        affiliate_code_used_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the affiliate code was used."
+          nullable: true
+        alternate_email:
+          type: string
+          description: "Alternate email address of the customer."
+        avatar:
+          type: string
+          description: "URL to the customer's avatar."
+        avatar_url:
+          type: string
+          description: "Alternative URL for the customer's avatar."
+        bio:
+          type: string
+          description: "Biography or description of the customer."
+        birth:
+          type: string
+          format: date
+          description: "Customer's date of birth."
+        country:
+          type: string
+          description: "Country where the customer is located."
+        country_calling_code:
+          type: integer
+          description: "Country calling code for the customer."
+        country_code:
+          type: string
+          description: "ISO country code of the customer's location."
+        created_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was created."
+        created_by:
+          type: integer
+          description: "ID of the user who created the customer record."
+        created_ip:
+          type: string
+          description: "IP address of the user who created the customer record."
+        customer_groups:
+          type: array
+          description: "Array of customer groups the customer belongs to."
+          items:
+            type: object
+        deleted_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was deleted."
+          nullable: true
+        deleted_by:
+          type: integer
+          description: "ID of the user who deleted the customer record."
+          nullable: true
+        designation:
+          type: string
+          description: "Customer's designation or title."
+        display_name:
+          type: string
+          description: "Display name of the customer."
+        first_name:
+          type: string
+          description: "Customer's first name."
+        foreign_user_id:
+          type: integer
+          description: "Foreign ID for external systems."
+        gender:
+          type: string
+          description: "Gender of the customer."
+        is_active:
+          type: integer
+          description: "Indicates if the customer account is active."
+        last_login_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer last logged in."
+          nullable: true
+        last_login_ip:
+          type: string
+          description: "IP address of the customer's last login."
+        last_name:
+          type: string
+          description: "Customer's last name."
+        meta:
+          type: object
+          description: "Additional metadata about the customer."
+          properties:
+            custom_fields:
+              type: object
+              description: "Custom fields related to the customer."
+              properties:
+                state:
+                  type: string
+                  description: "Custom field for customer state."
+        mfa_methods:
+          type: string
+          description: "Multi-factor authentication methods used by the customer."
+        middle_name:
+          type: string
+          description: "Customer's middle name."
+        name:
+          type: string
+          description: "Customer's full name."
+        phone:
+          type: integer
+          description: "Customer's phone number."
+        registration_id:
+          type: integer
+          description: "Registration ID associated with the customer."
+          nullable: true
+        reset_password_code_sent_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the reset password code was sent."
+          nullable: true
+        reset_password_code_used_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the reset password code was used."
+          nullable: true
+        security_code:
+          type: string
+          description: "Security code for the customer."
+        security_code_expired_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the security code expires."
+          nullable: true
+        status:
+          type: string
+          description: "Status of the customer."
+        timezone:
+          type: string
+          description: "Timezone of the customer."
+        title:
+          type: string
+          description: "Title of the customer (e.g., Mr, Mrs, Miss)."
+        updated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was last updated."
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the customer record."
+        username:
+          type: string
+          description: "Username of the customer."
+        website:
+          type: string
+          description: "Customer's website URL."
+    CustomerGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the customer group.
+        uuid:
+          type: string
+          description: The universally unique identifier for the customer group.
+        taxonomy_id_customer_groups_status:
+          type: integer
+          description: The identifier for the status of the customer group.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the customer group was created.
+        created_by:
+          type: integer
+          description: The identifier of the user who created the customer group.
+        updated_at:
+          type: string
+          format: date-time
+          description: The timestamp when the customer group was last updated.
+        updated_by:
+          type: integer
+          description: The identifier of the user who last updated the customer group.
+        deleted_at:
+          type: string
+          nullable: true
+          description: The timestamp when the customer group was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The identifier of the user who deleted the customer group, if applicable.
+        name:
+          type: string
+          description: The name of the customer group.
+        slug:
+          type: string
+          description: A URL-friendly version of the customer group's name.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier for the status of the customer group.
+            name:
+              type: string
+              description: The name of the status of the customer group.
+            slug:
+              type: string
+              description: A URL-friendly version of the status name.
+        status_notes:
+          type: string
+          description: Additional notes regarding the status of the customer group.
+        customers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier for the customer.
+              first_name:
+                type: string
+                description: The first name of the customer.
+              last_name:
+                type: string
+                description: The last name of the customer.
+              display_name:
+                type: string
+                description: The display name of the customer.
+              avatar:
+                type: string
+                format: uri
+                description: The URL of the customer's avatar image.
+              pivot:
+                type: object
+                properties:
+                  vh_st_customer_group_id:
+                    type: integer
+                    description: The identifier for the customer group in the pivot table.
+                  vh_st_user_id:
+                    type: integer
+                    description: The identifier for the user in the pivot table.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata associated with the customer group.
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the payment method.
+        uuid:
+          type: string
+          description: Universally Unique Identifier for the payment method.
+        name:
+          type: string
+          description: Name of the payment method.
+        slug:
+          type: string
+          description: A URL-friendly version of the payment method's name.
+        is_active:
+          type: integer
+          description: Status indicating if the payment method is active (1) or inactive (0).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was created.
+        created_by:
+          type: integer
+          description: Identifier of the user who created the payment method.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was last updated.
+        updated_by:
+          type: integer
+          description: Identifier of the user who last updated the payment method.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the payment method was deleted (if applicable).
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier of the user who deleted the payment method (if applicable).
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the payment method (optional).
 
 
 
