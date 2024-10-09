@@ -47,6 +47,10 @@ tags:
     description: Everything about Attributes in VaahStore
   - name: Attribute Groups
     description: Everything about Attribute Groups in VaahStore
+  - name: Addresses
+    description: Everything about Addresses in VaahStore
+  - name: Wishlists
+    description: Everything about Wishlists in VaahStore
 paths:
   /stores:
     get:
@@ -11395,6 +11399,1721 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /addresses/assets:
+    get:
+      summary: Get assets for addresses.
+      description: Retrieve various assets related to addresses, such as permissions, rows per page, fillable columns, taxonomies, and countries.
+      operationId: getAssets
+      tags:
+        - Addresses
+      responses:
+        '200':
+          description: Assets retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      permissions:
+                        type: array
+                        description: A list of permissions for the current authenticated user.
+                        items:
+                          type: string
+                          example: view-addresses
+                      rows:
+                        type: integer
+                        description: Number of rows per page as configured.
+                        example: 10
+                      fillable:
+                        type: object
+                        properties:
+                          columns:
+                            type: array
+                            description: List of fillable columns in the address model.
+                            items:
+                              type: string
+                              example: address_line_1
+                          except:
+                            type: array
+                            description: List of columns that are not fillable in the address model.
+                            items:
+                              type: string
+                              example: created_at
+                      empty_item:
+                        type: object
+                        description: An empty item structure for the address model.
+                        example:
+                          address_line_1: ''
+                          address_line_2: ''
+                          city: ''
+                          country: ''
+                          pin_code: ''
+                      taxonomy:
+                        type: object
+                        properties:
+                          types:
+                            type: array
+                            description: Taxonomies related to address types.
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  description: ID of the taxonomy.
+                                  example: 46
+                                name:
+                                  type: string
+                                  description: Name of the address type.
+                                  example: Billing
+                          status:
+                            type: array
+                            description: Taxonomies related to address statuses.
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  description: ID of the address status.
+                                  example: 50
+                                name:
+                                  type: string
+                                  description: Name of the status.
+                                  example: Approved
+                      countries:
+                        type: array
+                        description: List of available countries.
+                        items:
+                          type: string
+                          example: India
+                      actions:
+                        type: array
+                        description: List of available actions for the user.
+                        items:
+                          type: string
+                          example: create-address
+        '500':
+          description: An error occurred while retrieving assets.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    description: List of error messages.
+                    items:
+                      type: string
+                      example: Something went wrong.
+                  hint:
+                    type: array
+                    description: Debugging hints (only in debug mode).
+                    items:
+                      type: string
+                      example: Trace details...
+  /addresses:
+    get:
+      tags:
+        - Addresses
+      summary: Get list of addresses
+      description: Retrieve list of all the addresses.
+      operationId: getAddresses
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_is_default'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/users'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Address'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/addresses?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Addresses
+      summary: Create an user address
+      operationId: createItem
+      requestBody:
+        description: Create a new address for a user.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_user_id:
+                  type: integer
+                  description: The ID of the user associated with the address.
+                address_line_1:
+                  type: string
+                  description: The first line of the address.
+                address_line_2:
+                  type: string
+                  nullable: true
+                  description: The second line of the address.
+                city:
+                  type: string
+                  description: The city of the address.
+                state:
+                  type: string
+                  description: The state of the address.
+                pin_code:
+                  type: string
+                  description: The postal code or ZIP code for the address.
+                country:
+                  type: string
+                  description: The country of the address.
+                phone:
+                  type: string
+                  nullable: true
+                  description: The phone number associated with the address.
+                is_default:
+                  type: integer
+                  description: Indicates whether this address should be the default address for the user.
+                taxonomy_id_address_types:
+                  type: integer
+                  description: The ID representing the type of address (e.g., Billing or Shipping).
+                taxonomy_id_address_status:
+                  type: integer
+                  description: The ID representing the current status of the address (e.g., Approved or Pending).
+                status_notes:
+                  type: string
+                  nullable: true
+                  description: Additional notes about the status of the address.
+              required:
+                - vh_user_id
+                - address_line_1
+                - city
+                - state
+                - pin_code
+                - country
+                - is_default
+                - taxonomy_id_address_types
+                - taxonomy_id_address_status
+      responses:
+        '200':
+          description: Address created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Address'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The User field is required
+                      - The Address Line 1 field is required
+                      - The Type field is required
+                      - The Status field is required
+    put:
+      tags:
+        - Addresses
+      summary: Update a list of addresses
+      description: This endpoint allows you to update multiple addresses records based on the provided input, including actions like activating, deactivating, trashing, or restoring addresses.
+      operationId: updateAddressesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the addresses to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified addresses have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Addresses
+      summary: Delete a list of addresses
+      description: This endpoint allows you to delete multiple addresses records based on the provided input.
+      operationId: deleteAddressesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the addresses to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified addresses have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /addresses/{id}:
+    get:
+      tags:
+        - Addresses
+      summary: Get record by address ID
+      description: Retrieve an address by its unique identifier.
+      operationId: getAddressById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Address Retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Address'
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Addresses
+      summary: Update an existing record
+      description: Update an address record with the specified ID using the provided details.
+      operationId: updateAddress
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Update an existing address and its associated values.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the address want to update.
+                vh_user_id:
+                  type: integer
+                  description: The ID of the user associated with the address.
+                address_line_1:
+                  type: string
+                  description: The first line of the address.
+                address_line_2:
+                  type: string
+                  nullable: true
+                  description: The second line of the address.
+                city:
+                  type: string
+                  description: The city of the address.
+                state:
+                  type: string
+                  description: The state of the address.
+                pin_code:
+                  type: string
+                  description: The postal code or ZIP code for the address.
+                country:
+                  type: string
+                  description: The country of the address.
+                phone:
+                  type: string
+                  nullable: true
+                  description: The phone number associated with the address.
+                is_default:
+                  type: integer
+                  description: Indicates whether this address should be the default address for the user.
+                taxonomy_id_address_types:
+                  type: integer
+                  description: The ID representing the type of address (e.g., Billing or Shipping).
+                taxonomy_id_address_status:
+                  type: integer
+                  description: The ID representing the current status of the address (e.g., Approved or Pending).
+                status_notes:
+                  type: string
+                  nullable: true
+                  description: Additional notes about the status of the address.
+              required:
+                - vh_user_id
+                - id
+                - address_line_1
+                - city
+                - state
+                - pin_code
+                - country
+                - is_default
+                - taxonomy_id_address_types
+                - taxonomy_id_address_status
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Address'
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The User field is required
+                      - The Address Line 1 field is required
+                      - The Type field is required
+                      - The Status field is required
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Addresses
+      summary: Delete a record by ID
+      description: Delete a single address by its ID.
+      operationId: deleteAddressById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Address Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /addresses/{id}/action/{action}:
+    patch:
+      tags:
+        - Addresses
+      summary: Perform an action on an address
+      description: |
+        This endpoint allows you to perform various actions on an address item, such as activating, deactivating, trashing, or restoring a address.
+      operationId: itemActionAddress
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /addresses/action/{action}:
+    put:
+      tags:
+        - Addresses
+      summary: bulk actions on addresses
+      description: This endpoint allows various bulk actions to be performed on addresses list based on the provided action type.
+      operationId: bulkActionsAddresses
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /wishlists/assets:
+    get:
+      summary: Get assets for wishlists
+      description: Retrieve various assets related to wishlists, such as permissions, rows per page, fillable columns, taxonomies, and user data.
+      operationId: getWishlistAssets
+      tags:
+        - Wishlists
+      responses:
+        '200':
+          description: Assets retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      permissions:
+                        type: array
+                        description: A list of permissions for the current authenticated user.
+                        items:
+                          type: string
+                          example: view-wishlists
+                      rows:
+                        type: integer
+                        description: Number of rows per page as configured.
+                        example: 10
+                      fillable:
+                        type: object
+                        properties:
+                          columns:
+                            type: array
+                            description: List of fillable columns in the wishlist model.
+                            items:
+                              type: string
+                              example: name
+                          except:
+                            type: array
+                            description: List of columns that are not fillable in the wishlist model.
+                            items:
+                              type: string
+                              example: created_at
+                      empty_item:
+                        type: object
+                        description: An empty item structure for the wishlist model.
+                        example:
+                          name: ''
+                          description: ''
+                          created_at: ''
+                      taxonomy:
+                        type: object
+                        properties:
+                          status:
+                            type: array
+                            description: Taxonomies related to wishlist statuses.
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  description: ID of the status taxonomy.
+                                  example: 60
+                                name:
+                                  type: string
+                                  description: Name of the status.
+                                  example: Active
+                      actions:
+                        type: array
+                        description: List of available actions for the user.
+                        items:
+                          type: string
+                          example: create-wishlist
+                      urls:
+                        type: object
+                        description: URLs related to wishlists.
+                        properties:
+                          public:
+                            type: string
+                            description: Public URL for managing wishlists.
+                            example: https://example.com/backend/store#/wishlists
+                      user_data:
+                        type: object
+                        description: Additional user data relevant to the wishlist management.
+        '500':
+          description: An error occurred while retrieving assets.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    description: List of error messages.
+                    items:
+                      type: string
+                      example: Something went wrong.
+                  hint:
+                    type: array
+                    description: Debugging hints (only in debug mode).
+                    items:
+                      type: string
+                      example: Trace details...
+  /wishlists:
+    get:
+      tags:
+        - Wishlists
+      summary: Get list of wishlists
+      description: Retrieve list of all the wishlists.
+      operationId: getWishlists
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/users'
+        - $ref: '#/components/parameters/products'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Wishlist'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/wishlists?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    post:
+      tags:
+        - Wishlists
+      summary: Create an user wishlist
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vh_user_id:
+                  type: integer
+                  description: ID of the user creating the wishlist
+                  example: 121
+                taxonomy_id_whishlists_status:
+                  type: integer
+                  description: Status of the wishlist
+                  example: 59
+                is_default:
+                  type: integer
+                  description: Whether the wishlist is set as default (1 for true, 0 for false)
+                  example: 1
+                name:
+                  type: string
+                  description: Name of the wishlist
+                  example: Rahul
+                slug:
+                  type: string
+                  description: Slugified version of the wishlist name
+                  example: rahul
+                type:
+                  type: integer
+                  description: Type of the wishlist i.e shareable or non-shareable
+                  example: 1
+                status_notes:
+                  type: string
+                  description: Additional notes on the status
+                  example: asa
+              required:
+                - name
+                - slug
+                - vh_user_id
+                - taxonomy_id_whishlists_status
+                - is_default
+      responses:
+        '200':
+          description: Wishlist created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    $ref: '#/components/schemas/Wishlist'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The User field is required.
+                      - The Name field is required.
+                      - The Slug field is required.
+                      - The Status field is required.
+    put:
+      tags:
+        - Wishlists
+      summary: Update a list of wishlists
+      description: This endpoint allows you to update multiple wishlists records based on the provided input, including actions like activating, deactivating, trashing, or restoring wishlists.
+      operationId: updateWishlistsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "activate", "deactivate", "trash", "restore").
+                  example: trash
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the wishlists to be updated.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified wishlists have been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the update process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+    delete:
+      tags:
+        - Wishlists
+      summary: Delete a list of wishlists
+      description: This endpoint allows you to delete multiple wishlists records based on the provided input.
+      operationId: deleteWishlistsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - items
+              properties:
+                type:
+                  type: string
+                  description: Action type (e.g., "delete").
+                  example: delete
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the wishlists to be deleted.
+                        example: 1
+                  example:
+                    - id: 1
+                    - id: 2
+                    - id: 3
+      responses:
+        '200':
+          description: Action was successful and the specified wishlists have been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Validation failed for the input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action type is required.
+                      - Select items.
+        '403':
+          description: The user does not have permission to perform this action.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied for action 'can-update-module'.
+        '500':
+          description: An unexpected error occurred during the deletion process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
+  /wishlists/{id}:
+    get:
+      tags:
+        - Wishlists
+      summary: Get record by wishlist ID
+      description: Retrieve an wishlist by its unique identifier.
+      operationId: getWishlistById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Wishlist Retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier of the wishlist.
+                      uuid:
+                        type: string
+                        description: The universally unique identifier (UUID) of the wishlist.
+                      name:
+                        type: string
+                        description: The name of the wishlist.
+                      slug:
+                        type: string
+                        description: The slug or URL-friendly name of the wishlist.
+                      type:
+                        type: string
+                        nullable: true
+                        description: The type of the wishlist (nullable).
+                      vh_user_id:
+                        type: integer
+                        description: The unique identifier of the user who owns the wishlist.
+                      taxonomy_id_whishlists_status:
+                        type: integer
+                        description: The status taxonomy ID associated with the wishlist.
+                      taxonomy_id_whishlists_types:
+                        type: string
+                        nullable: true
+                        description: The type taxonomy ID associated with the wishlist (nullable).
+                      is_default:
+                        type: integer
+                        description: Indicates whether the wishlist is the default wishlist for the user.
+                      meta:
+                        type: string
+                        nullable: true
+                        description: Additional metadata for the wishlist (nullable).
+                      status_notes:
+                        type: string
+                        description: Any notes related to the status of the wishlist.
+                      created_by:
+                        type: string
+                        nullable: true
+                        description: The identifier of the user who created the wishlist (nullable).
+                      updated_by:
+                        type: integer
+                        description: The identifier of the user who last updated the wishlist.
+                      deleted_by:
+                        type: string
+                        nullable: true
+                        description: The identifier of the user who deleted the wishlist (nullable).
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: The timestamp when the wishlist was created.
+                      updated_at:
+                        type: string
+                        format: date-time
+                        description: The timestamp when the wishlist was last updated.
+                      deleted_at:
+                        type: string
+                        nullable: true
+                        description: The timestamp when the wishlist was deleted (nullable).
+                      created_by_user:
+                        type: string
+                        nullable: true
+                        description: Details of the user who created the wishlist (nullable).
+                      updated_by_user:
+                        type: object
+                        description: Details of the user who last updated the wishlist.
+                        properties:
+                          id:
+                            type: integer
+                            description: The unique identifier of the user who updated the wishlist.
+                          uuid:
+                            type: string
+                            description: The UUID of the user who updated the wishlist.
+                          first_name:
+                            type: string
+                            description: The first name of the user who updated the wishlist.
+                          last_name:
+                            type: string
+                            description: The last name of the user who updated the wishlist.
+                          email:
+                            type: string
+                            description: The email of the user who updated the wishlist.
+                          avatar:
+                            type: string
+                            description: The avatar URL of the user who updated the wishlist.
+                          name:
+                            type: string
+                            description: The full name of the user who updated the wishlist.
+                      deleted_by_user:
+                        type: string
+                        nullable: true
+                        description: Details of the user who deleted the wishlist (nullable).
+                      user:
+                        type: object
+                        description: Details of the user who owns the wishlist.
+                        properties:
+                          id:
+                            type: integer
+                            description: The unique identifier of the user.
+                          first_name:
+                            type: string
+                            description: The first name of the user.
+                          username:
+                            type: string
+                            description: The username of the user.
+                          avatar:
+                            type: string
+                            description: The avatar URL of the user.
+                          name:
+                            type: string
+                            description: The full name of the user.
+                      status:
+                        type: object
+                        description: The current status of the wishlist.
+                        properties:
+                          id:
+                            type: integer
+                            description: The unique identifier of the status.
+                          name:
+                            type: string
+                            description: The name of the status.
+                          slug:
+                            type: string
+                            description: The slug or URL-friendly name of the status.
+                      products:
+                        type: array
+                        description: A list of products associated with the wishlist.
+                        items:
+                          type: object
+                          properties:
+                            is_selected:
+                              type: boolean
+                              description: Indicates if the product is selected.
+                            product:
+                              type: object
+                              description: Details of the product in the wishlist.
+                              properties:
+                                id:
+                                  type: integer
+                                  description: The unique identifier of the product.
+                                name:
+                                  type: string
+                                  description: The name of the product.
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    put:
+      tags:
+        - Wishlists
+      summary: Update an existing record
+      description: Update a wishlist record with the specified ID using the provided details and also add a product to the wishlist.
+      operationId: updateWishlist
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Update an existing wishlist and its associated values.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the wishlist.
+                slug:
+                  type: string
+                  description: The slug or URL-friendly name of the wishlist.
+                type:
+                  type: string
+                  nullable: true
+                  description: The type of the wishlist (nullable).
+                vh_user_id:
+                  type: integer
+                  description: ID of the user creating the wishlist
+                  example: 121
+                taxonomy_id_whishlists_status:
+                  type: integer
+                  description: The status taxonomy ID associated with the wishlist.
+                is_default:
+                  type: integer
+                  description: Indicates whether the wishlist is the default wishlist for the user.
+                products:
+                  type: array
+                  description: A list of products associated with the wishlist.
+                  items:
+                    type: object
+                    properties:
+                      is_selected:
+                        type: boolean
+                        description: Indicates if the product is selected.
+                      product:
+                        type: object
+                        description: Details of the product in the wishlist.
+                        properties:
+                          id:
+                            type: integer
+                            description: The unique identifier of the product.
+                          name:
+                            type: string
+                            description: The name of the product.
+                        required:
+                          - id
+                    required:
+                      - product
+              required:
+                - name
+                - slug
+                - is_default
+                - taxonomy_id_whishlists_status
+                - products
+                - vh_user_id
+      responses:
+        '200':
+          description: Saved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates if the request was successful.
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Wishlist'
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The User field is required
+                      - The Address Line 1 field is required
+                      - The Type field is required
+                      - The Status field is required
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+    delete:
+      tags:
+        - Wishlists
+      summary: Delete a record by ID
+      description: Delete a single wishlist by its ID.
+      operationId: deleteWishlistById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Wishlist Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items: {}
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Record has been deleted
+        '400':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: string
+                    items:
+                      type: string
+                      example: Record does not exist.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /wishlists/{id}/action/{action}:
+    patch:
+      tags:
+        - Wishlists
+      summary: Perform an action on wishlist
+      description: |
+        This endpoint allows you to perform various actions on a wishlist item, such as activating, deactivating, trashing, or restoring a wishlist.
+      operationId: itemActionWishlist
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/action'
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_active:
+                        type: integer
+                        example: 1
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Permission denied to update module
+        '404':
+          description: Record does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Record not found with ID: {id}'
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred
+  /wishlists/{action/{action}:
+    put:
+      tags:
+        - Wishlists
+      summary: bulk actions on wishlists
+      description: This endpoint allows various bulk actions to be performed on wishlists list based on the provided action type.
+      operationId: bulkActionsWishlists
+      parameters:
+        - $ref: '#/components/parameters/bulk_action'
+      responses:
+        '200':
+          description: Action was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Action was successful.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input data.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An unexpected error occurred.
   /attributes:
     get:
       tags:
@@ -13076,6 +14795,12 @@ components:
       required: false
       schema:
         type: boolean
+    filter_is_default:
+      name: filter[is_default]
+      in: query
+      required: false
+      schema:
+        type: boolean
     filter_trashed:
       name: filter[trashed]
       in: query
@@ -13233,6 +14958,15 @@ components:
       description: Filter records by state, city, or postal code. Partial matching is supported.
       schema:
         type: string
+    users:
+      name: filter[users][]
+      in: query
+      required: false
+      description: Filter records by user first name.
+      schema:
+        type: array
+        items:
+          type: string
     attributes:
       name: filter[attributes][]
       in: query
@@ -15400,3 +17134,230 @@ components:
                   vh_st_attribute_id:
                     type: integer
                     description: The ID of the attribute.
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the address.
+        uuid:
+          type: string
+          description: The universally unique identifier for the address.
+        vh_user_id:
+          type: integer
+          description: The ID of the user associated with the address.
+        name:
+          type: string
+          description: The name of the person or entity associated with the address.
+        address:
+          type: string
+          description: The complete address.
+        address_line_1:
+          type: string
+          description: The first line of the address.
+        address_line_2:
+          type: string
+          nullable: true
+          description: The second line of the address, if available.
+        city:
+          type: string
+          description: The city of the address.
+        state:
+          type: string
+          description: The state of the address.
+        pin_code:
+          type: string
+          description: The postal code or ZIP code for the address.
+        country:
+          type: string
+          description: The country of the address.
+        phone:
+          type: string
+          description: The phone number associated with the address.
+        address_type:
+          type: object
+          description: The type of address, such as Billing or Shipping.
+          properties:
+            id:
+              type: integer
+              description: The unique identifier for the address type.
+            name:
+              type: string
+              description: The name of the address type.
+            slug:
+              type: string
+              description: The slug for the address type.
+        status:
+          type: object
+          description: The current status of the address.
+          properties:
+            id:
+              type: integer
+              description: The unique identifier for the address status.
+            name:
+              type: string
+              description: The name of the address status.
+            slug:
+              type: string
+              description: The slug for the address status.
+        is_default:
+          type: integer
+          nullable: true
+          description: Indicates if this is the default address.
+        status_notes:
+          type: string
+          nullable: true
+          description: Additional notes about the status of the address.
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time when the address was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time when the address was last updated.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the address was deleted, if applicable.
+        created_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who created the address.
+        updated_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who last updated the address.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who deleted the address.
+        user:
+          type: object
+          description: The user associated with the address.
+          properties:
+            id:
+              type: integer
+              description: The unique identifier for the user.
+            uuid:
+              type: string
+              description: The universally unique identifier for the user.
+            first_name:
+              type: string
+              description: The first name of the user.
+            email:
+              type: string
+              description: The email address of the user.
+            avatar:
+              type: string
+              description: The avatar URL of the user.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: The date and time when the user was deleted, if applicable.
+    Wishlist:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the wishlist.
+        uuid:
+          type: string
+          description: Unique identifier of the wishlist.
+        name:
+          type: string
+          description: Name of the wishlist.
+        slug:
+          type: string
+          description: Slugified version of the wishlist name.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the wishlist was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: The timestamp when the wishlist was last updated.
+        created_by:
+          type: integer
+          description: ID of the user who created the wishlist.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the wishlist.
+        deleted_at:
+          type: string
+          format: date-time
+          description: The timestamp when the wishlist was deleted (if applicable).
+        is_default:
+          type: integer
+          description: Indicates if this is the default wishlist for the user.
+        meta:
+          type: object
+          description: Additional metadata associated with the wishlist.
+        status:
+          type: object
+          description: Status of the wishlist.
+          properties:
+            id:
+              type: integer
+              description: ID of the wishlist status.
+            name:
+              type: string
+              description: Name of the status.
+            slug:
+              type: string
+              description: Slug of the status.
+            status_notes:
+              type: string
+              description: Notes associated with the status.
+        taxonomy_id_whishlists_status:
+          type: integer
+          description: Taxonomy ID for the wishlist status.
+        taxonomy_id_whishlists_types:
+          type: integer
+          description: Taxonomy ID for the wishlist type (if applicable).
+        type:
+          type: string
+          description: Type of wishlist (if applicable).
+        products:
+          type: array
+          description: List of products in the wishlist.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: ID of the product.
+              name:
+                type: string
+                description: Name of the product.
+              pivot:
+                type: object
+                properties:
+                  vh_st_wishlist_id:
+                    type: integer
+                    description: ID of the wishlist associated with this product.
+                  vh_st_product_id:
+                    type: integer
+                    description: ID of the product associated with this wishlist.
+        user:
+          type: object
+          description: User who owns the wishlist.
+          properties:
+            id:
+              type: integer
+              description: ID of the user.
+            first_name:
+              type: string
+              description: First name of the user.
+            username:
+              type: string
+              description: Username of the user.
+            avatar:
+              type: string
+              description: Avatar image URL of the user.
+            uuid:
+              type: string
+              description: Unique identifier of the user.
