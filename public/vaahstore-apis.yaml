@@ -3,7 +3,7 @@ info:
   title: VaahStore
   description: |
     VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
-        To get started, [sign up here](#tag/Authentication/POST/user/signup).
+        To get started, [sign up here](#tag/authentication/POST/signup).
   version: 1.0.0
   contact:
     name: Webreinvent Team
@@ -11,10 +11,15 @@ info:
     email: we@webreinvent.com
 servers:
   - url: http://127.0.0.1:8000/api/store
+    description: This is the server for managing the Vaahstore API.
+  - url: http://127.0.0.1:8000/api
+    description: This is the base server for providing access to general endpoints mainly for authentication.
 security:
   - bearerAuth: []
   - basicAuth: []
 tags:
+  - name: Authentication
+    description: Provide all the required endpoints to create an account and authorize yourself. Ensure that you change the base URL to `http://127.0.0.1:8000/api/` for all authentication-related requests.
   - name: Stores
     description: Everything about Stores
   - name: Products
@@ -60,6 +65,190 @@ tags:
   - name: Payment Methods
     description: Everything about Payment Methods in VaahStore
 paths:
+  /signup:
+    post:
+      summary: User Signup
+      description: This endpoint allows users to register a new account.
+      operationId: postSignUp
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: The first name of the user.
+                username:
+                  type: string
+                  description: The user name of the user.
+                email:
+                  type: string
+                  format: email
+                  description: The email address of the user (must be unique).
+                password:
+                  type: string
+                  description: The password for the account (must be confirmed).
+                password_confirmation:
+                  type: string
+                  description: Confirmation of the password.
+                status:
+                  type: string
+                  description: The status of the user account (default is "active").
+                  example: active
+                is_active:
+                  type: integer
+                  description: Indicates if the user account is active (1 = active, 0 = inactive; default is 1).
+                  example: 1
+              required:
+                - first_name
+                - username
+                - email
+                - password
+                - password_confirmation
+      responses:
+        '201':
+          description: User registered successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Saved successfully
+                  data:
+                    type: object
+                    description: The user data returned upon successful registration.
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the user.
+                      first_name:
+                        type: string
+                        description: The first name of the user.
+                      email:
+                        type: string
+                        format: email
+                        description: The email address of the user.
+                      status:
+                        type: string
+                        description: The status of the user account.
+                      is_active:
+                        type: integer
+                        description: Indicates if the user account is active.
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The first name field is required.
+                      - The email field is required.
+  /signin:
+    post:
+      summary: User Signin
+      description: |
+        This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests.
+      operationId: postSignIn
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: The email address of the user.
+                password:
+                  type: string
+                  description: The password for the account.
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: User signed in successfully and API token generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      item:
+                        type: object
+                        description: The authenticated user data including the API token.
+                        properties:
+                          id:
+                            type: integer
+                            description: The unique identifier for the user.
+                          email:
+                            type: string
+                            format: email
+                            description: The email address of the user.
+                          api_token:
+                            type: string
+                            description: The API token for authenticating future requests.
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The email field is required.
+                      - The password field is required.
+        '401':
+          description: Unauthorized, invalid credentials provided.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Invalid credentials provided.
   /stores:
     get:
       tags:
@@ -17830,9 +18019,15 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Provide your API token in the `Authorization` header as follows:
+        `Authorization: Bearer YOUR_API_TOKEN`.
     basicAuth:
       type: http
       scheme: basic
+      description: |
+        Basic authentication using username and password.
   parameters:
     id:
       name: id
@@ -18711,19 +18906,19 @@ components:
         email:
           type: string
           format: email
-          examples:
-            - we@webreinvent.com
+          description: The email address associated with your account.
+          example: we@webreinvent.com
         password:
           type: string
-          examples:
-            - webreinvent
+          description: The password for your account.
+          example: webreinvent
     Token:
       type: object
       properties:
-        token:
+        api_token:
           type: string
-          examples:
-            - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+          description: The token used for authenticating requests. You will receive this token after a successful login.
+          example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     Store:
       type: object
       required:

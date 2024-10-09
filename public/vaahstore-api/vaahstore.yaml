@@ -3,7 +3,7 @@ info:
   title: VaahStore
   description: |
     VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
-        To get started, [sign up here](#tag/Authentication/POST/user/signup).
+        To get started, [sign up here](#tag/authentication/POST/signup).
   version: 1.0.0
   contact:
     name: Webreinvent Team
@@ -11,10 +11,16 @@ info:
     email: we@webreinvent.com
 servers:
   - url: http://127.0.0.1:8000/api/store
+    description: This is the server for managing the Vaahstore API.
+  - url: http://127.0.0.1:8000/api
+    description: This is the base server for providing access to general endpoints mainly for authentication.
 security:
   - bearerAuth: []
   - basicAuth: []
 tags:
+  - name: Authentication
+    description: Provide all the required endpoints to create an account and authorize yourself.
+      Ensure that you change the base URL to `http://127.0.0.1:8000/api/` for all authentication-related requests.
   - name: Stores
     description: Everything about Stores
   - name: Products
@@ -62,6 +68,11 @@ tags:
 
 
 paths:
+  '/signup':
+    $ref: './authentication/signup.yaml'  # Reference to the stores file
+  '/signin':
+    $ref: './authentication/signin.yaml'  # Reference to the stores file
+
   '/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
   /stores/{id}/action/{action}:
@@ -317,9 +328,15 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Provide your API token in the `Authorization` header as follows:
+        `Authorization: Bearer YOUR_API_TOKEN`.
     basicAuth:
       type: http
       scheme: basic
+      description: |
+        Basic authentication using username and password.
   parameters:
     id:
       name: id
@@ -1212,19 +1229,20 @@ components:
         email:
           type: string
           format: email
-          examples:
-            - we@webreinvent.com
+          description: The email address associated with your account.
+          example: we@webreinvent.com
         password:
           type: string
-          examples:
-            - webreinvent
+          description: The password for your account.
+          example: webreinvent
+
     Token:
       type: object
       properties:
-        token:
+        api_token:
           type: string
-          examples:
-            - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+          description: The token used for authenticating requests. You will receive this token after a successful login.
+          example: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     Store:
       type: object
       required:
