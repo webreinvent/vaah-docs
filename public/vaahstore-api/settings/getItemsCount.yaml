@@ -1,0 +1,96 @@
+get:
+  tags:
+    - Settings
+  summary: Get the count of all CRUD records in VaahStore
+  operationId: getCrudCount
+  description: >
+    Fetch the count of various CRUD records in VaahStore such as stores, wishlists,
+    addresses, brands, attributes, customers, products, vendors, and warehouses.
+  responses:
+    '200':
+      description: Successful response with the counts of CRUD records.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  count:
+                    type: object
+                    properties:
+                      Store:
+                        type: integer
+                        example: 10
+                      Wishlists:
+                        type: integer
+                        example: 25
+                      Address:
+                        type: integer
+                        example: 50
+                      Brand:
+                        type: integer
+                        example: 8
+                      Attributes:
+                        type: integer
+                        example: 15
+                      AttributeGroups:
+                        type: integer
+                        example: 5
+                      Customer:
+                        type: integer
+                        example: 100
+                      CustomerGroup:
+                        type: integer
+                        example: 3
+                      Product:
+                        type: integer
+                        example: 200
+                      ProductVariations:
+                        type: integer
+                        example: 30
+                      Vendors:
+                        type: integer
+                        example: 12
+                      ProductAttribute:
+                        type: integer
+                        example: 45
+                      ProductMedia:
+                        type: integer
+                        example: 60
+                      VendorsProduct:
+                        type: integer
+                        example: 40
+                      Warehouses:
+                        type: integer
+                        example: 7
+                      ProductStock:
+                        type: integer
+                        example: 300
+                      All:
+                        type: integer
+                        example: 900
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Something went wrong"
+              hint:
+                type: array
+                items:
+                  type: string
+                  example: "Exception trace information"

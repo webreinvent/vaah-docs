@@ -1,0 +1,72 @@
+get:
+  tags:
+    - Shipments
+  summary: Get shipped Order Items
+  description: Retrieves the list of shipped items for a specific order item ID.
+  operationId: getShipmentItemList
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the order item to retrieve the shipped items for.
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Successfully retrieved shipment items.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  shipment_items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The ID of the shipment item.
+                        vh_st_shipment_id:
+                          type: integer
+                          description: TThe ID of the associated shipment.
+                        vh_st_order_id:
+                          type: integer
+                          description: The ID of the order associated with this shipment.
+                        vh_st_order_item_id:
+                          type: integer
+                          description: The ID of the order item associated with this shipment.
+                        quantity:
+                          type: integer
+                          description: The quantity of this item that has been shipped.
+                        pending:
+                          type: integer
+                          description: The quantity of this item that is pending shipment.
+                        total_quantity:
+                          type: integer
+                          description: The total quantity of the order item.
+                  total_quantity_to_be_shipped:
+                    type: integer
+                    description: The total quantity of the order item to be shipped.
+                    example: 5
+    '404':
+      description: Not Found, the specified order item does not exist.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["Record does not exist."]

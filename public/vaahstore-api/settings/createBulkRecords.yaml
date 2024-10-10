@@ -1,0 +1,88 @@
+post:
+  tags:
+    - Settings
+  summary: Create bulk sample CRUD records
+  operationId: createBulkRecords
+  description: >
+    This endpoint allows for bulk creation of sample records for various CRUD operations
+    such as Store, Address, Wishlist, Brand, Attributes, Customer, and more in VaahStore.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            selectedCrud:
+              type: array
+              description: List of selected CRUD operations for which sample records need to be created.
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                    description: Name of the CRUD operation
+                    example: Store
+                  quantity:
+                    type: integer
+                    description: Number of sample records to create
+                    example: 10
+                  is_checked:
+                    type: boolean
+                    description: Whether the CRUD operation is selected
+                    example: true
+                required:
+                  - value
+                  - quantity
+                  - is_checked
+          required:
+            - selectedCrud
+  responses:
+    '200':
+      description: Successful response indicating records were created.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                example: {}
+    '400':
+      description: Validation error or missing required information
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Quantity is required for Store"
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Something went wrong"
+              hint:
+                type: array
+                items:
+                  type: string
+                  example: "Exception trace information"

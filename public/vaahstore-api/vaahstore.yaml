@@ -2,8 +2,8 @@ openapi: 3.0.0
 info:
   title: VaahStore
   description: |
-    VaahStore is an e-commerce module that provides an API specification for user authentication and store management.
-        To get started, [sign up here](#tag/Authentication/POST/user/signup).
+    VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
+        To get started, [sign up here](#tag/authentication/POST/signup).
   version: 1.0.0
   contact:
     name: Webreinvent Team
@@ -11,10 +11,16 @@ info:
     email: we@webreinvent.com
 servers:
   - url: http://127.0.0.1:8000/api/store
+    description: This is the server for managing the Vaahstore API.
+  - url: http://127.0.0.1:8000/api
+    description: This is the base server for providing access to general endpoints mainly for authentication.
 security:
   - bearerAuth: []
   - basicAuth: []
 tags:
+  - name: Authentication
+    description: Provide all the required endpoints to create an account and authorize yourself.
+      Ensure that you change the base URL to `http://127.0.0.1:8000/api/` for all authentication-related requests.
   - name: Stores
     description: Everything about Stores
   - name: Products
@@ -33,6 +39,8 @@ tags:
     description: Everything about Order Process in VaahStore
   - name: Payments
     description: Everything about Payments in VaahStore
+  - name: Shipments
+    description: Everything about Shipments in VaahStore
   - name: Product Attributes
     description: Everything about Product Attributes in VaahStore
   - name: Product Medias
@@ -57,8 +65,19 @@ tags:
     description: Everything about Customer Groups in VaahStore
   - name: Payment Methods
     description: Everything about Payment Methods in VaahStore
+  - name: Settings
+    description: >
+      Everything about Settings in VaahStore. This section includes managing various
+      settings and configurations related to VaahStore. Additionally, it covers how to
+      create, read, update, and delete sample records for VaahStore CRUD operations.
+
 
 paths:
+  '/signup':
+    $ref: './authentication/signup.yaml'  # Reference to the stores file
+  '/signin':
+    $ref: './authentication/signin.yaml'  # Reference to the stores file
+
   '/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
   /stores/{id}/action/{action}:
@@ -183,6 +202,19 @@ paths:
   '/payments/search/orders':
     $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
 
+  '/shipments':
+    $ref: './shipments/index.yaml'  # Reference to shipments file
+  '/shipments/{id}':
+    $ref: './shipments/update.yaml'  # Reference to shipments item file
+  '/shipments/{id}/get-shipped-item-list':
+    $ref: './shipments/getShippedItem.yaml'  # Reference to get shipment by item id file
+  '/shipments/update-shipped-item-quantity':
+    $ref: './shipments/updateItemQuantity.yaml'  # Reference to shipments update shipped items quantity file
+  '/shipments/{id}/action/{action}':
+    $ref: './shipments/itemAction.yaml'  # Reference to payment item actions file
+  '/shipments/action/{action}':
+    $ref: './shipments/listAction.yaml'  # Reference to payment list actions file
+
   '/productattributes':
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file
   '/productattributes/{id}':
@@ -295,15 +327,26 @@ paths:
   '/paymentmethods/action/{action}':
     $ref: './payment-methods/listAction.yaml'  # Reference to payment-methods list actions file
 
+  '/settings/get/all-item/count':
+    $ref: './settings/getItemsCount.yaml'  # Reference to get count of all crud in vaahstore file
+  '/settings/fill/bulk/method':
+    $ref: './settings/createBulkRecords.yaml'  # Reference to get count of all crud in vaahstore file
+
 
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Provide your API token in the `Authorization` header as follows:
+        `Authorization: Bearer YOUR_API_TOKEN`.
     basicAuth:
       type: http
       scheme: basic
+      description: |
+        Basic authentication using username and password.
   parameters:
     id:
       name: id
@@ -568,6 +611,15 @@ components:
       in: query
       required: false
       description: Filter by associated customers.
+      schema:
+        type: array
+        items:
+          type: string
+    order:
+      name: filter[order][]
+      in: query
+      required: false
+      description: Filter by associated order.
       schema:
         type: array
         items:
@@ -1187,19 +1239,20 @@ components:
         email:
           type: string
           format: email
-          examples:
-            - we@webreinvent.com
+          description: The email address associated with your account.
+          example: we@webreinvent.com
         password:
           type: string
-          examples:
-            - webreinvent
+          description: The password for your account.
+          example: webreinvent
+
     Token:
       type: object
       properties:
-        token:
+        api_token:
           type: string
-          examples:
-            - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+          description: The token used for authenticating requests. You will receive this token after a successful login.
+          example: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     Store:
       type: object
       required:
@@ -3353,6 +3406,83 @@ components:
           type: object
           nullable: true
           description: Additional metadata related to the payment method (optional).
+    Shipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the shipment.
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier for the shipment.
+        taxonomy_id_shipment_status:
+          type: integer
+          description: Identifier for the shipment status taxonomy.
+        name:
+          type: string
+          description: Name of the product associated with the shipment.
+        tracking_url:
+          type: string
+          format: uri
+          description: URL for tracking the shipment.
+        tracking_key:
+          type: string
+          description: Key used for tracking the shipment.
+        tracking_value:
+          type: string
+          description: Value or description related to the tracking of the shipment.
+        is_trackable:
+          type: integer
+          description: Indicates whether the shipment is trackable (1 for true, 0 for false).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the shipment was created.
+        created_by:
+          type: integer
+          description: Identifier for the user who created the shipment.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the shipment was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier for the user who deleted the shipment, if applicable.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the shipment.
+        orders_count:
+          type: integer
+          description: Number of orders associated with the shipment.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the shipment status.
+
+            parent_id:
+              type: integer
+              nullable: true
+              description: Identifier for the parent status, if applicable.
+            vh_taxonomy_type_id:
+              type: integer
+              description: Identifier for the taxonomy type of the shipment status.
+            is_active:
+              type: integer
+              description: Indicates whether the shipment status is active (1 for true, 0 for false).
+            name:
+              type: string
+              description: Name of the shipment status.
+            slug:
+              type: string
+              description: URL-friendly version of the shipment status name.
+
+
 
 
 
