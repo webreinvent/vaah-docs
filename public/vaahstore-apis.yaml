@@ -64,6 +64,9 @@ tags:
     description: Everything about Customer Groups in VaahStore
   - name: Payment Methods
     description: Everything about Payment Methods in VaahStore
+  - name: Settings
+    description: |
+      Everything about Settings in VaahStore. This section includes managing various settings and configurations related to VaahStore. Additionally, it covers how to create, read, update, and delete sample records for VaahStore CRUD operations.
 paths:
   /signup:
     post:
@@ -18014,6 +18017,190 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /settings/get/all-item/count:
+    get:
+      tags:
+        - Settings
+      summary: Get the count of all CRUD records in VaahStore
+      operationId: getCrudCount
+      description: |
+        Fetch the count of various CRUD records in VaahStore such as stores, wishlists, addresses, brands, attributes, customers, products, vendors, and warehouses.
+      responses:
+        '200':
+          description: Successful response with the counts of CRUD records.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: object
+                        properties:
+                          Store:
+                            type: integer
+                            example: 10
+                          Wishlists:
+                            type: integer
+                            example: 25
+                          Address:
+                            type: integer
+                            example: 50
+                          Brand:
+                            type: integer
+                            example: 8
+                          Attributes:
+                            type: integer
+                            example: 15
+                          AttributeGroups:
+                            type: integer
+                            example: 5
+                          Customer:
+                            type: integer
+                            example: 100
+                          CustomerGroup:
+                            type: integer
+                            example: 3
+                          Product:
+                            type: integer
+                            example: 200
+                          ProductVariations:
+                            type: integer
+                            example: 30
+                          Vendors:
+                            type: integer
+                            example: 12
+                          ProductAttribute:
+                            type: integer
+                            example: 45
+                          ProductMedia:
+                            type: integer
+                            example: 60
+                          VendorsProduct:
+                            type: integer
+                            example: 40
+                          Warehouses:
+                            type: integer
+                            example: 7
+                          ProductStock:
+                            type: integer
+                            example: 300
+                          All:
+                            type: integer
+                            example: 900
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Something went wrong
+                  hint:
+                    type: array
+                    items:
+                      type: string
+                      example: Exception trace information
+  /settings/fill/bulk/method:
+    post:
+      tags:
+        - Settings
+      summary: Create bulk sample CRUD records
+      operationId: createBulkRecords
+      description: |
+        This endpoint allows for bulk creation of sample records for various CRUD operations such as Store, Address, Wishlist, Brand, Attributes, Customer, and more in VaahStore.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                selectedCrud:
+                  type: array
+                  description: List of selected CRUD operations for which sample records need to be created.
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        description: Name of the CRUD operation
+                        example: Store
+                      quantity:
+                        type: integer
+                        description: Number of sample records to create
+                        example: 10
+                      is_checked:
+                        type: boolean
+                        description: Whether the CRUD operation is selected
+                        example: true
+                    required:
+                      - value
+                      - quantity
+                      - is_checked
+              required:
+                - selectedCrud
+      responses:
+        '200':
+          description: Successful response indicating records were created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    example: {}
+        '400':
+          description: Validation error or missing required information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Quantity is required for Store
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: Something went wrong
+                  hint:
+                    type: array
+                    items:
+                      type: string
+                      example: Exception trace information
 components:
   securitySchemes:
     bearerAuth:

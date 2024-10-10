@@ -65,6 +65,11 @@ tags:
     description: Everything about Customer Groups in VaahStore
   - name: Payment Methods
     description: Everything about Payment Methods in VaahStore
+  - name: Settings
+    description: >
+      Everything about Settings in VaahStore. This section includes managing various
+      settings and configurations related to VaahStore. Additionally, it covers how to
+      create, read, update, and delete sample records for VaahStore CRUD operations.
 
 
 paths:
@@ -321,6 +326,11 @@ paths:
     $ref: './payment-methods/itemAction.yaml'  # Reference to payment-methods item actions file
   '/paymentmethods/action/{action}':
     $ref: './payment-methods/listAction.yaml'  # Reference to payment-methods list actions file
+
+  '/settings/get/all-item/count':
+    $ref: './settings/getItemsCount.yaml'  # Reference to get count of all crud in vaahstore file
+  '/settings/fill/bulk/method':
+    $ref: './settings/createBulkRecords.yaml'  # Reference to get count of all crud in vaahstore file
 
 
 components:
