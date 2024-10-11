@@ -14,6 +14,9 @@ post:
             shipment_id:
               type: integer
               description: The ID of the shipment being updated.
+            available_quantity:
+              type: integer
+              description: The Total available quantity of the order item.
             shipment_items:
               type: array
               description: List of shipment items with their updated quantities.
@@ -39,6 +42,7 @@ post:
                   - pending
           required:
             - shipment_id
+            - available_quantity
             - shipment_items
   responses:
     '200':
@@ -74,4 +78,9 @@ post:
                 type: array
                 items:
                   type: string
-                example: ["The quantity cannot exceed the order item's available quantity."]
+                example: [
+                    "The record does not exist for shipment item ID:",
+                    "The record does not exist for order item ID:",
+                    "Shipment quantity exceeds available quantity for item ID:",
+                    "Total shipment quantity exceeds available quantity."
+                ]

@@ -3166,9 +3166,9 @@ paths:
     post:
       tags:
         - Vendors
-      summary: Attach products with vendor
-      description: This endpoint allows adding products to a specific vendor.
-      operationId: createProduct
+      summary: Assign user role with vendor
+      description: Adds a user to the vendor with the specified roles.
+      operationId: createVendorUser
       requestBody:
         required: true
         content:
@@ -3176,65 +3176,44 @@ paths:
             schema:
               type: object
               required:
-                - id
-                - products
+                - item
+                - user_details
               properties:
-                id:
-                  type: integer
-                  description: The ID of the vendor.
-                  example: 6
-                products:
+                item:
+                  type: object
+                  description: item containing the vendor id
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: The ID of the vendor.
+                      example: 1
+                user_details:
                   type: array
+                  description: List of users with their roles.
                   items:
                     type: object
                     required:
-                      - product
-                      - can_update
-                      - status
+                      - pivot
                     properties:
-                      product:
+                      pivot:
                         type: object
                         required:
-                          - id
-                          - name
-                          - vh_st_store_id
+                          - vh_user_id
+                          - vh_role_id
                         properties:
-                          id:
+                          vh_user_id:
                             type: integer
-                            description: The ID of the product.
-                            example: 3
-                          name:
-                            type: string
-                            description: The name of the product.
-                            example: Sony
-                          is_default:
+                            description: The ID of the user.
+                            example: 123
+                          vh_role_id:
                             type: integer
-                            description: Whether the product is the default (0 or 1).
-                            example: 0
-                          vh_st_store_id:
-                            type: integer
-                            description: The store ID associated with the product.
-                            example: 1
-                      can_update:
-                        type: boolean
-                        description: Determines if the product can be updated by the vendor.
-                        example: false
-                      status:
-                        type: object
-                        required:
-                          - id
-                        properties:
-                          id:
-                            type: integer
-                            description: The status ID of the product.
-                            example: 18
-                      status_notes:
-                        type: string
-                        description: Optional notes about the status of the product.
-                        example: Product is under review
+                            description: The ID of the role assigned to the user.
+                            example: 456
       responses:
         '200':
-          description: Product added successfully with vendor
+          description: Successful operation
           content:
             application/json:
               schema:
@@ -3245,15 +3224,16 @@ paths:
                     example: true
                   data:
                     type: object
+                    description: The updated vendor data.
                     $ref: '#/components/schemas/Vendor'
                   messages:
                     type: array
                     items:
                       type: string
                     example:
-                      - Product added successfully.
+                      - Saved successfully.
         '400':
-          description: Bad Request. Validation failed or product already exists.
+          description: Duplicate user-role combination or invalid request.
           content:
             application/json:
               schema:
@@ -3262,12 +3242,12 @@ paths:
                   success:
                     type: boolean
                     example: false
-                  errors:
+                  messages:
                     type: array
                     items:
                       type: string
                     example:
-                      - '''Sample Product'' already exists for this vendor.'
+                      - This Record already present in the list.
         '500':
           description: Internal Server Error
           content:
@@ -3280,7 +3260,7 @@ paths:
                     example: false
                   message:
                     type: string
-                    example: An error occurred while adding the product.
+                    example: An error occurred while adding the user.
   /productvariations:
     get:
       tags:
@@ -4301,6 +4281,94 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /productvendors/getProductForStore:
+    post:
+      summary: Get Products of Store
+      operationId: productForStore
+      tags:
+        - Vendor Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of Store IDs
+                  example:
+                    - 1
+                    - 2
+                    - 3
+                q:
+                  type: string
+                  description: Search query for product name or slug
+                  example: Product Name
+              required:
+                - id
+                - q
+      responses:
+        '200':
+          description: List of products for the given store(s)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Product ID
+                          example: 1
+                        name:
+                          type: string
+                          description: Product Name
+                          example: Sample Product
+                        slug:
+                          type: string
+                          description: Product Slug
+                          example: sample-product
+                        vh_st_store_id:
+                          type: integer
+                          description: Store ID where the product belongs
+                          example: 1
+                        store:
+                          type: object
+                          description: Store object to which the product belongs
+                          properties:
+                            id:
+                              type: integer
+                              description: Store ID
+                              example: 1
+                            name:
+                              type: string
+                              description: Store Name
+                              example: Main Store
+                            slug:
+                              type: string
+                              description: Store Slug
+                              example: store-slug
+                            is_default:
+                              type: boolean
+                              nullable: true
+                              description: Indicates if the store is the default store
+                              example: null
+                            deleted_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                              description: Timestamp if the store is deleted
+                              example: null
   /productvendors/{id}:
     get:
       tags:
@@ -8914,6 +8982,106 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /shipments/search/orders:
+    post:
+      summary: Search/get Orders with the Quantities Records
+      operationId: searchOrders
+      tags:
+        - Shipments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The search query string (can be user display name, first name, or email).
+      responses:
+        '200':
+          description: A list of orders with quantities records
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Order ID
+                          example: 1
+                        amount:
+                          type: number
+                          format: float
+                          description: Total order amount
+                          example: 99.99
+                        paid:
+                          type: boolean
+                          description: Whether the order is paid
+                          example: true
+                        created_at:
+                          type: string
+                          format: date-time
+                          description: Order creation timestamp
+                          example: '2023-10-10T12:00:00Z'
+                        updated_at:
+                          type: string
+                          format: date-time
+                          description: Order update timestamp
+                          example: '2023-10-10T14:00:00Z'
+                        user_name:
+                          type: string
+                          description: User's display name
+                          example: John Doe
+                        items:
+                          type: array
+                          description: Items associated with the order
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                description: Item ID
+                                example: 1
+                              uuid:
+                                type: string
+                                description: Item UUID
+                              vh_st_product_variation_id:
+                                type: integer
+                                description: Product variation ID
+                                example: 1
+                              quantity:
+                                type: integer
+                                description: Ordered quantity
+                                example: 10
+                              name:
+                                type: string
+                                description: Product variation name
+                                example: Product Variation Name
+                              shipped:
+                                type: integer
+                                description: Shipped quantity
+                                example: 5
+                              pending:
+                                type: integer
+                                description: Pending quantity
+                                example: 5
+                              overall_shipped_quantity:
+                                type: integer
+                                description: Overall shipped quantity
+                                example: 5
+                              exists_in_shipment:
+                                type: boolean
+                                description: Whether the item exists in a shipment
+                                example: true
   /shipments/{id}:
     get:
       tags:
@@ -9608,6 +9776,9 @@ paths:
                 shipment_id:
                   type: integer
                   description: The ID of the shipment being updated.
+                available_quantity:
+                  type: integer
+                  description: The Total available quantity of the order item.
                 shipment_items:
                   type: array
                   description: List of shipment items with their updated quantities.
@@ -9633,6 +9804,7 @@ paths:
                       - pending
               required:
                 - shipment_id
+                - available_quantity
                 - shipment_items
       responses:
         '200':
@@ -9670,7 +9842,10 @@ paths:
                     items:
                       type: string
                     example:
-                      - The quantity cannot exceed the order item's available quantity.
+                      - 'The record does not exist for shipment item ID:'
+                      - 'The record does not exist for order item ID:'
+                      - 'Shipment quantity exceeds available quantity for item ID:'
+                      - Total shipment quantity exceeds available quantity.
   /shipments/{id}/action/{action}:
     patch:
       tags:

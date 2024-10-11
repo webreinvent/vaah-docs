@@ -122,7 +122,7 @@ paths:
   '/vendors/add/product':
     $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
   '/vendors/add/user':
-    $ref: './vendors/attachProducts.yaml'  # Reference to the vendors attachment with user file
+    $ref: './vendors/addUser.yaml'  # Reference to the vendors attachment with user file
 
 
   '/productvariations':
@@ -139,6 +139,8 @@ paths:
     $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
   '/productvendors':
     $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
+  '/productvendors/getProductForStore':
+    $ref: './product-vendors/getStoreProducts.yaml'  # Reference to the product vendors get products of stores file
   '/productvendors/{id}':
     $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
   '/productvendors/{id}/action/{action}':
@@ -204,6 +206,8 @@ paths:
 
   '/shipments':
     $ref: './shipments/index.yaml'  # Reference to shipments file
+  '/shipments/search/orders':
+    $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
   '/shipments/{id}':
     $ref: './shipments/update.yaml'  # Reference to shipments item file
   '/shipments/{id}/get-shipped-item-list':
