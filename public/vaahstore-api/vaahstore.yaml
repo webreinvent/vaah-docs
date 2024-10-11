@@ -139,6 +139,8 @@ paths:
     $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
   '/productvendors':
     $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
+  '/productvendors/getProductForStore':
+    $ref: './product-vendors/getStoreProducts.yaml'  # Reference to the product vendors get products of stores file
   '/productvendors/{id}':
     $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
   '/productvendors/{id}/action/{action}':

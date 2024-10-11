@@ -4281,6 +4281,94 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /productvendors/getProductForStore:
+    post:
+      summary: Get Products of Store
+      operationId: productForStore
+      tags:
+        - Vendor Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of Store IDs
+                  example:
+                    - 1
+                    - 2
+                    - 3
+                q:
+                  type: string
+                  description: Search query for product name or slug
+                  example: Product Name
+              required:
+                - id
+                - q
+      responses:
+        '200':
+          description: List of products for the given store(s)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Product ID
+                          example: 1
+                        name:
+                          type: string
+                          description: Product Name
+                          example: Sample Product
+                        slug:
+                          type: string
+                          description: Product Slug
+                          example: sample-product
+                        vh_st_store_id:
+                          type: integer
+                          description: Store ID where the product belongs
+                          example: 1
+                        store:
+                          type: object
+                          description: Store object to which the product belongs
+                          properties:
+                            id:
+                              type: integer
+                              description: Store ID
+                              example: 1
+                            name:
+                              type: string
+                              description: Store Name
+                              example: Main Store
+                            slug:
+                              type: string
+                              description: Store Slug
+                              example: store-slug
+                            is_default:
+                              type: boolean
+                              nullable: true
+                              description: Indicates if the store is the default store
+                              example: null
+                            deleted_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                              description: Timestamp if the store is deleted
+                              example: null
   /productvendors/{id}:
     get:
       tags:
@@ -9688,6 +9776,9 @@ paths:
                 shipment_id:
                   type: integer
                   description: The ID of the shipment being updated.
+                available_quantity:
+                  type: integer
+                  description: The Total available quantity of the order item.
                 shipment_items:
                   type: array
                   description: List of shipment items with their updated quantities.
@@ -9713,6 +9804,7 @@ paths:
                       - pending
               required:
                 - shipment_id
+                - available_quantity
                 - shipment_items
       responses:
         '200':
@@ -9750,7 +9842,10 @@ paths:
                     items:
                       type: string
                     example:
-                      - The quantity cannot exceed the order item's available quantity.
+                      - 'The record does not exist for shipment item ID:'
+                      - 'The record does not exist for order item ID:'
+                      - 'Shipment quantity exceeds available quantity for item ID:'
+                      - Total shipment quantity exceeds available quantity.
   /shipments/{id}/action/{action}:
     patch:
       tags:
