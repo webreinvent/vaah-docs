@@ -122,7 +122,7 @@ paths:
   '/vendors/add/product':
     $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
   '/vendors/add/user':
-    $ref: './vendors/attachProducts.yaml'  # Reference to the vendors attachment with user file
+    $ref: './vendors/addUser.yaml'  # Reference to the vendors attachment with user file
 
 
   '/productvariations':
@@ -204,6 +204,8 @@ paths:
 
   '/shipments':
     $ref: './shipments/index.yaml'  # Reference to shipments file
+  '/shipments/search/orders':
+    $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
   '/shipments/{id}':
     $ref: './shipments/update.yaml'  # Reference to shipments item file
   '/shipments/{id}/get-shipped-item-list':
