@@ -10,10 +10,7 @@ info:
     url: https://webreinvent.com/
     email: we@webreinvent.com
 servers:
-  - url: http://127.0.0.1:8000/api/store
-    description: This is the server for managing the Vaahstore API.
-  - url: http://127.0.0.1:8000/api
-    description: This is the base server for providing access to general endpoints mainly for authentication.
+
 security:
   - bearerAuth: []
   - basicAuth: []
@@ -81,56 +78,56 @@ tags:
 
 paths:
 
-  '/signin':
+  '/api/signin':
     $ref: './authentication/signin.yaml'  # Reference to the stores file
 
-  '/taxonomies':
+  '/api/taxonomies':
     $ref: './taxonomies/index.yaml'  # Reference to the taxonomies file
 
-  '/stores':
+  '/api/store/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
-  /stores/{id}/action/{action}:
+  /api/store/stores/{id}/action/{action}:
     $ref: './stores/storeAction.yaml'  # Reference to the stores item action file
-  /stores/{id}:
+  /api/store/stores/{id}:
     $ref: './stores/storeUpdate.yaml'  # Reference to the stores item file
-  /stores/action/{action}:
+  /api/store/stores/action/{action}:
     $ref: './stores/storeListAction.yaml'  # Reference to the stores list action file
 
-  '/products':
+  '/api/store/products':
     $ref: './products/products.yaml'  # Reference to the create products file
-  '/products/{id}':
+  '/api/store/products/{id}':
     $ref: './products/productUpdate.yaml'  # Reference to the product item file
-  '/products/{id}/action/{action}':
+  '/api/store/products/{id}/action/{action}':
     $ref: './products/productAction.yaml'  # Reference to the product item action file
-  '/products/action/{action}':
+  '/api/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
-  '/products/vendor':
+  '/api/store/products/vendor':
     $ref: './products/attachVendor.yaml'  # Reference to the attachment with vendor file
-  '/products/get-vendors-list/{id}':
+  '/api/store/products/get-vendors-list/{id}':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
-  '/products/{id}/action-for-vendor/{action}':
+  '/api/store/products/{id}/action-for-vendor/{action}':
     $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
-  '/products/getAttributeList':
+  '/api/store/products/getAttributeList':
     $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
-  '/products/getAttributeValue':
+  '/api/store/products/getAttributeValue':
     $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
-  '/products/variation':
+  '/api/store/products/variation':
     $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
-  '/products/add/product-to-cart':
+  '/api/store/products/add/product-to-cart':
     $ref: './products/addToCart.yaml'  # Reference to the add product to cart file
 
 
-  '/vendors':
+  '/api/store/vendors':
     $ref: './vendors/vendors.yaml'  # Reference to the vendors file
-  '/vendors/{id}':
+  '/api/store/vendors/{id}':
     $ref: './vendors/vendorsUpdate.yaml'  # Reference to the vendors item file
-  '/vendors/{id}/action/{action}':
+  '/api/store/vendors/{id}/action/{action}':
     $ref: './vendors/vendorAction.yaml'  # Reference to the vendors item action file
-  '/vendors/action/{action}':
+  '/api/store/vendors/action/{action}':
     $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors list actions file
-  '/vendors/add/product':
+  '/api/store/vendors/add/product':
     $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
-  '/vendors/add/user':
+  '/api/store/vendors/add/user':
     $ref: './vendors/addUser.yaml'  # Reference to the vendors attachment with user file
 
 

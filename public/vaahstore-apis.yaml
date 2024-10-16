@@ -9,11 +9,7 @@ info:
     name: Webreinvent Team
     url: https://webreinvent.com/
     email: we@webreinvent.com
-servers:
-  - url: http://127.0.0.1:8000/api/store
-    description: This is the server for managing the Vaahstore API.
-  - url: http://127.0.0.1:8000/api
-    description: This is the base server for providing access to general endpoints mainly for authentication.
+servers: null
 security:
   - bearerAuth: []
   - basicAuth: []
@@ -74,7 +70,7 @@ tags:
     description: |
       Everything about Settings in VaahStore. This section includes managing various settings and configurations related to VaahStore. Additionally, it covers how to create, read, update, and delete sample records for VaahStore CRUD operations.
 paths:
-  /signin:
+  /api/signin:
     post:
       summary: User Signin
       description: |
@@ -160,7 +156,7 @@ paths:
                       type: string
                     example:
                       - Invalid credentials provided.
-  /taxonomies:
+  /api/taxonomies:
     get:
       tags:
         - Taxonomies
@@ -242,7 +238,7 @@ paths:
           description: Invalid request
         '500':
           description: Server error
-  /stores:
+  /api/store/stores:
     get:
       tags:
         - Stores
@@ -533,7 +529,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /stores/{id}/action/{action}:
+  /api/store/stores/{id}/action/{action}:
     patch:
       tags:
         - Stores
@@ -604,7 +600,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /stores/{id}:
+  /api/store/stores/{id}:
     get:
       tags:
         - Stores
@@ -807,7 +803,7 @@ paths:
           content:
             application/json:
               schema: null
-  /stores/action/{action}:
+  /api/store/stores/action/{action}:
     put:
       tags:
         - Stores
@@ -880,7 +876,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /products:
+  /api/store/products:
     get:
       tags:
         - Products
@@ -1288,7 +1284,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /products/{id}:
+  /api/store/products/{id}:
     get:
       tags:
         - Products
@@ -1488,7 +1484,7 @@ paths:
           content:
             application/json:
               schema: null
-  /products/{id}/action/{action}:
+  /api/store/products/{id}/action/{action}:
     patch:
       tags:
         - Products
@@ -1569,7 +1565,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /products/action/{action}:
+  /api/store/products/action/{action}:
     put:
       tags:
         - Products
@@ -1642,7 +1638,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /products/vendor:
+  /api/store/products/vendor:
     post:
       tags:
         - Products
@@ -1762,7 +1758,7 @@ paths:
                   message:
                     type: string
                     example: Permission denied.
-  /products/get-vendors-list/{id}:
+  /api/store/products/get-vendors-list/{id}:
     get:
       tags:
         - Products
@@ -1852,7 +1848,7 @@ paths:
                   message:
                     type: string
                     example: Product not found or no vendors associated.
-  /products/{id}/action-for-vendor/{action}:
+  /api/store/products/{id}/action-for-vendor/{action}:
     patch:
       tags:
         - Products
@@ -1926,7 +1922,7 @@ paths:
                   message:
                     type: string
                     example: Product vendor not found.
-  /products/getAttributeList:
+  /api/store/products/getAttributeList:
     post:
       tags:
         - Products
@@ -1984,7 +1980,7 @@ paths:
                           type: string
                           description: The type of the attribute (only applicable for attributes).
                           example: string
-  /products/getAttributeValue:
+  /api/store/products/getAttributeValue:
     post:
       tags:
         - Products
@@ -2074,7 +2070,7 @@ paths:
                           id: 1
                     all_attribute_name:
                       - Color
-  /products/variation:
+  /api/store/products/variation:
     post:
       tags:
         - Products
@@ -2190,7 +2186,7 @@ paths:
                     example:
                       - This Variation name 'Color - Blue' already exists.
                     description: A list of error messages detailing the issues encountered.
-  /products/add/product-to-cart:
+  /api/store/products/add/product-to-cart:
     post:
       tags:
         - Products
@@ -2279,7 +2275,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred while adding the product to the cart.
-  /vendors:
+  /api/store/vendors:
     get:
       tags:
         - Vendors
@@ -2693,7 +2689,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /vendors/{id}:
+  /api/store/vendors/{id}:
     get:
       tags:
         - Vendors
@@ -2877,7 +2873,7 @@ paths:
           content:
             application/json:
               schema: null
-  /vendors/{id}/action/{action}:
+  /api/store/vendors/{id}/action/{action}:
     patch:
       tags:
         - Vendors
@@ -2960,7 +2956,7 @@ paths:
                       type: string
                       example:
                         - An error occurred
-  /vendors/action/{action}:
+  /api/store/vendors/action/{action}:
     put:
       tags:
         - Vendors
@@ -3033,7 +3029,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /vendors/add/product:
+  /api/store/vendors/add/product:
     post:
       tags:
         - Vendors
@@ -3152,7 +3148,7 @@ paths:
                   message:
                     type: string
                     example: An error occurred while adding the product.
-  /vendors/add/user:
+  /api/store/vendors/add/user:
     post:
       tags:
         - Vendors
