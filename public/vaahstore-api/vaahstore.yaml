@@ -3,7 +3,7 @@ info:
   title: VaahStore
   description: |
     VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
-        To get started, [sign up here](#tag/authentication/POST/signup).
+        To get started, [sign in here](#tag/authentication/POST/signin).
   version: 1.0.0
   contact:
     name: Webreinvent Team
@@ -80,8 +80,7 @@ tags:
 
 
 paths:
-  '/signup':
-    $ref: './authentication/signup.yaml'  # Reference to the stores file
+
   '/signin':
     $ref: './authentication/signin.yaml'  # Reference to the stores file
 
