@@ -7,6 +7,11 @@ info:
     ### Note:
         Before testing any requests, make sure to replace the URL placeholder (`{your_url}`) with your actual URL in the server configuration.
 
+    <details>
+              <summary>Example</summary>
+
+              GET `{Your Base URL}`/api/`{path}`
+
     ## Resources:
        For more information and updates, visit [VaahStore on GitHub](https://github.com/webreinvent).
   version: 1.0.0
