@@ -4,6 +4,11 @@ info:
   description: |
     VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
         To get started, [sign in here](#tag/authentication/POST/signin).
+    ### Note:
+        Before testing any requests, make sure to replace the URL placeholder (`{your_url}`) with your actual URL in the server configuration.
+
+    ## Resources:
+       For more information and updates, visit [VaahStore on GitHub](https://github.com/webreinvent).
   version: 1.0.0
   contact:
     name: Webreinvent Team
@@ -17,8 +22,9 @@ security:
 
 tags:
   - name: Authentication
-    description: Provide all the required endpoints to create an account and authorize yourself.
-      Ensure that you change the base URL to `http://127.0.0.1:8000/api/` for all authentication-related requests.
+    description: |
+      Provides all the required endpoints to create an account and authorize yourself.
+      Ensure that you replace the base URL with your own domain for all authentication-related requests.
   - name: Taxonomies
     description: |
       Everything about Taxonomies in VaahStore.
@@ -131,215 +137,215 @@ paths:
     $ref: './vendors/addUser.yaml'  # Reference to the vendors attachment with user file
 
 
-  '/productvariations':
+  '/api/store/productvariations':
     $ref: './product-variations/variations.yaml'  # Reference to the productvariations file
-  '/productvariations/{id}':
+  '/api/store/productvariations/{id}':
     $ref: './product-variations/variationUpdate.yaml'  # Reference to the productvariations item file
-  '/productvariations/{id}/action/{action}':
+  '/api/store/productvariations/{id}/action/{action}':
     $ref: './product-variations/variationAction.yaml'  # Reference to the productvariations item action file
-  '/productvariations/action/{action}':
+  '/api/store/productvariations/action/{action}':
     $ref: './product-variations/variationListActions.yaml'  # Reference to the productvariations list actions file
-  '/productvariations/add/variation-to-cart':
+  '/api/store/productvariations/add/variation-to-cart':
     $ref: './product-variations/addToCart.yaml'  # Reference to the add to cart file
-  '/productvariations/disable/active-cart':
+  '/api/store/productvariations/disable/active-cart':
     $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
-  '/productvendors':
+  '/api/store/productvendors':
     $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
-  '/productvendors/getProductForStore':
+  '/api/store/productvendors/getProductForStore':
     $ref: './product-vendors/getStoreProducts.yaml'  # Reference to the product vendors get products of stores file
-  '/productvendors/{id}':
+  '/api/store/productvendors/{id}':
     $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
-  '/productvendors/{id}/action/{action}':
+  '/api/store/productvendors/{id}/action/{action}':
     $ref: './product-vendors/itemAction.yaml'  # Reference to the product vendor item action file
-  '/productvendors/action/{action}':
+  '/api/store/productvendors/action/{action}':
     $ref: './product-vendors/listAction.yaml'  # Reference to the product vendor list actions file
-  '/productvendors/product/price':
+  '/api/store/productvendors/product/price':
     $ref: './product-vendors/addProductPrice.yaml'  # Reference to the add product price file
 
-  '/productstocks':
+  '/api/store/productstocks':
     $ref: './product-stocks/index.yaml'  # Reference to the product stocks file
-  '/productstocks/{id}':
+  '/api/store/productstocks/{id}':
     $ref: './product-stocks/update.yaml'  # Reference to the product stocks item file
-  '/productstocks/{id}/action/{action}':
+  '/api/store/productstocks/{id}/action/{action}':
     $ref: './product-stocks/itemAction.yaml'  # Reference to the product stocks item action file
-  '/productstocks/action/{action}':
+  '/api/store/productstocks/action/{action}':
     $ref: './product-stocks/listAction.yaml'  # Reference to the product stocks list action file
 
-  '/carts':
+  '/api/store/carts':
     $ref: './carts/index.yaml'  # Reference to the carts file
-  '/carts/{id}':
+  '/api/store/carts/{id}':
     $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
-  '/carts/cart-check-out/{id}':
+  '/api/store/carts/cart-check-out/{id}':
     $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
-  '/carts/update/quantity':
+  '/api/store/carts/update/quantity':
     $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
-  '/carts/delete-cart-item':
+  '/api/store/carts/delete-cart-item':
     $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
-  '/carts/add-to-wishlist':
+  '/api/store/carts/add-to-wishlist':
     $ref: './carts/addToWishlist.yaml'  # Reference to  add to wishlist  file
-  '/carts/save/cart-user-address':
+  '/api/store/carts/save/cart-user-address':
     $ref: './carts/saveAddress.yaml'  # Reference to  save cart user address  file
-  '/carts/remove/cart-user-address':
+  '/api/store/carts/remove/cart-user-address':
     $ref: './carts/removeAddress.yaml'  # Reference to  remove cart user address  file
-  '/carts/update/user-shipping-address':
+  '/api/store/carts/update/user-shipping-address':
     $ref: './carts/updateAddress.yaml'  # Reference to  update cart user address  file
-  '/carts/place-order':
+  '/api/store/carts/place-order':
     $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
-  '/carts/get-order-details/{order_id}':
+  '/api/store/carts/get-order-details/{order_id}':
     $ref: './carts/getOrder.yaml'  # Reference to get order file
 
-  '/orders':
+  '/api/store/orders':
     $ref: './orders/index.yaml'  # Reference to order file
-  '/orders/{id}':
+  '/api/store/orders/{id}':
     $ref: './orders/update.yaml'  # Reference to order item file
-  '/orders/{id}/action/{action}':
+  '/api/store/orders/{id}/action/{action}':
     $ref: './orders/itemAction.yaml'  # Reference to order item action file
-  '/orders/action/{action}':
+  '/api/store/orders/action/{action}':
     $ref: './orders/listAction.yaml'  # Reference to order list actions file
-  '/orders/get-order-items/{id}':
+  '/api/store/orders/get-order-items/{id}':
     $ref: './orders/getOrderItems.yaml'  # Reference to get shipped order item details file
 
-  '/payments':
+  '/api/store/payments':
     $ref: './payments/index.yaml'  # Reference to payments file
-  '/payments/{id}':
+  '/api/store/payments/{id}':
     $ref: './payments/update.yaml'  # Reference to payment item file
-  '/payments/{id}/action/{action}':
+  '/api/store/payments/{id}/action/{action}':
     $ref: './payments/itemAction.yaml'  # Reference to payment item action file
-  '/payments/action/{action}':
+  '/api/store/payments/action/{action}':
     $ref: './payments/listAction.yaml'  # Reference to payment list actions file
-  '/payments/search/orders':
+  '/api/store/payments/search/orders':
     $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
 
-  '/shipments':
+  '/api/store/shipments':
     $ref: './shipments/index.yaml'  # Reference to shipments file
-  '/shipments/search/orders':
+  '/api/store/shipments/search/orders':
     $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
-  '/shipments/{id}':
+  '/api/store/shipments/{id}':
     $ref: './shipments/update.yaml'  # Reference to shipments item file
-  '/shipments/{id}/get-shipped-item-list':
+  '/api/store/shipments/{id}/get-shipped-item-list':
     $ref: './shipments/getShippedItem.yaml'  # Reference to get shipment by item id file
-  '/shipments/update-shipped-item-quantity':
+  '/api/store/shipments/update-shipped-item-quantity':
     $ref: './shipments/updateItemQuantity.yaml'  # Reference to shipments update shipped items quantity file
-  '/shipments/{id}/action/{action}':
+  '/api/store/shipments/{id}/action/{action}':
     $ref: './shipments/itemAction.yaml'  # Reference to payment item actions file
-  '/shipments/action/{action}':
+  '/api/store/shipments/action/{action}':
     $ref: './shipments/listAction.yaml'  # Reference to payment list actions file
 
-  '/productattributes':
+  '/api/store/productattributes':
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file
-  '/productattributes/{id}':
+  '/api/store/productattributes/{id}':
     $ref: './product-attributes/update.yaml'  # Reference to product attributes item file
-  '/productattributes/{id}/action/{action}':
+  '/api/store/productattributes/{id}/action/{action}':
     $ref: './product-attributes/itemAction.yaml'  # Reference to product attributes item action file
-  '/productattributes/action/{action}':
+  '/api/store/productattributes/action/{action}':
     $ref: './product-attributes/listAction.yaml'  # Reference to product attributes list actions file
 
-  '/productmedias':
+  '/api/store/productmedias':
     $ref: './product-medias/index.yaml'  # Reference to product medias file
-  '/productmedias/{id}':
+  '/api/store/productmedias/{id}':
     $ref: './product-medias/update.yaml'  # Reference to product media item file
-  '/productmedias/{id}/action/{action}':
+  '/api/store/productmedias/{id}/action/{action}':
     $ref: './product-medias/itemAction.yaml'  # Reference to product media item action file
-  '/productmedias/action/{action}':
+  '/api/store/productmedias/action/{action}':
     $ref: './product-medias/listAction.yaml'  # Reference to product media list action file
 
-  '/categories':
+  '/api/store/categories':
     $ref: './categories/index.yaml'  # Reference to the categories file
-  '/categories/{id}':
+  '/api/store/categories/{id}':
     $ref: './categories/update.yaml'  # Reference to the category item file
-  '/categories/{id}/action/{action}':
+  '/api/store/categories/{id}/action/{action}':
     $ref: './categories/itemAction.yaml'  # Reference to the category item actions file
-  '/categories/action/{action}':
+  '/api/store/categories/action/{action}':
     $ref: './categories/listAction.yaml'  # Reference to the category list actions file
 
-  '/brands':
+  '/api/store/brands':
     $ref: './brands/index.yaml'  # Reference to brands  file
-  '/brands/{id}':
+  '/api/store/brands/{id}':
     $ref: './brands/update.yaml'  # Reference to brand item  file
-  '/brands/{id}/action/{action}':
+  '/api/store/brands/{id}/action/{action}':
     $ref: './brands/itemAction.yaml'  # Reference to brand item action file
-  '/brands/action/{action}':
+  '/api/store/brands/action/{action}':
     $ref: './brands/listAction.yaml'  # Reference to brand list action file
 
-  '/warehouses':
+  '/api/store/warehouses':
     $ref: './warehouses/index.yaml'  # Reference to warehouses  file
-  '/warehouses/{id}':
+  '/api/store/warehouses/{id}':
     $ref: './warehouses/update.yaml'  # Reference to warehouse item file
-  '/warehouses/{id}/action/{action}':
+  '/api/store/warehouses/{id}/action/{action}':
     $ref: './warehouses/itemAction.yaml'  # Reference to warehouse item action file
-  '/warehouses/action/{action}':
+  '/api/store/warehouses/action/{action}':
     $ref: './warehouses/listAction.yaml'  # Reference to warehouse list action file
 
-  '/addresses/assets':
+  '/api/store/addresses/assets':
     $ref: './addresses/getAssets.yaml'  # Reference to addresses assets file
-  '/addresses':
+  '/api/store/addresses':
     $ref: './addresses/index.yaml'  # Reference to addresses file
-  '/addresses/{id}':
+  '/api/store/addresses/{id}':
     $ref: './addresses/update.yaml'  # Reference to address item file
-  '/addresses/{id}/action/{action}':
+  '/api/store/addresses/{id}/action/{action}':
     $ref: './addresses/itemAction.yaml'  # Reference to address item actions file
-  '/addresses/action/{action}':
+  '/api/store/addresses/action/{action}':
     $ref: './addresses/listAction.yaml'  # Reference to address list actions file
 
-  '/wishlists/assets':
+  '/api/store/wishlists/assets':
     $ref: './wishlists/getAssets.yaml'  # Reference to wishlists assets file
-  '/wishlists':
+  '/api/store/wishlists':
     $ref: './wishlists/index.yaml'  # Reference to wishlists file
-  '/wishlists/{id}':
+  '/api/store/wishlists/{id}':
     $ref: './wishlists/update.yaml'  # Reference to wishlists item file
-  '/wishlists/{id}/action/{action}':
+  '/api/store/wishlists/{id}/action/{action}':
     $ref: './wishlists/itemAction.yaml'  # Reference to wishlists item actions file
-  '/wishlists/{action/{action}':
+  '/api/store/wishlists/{action/{action}':
     $ref: './wishlists/listAction.yaml'  # Reference to wishlists list actions file
 
-  '/attributes':
+  '/api/store/attributes':
     $ref: './attributes/index.yaml'  # Reference to attributes file
-  '/attributes/{id}':
+  '/api/store/attributes/{id}':
     $ref: './attributes/update.yaml'  # Reference to attribute item file
-  '/attributes/{id}/action/{action}':
+  '/api/store/attributes/{id}/action/{action}':
     $ref: './attributes/itemAction.yaml'  # Reference to attribute item actions file
-  '/attributes/action/{action}':
+  '/api/store/attributes/action/{action}':
     $ref: './attributes/listAction.yaml'  # Reference to attribute list actions file
 
-  '/attributegroups':
+  '/api/store/attributegroups':
     $ref: './attribute-groups/index.yaml'  # Reference to attribute groups file
-  '/attributegroups/{id}':
+  '/api/store/attributegroups/{id}':
     $ref: './attribute-groups/update.yaml'  # Reference to attribute groups item file
-  '/attributegroups/{id}/action/{action}':
+  '/api/store/attributegroups/{id}/action/{action}':
     $ref: './attribute-groups/itemAction.yaml'  # Reference to attribute groups item actions file
-  '/attributegroups/action/{action}':
+  '/api/store/attributegroups/action/{action}':
     $ref: './attribute-groups/listAction.yaml'  # Reference to attribute groups list actions file
 
-  '/users/assets':
+  '/api/store/users/assets':
     $ref: './customers/getAssets.yaml'  # Reference to customers assets file
-  '/users':
+  '/api/store/users':
     $ref: './customers/index.yaml'  # Reference to customers file
-  '/users/{id}':
+  '/api/store/users/{id}':
     $ref: './customers/update.yaml'  # Reference to customers update file
 
-  '/customergroups/assets':
+  '/api/store/customergroups/assets':
     $ref: './customer-groups/getAssets.yaml'  # Reference to customer groups assets file
-  '/customergroups':
+  '/api/store/customergroups':
     $ref: './customer-groups/index.yaml'  # Reference to customer groups file
-  '/customergroups/{id}':
+  '/api/store/customergroups/{id}':
     $ref: './customer-groups/update.yaml'  # Reference to customer group item file
-  '/customergroups/{id}/action/{actio}':
+  '/api/store/customergroups/{id}/action/{actio}':
     $ref: './customer-groups/itemAction.yaml'  # Reference to customer group item actions file
-  '/customergroups/action/{actio}':
+  '/api/store/customergroups/action/{actio}':
     $ref: './customer-groups/listAction.yaml'  # Reference to customer group list actions file
 
-  '/paymentmethods':
+  '/api/store/paymentmethods':
     $ref: './payment-methods/index.yaml'  # Reference to payment-methods file
-  '/paymentmethods/{id}':
+  '/api/store/paymentmethods/{id}':
     $ref: './payment-methods/update.yaml'  # Reference to payment-methods item file
-  '/paymentmethods/{id}/action/{action}':
+  '/api/store/paymentmethods/{id}/action/{action}':
     $ref: './payment-methods/itemAction.yaml'  # Reference to payment-methods item actions file
-  '/paymentmethods/action/{action}':
+  '/api/store/paymentmethods/action/{action}':
     $ref: './payment-methods/listAction.yaml'  # Reference to payment-methods list actions file
 
-  '/settings/get/all-item/count':
+  '/api/store/settings/get/all-item/count':
     $ref: './settings/getItemsCount.yaml'  # Reference to get count of all crud in vaahstore file
-  '/settings/fill/bulk/method':
+  '/api/store/settings/fill/bulk/method':
     $ref: './settings/createBulkRecords.yaml'  # Reference to get count of all crud in vaahstore file
 
 

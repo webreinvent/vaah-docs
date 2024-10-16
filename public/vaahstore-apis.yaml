@@ -4,6 +4,11 @@ info:
   description: |
     VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
         To get started, [sign in here](#tag/authentication/POST/signin).
+    ### Note:
+        Before testing any requests, make sure to replace the URL placeholder (`{your_url}`) with your actual URL in the server configuration.
+
+    ## Resources:
+       For more information and updates, visit [VaahStore on GitHub](https://github.com/webreinvent).
   version: 1.0.0
   contact:
     name: Webreinvent Team
@@ -15,7 +20,9 @@ security:
   - basicAuth: []
 tags:
   - name: Authentication
-    description: Provide all the required endpoints to create an account and authorize yourself. Ensure that you change the base URL to `http://127.0.0.1:8000/api/` for all authentication-related requests.
+    description: |
+      Provides all the required endpoints to create an account and authorize yourself.
+      Ensure that you replace the base URL with your own domain for all authentication-related requests.
   - name: Taxonomies
     description: |
       Everything about Taxonomies in VaahStore.
@@ -74,7 +81,7 @@ paths:
     post:
       summary: User Signin
       description: |
-        This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests.[For signup](#tag/customers/POST/users) as a cutomer in VaahStore
+        This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/customers/POST/users) as a cutomer in VaahStore
       operationId: postSignIn
       tags:
         - Authentication
@@ -3247,7 +3254,7 @@ paths:
                   message:
                     type: string
                     example: An error occurred while adding the user.
-  /productvariations:
+  /api/store/productvariations:
     get:
       tags:
         - Product Variations
@@ -3573,7 +3580,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productvariations/{id}:
+  /api/store/productvariations/{id}:
     get:
       tags:
         - Product Variations
@@ -3702,7 +3709,7 @@ paths:
           content:
             application/json:
               schema: null
-  /productvariations/{id}/action/{action}:
+  /api/store/productvariations/{id}/action/{action}:
     patch:
       tags:
         - Product Variations
@@ -3783,7 +3790,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /productvariations/action/{action}:
+  /api/store/productvariations/action/{action}:
     put:
       tags:
         - Product Variations
@@ -3841,7 +3848,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productvariations/add/variation-to-cart:
+  /api/store/productvariations/add/variation-to-cart:
     post:
       tags:
         - Product Variations
@@ -3926,7 +3933,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /productvariations/disable/active-cart:
+  /api/store/productvariations/disable/active-cart:
     post:
       tags:
         - Product Variations
@@ -3968,7 +3975,7 @@ paths:
                     type: string
                     description: Error trace when APP_DEBUG is true
                     example: Error trace stack...
-  /productvendors:
+  /api/store/productvendors:
     get:
       tags:
         - Vendor Products
@@ -4267,7 +4274,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productvendors/getProductForStore:
+  /api/store/productvendors/getProductForStore:
     post:
       summary: Get Products of Store
       operationId: productForStore
@@ -4355,7 +4362,7 @@ paths:
                               nullable: true
                               description: Timestamp if the store is deleted
                               example: null
-  /productvendors/{id}:
+  /api/store/productvendors/{id}:
     get:
       tags:
         - Vendor Products
@@ -4484,7 +4491,7 @@ paths:
           content:
             application/json:
               schema: null
-  /productvendors/{id}/action/{action}:
+  /api/store/productvendors/{id}/action/{action}:
     patch:
       tags:
         - Vendor Products
@@ -4565,7 +4572,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /productvendors/action/{action}:
+  /api/store/productvendors/action/{action}:
     put:
       tags:
         - Vendor Products
@@ -4623,7 +4630,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productvendors/product/price:
+  /api/store/productvendors/product/price:
     post:
       tags:
         - Vendor Products
@@ -4697,7 +4704,7 @@ paths:
                     example:
                       - The Product field is required
                       - The product_variation.0.amount field is required.
-  /productstocks:
+  /api/store/productstocks:
     get:
       tags:
         - Product Stocks
@@ -5000,7 +5007,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productstocks/{id}:
+  /api/store/productstocks/{id}:
     get:
       tags:
         - Product Stocks
@@ -5129,7 +5136,7 @@ paths:
           content:
             application/json:
               schema: null
-  /productstocks/{id}/action/{action}:
+  /api/store/productstocks/{id}/action/{action}:
     patch:
       tags:
         - Product Stocks
@@ -5210,7 +5217,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /productstocks/action/{action}:
+  /api/store/productstocks/action/{action}:
     put:
       tags:
         - Product Stocks
@@ -5268,7 +5275,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /carts:
+  /api/store/carts:
     get:
       tags:
         - Carts
@@ -5305,7 +5312,7 @@ paths:
           content:
             application/json:
               schema: null
-  /carts/{id}:
+  /api/store/carts/{id}:
     get:
       tags:
         - Carts
@@ -5477,7 +5484,7 @@ paths:
           content:
             application/json:
               schema: null
-  /carts/cart-check-out/{id}:
+  /api/store/carts/cart-check-out/{id}:
     get:
       tags:
         - Carts
@@ -5804,7 +5811,7 @@ paths:
           content:
             application/json:
               schema: null
-  /carts/update/quantity:
+  /api/store/carts/update/quantity:
     post:
       tags:
         - Carts
@@ -5894,7 +5901,7 @@ paths:
                     items:
                       type: string
                       example: Cart not found.
-  /carts/delete-cart-item:
+  /api/store/carts/delete-cart-item:
     post:
       tags:
         - Carts
@@ -5980,7 +5987,7 @@ paths:
                     items:
                       type: string
                       example: Cart not found.
-  /carts/add-to-wishlist:
+  /api/store/carts/add-to-wishlist:
     post:
       tags:
         - Carts
@@ -6100,7 +6107,7 @@ paths:
                     items:
                       type: string
                       example: User or product not found.
-  /carts/save/cart-user-address:
+  /api/store/carts/save/cart-user-address:
     post:
       tags:
         - Carts
@@ -6239,7 +6246,7 @@ paths:
                     items:
                       type: string
                       example: Error saving address.
-  /carts/remove/cart-user-address:
+  /api/store/carts/remove/cart-user-address:
     post:
       tags:
         - Carts
@@ -6305,7 +6312,7 @@ paths:
                     items:
                       type: string
                       example: Invalid address ID.
-  /carts/update/user-shipping-address:
+  /api/store/carts/update/user-shipping-address:
     post:
       tags:
         - Carts
@@ -6416,7 +6423,7 @@ paths:
                     items:
                       type: string
                       example: Request data is incomplete.
-  /carts/place-order:
+  /api/store/carts/place-order:
     post:
       tags:
         - Carts
@@ -6629,7 +6636,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred while placing the order.
-  /carts/get-order-details/{order_id}:
+  /api/store/carts/get-order-details/{order_id}:
     get:
       summary: Get order details after placing an order
       operationId: getOrderDetails
@@ -6772,7 +6779,7 @@ paths:
                     example: Order not found.
                   data:
                     type: null
-  /orders:
+  /api/store/orders:
     get:
       tags:
         - Orders
@@ -7009,7 +7016,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /orders/{id}:
+  /api/store/orders/{id}:
     get:
       tags:
         - Orders
@@ -7373,7 +7380,7 @@ paths:
           content:
             application/json:
               schema: null
-  /orders/{id}/action/{action}:
+  /api/store/orders/{id}/action/{action}:
     patch:
       tags:
         - Orders
@@ -7454,7 +7461,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /orders/action/{action}:
+  /api/store/orders/action/{action}:
     put:
       tags:
         - Orders
@@ -7512,7 +7519,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /orders/get-order-items/{id}:
+  /api/store/orders/get-order-items/{id}:
     get:
       summary: Get shipped order items by ID
       description: Retrieve order items shipment details for a specified order ID, including product variations, vendor information, and quantities shipped.
@@ -7618,7 +7625,7 @@ paths:
                     example: An unexpected error occurred.
                   data:
                     type: null
-  /payments:
+  /api/store/payments:
     get:
       tags:
         - Payments
@@ -8129,7 +8136,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /payments/{id}:
+  /api/store/payments/{id}:
     get:
       tags:
         - Payments
@@ -8424,7 +8431,7 @@ paths:
           content:
             application/json:
               schema: null
-  /payments/{id}/action/{action}:
+  /api/store/payments/{id}/action/{action}:
     patch:
       tags:
         - Payments
@@ -8505,7 +8512,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /payments/action/{action}:
+  /api/store/payments/action/{action}:
     put:
       tags:
         - Payments
@@ -8563,7 +8570,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /payments/search/orders:
+  /api/store/payments/search/orders:
     post:
       tags:
         - Payments
@@ -8621,7 +8628,7 @@ paths:
                           type: string
                           format: date-time
                           description: The date and time the order was last updated.
-  /shipments:
+  /api/store/shipments:
     get:
       tags:
         - Shipments
@@ -8968,7 +8975,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /shipments/search/orders:
+  /api/store/shipments/search/orders:
     post:
       summary: Search/get Orders with the Quantities Records
       operationId: searchOrders
@@ -9068,7 +9075,7 @@ paths:
                                 type: boolean
                                 description: Whether the item exists in a shipment
                                 example: true
-  /shipments/{id}:
+  /api/store/shipments/{id}:
     get:
       tags:
         - Shipments
@@ -9671,7 +9678,7 @@ paths:
           content:
             application/json:
               schema: null
-  /shipments/{id}/get-shipped-item-list:
+  /api/store/shipments/{id}/get-shipped-item-list:
     get:
       tags:
         - Shipments
@@ -9745,7 +9752,7 @@ paths:
                       type: string
                     example:
                       - Record does not exist.
-  /shipments/update-shipped-item-quantity:
+  /api/store/shipments/update-shipped-item-quantity:
     post:
       summary: Update Shipped Item Quantities
       description: Updates the quantities of shipped items based on the provided shipment item details.
@@ -9832,7 +9839,7 @@ paths:
                       - 'The record does not exist for order item ID:'
                       - 'Shipment quantity exceeds available quantity for item ID:'
                       - Total shipment quantity exceeds available quantity.
-  /shipments/{id}/action/{action}:
+  /api/store/shipments/{id}/action/{action}:
     patch:
       tags:
         - Shipments
@@ -9913,7 +9920,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /shipments/action/{action}:
+  /api/store/shipments/action/{action}:
     put:
       tags:
         - Shipments
@@ -9971,7 +9978,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productattributes:
+  /api/store/productattributes:
     get:
       tags:
         - Product Attributes
@@ -10288,7 +10295,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productattributes/{id}:
+  /api/store/productattributes/{id}:
     get:
       tags:
         - Product Attributes
@@ -10471,7 +10478,7 @@ paths:
           content:
             application/json:
               schema: null
-  /productattributes/{id}/action/{action}:
+  /api/store/productattributes/{id}/action/{action}:
     patch:
       tags:
         - Product Attributes
@@ -10552,7 +10559,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /productattributes/action/{action}:
+  /api/store/productattributes/action/{action}:
     put:
       tags:
         - Product Attributes
@@ -10610,7 +10617,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productmedias:
+  /api/store/productmedias:
     get:
       tags:
         - Product Medias
@@ -10851,7 +10858,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /productmedias/{id}:
+  /api/store/productmedias/{id}:
     get:
       tags:
         - Product Medias
@@ -11111,7 +11118,7 @@ paths:
           content:
             application/json:
               schema: null
-  /productmedias/{id}/action/{action}:
+  /api/store/productmedias/{id}/action/{action}:
     patch:
       tags:
         - Product Medias
@@ -11192,7 +11199,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /productmedias/action/{action}:
+  /api/store/productmedias/action/{action}:
     put:
       tags:
         - Product Medias
@@ -11250,7 +11257,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /categories:
+  /api/store/categories:
     get:
       tags:
         - Categories
@@ -11571,7 +11578,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /categories/{id}:
+  /api/store/categories/{id}:
     get:
       tags:
         - Categories
@@ -11732,7 +11739,7 @@ paths:
           content:
             application/json:
               schema: null
-  /categories/{id}/action/{action}:
+  /api/store/categories/{id}/action/{action}:
     patch:
       tags:
         - Categories
@@ -11813,7 +11820,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /categories/action/{action}:
+  /api/store/categories/action/{action}:
     put:
       tags:
         - Categories
@@ -11871,7 +11878,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /brands:
+  /api/store/brands:
     get:
       tags:
         - Brands
@@ -12168,7 +12175,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /brands/{id}:
+  /api/store/brands/{id}:
     get:
       tags:
         - Brands
@@ -12297,7 +12304,7 @@ paths:
           content:
             application/json:
               schema: null
-  /brands/{id}/action/{action}:
+  /api/store/brands/{id}/action/{action}:
     patch:
       tags:
         - Brands
@@ -12378,7 +12385,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /brands/action/{action}:
+  /api/store/brands/action/{action}:
     put:
       tags:
         - Brands
@@ -12436,7 +12443,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /warehouses:
+  /api/store/warehouses:
     get:
       tags:
         - Warehouses
@@ -12735,7 +12742,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /warehouses/{id}:
+  /api/store/warehouses/{id}:
     get:
       tags:
         - Warehouses
@@ -12864,7 +12871,7 @@ paths:
           content:
             application/json:
               schema: null
-  /warehouses/{id}/action/{action}:
+  /api/store/warehouses/{id}/action/{action}:
     patch:
       tags:
         - Warehouses
@@ -12945,7 +12952,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /warehouses/action/{action}:
+  /api/store/warehouses/action/{action}:
     put:
       tags:
         - Warehouses
@@ -13003,7 +13010,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /addresses/assets:
+  /api/store/addresses/assets:
     get:
       summary: Get assets for addresses.
       description: Retrieve various assets related to addresses, such as permissions, rows per page, fillable columns, taxonomies, and countries.
@@ -13124,7 +13131,7 @@ paths:
                     items:
                       type: string
                       example: Trace details...
-  /addresses:
+  /api/store/addresses:
     get:
       tags:
         - Addresses
@@ -13465,7 +13472,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /addresses/{id}:
+  /api/store/addresses/{id}:
     get:
       tags:
         - Addresses
@@ -13666,7 +13673,7 @@ paths:
           content:
             application/json:
               schema: null
-  /addresses/{id}/action/{action}:
+  /api/store/addresses/{id}/action/{action}:
     patch:
       tags:
         - Addresses
@@ -13747,7 +13754,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /addresses/action/{action}:
+  /api/store/addresses/action/{action}:
     put:
       tags:
         - Addresses
@@ -13805,7 +13812,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /wishlists/assets:
+  /api/store/wishlists/assets:
     get:
       summary: Get assets for wishlists
       description: Retrieve various assets related to wishlists, such as permissions, rows per page, fillable columns, taxonomies, and user data.
@@ -13915,7 +13922,7 @@ paths:
                     items:
                       type: string
                       example: Trace details...
-  /wishlists:
+  /api/store/wishlists:
     get:
       tags:
         - Wishlists
@@ -14240,7 +14247,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /wishlists/{id}:
+  /api/store/wishlists/{id}:
     get:
       tags:
         - Wishlists
@@ -14579,7 +14586,7 @@ paths:
           content:
             application/json:
               schema: null
-  /wishlists/{id}/action/{action}:
+  /api/store/wishlists/{id}/action/{action}:
     patch:
       tags:
         - Wishlists
@@ -14660,7 +14667,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /wishlists/{action/{action}:
+  /api/store/wishlists/{action/{action}:
     put:
       tags:
         - Wishlists
@@ -14718,7 +14725,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /attributes:
+  /api/store/attributes:
     get:
       tags:
         - Attributes
@@ -15068,7 +15075,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /attributes/{id}:
+  /api/store/attributes/{id}:
     get:
       tags:
         - Attributes
@@ -15341,7 +15348,7 @@ paths:
           content:
             application/json:
               schema: null
-  /attributes/{id}/action/{action}:
+  /api/store/attributes/{id}/action/{action}:
     patch:
       tags:
         - Attributes
@@ -15422,7 +15429,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /attributes/action/{action}:
+  /api/store/attributes/action/{action}:
     put:
       tags:
         - Attributes
@@ -15480,7 +15487,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /attributegroups:
+  /api/store/attributegroups:
     get:
       tags:
         - Attribute Groups
@@ -15813,7 +15820,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /attributegroups/{id}:
+  /api/store/attributegroups/{id}:
     get:
       tags:
         - Attribute Groups
@@ -16173,7 +16180,7 @@ paths:
           content:
             application/json:
               schema: null
-  /attributegroups/{id}/action/{action}:
+  /api/store/attributegroups/{id}/action/{action}:
     patch:
       tags:
         - Attribute Groups
@@ -16254,7 +16261,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /attributegroups/action/{action}:
+  /api/store/attributegroups/action/{action}:
     put:
       tags:
         - Attribute Groups
@@ -16312,7 +16319,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /users/assets:
+  /api/store/users/assets:
     get:
       summary: Get assets for customers
       description: Retrieve various assets related to customers, such as permissions, rows per page, fillable columns, taxonomies, and user data.
@@ -16451,7 +16458,7 @@ paths:
                     items:
                       type: string
                       example: Trace details...
-  /users:
+  /api/store/users:
     get:
       tags:
         - Customers
@@ -16780,7 +16787,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /users/{id}:
+  /api/store/users/{id}:
     get:
       tags:
         - Customers
@@ -16948,7 +16955,7 @@ paths:
           content:
             application/json:
               schema: null
-  /customergroups/assets:
+  /api/store/customergroups/assets:
     get:
       summary: Retrieve assets
       tags:
@@ -17067,7 +17074,7 @@ paths:
                             slug:
                               type: string
                               example: active
-  /customergroups:
+  /api/store/customergroups:
     get:
       tags:
         - Customer Groups
@@ -17362,7 +17369,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /customergroups/{id}:
+  /api/store/customergroups/{id}:
     get:
       tags:
         - Customer Groups
@@ -17491,7 +17498,7 @@ paths:
           content:
             application/json:
               schema: null
-  /customergroups/{id}/action/{actio}:
+  /api/store/customergroups/{id}/action/{actio}:
     patch:
       tags:
         - Customer Groups
@@ -17572,7 +17579,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /customergroups/action/{actio}:
+  /api/store/customergroups/action/{actio}:
     put:
       tags:
         - Customer Groups
@@ -17630,7 +17637,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /paymentmethods:
+  /api/store/paymentmethods:
     get:
       tags:
         - Payment Methods
@@ -17910,7 +17917,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /paymentmethods/{id}:
+  /api/store/paymentmethods/{id}:
     get:
       tags:
         - Payment Methods
@@ -18039,7 +18046,7 @@ paths:
           content:
             application/json:
               schema: null
-  /paymentmethods/{id}/action/{action}:
+  /api/store/paymentmethods/{id}/action/{action}:
     patch:
       tags:
         - Payment Methods
@@ -18120,7 +18127,7 @@ paths:
                     items:
                       type: string
                       example: An error occurred
-  /paymentmethods/action/{action}:
+  /api/store/paymentmethods/action/{action}:
     put:
       tags:
         - Payment Methods
@@ -18178,7 +18185,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /settings/get/all-item/count:
+  /api/store/settings/get/all-item/count:
     get:
       tags:
         - Settings
@@ -18274,7 +18281,7 @@ paths:
                     items:
                       type: string
                       example: Exception trace information
-  /settings/fill/bulk/method:
+  /api/store/settings/fill/bulk/method:
     post:
       tags:
         - Settings
