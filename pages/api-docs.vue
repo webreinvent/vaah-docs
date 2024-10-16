@@ -13,6 +13,7 @@ if (process.client) {
     spec: {
       url: `${baseUrl}/vaahstore-apis.yaml`, // Path to your OpenAPI spec file
     },
+    hideDownloadButton: true
   };
 }
 </script>

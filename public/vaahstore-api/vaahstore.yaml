@@ -17,10 +17,17 @@ servers:
 security:
   - bearerAuth: []
   - basicAuth: []
+
 tags:
   - name: Authentication
     description: Provide all the required endpoints to create an account and authorize yourself.
       Ensure that you change the base URL to `http://127.0.0.1:8000/api/` for all authentication-related requests.
+  - name: Taxonomies
+    description: |
+      Everything about Taxonomies in VaahStore.
+      From here, you can get the taxonomy ID used in VaahStore for various purposes, such as managing statuses.
+      Each CRUD operation has its own associated statuses; for instance, the store entity has specific statuses like `store-status`.
+      You can retrieve all the statuses associated with the store CRUD operations, allowing for better management and understanding of the state of each store.
   - name: Stores
     description: Everything about Stores
   - name: Products
@@ -77,6 +84,9 @@ paths:
     $ref: './authentication/signup.yaml'  # Reference to the stores file
   '/signin':
     $ref: './authentication/signin.yaml'  # Reference to the stores file
+
+  '/taxonomies':
+    $ref: './taxonomies/index.yaml'  # Reference to the taxonomies file
 
   '/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
