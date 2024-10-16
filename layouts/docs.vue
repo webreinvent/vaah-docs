@@ -12,8 +12,8 @@ const navigation = computed(() => {
 
   if(n.at(0)?.children) {
     return n.at(0)?.children.map((item) => {
-      if(item._path === '/vaahstore/api-docs') {
-        return {...item, _path: '/api-docs'}
+      if(item._path === '/vaahstore/api') {
+        return {...item, _path: '/vaahstore/api'}
       }
       return item
     })
