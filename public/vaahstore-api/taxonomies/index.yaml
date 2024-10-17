@@ -1,0 +1,81 @@
+get:
+  tags:
+    - Taxonomies
+  summary: Get list of taxonomies
+  description: Returns a list of taxonomies with various filters such as sorting, activity, trashed, search, and type filter.
+  parameters:
+    - in: query
+      name: filter
+      required: false
+      schema:
+        type: object
+        properties:
+          sorted:
+            type: string
+            description: Sort by specific field.
+          active:
+            type: boolean
+            description: Filter by active/inactive status.
+          trashed:
+            type: boolean
+            description: Filter by trashed/not trashed status.
+          search:
+            type: string
+            description: Search by keyword.
+          type:
+            type: string
+            description: Filter by taxonomy type.
+      style: deepObject
+    - in: query
+      name: rows
+      required: false
+      schema:
+        type: integer
+        description: Number of rows per page for pagination.
+      example: 10
+  responses:
+    '200':
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                description: Paginated list of taxonomies
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    parent:
+                      type: object
+                      description: Parent taxonomy
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                    type:
+                      type: object
+                      description: Taxonomy type
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                    is_active:
+                      type: boolean
+                    deleted_at:
+                      type: string
+                      format: date-time
+    '400':
+      description: Invalid request
+    '500':
+      description: Server error

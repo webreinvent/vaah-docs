@@ -34,6 +34,7 @@ post:
                 required:
                   - vendor
                   - can_update
+                  - status_notes
                 properties:
                   vendor:
                     type: object
@@ -66,6 +67,7 @@ post:
                     type: string
                     description: Optional notes about the vendor status.
                     example: "Vendor approved."
+                    nullable: true
 
   responses:
     200:
@@ -86,7 +88,7 @@ post:
               data:
                 type: object
                 description: The product data.
-                additionalProperties: true
+                '$ref': '../vaahstore.yaml#/components/schemas/Product'
     400:
       description: Bad Request, validation errors occurred.
       content:
