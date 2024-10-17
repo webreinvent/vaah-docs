@@ -1,7 +1,0 @@
-post:
-  summary: Customer Signup
-  description: This endpoint allows to [signup](#tag/customers/POST/users) as a cutomer in VaahStore.
-  operationId: postSignUp
-  tags:
-    - Authentication
-
