@@ -1,7 +1,7 @@
 post:
   summary: User Signin
   description: |
-    This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/customers/POST/users) as a cutomer in VaahStore
+    This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/customers/POST/api/store/users) as a cutomer in VaahStore
   operationId: postSignIn
   tags:
     - Authentication

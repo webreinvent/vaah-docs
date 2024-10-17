@@ -3,7 +3,7 @@ info:
   title: VaahStore
   description: |
     VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
-        To get started, [sign in here](#tag/authentication/POST/signin).
+        To get started, [sign in here](#tag/authentication/POST/api/signin).
     ### Note:
         Before testing any requests, make sure to replace the URL placeholder (`{your_url}`) with your actual URL in the server configuration.
 
@@ -13,8 +13,9 @@ info:
               GET `{Your Base URL}`/api/`{path}`
 
     ## Resources:
-       For more information and updates, visit [VaahStore on GitHub](https://github.com/webreinvent).
-  version: 1.0.0
+       For more information and updates, visit <a href="https://github.com/webreinvent" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/github.png" alt="GitHub" style="vertical-align: middle; margin-right: 4px;"/></a>.
+
+  version: "Under Development"
   contact:
     name: Webreinvent Team
     url: https://webreinvent.com/
