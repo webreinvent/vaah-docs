@@ -199,6 +199,10 @@ paths:
     $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
   '/api/store/carts/get-order-details/{order_id}':
     $ref: './carts/getOrder.yaml'  # Reference to get order file
+  '/api/store/carts/{id}/action/{action}':
+    $ref: './carts/itemAction.yaml'  # Reference to cart item action file
+  '/api/store/carts/action/{action}':
+    $ref: './carts/listAction.yaml'  # Reference to cart list actions file
 
   '/api/store/orders':
     $ref: './orders/index.yaml'  # Reference to order file

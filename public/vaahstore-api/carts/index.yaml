@@ -36,3 +36,107 @@ get:
       content:
         application/json:
           schema:
+
+delete:
+  tags:
+    - Carts
+  summary: Delete list of carts
+  description: This endpoint allows you to delete multiple carts records based on the provided input.
+  operationId: deleteCartsList
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - type
+            - items
+          properties:
+            type:
+              type: string
+              description: Action type (e.g., "delete").
+              example: "delete"
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the carts to be deleted.
+                    example: 1  # Example for a single item
+              example: # Example for the entire array
+                - id: 1
+                - id: 2
+                - id: 3
+  responses:
+    '200':
+      description: Action was successful and the specified carts have been deleted.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Action was successful."
+    '403':
+      description: The user does not have permission to perform this action.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Permission denied for action 'can-update-module'."
+    '400':
+      description: Validation failed for the input parameters.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              failed:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Action type is required."
+                  - "Select items."
+
+
+    '500':
+      description: An unexpected error occurred during the deletion process.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An unexpected error occurred."
