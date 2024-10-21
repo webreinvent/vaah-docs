@@ -227,63 +227,50 @@ public function getChartData(Request $request)
 ```php
 public static function getChartData(Request $request)
 {
-    // Extract model namespace and other dynamic parameters from the request
-    $date_column = () // Default to 'created_at'
-    $count = (); // Default to 'COUNT'
-    $rows = (); // Default to all rows
-    $group_by_column = (); // Default to grouping by date/month
+    // Extract dynamic parameters from the request
+    $date_column = 'created_at'; // Default column
+    $count = 'COUNT'; // Default count function
+    $group_by_column = 'DATE_FORMAT(created_at, "%m")'; // Group by month
 
-    
-
-    // Fetch data dynamically from the specified model
-    $chart_data = {model_name_space}::selectRaw("$group_by_column as month") // Dynamically apply group-by column for month
-        ->selectRaw("$count($date_column) as total_count") // Use COUNT on the date column
+    // Fetch data from the specified model
+    $chart_data = {model_name_space}::selectRaw("$group_by_column as month")
+        ->selectRaw("$count($date_column) as total_count")
         ->selectRaw("SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active_count")
-        ->groupBy('month') // Group by month
-        ->orderBy('month') // Order by month
+        ->groupBy('month')
+        ->orderBy('month')
         ->get();
 
-    // Prepare the data for the chart in the desired format
-    
+    // Prepare data for the chart
     $data = [
-            [
-                'name' => 'Total Customers', // Optional: Name for the series
-                // Initialize an array for 12 months with zero counts
-                'data' => array_fill(0, 12, 0), 
-            ],
-            [
-                'name' => 'Active Customers', // Optional: Name for the series
-                // Initialize an array for 12 months with zero counts
-                'data' => array_fill(0, 12, 0), 
-            ]
-        ];
-        $labels = [];
-        for ($month = 1; $month <= 12; $month++) {
-            $labels[] = date('F', strtotime("2024-$month-01")); // Get month name only
-        }
-        // Populate the data arrays with the actual counts from the fetched data
-        foreach ($chart_data as $item) {
-            $month_index = (int)$item->month - 1; // Get month index (0-11)
-            $data[0]['data'][$month_index] = $item->count; // Total Customers
-            $data[1]['data'][$month_index] = $item->active_count; // Active Customers
-        }
-    // Return the data along with dynamic chart options
+        ['name' => 'Customers', 'data' => array_fill(0, 12, 0)],
+        ['name' => 'Active Customers', 'data' => array_fill(0, 12, 0)],
+    ];
+
+    $labels = [];
+    for ($month = 1; $month <= 12; $month++) {
+        $labels[] = date('F', strtotime("2024-$month-01")); // Month names
+    }
+
+    // Populate data arrays
+    foreach ($chart_data as $item) {
+        $month_index = (int)$item->month - 1;
+        $data[0]['data'][$month_index] = $item->total_count;
+        $data[1]['data'][$month_index] = $item->active_count;
+    }
+
+    // Return the data and chart options
     return [
         'data' => [
-                'series' => $data, // Use 'series' key to match the specified format
-                // Labels for the x-axis
-                'labels' => $labels, 
-            ],
+            'series' => $data,
+            'labels' => $labels,
+        ],
         'newOptions' => [
-            'chart' => [
-                'id' => 'dynamic-chart', // Dynamic chart ID
-            ],
-            'xaxis' => [
-                    'type' => 'month', // Specify x-axis type if using timestamps/ months
-                ],
+            'chart' => ['id' => 'dynamic-chart'],
+            'xaxis' => ['type' => 'category'],
         ],
     ];
 }
+
 
 ```
 
