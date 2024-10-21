@@ -236,8 +236,8 @@ public static function getChartData(Request $request)
 {
     // Extract model namespace and other dynamic parameters from the request
     $date_column = () // Default to 'created_at'
-    $date_column = (); // Default to 'COUNT'
-    $date_column = (); // Default to all rows
+    $count = (); // Default to 'COUNT'
+    $rows = (); // Default to all rows
     $group_by_column = (); // Default to grouping by date
 
     
