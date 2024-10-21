@@ -23,6 +23,9 @@ const props = defineProps({
   },
   stacked: false // Default to false if not provided
   ,
+  stackType: {
+    type: String,
+    default: '',},
   title: {
     type: String,
     default: 'Monthly Customers Data' // Default title if not provided
@@ -66,6 +69,18 @@ const chartOptions = ref({
       enabled: false
     },
     stacked: props.stacked, // Use the stacked prop dynamically
+    stackType: props.stackType, // Use the stacked prop dynamically
+  },
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      // Set stacking type based on props
+      stacked: props.stacked,
+      // Setting the type of stacking
+      dataLabels: {
+        position: 'top' // Position of data labels
+      }
+    },
   },
   xaxis: {
     categories: props.chartOptions.categories || []

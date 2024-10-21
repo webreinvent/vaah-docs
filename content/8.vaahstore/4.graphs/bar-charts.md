@@ -20,7 +20,7 @@ data: [30, 40, 45, 50, 49, 60, 70]
 },
 
 {
-name: 'New Customers',
+name: 'Active Customers',
 data: [10, 20, 30, 40, 50, 60, 70]
 }
 
@@ -35,22 +35,38 @@ data: [30, 40, 45, 50, 49, 60, 70]
 
 ]
 
+data_pie: [30, 40, 45, 50, 49, 60, 70]
+
 data_axis: {
-categories: ['January', 'as', 'March', 'April', 'May', 'June', 'July']
+categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+}
+
+data_labels: {
+labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 }
 
 
 ---
 
-## Customers Count Over A Period
+## Overview
+The Bar Chart is an essential visualization tool for displaying categorical data. In this documentation, we will 
+focus on how to effectively represent customer count data using a bar chart, allowing for easy comparison across different time periods or categories.
 
-::preview{component='<CustomersChart/>' path='./components/store/CustomersChart.vue' }
+## Reusable  Components
+The bar chart is designed as a reusable component. This means you can easily adapt it for different
+datasets by changing the naming conventions and data inputs according to your CRUD operations.
+
+
+## Customers Count Over A Period In Bar Chart Component
+
+::preview{component='<CustomersCountBarChart/>' path='./components/store/CustomersChart.vue' }
 
 <div class="flex  justify-center items-center">
 
-:customers-chart{type='bar' title='Simple Bar Chart' :chartSeries="data_bar"}
+:customers-count-bar-chart{type='bar' title='Simple Bar Chart' :chartSeries="data_bar"}
 
-:customers-chart{type='line' title='Monthly Customer Data Line Chart' height=300 :chartSeries="data_bar"}
+
+:customers-count-bar-chart{type='line' :chartOptions="data_axis" title='Monthly Customer Data Line Chart' height=300 :chartSeries="data_bar"}
 
 </div>
 
@@ -69,12 +85,13 @@ categories: ['January', 'as', 'March', 'April', 'May', 'June', 'July']
 
 ```vue
 
+
 <template>
   <div>
     <apexchart
       :type="chartType"
       :options="chartOptions"
-      :series="chartSeries"
+      :series="chartSeries ?? []"
       :height="height"
       :width="width"
 
@@ -89,21 +106,20 @@ import { ref, defineProps } from 'vue'
 const props = defineProps({
   type: {
     type: String,
-    default: 'bar' // Default to 'bar' if no type is provided
   },
-  stacked: false // Default to false if not provided
+  stacked: false 
   ,
-  title: {
+  stackType: {
     type: String,
-    default: 'Monthly Customers Data' // Default title if not provided
+    },
+  title: {
+    type: String
   },
   height: {
-    type: Number,
-    default: 300 // Default height if not provided
+    type: Number
   },
   width: {
     type: Number,
-    default: 400 // Default width if not provided
   },
   chartOptions: {
     type: Object,
@@ -115,7 +131,7 @@ const props = defineProps({
   },
   colors: {
     type: Array,
-    default: () => ['#008FFB', '#00E396', '#FEB019'],
+    default: () => [],
   },
   labels: {
     type: Array,
@@ -123,7 +139,6 @@ const props = defineProps({
   }
 })
 
-// Chart type prop
 const chartType = ref(props.type)
 
 // Chart options using props to make it dynamic
@@ -136,13 +151,23 @@ const chartOptions = ref({
       enabled: false
     },
     stacked: props.stacked, 
+    stackType: props.stackType,
+  },
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      stacked: props.stacked,
+      dataLabels: {
+        position: 'top' 
+      }
+    },
   },
   xaxis: {
     categories: props.chartOptions.categories || []
   },
   labels: props.labels, 
   title: {
-    text: props.title,
+    text: props.title, 
     align: 'center'
   },
   dataLabels: {
@@ -158,6 +183,7 @@ const chartOptions = ref({
 </style>
 
 
+
 ```
 
 
@@ -166,7 +192,7 @@ const chartOptions = ref({
 
 #expandCode
 
-@@@ ./components/store/CustomersChart.vue
+@@@ ./components/store/CustomersCountBarChart.vue
 
 ::
 
@@ -228,13 +254,13 @@ public static function getChartData(Request $request)
     $data = $chart_data->map(function ($item) {
         return [
             'x' => $item->date, // Date as X-axis
-            'y' => $item->count, // Count as Y-axis
+            'y' => [$item->total_count, $item->active_count] // specified format for simple bar and stcked, grouped bar chart
         ];
     });
 
     // Return the data along with dynamic chart options
     return [
-        'data' => $data,
+        'data' => $data, // Use 'data' key to match the specified format
         'newOptions' => [
             'chart' => [
                 'id' => 'dynamic-chart', // Dynamic chart ID
@@ -248,50 +274,51 @@ public static function getChartData(Request $request)
 
 ```
 
-## Grouped
+### Grouped
 
-::preview{component='<CustomersChart />'}
+::preview{component='<CustomersCountBarChart />'}
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:customers-chart{type='bar' title='Grouped Bar Chart' height=300 :chartOptions="data_axis" :chartSeries="data_2"}
+:customers-count-bar-chart{type='bar' width=600 title='Grouped Bar Chart' height=300 :chartOptions="data_axis" :chartSeries="data_2"}
 
 </div>
 
 #shortCode
 
 ```vue
-<CustomersCountBarChart type="bar" title='Grouped Bar Chart' height=300 :chartSeries="[
+<CustomersCountBarChart type="bar" title='Grouped Bar Chart' width=600 height=300 :chartSeries="[
 { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] },
-{ name: 'New Customers', data: [10, 20, 30, 40, 50, 60, 70] }
+{ name: 'Active Customers', data: [10, 20, 30, 40, 50, 60, 70] }
 ]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
 ```
 
 ::
 
-## Stacked
+### Stacked
 
-::preview{component='<CustomersChart />'}
+::preview{component='<CustomersCountBarChart />'}
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:customers-chart{type='bar' title='Stacked Bar Chart' height=300 stacked :chartOptions="data_axis" :chartSeries="data_2"}
+:customers-count-bar-chart{type='bar' title='100% Stacked Bar Chart' width=300 stacked stackType='100%'  :chartOptions="data_axis" :chartSeries="data_2"}
+:customers-count-bar-chart{type='bar' title='Stacked Bar Chart' stacked  width=300  :chartOptions="data_axis" :chartSeries="data_2"}
 
 </div>
 
 #shortCode
 
 ```vue
-<CustomersCountBarChart type="bar" title='Stacked Bar Chart' height=300 stacked :chartSeries="[
+<CustomersCountBarChart type="bar" title='Stacked Bar Chart' width=600 height=300 stacked stackType='100%' :chartSeries="[
 { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] },
-{ name: 'New Customers', data: [10, 20, 30, 40, 50, 60, 70] }
+{ name: 'Active Customers', data: [10, 20, 30, 40, 50, 60, 70] }
 ]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
 ```
 
 ::
 
 
-
+>Note-> For Read More About Bar Chart [Visit Here](https://apexcharts.com/){_target_blank}.
 
 ## Props
 
