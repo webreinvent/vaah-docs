@@ -245,11 +245,16 @@ public static function getChartData(Request $request)
         ['name' => 'Customers', 'data' => array_fill(0, 12, 0)],
         ['name' => 'Active Customers', 'data' => array_fill(0, 12, 0)],
     ];
-
+    
     $labels = [];
     for ($month = 1; $month <= 12; $month++) {
         $labels[] = date('F', strtotime("2024-$month-01")); // Month names
     }
+
+// OR Get month names irrespective of year
+//    for ($month = 1; $month <= 12; $month++) {
+//         $labels[] = date('F', mktime(0, 0, 0, $month, 1)); 
+//        }
 
     // Populate data arrays
     foreach ($chart_data as $item) {
@@ -257,7 +262,6 @@ public static function getChartData(Request $request)
         $data[0]['data'][$month_index] = $item->total_count;
         $data[1]['data'][$month_index] = $item->active_count;
     }
-
     // Return the data and chart options
     return [
         'data' => [
