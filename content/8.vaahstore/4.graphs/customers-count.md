@@ -1,335 +1,82 @@
+---
+data: [
+{
+name: 'Orders',
+data: [30, 40, 45, 50, 49, 60, 70]
+},
+
+{
+name: 'New Orders',
+data: [10, 20, 30, 40, 50, 60, 70]
+}
+
+]
+
+
+data_2: [
+{
+name: 'Customers',
+data: [30, 40, 45, 50, 49, 60, 70]
+},
+
+{
+name: 'New Customers',
+data: [10, 20, 30, 40, 50, 60, 70]
+}
+
+]
+
+
+data_bar: [
+{
+name: 'Customers',
+data: [30, 40, 45, 50, 49, 60, 70]
+}
+
+]
+
+data_axis: {
+categories: ['January', 'as', 'March', 'April', 'May', 'June', 'July']
+}
+
+
+---
+
 ## Customers Count Over A Period
 
 ::preview{component='<CustomersChart/>' path='./components/store/CustomersChart.vue' }
 
 <div class="flex  justify-center items-center">
 
-:customers-chart{type='bar'}
+:customers-chart{type='bar' title='Simple Bar Chart' :chartSeries="data_bar"}
 
-:customers-chart{type='bar' title='Stacked Monthly Customer Data' height=300  stacked}
+:customers-chart{type='line' title='Monthly Customer Data Line Chart' height=300 :chartSeries="data_bar"}
 
 </div>
 
-:customers-chart{type='line' title='Monthly Customer Data Line Chart'}
 
 #shortCode
 
 ```vue
 
-<CustomersCountBarChart type="bar"/>
-<CustomersCountBarChart type="line" title=' Monthly Customer Data Line Chart' />
-<CustomersCountBarChart type="bar" title='Stacked Monthly Customer Data' height=300 stacked />
-
-
+<CustomersCountBarChart type="bar" title='Simple Bar Chart'  :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }"/>
+<CustomersCountBarChart type="line" title='Simple Line Chart'  :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }"
+                        :chartSeries="[ { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] }]" />
 ```
-
 
 
 #code
 
-[comment]: <> (```vue)
-
-[comment]: <> (<template>)
-
-[comment]: <> (  <div>)
-
-[comment]: <> (    <apexchart)
-
-[comment]: <> (      :type="chartType")
-
-[comment]: <> (      :options="chartOptions")
-
-[comment]: <> (      :series="chartSeries")
-
-[comment]: <> (      height="300")
-
-[comment]: <> (      width="400")
-
-[comment]: <> (    />)
-
-[comment]: <> (  </div>)
-
-[comment]: <> (</template>)
-
-[comment]: <> (<script setup>)
-
-[comment]: <> (import { ref, defineProps } from 'vue')
-
-[comment]: <> (// Define props to make the component dynamic)
-
-[comment]: <> (const props = defineProps&#40;{)
-
-[comment]: <> (  type: {)
-
-[comment]: <> (    type: String,)
-
-[comment]: <> (    default: 'bar' // Default to 'bar' if no type is provided)
-
-[comment]: <> (  })
-
-[comment]: <> (}&#41;)
-
-[comment]: <> (// Chart type prop)
-
-[comment]: <> (const chartType = ref&#40;props.type&#41;)
-
-[comment]: <> (// Chart options for the chart)
-
-[comment]: <> (const chartOptions = ref&#40;{)
-
-[comment]: <> (  chart: {)
-
-[comment]: <> (    toolbar: {)
-
-[comment]: <> (      show: true)
-
-[comment]: <> (    },)
-
-[comment]: <> (    zoom: {)
-
-[comment]: <> (      enabled: false)
-
-[comment]: <> (    })
-
-[comment]: <> (  },)
-
-[comment]: <> (  xaxis: {)
-
-[comment]: <> (    categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July'])
-
-[comment]: <> (  },)
-
-[comment]: <> (  title: {)
-
-[comment]: <> (    text: 'Monthly Customers Data',)
-
-[comment]: <> (    align: 'center')
-
-[comment]: <> (  },)
-
-[comment]: <> (  dataLabels: {)
-
-[comment]: <> (    enabled: true)
-
-[comment]: <> (  },)
-
-[comment]: <> (  colors: ['#008FFB', '#00E396', '#FEB019'])
-
-[comment]: <> (}&#41;)
-
-[comment]: <> (// Data series for the chart)
-
-[comment]: <> (const chartSeries = ref&#40;[)
-
-[comment]: <> (  {)
-
-[comment]: <> (    name: 'Old Customers',)
-
-[comment]: <> (    data: [30, 40, 45, 50, 49, 60, 70])
-
-[comment]: <> (  },)
-
-[comment]: <> (  {)
-
-[comment]: <> (    name: 'New Customers',)
-
-[comment]: <> (    data: [20, 30, 25, 40, 45, 55, 65])
-
-[comment]: <> (  })
-
-[comment]: <> (]&#41;)
-
-[comment]: <> (</script>)
-
-[comment]: <> (<style scoped>)
-
-[comment]: <> (/* Add any component-specific styles here */)
-
-[comment]: <> (</style>)
-
-[comment]: <> (```)
-
-[comment]: <> (```php)
-
-[comment]: <> (// routes/api.php)
-
-[comment]: <> (use App\Http\Controllers\YourController;)
-
-[comment]: <> (Route::get&#40;'/charts/data', [YourController::class, 'getChartData']&#41;;)
-
-[comment]: <> (```)
-
-[comment]: <> (```php)
-
-[comment]: <> (// http/Controllers/Your_Controller)
-
-[comment]: <> (public function getChartData&#40;Request $request&#41;)
-
-[comment]: <> (    {)
-
-[comment]: <> (        try{)
-
-[comment]: <> (            return {model_namespace}::getChartData&#40;$request&#41;;)
-
-[comment]: <> (        }catch &#40;\Exception $e&#41;{)
-
-[comment]: <> (            $response = [];)
-
-[comment]: <> (            $response['success'] = false;)
-
-[comment]: <> (            if&#40;env&#40;'APP_DEBUG'&#41;&#41;{)
-
-[comment]: <> (                $response['errors'][] = $e->getMessage&#40;&#41;;)
-
-[comment]: <> (                $response['hint'] = $e->getTrace&#40;&#41;;)
-
-[comment]: <> (            } else{)
-
-[comment]: <> (                $response['errors'][] = trans&#40;"vaahcms-general.something_went_wrong"&#41;;)
-
-[comment]: <> (            })
-
-[comment]: <> (            return $response;)
-
-[comment]: <> (        })
-
-[comment]: <> (    })
-
-[comment]: <> (```)
-
-[comment]: <> (```php)
-
-[comment]: <> (public static function getChartData&#40;Request $request&#41;)
-
-[comment]: <> (    {)
-
-[comment]: <> (        // Fetch customers grouped by date and count without filtering)
-
-[comment]: <> (        $customer_chart_data = model_namespace::select&#40;'created_at'&#41; // Select the created_at field)
-
-[comment]: <> (        ->selectRaw&#40;'DATE&#40;created_at&#41; as date'&#41; // Extracting just the date part)
-
-[comment]: <> (        ->selectRaw&#40;'COUNT&#40;*&#41; as count'&#41; // Counting customers for each date)
-
-[comment]: <> (        ->groupBy&#40;'date'&#41; // Group by date)
-
-[comment]: <> (        ->orderBy&#40;'date'&#41; // Order by date)
-
-[comment]: <> (        ->get&#40;&#41;;)
-
-
-[comment]: <> (        // Prepare the data for the chart in the desired format)
-
-[comment]: <> (        $data = $customer_chart_data->map&#40;function &#40;$item&#41; {)
-
-[comment]: <> (            return [)
-
-[comment]: <> (                'x' => $item->date, // Format the date as a string)
-
-[comment]: <> (                'y' => $item->count, // Count for y-axis)
-
-[comment]: <> (            ];)
-
-[comment]: <> (        }&#41;;)
-
-[comment]: <> (        return [)
-
-[comment]: <> (            'data' => $data, // Use 'data' key to match the specified format)
-
-[comment]: <> (            'newOptions' => [)
-
-[comment]: <> (                'chart' => [)
-
-[comment]: <> (                    'id' => 'customer-bar-chart',)
-
-[comment]: <> (                ],)
-
-[comment]: <> (                'xaxis' => [)
-
-[comment]: <> (                    'type' => 'datetime', // Specify x-axis type if using timestamps)
-
-[comment]: <> (                ],)
-
-[comment]: <> (            ],)
-
-[comment]: <> (        ];)
-
-
-[comment]: <> (    })
-
-[comment]: <> (```)
-
-```php
-public static function getChartData(Request $request)
-{
-    // Extract model namespace and other dynamic parameters from the request
-    $modelNamespace = $request->input('model_namespace'); // e.g., "App\\Models\\User"
-    $dateColumn = $request->input('date_column', 'created_at'); // Default to 'created_at'
-    $aggregateFunction = $request->input('aggregate_function', 'COUNT'); // Default to 'COUNT'
-    $aggregateColumn = $request->input('aggregate_column', '*'); // Default to all rows
-    $groupByColumn = $request->input('group_by_column', 'DATE(' . $dateColumn . ')'); // Default to grouping by date
-
-    // Validate the model namespace
-    if (!class_exists($modelNamespace)) {
-        return [
-            'success' => false,
-            'errors' => ['Invalid model namespace provided.']
-        ];
-    }
-
-    // Fetch data dynamically from the specified model
-    $chartData = $modelNamespace::select($dateColumn)
-        ->selectRaw("$groupByColumn as date") // Dynamically apply group-by column
-        ->selectRaw("$aggregateFunction($aggregateColumn) as count") // Dynamic aggregate function and column
-        ->groupBy('date') // Group by date (or other field passed)
-        ->orderBy('date') // Order by date
-        ->get();
-
-    // Prepare the data for the chart in the desired format
-    $data = $chartData->map(function ($item) {
-        return [
-            'x' => $item->date, // Date as X-axis
-            'y' => $item->count, // Count as Y-axis
-        ];
-    });
-
-    // Return the data along with dynamic chart options
-    return [
-        'data' => $data,
-        'newOptions' => [
-            'chart' => [
-                'id' => 'dynamic-chart', // Dynamic chart ID
-            ],
-            'xaxis' => [
-                'type' => 'datetime', // Set x-axis type based on date
-            ],
-        ],
-    ];
-}
-
-```
-
-[comment]: <> (@@@ ./components/store/CustomersChart.vue)
-
-
-
-#expandCode
-
-@@@ ./components/store/CustomersChart.vue
-
-::
-
-**VUE Component**
-
 ```vue
+
 <template>
   <div>
     <apexchart
       :type="chartType"
       :options="chartOptions"
       :series="chartSeries"
-      height="300"
-      width="400"
+      :height="height"
+      :width="width"
 
     />
   </div>
@@ -349,13 +96,37 @@ const props = defineProps({
   title: {
     type: String,
     default: 'Monthly Customers Data' // Default title if not provided
+  },
+  height: {
+    type: Number,
+    default: 300 // Default height if not provided
+  },
+  width: {
+    type: Number,
+    default: 400 // Default width if not provided
+  },
+  chartOptions: {
+    type: Object,
+    default: () => ({}),
+  },
+  chartSeries: {
+    type: Array,
+    required: true,
+  },
+  colors: {
+    type: Array,
+    default: () => ['#008FFB', '#00E396', '#FEB019'],
+  },
+  labels: {
+    type: Array,
+    default: () => [],
   }
 })
 
 // Chart type prop
 const chartType = ref(props.type)
 
-// Chart options for the chart
+// Chart options using props to make it dynamic
 const chartOptions = ref({
   chart: {
     toolbar: {
@@ -364,40 +135,41 @@ const chartOptions = ref({
     zoom: {
       enabled: false
     },
-    stacked: props.stacked, // Use the stacked prop
-
+    stacked: props.stacked, 
   },
   xaxis: {
-    categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+    categories: props.chartOptions.categories || []
   },
+  labels: props.labels, 
   title: {
-    text: props.title, // Use the title prop
+    text: props.title,
     align: 'center'
   },
   dataLabels: {
     enabled: true
   },
-  colors: ['#008FFB', '#00E396', '#FEB019']
-})
+  colors: props.colors, 
+});
 
-// Data series for the chart
-const chartSeries = ref([
-  {
-    name: 'Customers',
-    data: [30, 40, 45, 50, 49, 60, 70]
-  },
-  {
-    name: 'New Customers',
-    data: [2,4,6,8,10,12,14]
-  }
-])
 </script>
 
 <style scoped>
 /* Add any component-specific styles here */
 </style>
 
+
 ```
+
+
+
+
+
+#expandCode
+
+@@@ ./components/store/CustomersChart.vue
+
+::
+
 
 **API Endpoint**
 
@@ -476,13 +248,50 @@ public static function getChartData(Request $request)
 
 ```
 
+## Grouped
 
+::preview{component='<CustomersChart />'}
 
+<div class="flex flex-wrap gap-3 justify-center items-center">
 
-
-[comment]: <> (:customers-chart{type='bar' title='Stacked Monthly Customer Data' height=300  stacked})
+:customers-chart{type='bar' title='Grouped Bar Chart' height=300 :chartOptions="data_axis" :chartSeries="data_2"}
 
 </div>
+
+#shortCode
+
+```vue
+<CustomersCountBarChart type="bar" title='Grouped Bar Chart' height=300 :chartSeries="[
+{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] },
+{ name: 'New Customers', data: [10, 20, 30, 40, 50, 60, 70] }
+]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
+```
+
+::
+
+## Stacked
+
+::preview{component='<CustomersChart />'}
+
+<div class="flex flex-wrap gap-3 justify-center items-center">
+
+:customers-chart{type='bar' title='Stacked Bar Chart' height=300 stacked :chartOptions="data_axis" :chartSeries="data_2"}
+
+</div>
+
+#shortCode
+
+```vue
+<CustomersCountBarChart type="bar" title='Stacked Bar Chart' height=300 stacked :chartSeries="[
+{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] },
+{ name: 'New Customers', data: [10, 20, 30, 40, 50, 60, 70] }
+]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
+```
+
+::
+
+
+
 
 ## Props
 
