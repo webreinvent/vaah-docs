@@ -275,7 +275,7 @@
 
   const { copy, copied } = useClipboard({ source });
 
-  const preview_random_id = ref();
+  const preview_random_id = ref(useRandomUUID());
 
   const copyCode = () => {
     const item = document.querySelector(`[data-path="${props.path}"]`);
