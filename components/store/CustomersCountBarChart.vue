@@ -19,24 +19,24 @@ import { ref, defineProps } from 'vue'
 const props = defineProps({
   type: {
     type: String,
-    default: 'bar' // Default to 'bar' if no type is provided
+    default: 'bar'
   },
-  stacked: false // Default to false if not provided
+  stacked: false
   ,
   stackType: {
     type: String,
-    default: '',},
+    },
   title: {
     type: String,
-    default: 'Monthly Customers Data' // Default title if not provided
+    default: 'Bar Chart'
   },
   height: {
-    type: Number,
-    default: 300 // Default height if not provided
+    type: [Number, String],
+    default: 'auto'
   },
   width: {
     type: Number,
-    default: 400 // Default width if not provided
+    default: '100%'
   },
   chartOptions: {
     type: Object,
@@ -48,12 +48,24 @@ const props = defineProps({
   },
   colors: {
     type: Array,
-    default: () => ['#008FFB', '#00E396', '#FEB019'],
+
   },
   labels: {
     type: Array,
-    default: () => [],
-  }
+
+  },
+  titleAlign: {
+    type: String,
+    default: 'center'
+  },
+  horizontal: {
+    type: Boolean,
+    default: false,
+  },
+  dataLabelsPosition: {
+    type: String,
+    default: 'top',
+  },
 })
 
 // Chart type prop
@@ -68,32 +80,30 @@ const chartOptions = ref({
     zoom: {
       enabled: false
     },
-    stacked: props.stacked, // Use the stacked prop dynamically
-    stackType: props.stackType, // Use the stacked prop dynamically
+    stacked: props.stacked,
+    stackType: props.stackType,
   },
   plotOptions: {
     bar: {
-      horizontal: false,
-      // Set stacking type based on props
+      horizontal: props.horizontal,
       stacked: props.stacked,
-      // Setting the type of stacking
       dataLabels: {
-        position: 'top' // Position of data labels
-      }
+        position: props.dataLabelsPosition,
+      },
     },
   },
   xaxis: {
     categories: props.chartOptions.categories || []
   },
-  labels: props.labels, // Dynamically bind labels
+  labels: props.labels || [],
   title: {
-    text: props.title, // Use the title prop
-    align: 'center'
+    text: props.title,
+    align: props.titleAlign
   },
   dataLabels: {
     enabled: true
   },
-  colors: props.colors, // Use the colors prop
+  colors: props.colors,
 });
 
 </script>
