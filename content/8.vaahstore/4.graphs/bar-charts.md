@@ -61,7 +61,7 @@ datasets by changing the naming conventions and data inputs according to your CR
 
 ```vue
 
-<CustomersCountBarChart type="bar" title='Customer Count Bar Chart' height=400 width=600 titleAlign='center' :chartSeries="[{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,54,34,56,78] }]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}"/>
+<CustomersCountBarChart type="bar" title='Customer Count Bar Chart' height=400 width=600 titleAlign='center' :chartSeries="[{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,54,34,56,78,30] }]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}"/>
 ```
 
 
@@ -275,7 +275,7 @@ import CustomersCountBarChart from "./CustomersCountBarChart";
 const store = useYourStore(); // Use the store
 // Fetch data when the component mounts
 onMounted(() => {
-  store.fetchCustomerCountChartDataAfter(); // Calls the method to fetch data
+  store.fetchCustomerCountChartData(); // Calls the method to fetch data
 });
 </script>
 
@@ -391,7 +391,7 @@ public static function fetchCustomerCountChartData(Request $request)
 <CustomersCountBarChart type="bar" title='Grouped Bar Chart' titleAlign='center' width=600 height=400 :chartSeries="[
 { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
 { name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
-]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
+]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" />
 ```
 
 ::
@@ -557,7 +557,7 @@ public static function getChartData(Request $request)
 <CustomersCountBarChart type="bar" title='Stacked Bar Chart' titleAlign='center' width=600 height=400 stacked :chartSeries="[
 { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
 { name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
-]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
+]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" />
 ```
 
 ::
