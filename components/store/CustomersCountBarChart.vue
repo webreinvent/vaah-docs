@@ -1,11 +1,10 @@
 <template>
   <div>
     <apexchart
-      :type="chartType"
       :options="chartOptions"
       :series="chartSeries"
-      :height="height"
-      :width="width"
+      v-bind="$attrs"
+
     />
   </div>
 </template>
@@ -13,12 +12,11 @@
 <script setup>
 import { ref, defineProps, watch } from 'vue';
 
+defineOptions({
+  inheritAttrs: false,
+})
 // Define props to make the component dynamic
 const props = defineProps({
-  type: {
-    type: String,
-    default: 'bar'
-  },
   stacked: {
     type: Boolean,
     default: false
@@ -30,14 +28,7 @@ const props = defineProps({
     type: String,
     default: 'Bar Chart'
   },
-  height: {
-    type: [Number, String],
-    default: 'auto'
-  },
-  width: {
-    type: [Number, String],
-    default: '100%'
-  },
+
   chartOptions: {
     type: Object,
     default: () => ({}),
@@ -46,64 +37,38 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  colors: {
-    type: Array,
-    default: () => [] // Ensure a default empty array
-  },
-  labels: {
-    type: Array,
-    default: () => [] // Ensure a default empty array
-  },
+
   titleAlign: {
     type: String,
     default: 'center'
   },
-  horizontal: {
-    type: Boolean,
-    default: false,
-  },
-  dataLabelsPosition: {
-    type: String,
-    default: 'top',
-  },
+
 });
 
-// Chart type prop
-const chartType = ref(props.type);
+
 
 // Chart options and series using refs to make them reactive
 const chartOptions = ref({
   chart: {
-    toolbar: {
-      show: true
-    },
-    zoom: {
-      enabled: false
-    },
     stacked: props.stacked,
     stackType: props.stackType,
   },
   plotOptions: {
-    bar: {
-      horizontal: props.horizontal,
-      stacked: props.stacked,
-      dataLabels: {
-        position: props.dataLabelsPosition,
-      },
+        bar: { },
     },
-  },
   xaxis: {
     categories: props.chartOptions.categories || []
   },
-  labels: props.labels,
+  yaxis: {
+    title: {
+      text: props.chartOptions.yaxisTitle || '', // Provide default Y-axis title
+    },
+  },
   title: {
     text: props.title,
     align: props.titleAlign
   },
-  dataLabels: {
-    enabled: true
-  },
-  colors: props.colors,
+
 });
 
 // Define chartSeries as a reactive ref
