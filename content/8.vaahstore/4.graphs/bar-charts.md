@@ -3,12 +3,12 @@
 customer_count_grouped: [
 {
 name: 'Customers',
-data: [30, 40, 45, 50, 49, 60, 70]
+data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100]
 },
 
 {
 name: 'Active Customers',
-data: [10, 20, 15, 30, 35, 40, 45]
+data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70]
 }
 
 ]
@@ -17,14 +17,14 @@ data: [10, 20, 15, 30, 35, 40, 45]
 customer_count_simple: [
 {
 name: 'Customers',
-data: [30, 40, 45, 50, 49, 60, 70]
+data: [30, 40, 45, 50, 49, 60, 70,54,34,56,78,30]
 }
 
 ]
 
 
 xaxis: {
-categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
 }
 
 data_labels: {
@@ -45,11 +45,40 @@ datasets by changing the naming conventions and data inputs according to your CR
 
 ## Customers Count Over A Period In Bar Chart Component
 
+The sample data will be in the following format:
+
+```
+{
+  "data": {
+    "chart_series": [
+      {
+        "data": [value1, value2, ...],  // Replace with actual values
+        "name": "Name 1"  // Replace with the actual name/value for this series
+      },
+      {
+        "data": [value3, value4, ...],  // Another series
+        "name": "Name 2"  // Name/value for this series
+      }
+      // Add more series as needed
+    ],
+    
+  }
+  "chart_options":{
+  "xaxis":{ 
+     "categories":["Label 1","Label 2","Label 3"] //e.g ["Jan","Feb",..]
+     "type":"string" //category-months
+    },
+  "chart":{}
+  }
+}
+
+```
+
 ::preview{component='<CustomersCountBarChart/>' path='./components/store/CustomersChart.vue' }
 
 <div class="flex  justify-center items-center">
 
-:customers-count-bar-chart{type='bar' title='Simple Bar Chart' width=600 :chartOptions="xaxis" :chartSeries="customer_count_simple"}
+:customers-count-bar-chart{type='bar' title='Customer Count Bar Chart' width=600 :chartOptions="xaxis" :chartSeries="customer_count_simple"}
 
 
 </div>
@@ -59,7 +88,7 @@ datasets by changing the naming conventions and data inputs according to your CR
 
 ```vue
 
-<CustomersCountBarChart type="bar" title='Simple Bar Chart' titleAlign='center' :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }"/>
+<CustomersCountBarChart type="bar" title='Customer Count Bar Chart' titleAlign='center' :chartSeries="[{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,54,34,56,78] }]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}"/>
 ```
 
 
@@ -71,16 +100,15 @@ datasets by changing the naming conventions and data inputs according to your CR
     <apexchart
       :type="chartType"
       :options="chartOptions"
-      :series="chartSeries ?? []"
+      :series="chartSeries"
       :height="height"
       :width="width"
-
     />
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, watch } from 'vue';
 
 // Define props to make the component dynamic
 const props = defineProps({
@@ -88,7 +116,10 @@ const props = defineProps({
     type: String,
     default: 'bar'
   },
-  stacked: false,
+  stacked: {
+    type: Boolean,
+    default: false
+  },
   stackType: {
     type: String,
   },
@@ -101,7 +132,7 @@ const props = defineProps({
     default: 'auto'
   },
   width: {
-    type: Number,
+    type: [Number, String],
     default: '100%'
   },
   chartOptions: {
@@ -114,9 +145,11 @@ const props = defineProps({
   },
   colors: {
     type: Array,
+    default: () => [] // Ensure a default empty array
   },
   labels: {
     type: Array,
+    default: () => [] // Ensure a default empty array
   },
   titleAlign: {
     type: String,
@@ -130,12 +163,12 @@ const props = defineProps({
     type: String,
     default: 'top',
   },
-})
+});
 
 // Chart type prop
-const chartType = ref(props.type)
+const chartType = ref(props.type);
 
-// Chart options using props to make it dynamic
+// Chart options and series using refs to make them reactive
 const chartOptions = ref({
   chart: {
     toolbar: {
@@ -159,7 +192,7 @@ const chartOptions = ref({
   xaxis: {
     categories: props.chartOptions.categories || []
   },
-  labels: props.labels || [],
+  labels: props.labels,
   title: {
     text: props.title,
     align: props.titleAlign
@@ -170,11 +203,25 @@ const chartOptions = ref({
   colors: props.colors,
 });
 
+// Define chartSeries as a reactive ref
+const chartSeries = ref(props.chartSeries);
+
+// Watch for prop changes to update chart options and series dynamically
+watch(() => props.chartOptions, (newOptions) => {
+  chartOptions.value = { ...chartOptions.value, ...newOptions };
+}, { immediate: true });
+
+watch(() => props.chartSeries, (newSeries) => {
+  chartSeries.value = newSeries; // Update the chart series reactively
+}, { immediate: true });
+
+
 </script>
 
 <style scoped>
 /* Add any component-specific styles here */
 </style>
+
 ```
 
 
@@ -255,22 +302,38 @@ public static function getChartData(Request $request)
 //    for ($month = 1; $month <= 12; $month++) {
 //         $labels[] = date('F', mktime(0, 0, 0, $month, 1)); 
 //        }
-
-    // Populate data arrays
-    foreach ($chart_data as $item) {
-        $month_index = (int)$item->month - 1;
-        $data[0]['data'][$month_index] = $item->total_count;
-        $data[1]['data'][$month_index] = $item->active_count;
+    
+    // Dynamically assign data to total and active customers
+    foreach ($data as $key => $series) {
+        switch ($key) {
+            case 0: // Total Customers
+                $data[$key]['data'][$month_index] = $item->total_count;
+                break;
+            case 1: // Active Customers
+                $data[$key]['data'][$month_index] = $item->active_count;
+                break;
+            // Additional cases can be added here for more customer types
+            // Example for Inactive Customers (Total - Active):
+            // case 2:
+            //     $inactive_count = $item->total_count - $item->active_count;
+            //     $data[$key]['data'][$month_index] = $inactive_count;
+            //     break;
+            // case 3:
+            //     // Another customer type
+            //     break;
+        }
     }
     // Return the data and chart options
     return [
         'data' => [
-            'series' => $data,
-            'labels' => $labels,
+            'chart_series' => $data,
         ],
-        'newOptions' => [
+        'chart_options' => [
             'chart' => ['id' => 'dynamic-chart'],
-            'xaxis' => ['type' => 'category'],
+            'xaxis' => [
+                'type' => 'category-months',
+                'categories'=>$labels
+            ],
         ],
     ];
 }
@@ -285,16 +348,16 @@ public static function getChartData(Request $request)
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:customers-count-bar-chart{type='bar' width=600 title='Grouped Bar Chart' height=300 :chartOptions="xaxis" :chartSeries="customer_count_grouped"}
+:customers-count-bar-chart{type='bar' width=600 title='Grouped Bar Chart' height=400 :chartOptions="xaxis" :chartSeries="customer_count_grouped"}
 
 </div>
 
 #shortCode
 
 ```vue
-<CustomersCountBarChart type="bar" title='Grouped Bar Chart' titleAlign='center' width=600 height=300 :chartSeries="[
-{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] },
-{ name: 'Active Customers', data: [10, 20, 30, 40, 50, 60, 70] }
+<CustomersCountBarChart type="bar" title='Grouped Bar Chart' titleAlign='center' width=600 height=400 :chartSeries="[
+{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
+{ name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
 ]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
 ```
 
@@ -306,16 +369,16 @@ public static function getChartData(Request $request)
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:customers-count-bar-chart{type='bar' title='Stacked Bar Chart' stacked  width=600  :chartOptions="xaxis" :chartSeries="customer_count_grouped"}
+:customers-count-bar-chart{type='bar' title='Stacked Bar Chart' stacked  width=600 height=400  :chartOptions="xaxis" :chartSeries="customer_count_grouped"}
 
 </div>
 
 #shortCode
 
 ```vue
-<CustomersCountBarChart type="bar" title='Stacked Bar Chart' titleAlign='center' width=600 height=300 stacked :chartSeries="[
-{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] },
-{ name: 'Active Customers', data: [10, 20, 30, 40, 50, 60, 70] }
+<CustomersCountBarChart type="bar" title='Stacked Bar Chart' titleAlign='center' width=600 height=400 stacked :chartSeries="[
+{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
+{ name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
 ]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
 ```
 
@@ -329,17 +392,17 @@ public static function getChartData(Request $request)
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:customers-count-bar-chart{type='bar' title='100% Stacked Bar Chart' h titleAlign='center' height=300 width=600 stacked stackType='100%'  :chartOptions="xaxis" :chartSeries="customer_count_grouped"}
+:customers-count-bar-chart{type='bar' title='100% Stacked Bar Chart' h titleAlign='center' height=400 width=600 stacked stackType='100%'  :chartOptions="xaxis" :chartSeries="customer_count_grouped"}
 
 </div>
 
 #shortCode
 
 ```vue
-<CustomersCountBarChart type="bar" title='Stacked Bar Chart' titleAlign='center' width=600 height=300 stacked stackType='100%' :chartSeries="[
-{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] },
-{ name: 'Active Customers', data: [10, 20, 30, 40, 50, 60, 70] }
-]" :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" />
+<CustomersCountBarChart type="bar" title='Stacked Bar Chart' titleAlign='center' width=600 height=400 stacked stackType='100%' :chartSeries="[
+{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
+{ name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
+]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" />
 ```
 
 ::
@@ -350,14 +413,14 @@ public static function getChartData(Request $request)
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:customers-count-bar-chart{type='line' :chartOptions="xaxis" title='Monthly Customer Data Line Chart' height=300 width=600 :chartSeries="customer_count_simple"}
+:customers-count-bar-chart{type='line' :chartOptions="xaxis" title='Monthly Customer Data Line Chart' height=400 width=600 :chartSeries="customer_count_simple"}
 
 </div>
 
 #shortCode
 
 ```vue
-<CustomersCountBarChart type="line" title='Simple Line Chart' titleAlign='center' height=300 width=600  :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" :chartSeries="[ { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] }]" />
+<CustomersCountBarChart type="line" title='Simple Line Chart' titleAlign='center' height=400 width=600  :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" :chartSeries="[ { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,54,34,56,78,30] }]" />
 ```
 
 ::
@@ -369,14 +432,16 @@ public static function getChartData(Request $request)
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:customers-count-bar-chart{type='line' :chartOptions="xaxis" title='Monthly Customer Data Line Chart' height=300 width=600 :chartSeries="customer_count_grouped"}
+:customers-count-bar-chart{type='line' :chartOptions="xaxis" title='Monthly Customer Data Line Chart' height=400 width=600 :chartSeries="customer_count_grouped"}
 
 </div>
 
 #shortCode
 
 ```vue
-<CustomersCountBarChart type="line" title='Simple Line Chart' titleAlign='center' height=300 width=600  :chartOptions="{ categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July'] }" :chartSeries="[ { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70] }]" />
+<CustomersCountBarChart type="line" title='Simple Line Chart' titleAlign='center' height=400 width=600  :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" :chartSeries="[{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
+{ name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
+]" />
 ```
 
 ::
