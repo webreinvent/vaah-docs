@@ -1,19 +1,17 @@
-
 <template>
   <div>
     <apexchart
       :type="chartType"
       :options="chartOptions"
-      :series="chartSeries ?? []"
+      :series="chartSeries"
       :height="height"
       :width="width"
-
     />
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, watch } from 'vue';
 
 // Define props to make the component dynamic
 const props = defineProps({
@@ -21,11 +19,13 @@ const props = defineProps({
     type: String,
     default: 'bar'
   },
-  stacked: false
-  ,
+  stacked: {
+    type: Boolean,
+    default: false
+  },
   stackType: {
     type: String,
-    },
+  },
   title: {
     type: String,
     default: 'Bar Chart'
@@ -35,7 +35,7 @@ const props = defineProps({
     default: 'auto'
   },
   width: {
-    type: Number,
+    type: [Number, String],
     default: '100%'
   },
   chartOptions: {
@@ -48,11 +48,11 @@ const props = defineProps({
   },
   colors: {
     type: Array,
-
+    default: () => [] // Ensure a default empty array
   },
   labels: {
     type: Array,
-
+    default: () => [] // Ensure a default empty array
   },
   titleAlign: {
     type: String,
@@ -66,12 +66,12 @@ const props = defineProps({
     type: String,
     default: 'top',
   },
-})
+});
 
 // Chart type prop
-const chartType = ref(props.type)
+const chartType = ref(props.type);
 
-// Chart options using props to make it dynamic
+// Chart options and series using refs to make them reactive
 const chartOptions = ref({
   chart: {
     toolbar: {
@@ -95,7 +95,7 @@ const chartOptions = ref({
   xaxis: {
     categories: props.chartOptions.categories || []
   },
-  labels: props.labels || [],
+  labels: props.labels,
   title: {
     text: props.title,
     align: props.titleAlign
@@ -105,6 +105,19 @@ const chartOptions = ref({
   },
   colors: props.colors,
 });
+
+// Define chartSeries as a reactive ref
+const chartSeries = ref(props.chartSeries);
+
+// Watch for prop changes to update chart options and series dynamically
+watch(() => props.chartOptions, (newOptions) => {
+  chartOptions.value = { ...chartOptions.value, ...newOptions };
+}, { immediate: true });
+
+watch(() => props.chartSeries, (newSeries) => {
+  chartSeries.value = newSeries; // Update the chart series reactively
+}, { immediate: true });
+
 
 </script>
 
