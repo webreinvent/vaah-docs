@@ -45,29 +45,7 @@ datasets by changing the naming conventions and data inputs according to your CR
 
 ##  Monthly Customer Count Bar Chart Component
 
-The sample data will be in the following format:
 
-```json
-{
-  // For Simple Bar Chart
-  "data": {
-    "chart_series": [{
-        "data": [value1, value2, ...],  // Replace with actual values
-        "name": "Name 1"  // Replace with the actual name/value for this series
-      }]
-      }
-  "chart_options":{
-    "xaxis":{
-      "categories":["Label 1","Label 2","Label 3"] //e.g ["Jan","Feb",..]
-      "type":"string" //category-months
-    },
-    "chart":{[ 'type'=>'bar']},
-    // other chart options
-  }
-  /----------------------------------------------------------------------------
-
-
-```
 
 ::preview{component='<CustomersCountBarChart/>' path='./components/store/CustomersCountBarChart.vue' }
 
@@ -88,6 +66,7 @@ The sample data will be in the following format:
 
 
 #code
+
 
 ```vue
 <template>
@@ -151,7 +130,7 @@ const chartOptions = ref({
   },
   yaxis: {
     title: {
-      text: props.chartOptions.yaxisTitle , // Provide default Y-axis title
+      text: props.chartOptions.yaxisTitle ,
     },
   },
   title: {
@@ -196,6 +175,30 @@ watch(() => props.chartSeries, (newSeries) => {
 ::
 
 #### Vue Store Code to Send Request and Fetch Data
+
+The **sample data** will be in the following format:
+
+```json
+{
+  // For Simple Bar Chart
+  "data": {
+    "chart_series": [{
+        "data": [value1, value2, ...],  // Replace with actual values
+        "name": "Name 1"  // Replace with the actual name/value for this series
+      }]
+      }
+  "chart_options":{
+    "xaxis":{
+      "categories":["Label 1","Label 2","Label 3"] //e.g ["Jan","Feb",..]
+      "type":"string" //category-months
+    },
+    "chart":{[ 'type'=>'bar']},
+    // other chart options
+  }
+  /----------------------------------------------------------------------------
+
+
+```
 
 Below is the example code for fetch the customer count data over months.
 
