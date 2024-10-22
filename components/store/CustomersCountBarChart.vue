@@ -61,7 +61,7 @@ const chartOptions = ref({
   },
   yaxis: {
     title: {
-      text: props.chartOptions.yaxisTitle || '', // Provide default Y-axis title
+      text: props.chartOptions.yaxisTitle ,
     },
   },
   title: {
