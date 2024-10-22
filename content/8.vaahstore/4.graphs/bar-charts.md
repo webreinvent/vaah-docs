@@ -137,8 +137,6 @@ const props = defineProps({
 
 });
 
-
-
 // Chart options and series using refs to make them reactive
 const chartOptions = ref({
   chart: {
@@ -153,7 +151,7 @@ const chartOptions = ref({
   },
   yaxis: {
     title: {
-      text: props.chartOptions.yaxisTitle || 'Count', // Provide default Y-axis title
+      text: props.chartOptions.yaxisTitle , // Provide default Y-axis title
     },
   },
   title: {
