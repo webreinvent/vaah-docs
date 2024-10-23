@@ -17,7 +17,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   plugins: [
-    "~/plugins/gtag.client"
+    "~/plugins/gtag.client",
+    { src: '~/plugins/apexchart.js', mode: 'client' }
   ],
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
