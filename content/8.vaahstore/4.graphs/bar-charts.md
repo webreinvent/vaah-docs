@@ -214,18 +214,18 @@ export const useYourStore = defineStore('store', {
   }),
   
   actions: {
-    async fetchCustomerCountChartData() {
+    async fetchCustomersCountData() {
       const options = {
         method: 'get',
       };
       await vaah().ajax(
         this.ajax_url + '/charts/data',
-        this.fetchCustomerCountChartDataAfter,
+        this.fetchCustomersCountDataAfter,
         options
       );
     },
     //---------------------------------------------------
-    fetchCustomerCountChartDataAfter(data,res){
+    fetchCustomersCountDataAfter(data,res){
       if (!data || !Array.isArray(data.chart_series)) {
         return; 
       }
@@ -234,7 +234,17 @@ export const useYourStore = defineStore('store', {
         data: Array.isArray(series.data) ? series.data : [],
       }));
       this.updateChartSeries(seriesData);
-        this.updateChartOptions(res.data.chart_options); // Update options based on response
+      const updatedOptions = {
+        ...res.data.chart_options, // Merge existing options
+        title: {
+          ...res.data.chart_options.title, // Retain existing title settings if they exist
+          // If you want to add or modify sections like title,yaxis, grid, etc., you can do it here
+          text: 'Your Desired Title', // Set the new title
+          // You can also add other title properties if needed
+        },
+      };
+      this.updateChartOptions(updatedOptions);
+      
     },
     //---------------------------------------------------
     updateChartOptions(newOptions) {
@@ -275,7 +285,7 @@ import CustomersCountBarChart from "./CustomersCountBarChart";
 const store = useYourStore(); // Use the store
 // Fetch data when the component mounts
 onMounted(() => {
-  store.fetchCustomerCountChartData(); // Calls the method to fetch data
+  store.fetchCustomersCountData(); // Calls the method to fetch data
 });
 </script>
 
@@ -290,17 +300,17 @@ onMounted(() => {
 
 use App\Http\Controllers\YourController;
 
-Route::get('/charts/data', [YourController::class, 'fetchCustomerCountChartData']);
+Route::get('/charts/data', [YourController::class, 'fetchCustomersCountData']);
 ```
 
 **Controller Method to Retrieve Chart Data**
 
 ```php
 // http/Controllers/Your_Controller
-public function fetchCustomerCountChartData(Request $request)
+public function fetchCustomersCountData(Request $request)
     {
         try{
-            return {model_namespace}::fetchCustomerCountChartData($request);
+            return {model_namespace}::fetchCustomersCountData($request);
         }catch (\Exception $e){
             $response = [];
             $response['success'] = false;
@@ -318,59 +328,96 @@ public function fetchCustomerCountChartData(Request $request)
 **Model Method for Return Monthly Customer Counts**
 
 ```php
-public static function fetchCustomerCountChartData(Request $request)
-{
-    // Extract dynamic parameters from the request
-    $date_column = 'created_at'; // Default column
-    $count = 'COUNT'; // Default count function
-    $group_by_column = 'DATE_FORMAT(created_at, "%m")'; // Group by month
+public static function fetchCustomersCountData(Request $request)
+    {
+        // Extract dynamic parameters from the request
+        $date_column = 'created_at'; // Default column
+        $count = 'COUNT'; // Default count function
+        $group_by_column = 'DATE_FORMAT(created_at, "%m")'; // Group by month
 
-    // Fetch data from the specified model
-    $chart_data = {model_name_space}::selectRaw("$group_by_column as month")
-        ->selectRaw("$count($date_column) as total_count")
-        ->groupBy('month')
-        ->orderBy('month')
-        ->get();
+        // Start with the User query filtering by active customer roles
+        $list = User::whereHas('activeRoles', function ($query) {
+            $query->where('slug', 'customer');
+        });
 
-    // Prepare data for the chart
-    $data = [
-        ['name' => 'Customers', 'data' => array_fill(0, 12, 0)],
-    ];
-    $labels = [];
-    // month names irrespective of year
-    for ($month = 1; $month <= 12; $month++) {
-         $labels[] = date('F', mktime(0, 0, 0, $month, 1)); 
+        // Applied filters
+        $filtered_data = self::appliedFilters($list, $request);
+
+        // Fetch data from the specified model
+        $chart_data = $filtered_data->selectRaw("$group_by_column as month")
+            ->selectRaw("$count($date_column) as total_count")
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        // Prepare data for the chart
+        $data = [
+            ['name' => 'Customers', 'data' => array_fill(0, 12, 0)],
+        ];
+        $labels = [];
+
+        // Month names irrespective of year
+        for ($month = 1; $month <= 12; $month++) {
+            $labels[] = date('F', mktime(0, 0, 0, $month, 1));
         }
-    
-    // Dynamically assign data to total customers
-    foreach ($data as $key => $series) {
-        switch ($key) {
-            case 0: // Total Customers Count
-                $data[$key]['data'][$month_index] = $item->total_count;
-                break;
+
+        // Dynamically assign data to total customers
+        foreach ($chart_data as $item) {
+            $month_index = (int)$item->month - 1;
+            foreach ($data as $key => $series) {
+                $data[$key]['data'][$month_index] = match ($key) {
+                    0 => $item->total_count,
+                };
+            }
         }
+
+        // Return the data and chart options
+        return [
+            'data' => [
+                'chart_series' => $data,
+            ],
+            'chart_options' => [
+                'chart' => [
+                    'id' => 'dynamic-chart',
+                    'background' => '#fff',
+                    'toolbar' => ['show' => true],
+                    'zoom' => ['enabled' => false],
+                ],
+                'xaxis' => [
+                    'type' => 'category',
+                    'categories' => $labels,
+                ],
+                'yaxis' => [
+                    'title' => [
+                        'text' => '',
+                        'color' => '#008FFB',
+                    ],
+                ],
+                'title' => [
+                    'text' => 'Customers Count Bar Chart',
+                    'align' => 'center',
+                ],
+                'legend' => [
+                    'position' => 'top',
+                    'horizontalAlign' => 'center',
+                    'onItemClick' => [
+                        'toggleDataSeries' => true,
+                    ],
+                ],
+                
+            ],
+        ];
     }
-    // Return the data and chart options
-    return [
-        'data' => [
-            'chart_series' => $data,
-        ],
-        'chart_options' => [
-            'chart' => ['id' => 'dynamic-chart'
-             'type'=>'bar',
-            ],
-            'xaxis' => [
-                'type' => 'category-months',
-                'categories'=>$labels
-            ],
-            'title' => [
-                'text' => 'Customer Count Bar Chart', // Set the title for the chart
-                'align' => 'center', // Align title
-            ],
-        ],
-    ];
-}
-
+    //-------------------------------------------------------------------------------------------------------
+    private static function appliedFilters($list, $request)
+    {
+        if (isset($request->filter)) {
+            $list = $list->isActiveFilter($request->filter);
+            $list = $list->dateRangeFilter($request->filter);
+            $list = $list->customerGroupFilter($request->filter);
+        }
+        return $list;
+    }
 
 ```
 
@@ -428,114 +475,117 @@ public static function fetchCustomerCountChartData(Request $request)
 **Backend Method For Return Bar Data For Grouped Bar Charts**
 
 ```php
-public static function getChartData(Request $request)
-{
-    // Extract dynamic parameters from the request
-    $date_column = 'created_at'; // Default column
-    $count = 'COUNT'; // Default count function
-    $group_by_column = 'DATE_FORMAT(created_at, "%m")'; // Group by month
+public static function fetchCustomersCountData(Request $request)
+    {
+        $date_column = 'created_at';
+        $count = 'COUNT';
+        $group_by_column = 'DATE_FORMAT(created_at, "%m")';
 
-    // Fetch data from the specified model
-    $chart_data = {model_name_space}::selectRaw("$group_by_column as month")
-        ->selectRaw("$count($date_column) as total_count")
-        ->selectRaw("SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active_count")
-        ->groupBy('month')
-        ->orderBy('month')
-        ->get();
+        $list = User::whereHas('activeRoles', function ($query) {
+            $query->where('slug', 'customer');
+        });
 
-    // Prepare data for the chart
-    $data = [
-        ['name' => 'Customers', 'data' => array_fill(0, 12, 0)],
-        ['name' => 'Active Customers', 'data' => array_fill(0, 12, 0)],
-    ];
-    
-    $labels = [];
-    for ($month = 1; $month <= 12; $month++) {
-        $labels[] = date('F', strtotime("2024-$month-01")); // Month names
-    }
+        // Applied filters
+        $filtered_data = self::appliedFilters($list, $request);
 
-// OR Get month names irrespective of year
-//    for ($month = 1; $month <= 12; $month++) {
-//         $labels[] = date('F', mktime(0, 0, 0, $month, 1)); 
-//        }
-    
-    // Dynamically assign data to total and active customers
-    foreach ($data as $key => $series) {
-        switch ($key) {
-            case 0: // Total Customers
-                $data[$key]['data'][$month_index] = $item->total_count;
-                break;
-            case 1: // Active Customers
-                $data[$key]['data'][$month_index] = $item->active_count;
-                break;
-            // Additional cases can be added here for more customer types
-            // Example for Inactive Customers (Total - Active):
-            // case 2:
-            //     $inactive_count = $item->total_count - $item->active_count;
-            //     $data[$key]['data'][$month_index] = $inactive_count;
-            //     break;
-            // case 3:
-            //     // Another customer type
-            //     break;
+        // Prepare the chart data query
+        $chart_data_query = $filtered_data->selectRaw("$group_by_column as month")
+            ->selectRaw("$count($date_column) as total_count")
+            ->selectRaw("SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active_count");
+
+        // Group by month and order the result
+        $chart_data = $chart_data_query->groupBy('month')->orderBy('month')->get();
+
+        // Calculate the total customer count
+        $total_customers = $chart_data->sum('total_count');
+
+        $data = [
+            ['name' => 'Total Customers', 'data' => array_fill(0, 12, 0)],
+            ['name' => 'Active Customers', 'data' => array_fill(0, 12, 0)],
+        ];
+
+        $labels = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $labels[] = date('F', strtotime("2024-$month-01"));
         }
-    }
-    // Return the data and chart options
-    return [
-        'data' => [
-            'chart_series' => $data,
-        ],
-        'chart_options' => [
-            'chart' => ['id' => 'dynamic-chart',
-//                'stacked'=>true,
-//                'type'=>'line',
-                'toolbar' => [
-                    'show' => true, // Show toolbar
-                ],
-                'zoom' => [
-                    'enabled' => false, // Disable zooming
-                ],
+
+        foreach ($chart_data as $item) {
+            $month_index = (int)$item->month - 1;
+            foreach ($data as $key => $series) {
+                $data[$key]['data'][$month_index] = match ($key) {
+                    0 => $item->total_count,
+                    1 => $item->active_count,
+                };
+            }
+        }
+
+        // Return the filtered data along with chart options
+        return [
+            'data' => [
+                'chart_series' => $data,
             ],
-            'plotOptions' => [
-                'bar' => [
-                    'horizontal' => false, // Set to true if you want a horizontal bar chart
-                    'dataLabels' => [
-                        'position' => 'top', // Position of data labels
+            'chart_options' => [
+                'chart' => [
+                    'id' => 'dynamic-chart',
+                    'background' => '#fff',
+                    'toolbar' => ['show' => true],
+                    'zoom' => ['enabled' => false],
+                ],
+                'xaxis' => [
+                    'type' => 'category',
+                    'categories' => $labels,
+                ],
+                'yaxis' => [
+                    'title' => [
+                        'text' => 'Customers Count',
+                        'color' => '#008FFB',
+                    ],
+                ],
+                'title' => [
+                    'text' => 'Total Customers: ' .  $total_customers,
+                    'align' => 'center',
+                ],
+                'legend' => [
+                    'position' => 'top',
+                    'horizontalAlign' => 'center',
+                    'onItemClick' => [
+                        'toggleDataSeries' => true,
+                    ],
+                ],
+                'grid' => [
+                    'borderColor' => '#e0e0e0',
+                    'strokeDashArray' => 0,
+                    'position' => 'back',
+                    'xaxis' => [
+                        'lines' => [
+                            'show' => false,
+                        ],
+                    ],
+                    'yaxis' => [
+                        'lines' => [
+                            'show' => false,
+                        ],
+                    ],
+                    'padding' => [
+                        'top' => 0,
+                        'right' => 0,
+                        'bottom' => 0,
+                        'left' => 0,
                     ],
                 ],
             ],
-            'xaxis' => [
-                'type' => 'category',
-                'categories'=>$labels
-            ],
-            'yaxis' => [
-                'title' => [
-                    'text' => '', // Set Y-axis title
-                ],
-            ],
-            'colors' => [ // Set custom colors for each series
-                '#FF4560', // Color for first series
-                '#008FFB', // Color for second series
-                '#00E396', // Color for third series
-            ],
-            'title' => [
-                'text' => 'Customer Data Overview', // Set the title for the chart
-                'align' => 'center', // Align title
-            ],
-            'legend' => [
-                'position' => 'top', // Position of the legend
-                'horizontalAlign' => 'center', // Align legend horizontally
-                'floating' => false, // Disable floating legend
-            ],
-            'grid' => [
-                'borderColor' => '#e0e0e0', // Set the color of the grid lines
-                'row' => [
-                    'colors' => ['#f3f3f3', 'transparent'], // Alternate row colors
-                    'opacity' => 0.5, // Set the opacity of the grid row colors
-                ],
-            ],
-        ],
-    ];
-}
+        ];
+    }
+    //-------------------------------------------------------------------------------------------------------
+    private static function appliedFilters($list, $request)
+    {
+        if (isset($request->filter)) {
+            $list = $list->isActiveFilter($request->filter);
+            $list = $list->dateRangeFilter($request->filter);
+            $list = $list->customerGroupFilter($request->filter);
+        }
+        return $list;
+    }
 
 
 ```
