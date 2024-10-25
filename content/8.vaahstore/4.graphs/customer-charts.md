@@ -300,7 +300,7 @@ onMounted(() => {
 
 use App\Http\Controllers\YourController;
 
-Route::get('/charts/data', [YourController::class, 'fetchCustomersCountData']);
+Route::post ('/charts/data', [YourController::class, 'fetchCustomersCountData']);
 ```
 
 **Controller Method to Retrieve Chart Data**
