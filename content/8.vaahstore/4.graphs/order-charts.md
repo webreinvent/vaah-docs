@@ -143,7 +143,7 @@ fontSize: '14px',
 
 ```vue
 
-<OrdersChartComponent type="pie" title='Order Status Distribution' height=400 titleAlign='center' :chartSeries="[30, 40, 45]" :chartOptions="{ labels: ['Placed', 'Shipped', 'Delivered']}"/>
+<Charts type="pie" title='Order Status Distribution' height=400 titleAlign='center' :chartSeries="[30, 40, 45]" :chartOptions="{ labels: ['Placed', 'Shipped', 'Delivered']}"/>
 ```
 
 #code
@@ -253,6 +253,212 @@ watch(() => props.chartSeries, (newSeries) => {
 
 ::
 
+#### Vue Code to Send Request and Fetch Data
+
+```js
+// stores/yourStore.js
+import { defineStore } from 'pinia';
+import {vaah} from 'your-vaah-instance'; // Adjust this import based on your setup
+
+export const useYourStore = defineStore('store', {
+  state: () => ({
+    pieChartOptions: {},
+    pieChartSeries: [],
+  }),
+  
+ actions: {
+    async fetchOrdersPieChartData()
+    {
+        const options = {
+            method: 'post',
+            query: vaah().clone(this.query)
+        };
+        await vaah().ajax(
+            this.ajax_url + '/charts/data',
+            this.fetchOrdersPieChartDataAfter,
+            options
+        );
+    },
+
+  //---------------------------------------------------
+  fetchOrdersPieChartDataAfter(data,res){
+    if (!data || !Array.isArray(data.chart_series)) {
+      return;
+    }
+    this.updatePieChartSeries(data.chart_series?.orders_statuses_pie_chart);
+
+    const updated_pie_chart_options = {
+      ...data.chart_options, // Merge existing options
+      title: {
+        text: 'Order Status Distribution', // Add your chart title here
+        align: 'center', // You can adjust alignment: 'left', 'center', 'right'
+        style: {
+          fontSize: '16px',
+          fontWeight: 'bold',
+          color: '#263238'
+        }
+      },
+      legend: {
+        position: 'bottom',
+        horizontalAlign: 'center',
+        floating: false,
+        fontSize: '12px',
+        formatter: function (val, opts) {
+          return `${val} - ${opts.w.globals.series[opts.seriesIndex]}`;
+        },
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '60%',
+            labels: {
+              show: true,
+              name: {
+                show: true,
+                fontSize: '14px',
+                fontWeight: 'bold',
+                color: '#263238',
+              },
+              value: {
+                show: true,  // Show value
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: '#000',  // Color for the value
+                formatter: function(val) {
+                  return val; // Return only the value without percentage
+                }
+              },
+            },
+          },
+        },
+      },
+    };
+
+    this.updatePieChartOptions(updated_pie_chart_options);
+
+  },
+  //---------------------------------------------------
+  updatePieChartOptions(newOptions) {
+    this.pieChartOptions = newOptions;
+  },
+
+  //---------------------------------------------------
+  updatePieChartSeries(newSeries) {
+    // Ensure chartSeries is updated reactively
+    this.pieChartSeries = [...newSeries]; // Shallow copy to trigger reactivity
+  },
+}
+});
+```
+
+
+#### Usage in a Component
+
+```vue
+
+<template>
+  <div>
+    <Charts
+      type="pie"
+      :chartOptions="store.pieChartOptions"
+      :chartSeries="store.pieChartSeries"
+      height=400 width=400
+      titleAlign="center"
+
+    />
+  </div>
+</template>
+
+<script setup>
+import {useYourStore} from '@/stores/yourStore'; // Adjust the path as needed
+import {onMounted} from 'vue';
+import Charts  from "./Charts ";
+const store = useYourStore(); // Use the store
+// Fetch data when the component mounts
+onMounted(() => {
+  store.fetchOrdersPieChartData(); // Calls the method to fetch data
+});
+</script>
+
+```
+
+
+**Steps To Backend Data Flow:**
+
+**API Endpoint**
+
+```php
+// routes/api.php
+use App\Http\Controllers\YourController;
+
+Route::post ('/charts/data', [YourController::class, 'fetchOrdersPieChartData']);
+```
+
+**Controller Method to Retrieve Chart Data**
+
+```php
+// http/Controllers/Your_Controller
+public function fetchOrdersPieChartData(Request $request)
+    {
+        try{
+            return {model_namespace}::fetchOrdersPieChartData($request);
+        }catch (\Exception $e){
+            $response = [];
+            $response['success'] = false;
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+            }
+            return $response;
+        }
+    }
+```
+
+**Model Method for Return Monthly Customer Counts**
+
+```php
+public static function fetchOrdersPieChartData(Request $request)
+    {
+        
+        $group_by_column = 'order_status';
+        $orders_statuses_count = self::select($group_by_column)
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy($group_by_column);
+
+        $orders_statuses_count = self::appliedFilters($orders_statuses_count, $request);
+
+        $order_status_counts_pie_chart_data = $orders_statuses_count
+        ->pluck('count', $group_by_column)->toArray();
+
+        return [
+            'data' => [
+                'chart_series' => [
+                    'orders_statuses_pie_chart'=>
+                    array_values($order_status_counts_pie_chart_data),
+                    ],
+                'chart_options' => [
+                    'labels' => array_keys($order_status_counts_pie_chart_data),
+                ],
+            ],
+
+        ];
+    }
+    //----------------------------------------------------------------------------------
+    private static function appliedFilters($list, $request)
+    {
+        if (isset($request->filter)) {
+            $list = $list->isActiveFilter($request->filter);
+            $list = $list->dateRangeFilter($request->filter);
+            $list = $list->customerGroupFilter($request->filter);
+        }
+        return $list;
+    }
+
+```
+
+
 ### Donut Chart
 
 ::preview{component='<Charts />'}
@@ -266,7 +472,7 @@ watch(() => props.chartSeries, (newSeries) => {
 #shortCode
 
 ```vue
-<OrdersChartComponent type="donut" title='Order Status Distribution' height=400 titleAlign='center' :chartSeries="[30, 40, 45]" :chartOptions="{ labels: ['Placed', 'Shipped', 'Delivered']}"/>
+<Charts type="donut" title='Order Status Distribution' height=400 titleAlign='center' :chartSeries="[30, 40, 45]" :chartOptions="{ labels: ['Placed', 'Shipped', 'Delivered']}"/>
 
 ```
 
@@ -289,7 +495,7 @@ watch(() => props.chartSeries, (newSeries) => {
 
 
 ```vue
-<OrdersChartComponent
+<Charts
   type="line"
   title='Orders Count'
   titleAlign='center'
@@ -343,3 +549,17 @@ watch(() => props.chartSeries, (newSeries) => {
 ```
 
 ::
+
+
+### Area Chart
+
+::preview{component='<Charts />'}
+
+<div class="flex flex-wrap gap-3 justify-center items-center">
+
+[comment]: <> (:customers-count-bar-chart{type='donut' :chartOptions="data_donut" title='Order Status Distribution' height=300  :chartSeries="data_pie"})
+
+:charts{type='area' :chartOptions="chartOptions" title='Orders Count' height=400 width=600 :chartSeries="customer_count_grouped"}
+
+
+</div>
