@@ -416,7 +416,7 @@ public function fetchOrdersPieChartData(Request $request)
     }
 ```
 
-**Model Method for Return Monthly Customer Counts**
+**Model Method for Return Orders Status Distribution Data**
 
 ```php
 public static function fetchOrdersPieChartData(Request $request)
@@ -550,6 +550,85 @@ public static function fetchOrdersPieChartData(Request $request)
 
 ::
 
+**Model Method for Return Monthly Orders Counts Data**
+
+```php
+public static function fetchOrdersCountChartData(Request $request)
+    {
+        $date_column = 'created_at';
+        $count = 'COUNT';
+        $group_by_column = 'DATE_FORMAT(created_at, "%m")';
+
+        // Query Order model
+        $list = Order::query();
+        // Apply filters to the list
+        $filtered_data = self::appliedFilters($list, $request);
+
+        // Query for chart data
+        $order_data_query = $filtered_data->selectRaw("$group_by_column as month")
+            ->selectRaw("$count($date_column) as total_count") // Total orders count
+            ->selectRaw
+            ("SUM(CASE WHEN order_status = 'Completed' THEN 1 ELSE 0 END) as completed_count")
+            ->selectRaw
+            ("SUM(CASE WHEN order_status != 'Completed' THEN 1 ELSE 0 END) as pending_count");
+
+        $chart_data = $order_data_query->groupBy('month')->orderBy('month')->get();
+        
+        $data = [
+            ['name' => 'Total Orders', 'data' => array_fill(0, 12, 0)],
+            ['name' => 'Completed Orders', 'data' => array_fill(0, 12, 0)],
+        ];
+        $labels = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $labels[] = date('M', strtotime("2024-$month-01"));
+             // 'M' gives the short month name
+        }
+
+        foreach ($chart_data as $item) {
+            $month_index = (int)$item->month - 1;
+            $data[0]['data'][$month_index] = $item->total_count;
+            $data[1]['data'][$month_index] = $item->completed_count;
+        }
+        return [
+            'data' => [
+                'chart_series' => [
+                    'orders_count_bar_chart'=>$data,
+                    ],
+                'chart_options' => [
+                    'xaxis' => [
+                        'type' => 'category',
+                        'categories' => $labels,
+                    ],
+                    'yaxis' => [
+                        'title' => [
+                            'text' => 'Orders Count',
+                            'color' => '#008FFB',
+                            'rotate' => -90,
+                            'style' => [
+                                'fontFamily' => 'Arial, sans-serif',
+                                'fontWeight' => 'bold',
+                            ],
+                        ],
+                    ],
+
+                ],
+            ],
+
+        ];
+
+    }
+    //----------------------------------------------------------------------------------
+    private static function appliedFilters($list, $request)
+    {
+        if (isset($request->filter)) {
+            $list = $list->isActiveFilter($request->filter);
+            $list = $list->dateRangeFilter($request->filter);
+            $list = $list->customerGroupFilter($request->filter);
+        }
+        return $list;
+    }
+
+```
 
 ### Area Chart
 
@@ -563,3 +642,74 @@ public static function fetchOrdersPieChartData(Request $request)
 
 
 </div>
+
+#shortCode
+
+
+```vue
+<Charts
+  type="area"
+  title="Orders Count"
+  titleAlign="center"
+  height="400"
+  width="600"
+  :chartOptions="{
+            xaxis: {
+                type: 'datetime' // Ensure proper quotation
+            },
+            stroke: {
+                curve: 'smooth', // Set the curve to smooth for smoother lines
+                width: 2, // Set the stroke width
+                colors: ['#FF5733', '#33FF57'] // Example colors for the lines
+            },
+            title: {
+                text: 'Orders Count',
+                align: 'center',
+                style: {
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    color: '#263238'
+                }
+            },
+            tooltip: {
+                enabled: true,
+                shared: true,
+                style: {
+                    fontSize: '14px'
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'center',
+                floating: false,
+                fontSize: '14px',
+                formatter: function (val, opts) {
+                    return `${val} - ${opts.w.globals.series[opts.seriesIndex]}`;
+                }
+            }
+        }"
+  :chartSeries="[
+            {
+                name: 'Total Orders',
+                data: [
+                    { x: 1706812200000, y: '123' },
+                    { x: 1727893800000, y: '388' },
+                    { x: 1730053800000, y: '16' },
+                    { x: 1730745000000, y: '63' }
+                ]
+            },
+            {
+                name: 'Completed Orders',
+                data: [
+                    { x: 1706812200000, y: '80' }, // Example data
+                    { x: 1727893800000, y: '300' },
+                    { x: 1730053800000, y: '10' },
+                    { x: 1730745000000, y: '50' }
+                ]
+            }
+        ]"
+/>
+
+```
+
+::
