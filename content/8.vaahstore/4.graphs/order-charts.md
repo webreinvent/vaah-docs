@@ -135,7 +135,7 @@ fontSize: '14px',
 
 
 
-:customers-count-bar-chart{type='pie' :chartOptions="data_donut" title='Order Status Distribution' height=300  :chartSeries="data_pie"}
+:charts{type='pie' :chartOptions="data_donut" title='Order Status Distribution' height=300  :chartSeries="data_pie"}
 
 </div>
 
@@ -465,7 +465,7 @@ public static function fetchOrdersPieChartData(Request $request)
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:customers-count-bar-chart{type='donut' :chartOptions="data_donut" title='Order Status Distribution' height=300  :chartSeries="data_pie"}
+:charts{type='donut' :chartOptions="data_donut" title='Order Status Distribution' height=300  :chartSeries="data_pie"}
 
 </div>
 
