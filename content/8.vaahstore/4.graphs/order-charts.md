@@ -126,6 +126,10 @@ fontSize: '14px',
 
 
 ## Orders Statuses Distribution
+The Orders Statuses Distribution chart provides a visual breakdown of the status of orders within a specified time frame. 
+It helps to monitor and analyze how orders are distributed across various stages, such as "**Placed**", "**Shipped**", "**Delivered**", and others.
+By observing this chart, businesses can quickly assess the health of their order fulfillment process, identify bottlenecks, and track 
+performance against targets.
 
 ### Pie Chart
 
