@@ -64,7 +64,7 @@ show: false,
 ## Stocks In Warehouses
 The Stocks In Warehouses chart provides a visual representation of the available stock quantities in each warehouse within a specified timeframe. It helps businesses monitor and analyze inventory levels across various warehouses, identifying those with the highest or lowest stock. This overview assists in making informed decisions for stock redistribution, restocking, and inventory optimization.
 ### Bar Chart
-
+#### Stocks Available In Warehouse
 ::preview{component='<Charts/>' path='./components/store/Charts.vue' }
 
 <div class="flex  justify-center items-center">
