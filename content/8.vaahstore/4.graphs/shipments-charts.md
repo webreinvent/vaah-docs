@@ -89,7 +89,63 @@ data: [
 }
 ]
 
+shipped_quantity_status_data: [
+{
+name: 'Item Qty.',
+data: [3033, 4033, 4533, 5033, 5523]
+}
 
+]
+
+
+shipped_quantity_status_chart_options: {
+xaxis: {
+categories: ['Partially Shipped', 'Shipped', 'Delivered', 'Partially Delivered', 'In Transit'],
+},
+
+title: {
+text: 'Shipped Quantity Status',
+align: 'center',
+offsetY: 12,
+style: {
+fontSize: '16px',
+fontWeight: 'bold',
+color: '#263238',
+},
+},
+dataLabels: {
+enabled: true,
+textAnchor: 'start',
+style: {
+colors: ['#000'],
+},
+offsetX: 0,
+dropShadow: {
+enabled: false,
+},
+},
+yaxis: {
+labels: {
+show: true,
+},
+},
+plotOptions: {
+bar: {
+barHeight: '80%',
+distributed: true,
+horizontal: true,
+dataLabels: {
+position: 'bottom',
+},
+},
+},
+tooltip: {
+theme: 'dark',
+},
+legend: {
+show: false,
+}
+}
 
 ---
 
@@ -535,3 +591,72 @@ The dataLabels configuration has been added to the shipment_chart_options prop:
 
 ::
 
+### Bar Chart
+#### Shipped Quantity Status
+
+::preview{component='<Charts />'}
+
+<div class="flex flex-wrap gap-3 justify-center items-center">
+
+:charts{type='bar' :chartOptions="shipped_quantity_status_chart_options" title='Shipped Quantity Status' height=300 width=600  :chartSeries="shipped_quantity_status_data"}
+
+</div>
+
+#shortCode
+
+```vue
+
+<Charts type="bar" title='Stocks Available In Warehouse'
+        height=300 width=600 titleAlign='center'
+        :chartSeries="[{ name: 'Item Qty.', data: [3033, 4033, 4533, 5033, 5523] }]"
+        :chartOptions="{ 
+          xaxis:
+          {
+            categories: ['Partially Shipped', 'Shipped', 'Delivered', 'Partially Delivered', 'In Transit']
+          },
+          title: {
+            text: 'Shipped Quantity Status',
+            align: 'center',
+            offsetY: 12,
+            style: {
+            fontSize: '16px',
+            fontWeight: 'bold',
+            color: '#263238',
+                }
+          },
+          dataLabels: {
+          enabled: true,
+          textAnchor: 'start',
+          style: {
+          colors: ['#000'],
+          },
+          offsetX: 0,
+          dropShadow: {
+          enabled: false,
+              },
+          },
+          yaxis: {
+          labels: {
+          show: true,
+              },
+          },
+          plotOptions: {
+            bar: {
+            barHeight: '80%',
+            distributed: true,
+            horizontal: true,
+            dataLabels: {
+            position: 'bottom',
+              },
+            },
+          },
+          tooltip: {
+                    theme: 'dark',
+                },
+          legend: {
+          show: false,
+          }
+        }
+"/>
+
+```
