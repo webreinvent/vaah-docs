@@ -51,7 +51,7 @@ datasets by changing the naming conventions and data inputs according to your CR
 
 <div class="flex  justify-center items-center">
 
-:customers-count-bar-chart{type='bar' title='Customer Count Bar Chart' height=400 width=600 :chartOptions="xaxis" :chartSeries="customer_count_simple"}
+:customers-count-bar-chart{type='bar' title='Customer Count Bar Chart' height=350 width=600 :chartOptions="xaxis" :chartSeries="customer_count_simple"}
 
 
 </div>
