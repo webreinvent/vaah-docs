@@ -37,7 +37,7 @@ const nav = inject<Ref<NavItem[]>>('navigation')
       <ColorPicker/>
 
       <UTooltip text="Search" :shortcuts="[metaSymbol, 'K']">
-        <UDocsSearchButton :label="null"/>
+        <UContentSearchButton :label="null"/>
       </UTooltip>
 
       <UColorModeButton/>

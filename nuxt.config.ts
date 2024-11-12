@@ -1,13 +1,14 @@
-
 const routeRules = require("./json/routeRules.json");
 
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
+
   runtimeConfig: {
     public: {
       gtagId: 'G-XTMX8KRPPK'
     }
   },
+
   modules: [
     '@nuxt/content',
     '@nuxt/ui',
@@ -16,9 +17,11 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     '@pinia/nuxt',
   ],
+
   plugins: [
     "~/plugins/gtag.client"
   ],
+
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
     'components:extend': (components) => {
@@ -27,6 +30,7 @@ export default defineNuxtConfig({
       globals.forEach((c) => c.global = true)
     }
   },
+
   components: {
     "dirs": [
       {
@@ -37,6 +41,7 @@ export default defineNuxtConfig({
       }
     ]
   },
+
   content:{
     highlight: {
       theme: {
@@ -66,13 +71,16 @@ export default defineNuxtConfig({
       ]
     }
   },
+
   ui: {
     icons: ['heroicons', 'simple-icons']
   },
+
   // Fonts
   fontMetrics: {
     fonts: ['DM Sans']
   },
+
   googleFonts: {
     display: 'swap',
     download: true,
@@ -80,11 +88,16 @@ export default defineNuxtConfig({
       'DM+Sans': [400, 500, 600, 700]
     }
   },
+
   routeRules: routeRules,
+
   devtools: {
     enabled: false
   },
+
   typescript: {
     strict: false
-  }
+  },
+
+  compatibilityDate: '2024-11-12'
 })
