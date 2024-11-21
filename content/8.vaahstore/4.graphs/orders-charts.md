@@ -1,13 +1,29 @@
 ---
 customer_count_grouped: [
 {
-name: 'Total Orders',
+name: 'Created',
 data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20 ]
 },
 
 {
-name: 'Completed Orders',
+name: 'Completed',
 data: [20, 30, 15, 30, 35, 25, 30, 40, 50, 45, 35, 15]
+}
+
+]
+
+overall_sales: [
+{
+name: 'Total Sale',
+data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20 ]
+}
+
+]
+
+order_payment_chart_series: [
+{
+name: 'Payment',
+data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20 ]
 }
 
 ]
@@ -85,12 +101,12 @@ fontSize: '14px'
 
 chartOptions: {
 xaxis: {
+type: 'datetime',
 categories: [
-'January', 'February', 'March', 'April', 'May',
-'June', 'July', 'August', 'September', 'October',
-'November', 'December'
-],
-},
+'2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
+'2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
+'2024-11-01', '2024-12-01'
+],},
 stroke: {
 curve: 'smooth', 
 width: 4,
@@ -120,6 +136,87 @@ fontSize: '14px',
 }
 }
 
+
+sales_chart_options: {
+xaxis: {
+type: 'datetime',
+categories: [
+'2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
+'2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
+'2024-11-01', '2024-12-01'
+],},
+stroke: {
+curve: 'smooth',
+width: 4,
+},
+title: {
+text: 'Overall Sales',
+align: 'center',
+style: {
+fontSize: '16px',
+fontWeight: 'bold',
+color: '#263238'
+}
+},
+dataLabels: {
+enabled: false,
+},
+tooltip: {
+enabled: true,
+shared: true,
+style: {
+fontSize: '14px'
+}
+},
+legend: {
+position: 'top',
+horizontalAlign: 'center',
+floating: false,
+fontSize: '14px',
+
+}
+}
+
+
+order_payment_chart_options: {
+xaxis: {
+type: 'datetime',
+categories: [
+'2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
+'2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
+'2024-11-01', '2024-12-01'
+],},
+stroke: {
+curve: 'smooth',
+width: 4,
+},
+title: {
+text: 'Payment Received',
+align: 'center',
+style: {
+fontSize: '16px',
+fontWeight: 'bold',
+color: '#263238'
+}
+},
+dataLabels: {
+enabled: false,
+},
+tooltip: {
+enabled: true,
+shared: true,
+style: {
+fontSize: '14px'
+}
+},
+legend: {
+position: 'top',
+horizontalAlign: 'center',
+floating: false,
+fontSize: '14px',
+
+}
+}
 ---
 
 
@@ -425,16 +522,23 @@ public function fetchOrdersPieChartData(Request $request)
 ```php
 public static function fetchOrdersPieChartData(Request $request)
     {
-        
+        $inputs = $request->all();
+        $start_date = isset($inputs['start_date']) ? Carbon::parse($inputs['start_date'])
+        ->startOfDay() : null;
+        $end_date = isset($inputs['end_date']) ? Carbon::parse($inputs['end_date'])
+        ->endOfDay() : null;
         $group_by_column = 'order_status';
         $orders_statuses_count = self::select($group_by_column)
             ->selectRaw('COUNT(*) as count')
             ->groupBy($group_by_column);
 
-        $orders_statuses_count = self::appliedFilters($orders_statuses_count, $request);
+        if ($start_date && $end_date) {
+            $orders_statuses_count = $orders_statuses_count
+            ->whereBetween('updated_at', [$start_date, $end_date]);
+        }
 
         $order_status_counts_pie_chart_data = $orders_statuses_count
-        ->pluck('count', $group_by_column)->toArray();
+        ->pluck('count', 'order_status')->toArray();
 
         return [
             'data' => [
@@ -450,15 +554,7 @@ public static function fetchOrdersPieChartData(Request $request)
         ];
     }
     //----------------------------------------------------------------------------------
-    private static function appliedFilters($list, $request)
-    {
-        if (isset($request->filter)) {
-            $list = $list->isActiveFilter($request->filter);
-            $list = $list->dateRangeFilter($request->filter);
-            $list = $list->customerGroupFilter($request->filter);
-        }
-        return $list;
-    }
+   
 
 ```
 
@@ -507,12 +603,12 @@ public static function fetchOrdersPieChartData(Request $request)
   width=600
   :chartOptions="{
         xaxis: {
-            categories: [
-                'January', 'February', 'March', 'April', 
-                'May', 'June', 'July', 'August', 
-                'September', 'October', 'November', 'December'
-            ]
-        },
+        type: 'datetime',
+        categories: [
+        '2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
+        '2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
+        '2024-11-01', '2024-12-01'
+        ],},
         stroke: {
             curve: 'smooth', // Set the curve to smooth for smoother lines
             width: 2, // Set the stroke width
@@ -545,8 +641,8 @@ public static function fetchOrdersPieChartData(Request $request)
         }
     }"
   :chartSeries="[
-        { name: 'Total Orders', data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20] },
-        { name: 'Completed Orders', data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20] }
+        { name: 'Created', data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20] },
+        { name: 'Completed', data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20] }
     ]"
 />
 
@@ -559,6 +655,17 @@ public static function fetchOrdersPieChartData(Request $request)
 ```php
 public static function fetchOrdersCountChartData(Request $request)
     {
+        $inputs = $request->all();
+
+        $start_date = Carbon::parse($inputs['start_date'] ?? Carbon::now())->startOfDay();
+        $end_date = Carbon::parse($inputs['end_date'] ?? Carbon::now())->endOfDay();
+
+        $labels = [];
+        foreach (new \DatePeriod($start_date, new \DateInterval('P1D'), $end_date->copy()
+        ->addDay()) as $date) {
+            $labels[] = $date->format('Y-m-d');
+        }
+
         $date_column = 'created_at';
         $count = 'COUNT';
         $group_by_column = 'DATE_FORMAT(created_at, "%m")';
@@ -575,49 +682,43 @@ public static function fetchOrdersCountChartData(Request $request)
             ("SUM(CASE WHEN order_status = 'Completed' THEN 1 ELSE 0 END) as completed_count")
             ->selectRaw
             ("SUM(CASE WHEN order_status != 'Completed' THEN 1 ELSE 0 END) as pending_count");
+            if ($inputs['start_date'] && $inputs['end_date']) {
+                        $order_data_query = $order_data_query->whereBetween('created_at',
+                         [$start_date, $end_date]);
+                    }
+            $chart_data = $order_data_query->groupBy('order_date')
+                ->orderBy('order_date')
+                ->get();
+         $created_orders = [];
+        $completed_orders = [];
+         foreach ($chart_data as $item) {
+            $order_date = Carbon::parse($item->order_date);
 
-        $chart_data = $order_data_query->groupBy('month')->orderBy('month')->get();
-        
-        $data = [
-            ['name' => 'Total Orders', 'data' => array_fill(0, 12, 0)],
-            ['name' => 'Completed Orders', 'data' => array_fill(0, 12, 0)],
-        ];
-        $labels = [];
-        for ($month = 1; $month <= 12; $month++) {
-            $labels[] = date('M', strtotime("2024-$month-01"));
-             // 'M' gives the short month name
-        }
-
-        foreach ($chart_data as $item) {
-            $month_index = (int)$item->month - 1;
-            $data[0]['data'][$month_index] = $item->total_count;
-            $data[1]['data'][$month_index] = $item->completed_count;
+            $created_orders[] = ['x' => $item->order_date, 'y' => (int)$item->total_count];
+            $completed_orders[] = ['x' => $item->order_date, 'y' => 
+            (int)$item->completed_count];
         }
         return [
             'data' => [
                 'chart_series' => [
-                    'orders_count_bar_chart'=>$data,
-                    ],
-                'chart_options' => [
-                    'xaxis' => [
-                        'type' => 'category',
-                        'categories' => $labels,
-                    ],
-                    'yaxis' => [
-                        'title' => [
-                            'text' => 'Orders Count',
-                            'color' => '#008FFB',
-                            'rotate' => -90,
-                            'style' => [
-                                'fontFamily' => 'Arial, sans-serif',
-                                'fontWeight' => 'bold',
-                            ],
+                    'orders_count_bar_chart' => [
+                        [
+                            'name' => 'Created',
+                            'data' => $created_orders,
+                        ],
+                        [
+                            'name' => 'Completed',
+                            'data' => $completed_orders,
                         ],
                     ],
-
+                ],
+                'chart_options' => [
+                    'xaxis' => [
+                        'type' => 'datetime',
+                        'categories' => $labels,
+                    ],
                 ],
             ],
-
         ];
 
     }
@@ -659,8 +760,12 @@ public static function fetchOrdersCountChartData(Request $request)
   width="600"
   :chartOptions="{
             xaxis: {
-                type: 'datetime' // Ensure proper quotation
-            },
+            type: 'datetime',
+            categories: [
+            '2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
+            '2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
+            '2024-11-01', '2024-12-01'
+            ],},
             stroke: {
                 curve: 'smooth', // Set the curve to smooth for smoother lines
                 width: 2, // Set the stroke width
@@ -712,6 +817,151 @@ public static function fetchOrdersCountChartData(Request $request)
                 ]
             }
         ]"
+/>
+
+```
+
+::
+
+
+### OverAll Sales
+
+::preview{component='<Charts />'}
+
+<div class="flex flex-wrap gap-3 justify-center items-center">
+
+
+:charts{type='area' :chartOptions="sales_chart_options" title='Overall Sale' height=400 width=600 :chartSeries="overall_sales"}
+
+
+</div>
+
+#shortCode
+
+
+```vue
+<Charts
+  type="area"
+  title='Overall Sales'
+  titleAlign='center'
+  height=400
+  width=600
+  :chartOptions="{
+        xaxis: {
+        type: 'datetime',
+        categories: [
+        '2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
+        '2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
+        '2024-11-01', '2024-12-01'
+        ],},
+        stroke: {
+            curve: 'smooth', // Set the curve to smooth for smoother lines
+            width: 2, // Set the stroke width
+            colors: ['#FF5733', '#33FF57'] // Example colors for the lines
+        },
+        title: {
+            text: 'Orders Count',
+            align: 'center',
+            style: {
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: '#263238'
+            }
+        },
+        tooltip: {
+            enabled: true,
+            shared: true,
+            style: {
+                fontSize: '14px'
+            }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'center',
+            floating: false,
+            fontSize: '14px',
+            formatter: function (val, opts) {
+                return `${val} - ${opts.w.globals.series[opts.seriesIndex]}`;
+            }
+        }
+    }"
+  :chartSeries="[
+        { name: 'Total Sales', data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20] }
+        
+    ]"
+/>
+
+```
+
+::
+
+
+
+### Order Payments Area Chart
+
+::preview{component='<Charts />'}
+
+<div class="flex flex-wrap gap-3 justify-center items-center">
+
+
+:charts{type='area' :chartOptions="order_payment_chart_options" title='Overall Sale' height=400 width=600 :chartSeries="order_payment_chart_series"}
+
+
+</div>
+
+#shortCode
+
+
+```vue
+<Charts
+  type="area"
+  title='Payment Revieved'
+  titleAlign='center'
+  height=400
+  width=600
+  :chartOptions="{
+        xaxis: {
+        type: 'datetime',
+        categories: [
+        '2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
+        '2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
+        '2024-11-01', '2024-12-01'
+        ],},
+        stroke: {
+            curve: 'smooth', // Set the curve to smooth for smoother lines
+            width: 2, // Set the stroke width
+            colors: ['#FF5733', '#33FF57'] // Example colors for the lines
+        },
+        title: {
+            text: 'Orders Count',
+            align: 'center',
+            style: {
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: '#263238'
+            }
+        },
+        tooltip: {
+            enabled: true,
+            shared: true,
+            style: {
+                fontSize: '14px'
+            }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'center',
+            floating: false,
+            fontSize: '14px',
+            formatter: function (val, opts) {
+                return `${val} - ${opts.w.globals.series[opts.seriesIndex]}`;
+            }
+        }
+    }"
+  :chartSeries="[
+        { name: 'Payment', data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20] }
+        
+    ]"
 />
 
 ```
