@@ -6535,6 +6535,7 @@ paths:
     post:
       tags:
         - Carts
+        - Orders
       summary: Place an order
       description: Places an order for the items in the cart and updates stock levels accordingly.
       operationId: placeOrder
