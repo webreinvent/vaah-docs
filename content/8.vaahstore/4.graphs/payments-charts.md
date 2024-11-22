@@ -211,7 +211,7 @@ export const useYourStore = defineStore('store', {
     async paymentMethodsPieChartData()
     {
         const options = {
-            method: 'get',
+            method: 'post',
             query: vaah().clone(this.query)
         };
         await vaah().ajax(
@@ -310,7 +310,7 @@ onMounted(() => {
 // routes/api.php
 use App\Http\Controllers\YourController;
 
-Route::get ('/charts/payment-methods-pie-chart-data', [YourController::class, 'paymentMethodsPieChartData']);
+Route::post ('/charts/payment-methods-pie-chart-data', [YourController::class, 'paymentMethodsPieChartData']);
 ```
 
 **Controller Method to Retrieve Chart Data**
@@ -340,11 +340,18 @@ public function paymentMethodsPieChartData(Request $request)
 ```php
 public static function paymentMethodsPieChartData()
     {
+        $start_date = isset($request->start_date) ? Carbon::parse($request->start_date)->startOfDay()
+         : Carbon::now()->startOfDay();
+        $end_date = isset($request->end_date) ? Carbon::parse($request->end_date)->endOfDay()
+         : Carbon::now()->endOfDay();
         $group_by_column = 'vh_st_payment_method_id';
         $relation = 'paymentMethod'; // Define the relation dynamically
         
         $payment_data = {model_name_space}::query()
         ->selectRaw("$group_by_column, COUNT(*) as total") 
+         ->when($start_date && $end_date, function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('created_at', [$start_date, $end_date]);
+            })
         // Use double quotes to interpolate the variable
         ->groupBy($group_by_column) 
         ->with("{$relation}:id,name")
