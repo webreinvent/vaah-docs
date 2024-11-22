@@ -674,7 +674,7 @@ public static function fetchCustomersCountData(Request $request)
 
 ### Props
 
->Note-> For Read More About Apexchart Props [Visit Here](https://apexcharts.com/){_target_blank}.
+>Note-> For Read More About Apexchart Props [Visit Here](https://apexcharts.com/){:target="_blank"}.
 
 <div class="relative overflow-x-auto rounded-lg border dark:border-0">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
