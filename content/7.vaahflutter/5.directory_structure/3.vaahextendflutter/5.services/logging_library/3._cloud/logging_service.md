@@ -34,6 +34,9 @@ Currently, six types of logging functions are there in abstract class `LoggingSe
 - event is used to for log, info, success, and warning.
 - exception is used to for logging exceptions.
 - transaction is used to for logging transactions.
+- action are used for logging events.
+- attributes are used to add sections to datadog.
+- setUserInfo are used to set default information of user.
 
 ## LoggingService
 
