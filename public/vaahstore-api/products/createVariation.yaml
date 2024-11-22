@@ -31,6 +31,8 @@ post:
                   type: array
                   items:
                     type: object
+                    required:
+                      - variation_name
                     properties:
                       variation_name:
                         type: string
@@ -43,6 +45,10 @@ post:
                       attribute 1:
                         description: "This is the name of the attribute."
                         type: object
+                        required:
+                          - value
+                          - id
+                          - vh_st_attribute_id
                         properties:
                           value:
                             type: string
@@ -70,7 +76,7 @@ post:
                   type: array
                   items:
                     type: string
-                  example: [ "attribute 1", "attribute 2" ]
+                  example: [ "attribute 1 ie.color", "attribute 2" ]
                   description: "An array of names of all attributes associated with the variations."
 
   responses:

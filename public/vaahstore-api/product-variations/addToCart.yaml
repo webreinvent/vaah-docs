@@ -1,6 +1,7 @@
 post:
   tags:
     - Product Variations
+    - Carts
   summary: Add product variation to cart
   description: |
     This endpoint adds a product variation to a user's cart based on the selected variation and vendor.
@@ -24,7 +25,6 @@ post:
               type: object
               required:
                 - id
-                - quantity
               properties:
                 id:
                   type: integer
