@@ -385,7 +385,7 @@ onMounted(() => {
 // routes/api.php
 use App\Http\Controllers\YourController;
 
-Route::get ('/charts/warehouse-stocks-bar-chart-data', [YourController::class, 'warehouseStockInBarChart']);
+Route::post ('/charts/warehouse-stocks-bar-chart-data', [YourController::class, 'warehouseStockInBarChart']);
 ```
 
 **Controller Method to Retrieve Chart Data**
@@ -410,7 +410,7 @@ public function warehouseStockInBarChart(Request $request)
     }
 ```
 
-**Model method for get the payment methods pie chart data used**
+**Model method for get the stocks available in the warehouses in Bar Chart**
 
 ```php
 public static function warehouseStockInBarChart($request)
@@ -436,12 +436,12 @@ public static function warehouseStockInBarChart($request)
     
         // Loop through each stock entry to build chart data
         foreach ($stock_data as $stock) {
-            $warehouse = {Your_Warehouse_Model}::find($stock->{$warehouse_foreign_key});
-    
+            $warehouse = self::find($stock->vh_st_warehouse_id);
+
             if ($warehouse) {
                 $chart_series[] = [
                     'name' => $warehouse->name,
-                    'data' => [(int)$stock->total_quantity],
+                    'data' => [(int)$stock->total_quantity]
                 ];
                 $chart_categories[] = $warehouse->name;
             }

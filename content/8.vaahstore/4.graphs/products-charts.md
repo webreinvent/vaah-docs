@@ -59,7 +59,7 @@ export const useYourStore = defineStore('store', {
  actions: {
    async topSellingProducts() {
      const options = {
-       method: 'get',
+       method: 'post',
        query: vaah().clone(this.query)
      };
      await vaah().ajax(
@@ -90,7 +90,7 @@ export const useYourStore = defineStore('store', {
 // routes/api.php
 use App\Http\Controllers\YourController;
 
-Route::get ('/charts/top-selling-products', [YourController::class, 'topSellingProducts']);
+Route::post ('/charts/top-selling-products', [YourController::class, 'topSellingProducts']);
 ```
 
 **Controller Method to Retrieve Chart Data**
@@ -115,21 +115,23 @@ public function topSellingProducts(Request $request)
     }
 ```
 
-**Model Method for Return Orders Status Distribution Data**
+**Model Method for Return Top Selling Products Data Over Specific Dates**
 
 ```php
  public static function topSellingProducts($request)
     {
         $limit = 5;
+         $limit = 5;
+        $start_date = isset($request->start_date) ? Carbon::parse($request->start_date)->startOfDay() : Carbon::now()->startOfDay();
+        $end_date = isset($request->end_date) ? Carbon::parse($request->end_date)->endOfDay() : Carbon::now()->endOfDay();
+        $apply_date_range = !isset($request->filter_all) || !$request->filter_all;
         $query = OrderItem::query();
-        // Model NameSpace where the quantity with product available
-
-        if (isset($request->filter)) {
-            $query = $query->quickFilter($request->filter);
+         if ($apply_date_range) {
+            $query->whereBetween('created_at', [$start_date, $end_date]);
         }
-          // Define the relation based on the user's request
+               // Define the relation based on the user's request
             $relation = 'medias'; 
-        $top_selling_variations = $query
+         $top_selling_variations = $query
             ->select('vh_st_product_variation_id')
             ->with(['productVariation' => function ($q) {
                 $q->with($relation); // Dynamically load the requested relation
@@ -142,8 +144,8 @@ public function topSellingProducts(Request $request)
             $sales_query = OrderItem::where('vh_st_product_variation_id', $item
             ->vh_st_product_variation_id);
 
-            if (isset($request->filter)) {
-                $sales_query = $sales_query->quickFilter($request->filter);
+            if ($apply_date_range) {
+                $sales_query->whereBetween('created_at', [$start_date, $end_date]);
             }
 
             $total_sales = $sales_query->sum('quantity');
@@ -163,7 +165,7 @@ public function topSellingProducts(Request $request)
         })
             ->sortByDesc('total_sales');
 
-        if (!isset($request->filter['time']) || $request->filter['time'] !== 'all') {
+        if ($apply_date_range) {
             $top_selling_variations = $top_selling_variations->take($limit);
         }
 
@@ -222,7 +224,7 @@ brand preferences and trends in the market.
 // routes/api.php
 use App\Http\Controllers\YourController;
 
-Route::get ('/charts/top-selling-brands', [YourController::class, 'topSellingBrands']);
+Route::post ('/charts/top-selling-brands', [YourController::class, 'topSellingBrands']);
 ```
 
 **Controller Method to Retrieve Chart Data**
@@ -253,48 +255,33 @@ public function topSellingBrands(Request $request)
  public static function topSellingBrands($request)
     {
         $limit = 5;
-        $query = OrderItem::query();
-
-        if (isset($request->filter)) {
-            $query = $query->quickFilter($request->filter);
-        }
-
-        $top_brands_by_product = $query
-            ->select('vh_st_product_id')
-            ->with(['product' => function ($query) {
-                $query->with('brand');
-            }])
+        $start_date = isset($request->start_date) ? Carbon::parse($request->start_date)->startOfDay() : Carbon::now()->startOfDay();
+        $end_date = isset($request->end_date) ? Carbon::parse($request->end_date)->endOfDay() : Carbon::now()->endOfDay();
+        $apply_date_range = !isset($request->filter_all) || !$request->filter_all;
+        $query = OrderItem::query()
+            ->selectRaw('vh_st_product_id, SUM(quantity) as total_sales')
+            ->when($apply_date_range, function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('created_at', [$start_date, $end_date]);
+            })
+            ->with(['product.brand'])
             ->groupBy('vh_st_product_id')
             ->get();
 
-        $top_brands_by_product = $top_brands_by_product->map(function ($item) use ($request) {
-            $sales_query = OrderItem::where('vh_st_product_id', $item->vh_st_product_id);
-
-            if (isset($request->filter)) {
-                $sales_query = $sales_query->quickFilter($request->filter);
-            }
-            // Calculate total sales for the product
-            $total_sales = $sales_query->sum('quantity');
+        $top_brands_by_product = $query->map(function ($item) {
             $product = $item->product;
-
-            if ($product) {
-                $brand = $product->brand;
-
+            if ($product && $product->brand) {
                 return [
-                    'total_sales' => $total_sales,
-                    'id' => $brand?->id,
-                    'name' => $brand?->name,
-                    'slug' => $brand?->slug,
+                    'total_sales' => $item->total_sales,
+                    'id' => $product->brand->id,
+                    'name' => $product->brand->name,
+                    'slug' => $product->brand->slug,
                 ];
             }
             return null;
         })
             ->filter()
-            ->sortByDesc('total_sales');
-
-        if (!isset($request->filter['time']) || $request->filter['time'] !== 'all') {
-            $top_brands_by_product = $top_brands_by_product->take($limit);
-        }
+            ->sortByDesc('total_sales')
+            ->take($limit);
         return [
             'data' => [
                 'top_selling_brands' => $top_brands_by_product->values(),
@@ -353,7 +340,7 @@ among customers, providing valuable insights into trends and customer preference
 // routes/api.php
 use App\Http\Controllers\YourController;
 
-Route::get ('/charts/top-selling-categories', [YourController::class, 'topSellingCategories']);
+Route::post ('/charts/top-selling-categories', [YourController::class, 'topSellingCategories']);
 ```
 
 **Controller Method to Retrieve Chart Data**
@@ -385,12 +372,13 @@ public function topSellingCategories(Request $request)
     {
         $limit = 5;
         $query = OrderItem::query();
-
+        $start_date = isset($request->start_date) ? Carbon::parse($request->start_date)->startOfDay() : Carbon::now()->startOfDay();
+        $end_date = isset($request->end_date) ? Carbon::parse($request->end_date)->endOfDay() : Carbon::now()->endOfDay();
         // Apply filters if provided in the request
-        if (isset($request->filter)) {
-            $query = $query->quickFilter($request->filter);
+        $apply_date_range = !isset($request->filter_all) || !$request->filter_all;
+        if ($apply_date_range) {
+            $query->whereBetween('created_at', [$start_date, $end_date]);
         }
-
         // Get the top-selling categories by product, with all categories and their parents
         $top_categories_by_product = $query
             ->select('vh_st_product_id')

@@ -491,7 +491,7 @@ public function vendorSalesByRange(Request $request)
     }
 ```
 
-**Model Method for Return Orders Status Distribution Data**
+**Model Method for Return Different Vendors By Sales Over Specific Dates**
 
 ```php
 public static function vendorSalesByRange(Request $request)
