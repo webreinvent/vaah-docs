@@ -40,7 +40,7 @@ Use cases:
 
 ::
 ## Log types
-Currently, our logs are of six types.
+Currently, our logs are of nine types.
 1. log
 2. info
 3. success
