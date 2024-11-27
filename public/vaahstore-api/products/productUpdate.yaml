@@ -6,6 +6,8 @@ get:
   operationId: getProductById
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/id'
+    - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
+    - '$ref': '../vaahstore.yaml#/components/parameters/include'
   responses:
     '200':
       description: Product Retrieved
