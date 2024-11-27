@@ -510,12 +510,17 @@ components:
       name: filter[category][]
       in: query
       required: false
-      description: Filter by category slugs.
+      description: Filter by category. You can provide multiple categories using either category IDs or slugs.
       schema:
         type: array
         items:
-          type: string
-      example: [ 'category-1', 'category-2' ]
+          oneOf:
+            - type: integer
+            - type: string
+      example:
+        - 49
+        - 48
+        - 'electronics'
 
     product_variations:
       name: filter[product_variations][]
@@ -654,7 +659,7 @@ components:
       name: ids
       in: query
       required: false
-      description: Filter products by their IDs. Example `/products?ids=[1,2,3]`
+      description: Filter records by their IDs. Example `?ids=[1,2,3]`
       schema:
         type: array
         items:
@@ -664,21 +669,21 @@ components:
       name: exclude
       in: query
       required: false
-      description: Comma-separated list of fields or relations to exclude from the response. Example`/products?exclude[price,status,productVariations]=true&exclude[medias]=true`
+      description: Comma-separated list of fields or relations to exclude from the response. Example`?exclude[price,status,productVariations]=true&exclude[medias]=true`
       schema:
         type: array
     include:
       name: include
       in: query
       required: false
-      description: Comma-separated list of fields or relations to include in the response. Example`/products?include[price,status,productVariations]=true&include[medias]=true`
+      description: Comma-separated list of fields or relations to include in the response. Example`?include[price,status,productVariations]=true&include[medias]=true`
       schema:
         type: array
     filter_new_arrivals:
       name: filter[new_arrivals]
       in: query
       required: false
-      description: Filters products by the "new arrivals". When using this filter, you must also provide a date range with `filter[from]` and `filter[to]`. Example `/products?filter[new_arrivals]=true&filter[from]=2024-11-01&filter[to]=2024-11-30`.
+      description: Filters products by the "new arrivals". When using this filter, you must also provide a date range with `filter[from]` and `filter[to]`. Example `?filter[new_arrivals]=true&filter[from]=2024-11-01&filter[to]=2024-11-30`.
       schema:
         type: boolean
         example: true
