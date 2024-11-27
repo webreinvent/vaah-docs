@@ -650,6 +650,31 @@ components:
         type: array
         items:
           type: string
+    ids_query:
+      name: ids
+      in: query
+      required: false
+      description: Filter products by their IDs. Example `/products?ids=[1,2,3]`
+      schema:
+        type: array
+        items:
+          type: integer
+          example: 1
+    exclude:
+      name: exclude
+      in: query
+      required: false
+      description: Comma-separated list of fields or relations to exclude from the response. Example`/products?exclude[price,status,productVariations]=true&exclude[medias]=true`
+      schema:
+        type: array
+    include:
+      name: include
+      in: query
+      required: false
+      description: Comma-separated list of fields or relations to include in the response. Example`/products?include[price,status,productVariations]=true&include[medias]=true`
+      schema:
+        type: array
+
 
 
   requestBodies:

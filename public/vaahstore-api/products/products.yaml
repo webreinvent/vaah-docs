@@ -7,6 +7,9 @@ get:
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/page'
     - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - '$ref': '../vaahstore.yaml#/components/parameters/ids_query'
+    - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
+    - '$ref': '../vaahstore.yaml#/components/parameters/include'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
