@@ -19,7 +19,8 @@ export default defineNuxtConfig({
   ],
 
   plugins: [
-    "~/plugins/gtag.client"
+    "~/plugins/gtag.client",
+    { src: '~/plugins/apexchart.js', mode: 'client' }
   ],
 
   hooks: {

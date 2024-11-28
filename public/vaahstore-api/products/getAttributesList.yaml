@@ -12,25 +12,15 @@ post:
       application/json:
         schema:
           type: object
+          required:
+            - attribute_type
           properties:
             attribute_type:
               type: string
               description: The type of attribute to retrieve. Can be "attribute" or "attribute_group".
-              example: "attribute_group"
+              example: "attribute or attribute_group"
 
-            get_attribute_from_group:
-              type: boolean
-              description: Indicates whether to retrieve attributes from a specific group.
-              example: false
-            product_id:
-              type: integer
-              description: The ID of the product related to the attributes.
-              example: 23
-            selected_attribute:
-              type: object
-              nullable: true
-              description: The selected attribute for retrieving attributes from a group. Null if not applicable.
-              example: null
+
   responses:
     '200':
       description: Successful response with attribute list

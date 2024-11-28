@@ -1,6 +1,7 @@
 post:
   tags:
     - Products
+    - Carts
   summary: Add a product to the cart
   description: |
     This endpoint allows users to add a product to their cart. It requires user information and the product ID. If the product is out of stock or no user information is provided, an error message will be returned.
@@ -15,25 +16,24 @@ post:
           properties:
             user_info:
               type: object
+              required:
+                - id
               properties:
                 id:
                   type: integer
                   example: 1
             product:
               type: object
+              required:
+                - id
               properties:
                 id:
                   type: integer
                   example: 1
-                product_price_range:
-                  type: object
-                  properties:
-                    selected_vendor:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
+          required:
+            - user_info
+            - product
+
 
   responses:
     '200':
