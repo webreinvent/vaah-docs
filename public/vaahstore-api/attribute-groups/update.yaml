@@ -1,0 +1,365 @@
+get:
+  tags:
+    - Attribute Groups
+  summary: Get record by attribute group ID
+  description: Retrieve a attribute group by its unique identifier.
+  operationId: getAttributeGroupById
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  responses:
+    '200':
+      description: Attribute group Retrieved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: "Indicates if the request was successful."
+                example: true
+              data:
+                type: object
+                properties:
+                  active_attributes:
+                    type: array
+                    description: "A list of active attributes."
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: "The unique identifier for the attribute."
+                          example: 1
+                        name:
+                          type: string
+                          description: "The name of the attribute."
+                          example: "Attribute A"
+                        type:
+                          type: string
+                          description: "The type or category of the attribute."
+                          example: "property"
+                  attributes_list:
+                    type: array
+                    description: "A list of all attributes associated with the group."
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: "The unique identifier for the attribute."
+                          example: 1
+                        name:
+                          type: string
+                          description: "The name of the attribute."
+                          example: "Attribute A"
+                        type:
+                          type: string
+                          description: "The type or category of the attribute."
+                          example: "property"
+                        deleted_at:
+                          type: string
+                          nullable: true
+                          description: "The date and time when the attribute was deleted, if applicable."
+                          example: null
+                        pivot:
+                          type: object
+                          description: "The pivot object representing the relationship between attribute group and attribute."
+                          properties:
+                            vh_st_attribute_group_id:
+                              type: integer
+                              description: "The ID of the associated attribute group."
+                              example: 4
+                            vh_st_attribute_id:
+                              type: integer
+                              description: "The ID of the associated attribute."
+                              example: 1
+                  id:
+                    type: integer
+                    description: "The unique identifier for the attribute group."
+                    example: 4
+                  name:
+                    type: string
+                    description: "The name of the attribute group."
+                    example: "Group Name"
+                  slug:
+                    type: string
+                    description: "A URL-friendly version of the name."
+                    example: "group-name"
+                  is_active:
+                    type: integer
+                    description: "Indicates if the attribute group is active (1 for active, 0 for inactive)."
+                    example: 1
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: "The date and time when the attribute group was created."
+                    example: "2024-10-07 17:55:48"
+                  updated_at:
+                    type: string
+                    format: date-time
+                    description: "The date and time when the attribute group was last updated."
+                    example: "2024-10-07 17:55:48"
+                  created_by:
+                    type: integer
+                    description: "The identifier of the user who created the attribute group."
+                    example: 1
+                  updated_by:
+                    type: integer
+                    description: "The identifier of the user who last updated the attribute group."
+                    example: 1
+
+
+    '404':
+      description: Record Not Found
+      content:
+        application/json:
+          schema:
+            type: object  # Define the type of the response
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Record not found with ID: {id}"
+                ]
+            required:
+              - errors  # Make errors a required field
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+put:
+  tags:
+    - Attribute Groups
+  summary: Update an existing record
+  description: Update a attribute group record with the specified ID using the provided details.
+  operationId: updateAttributeGroup
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  requestBody:
+    description: "Update an existing attribute group and its associated values."
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: "The name of the attribute group."
+              example: "Gp1"
+            slug:
+              type: string
+              description: "A URL-friendly version of the name."
+              example: "gp1"
+            description:
+              type: string
+              nullable: true
+              description: "A brief description of the attribute group."
+              example: null
+            is_active:
+              type: integer
+              description: "Indicates if the attribute group is active (1 for active, 0 for inactive)."
+              example: null
+
+            active_attributes:
+              type: array
+              description: "A list of active attributes associated with the attribute group."
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "The unique identifier for the attribute."
+                    example: 1
+                  name:
+                    type: string
+                    description: "The name of the attribute."
+                    example: "Attribute A"
+                  type:
+                    type: string
+                    description: "The type or category of the attribute."
+                    example: "property"
+                required:
+                  - id
+                  - name
+                  - type
+          required:
+            - name
+            - slug
+            - active_attributes
+
+  responses:
+    '200':
+      description: Saved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: "Indicates if the request was successful."
+                example: true
+              data:
+                type: object
+                properties:
+                  active_attributes:
+                    type: array
+                    description: "A list of active attributes."
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: "The unique identifier for the attribute."
+                          example: 1
+                        name:
+                          type: string
+                          description: "The name of the attribute."
+                          example: "Attribute A"
+                        type:
+                          type: string
+                          description: "The type or category of the attribute."
+                          example: "property"
+                  attributes_list:
+                    type: array
+                    description: "A list of all attributes associated with the group."
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: "The unique identifier for the attribute."
+                          example: 1
+                        name:
+                          type: string
+                          description: "The name of the attribute."
+                          example: "Attribute A"
+                        type:
+                          type: string
+                          description: "The type or category of the attribute."
+                          example: "property"
+                        deleted_at:
+                          type: string
+                          nullable: true
+                          description: "The date and time when the attribute was deleted, if applicable."
+                          example: null
+                        pivot:
+                          type: object
+                          description: "The pivot object representing the relationship between attribute group and attribute."
+                          properties:
+                            vh_st_attribute_group_id:
+                              type: integer
+                              description: "The ID of the associated attribute group."
+                              example: 4
+                            vh_st_attribute_id:
+                              type: integer
+                              description: "The ID of the associated attribute."
+                              example: 1
+                  id:
+                    type: integer
+                    description: "The unique identifier for the attribute group."
+                    example: 4
+                  name:
+                    type: string
+                    description: "The name of the attribute group."
+                    example: "Group Name"
+                  slug:
+                    type: string
+                    description: "A URL-friendly version of the name."
+                    example: "group-name"
+                  is_active:
+                    type: integer
+                    description: "Indicates if the attribute group is active (1 for active, 0 for inactive)."
+                    example: 1
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: "The date and time when the attribute group was created."
+                    example: "2024-10-07 17:55:48"
+                  updated_at:
+                    type: string
+                    format: date-time
+                    description: "The date and time when the attribute group was last updated."
+                    example: "2024-10-07 17:55:48"
+                  created_by:
+                    type: integer
+                    description: "The identifier of the user who created the attribute group."
+                    example: 1
+                  updated_by:
+                    type: integer
+                    description: "The identifier of the user who last updated the attribute group."
+                    example: 1
+    400:
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "This name/slug already exist." ]
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+delete:
+  tags:
+    - Attribute Groups
+  summary: Delete a record by ID
+  description: Delete a single attribute group by its ID.
+  operationId: deleteAttributeGroupById
+  parameters:
+    - '$ref': '#/components/parameters/id'
+  responses:
+    '200':
+      description: Attribute group Deleted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items: { }
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Record has been deleted"
+    '400':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: string
+                items:
+                  type: string
+                  example: "Record does not exist."
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:

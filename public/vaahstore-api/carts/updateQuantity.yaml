@@ -1,0 +1,91 @@
+post:
+  tags:
+    - Carts
+  summary: Update cart item quantity
+  description: Updates the quantity of a specified product in the cart. If the new quantity is less than 1, the product will be removed from the cart.
+  operationId: updateQuantity
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            cart_product_details:
+              type: object
+              properties:
+                vh_st_cart_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the cart.
+                vh_st_product_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the product.
+                vh_st_product_variation_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the product variation.
+                vh_st_vendor_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the vendor.
+              required:
+                - vh_st_cart_id
+                - vh_st_product_id
+                - vh_st_product_variation_id
+                - vh_st_vendor_id
+            quantity:
+              type: integer
+              example: 3
+              description: The new quantity for the product.
+          required:
+            - quantity
+            - cart_product_details
+  responses:
+    '200':
+      description: Cart item quantity updated successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/Cart'
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved successfully."
+
+    '400':
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Invalid input."
+
+    '404':
+      description: Cart not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Cart not found."

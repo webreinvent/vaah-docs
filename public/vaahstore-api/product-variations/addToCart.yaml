@@ -1,0 +1,85 @@
+post:
+  tags:
+    - Product Variations
+    - Carts
+  summary: Add product variation to cart
+  description: |
+    This endpoint adds a product variation to a user's cart based on the selected variation and vendor.
+  operationId: addVariationToCart
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            user_info:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+                  example: 119
+            product_variation:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+                quantity:
+                  type: integer
+                  description: The available total quantity of the variation
+
+                vh_st_product_id:
+                  type: integer
+  responses:
+    '200':
+      description: Added to cart successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved successfully."
+              data:
+                type: object
+                properties:
+
+                  example: "Response data will include user information."
+    '400':
+      description: Error occurred while adding variation to cart
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: ["Please enter valid user","This product variation is out of stock for selected vendor"]
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An error occurred"

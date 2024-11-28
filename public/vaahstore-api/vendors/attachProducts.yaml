@@ -1,0 +1,121 @@
+post:
+  tags:
+    - Vendors
+  summary: Attach products with vendor
+  description: This endpoint allows adding products to a specific vendor.
+  operationId: createProduct
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - id
+            - products
+          properties:
+            id:
+              type: integer
+              description: The ID of the vendor.
+              example: 6
+            products:
+              type: array
+              items:
+                type: object
+                required:
+                  - product
+                  - can_update
+                  - status
+                properties:
+                  product:
+                    type: object
+                    required:
+                      - id
+                      - name
+                      - vh_st_store_id
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the product.
+                        example: 3
+                      name:
+                        type: string
+                        description: The name of the product.
+                        example: "Sony"
+                      is_default:
+                        type: integer
+                        description: Whether the product is the default (0 or 1).
+                        example: 0
+                      vh_st_store_id:
+                        type: integer
+                        description: The store ID associated with the product.
+                        example: 1
+                  can_update:
+                    type: boolean
+                    description: Determines if the product can be updated by the vendor.
+                    example: false
+                  status:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The status ID of the product.
+                        example: 18
+                  status_notes:
+                    type: string
+                    description: Optional notes about the status of the product.
+                    example: "Product is under review"
+
+
+
+  responses:
+    '200':
+      description: Product added successfully with vendor
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                $ref: '../vaahstore.yaml#/components/schemas/Vendor'
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Product added successfully."
+    '400':
+      description: Bad Request. Validation failed or product already exists.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "'Sample Product' already exists for this vendor."
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "An error occurred while adding the product."

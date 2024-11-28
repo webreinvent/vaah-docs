@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "vaahstore:api": "npx @redocly/cli bundle public/vaahstore-api/vaahstore.yaml --output public/vaahstore-apis.yaml"
   },
   "dependencies": {
     "@iconify-json/heroicons": "^1.2.1",
@@ -22,7 +23,12 @@
     "medium-zoom": "^1.1.0",
     "nuxt": "^3.14.159",
     "nuxt-og-image": "^3.0.8",
-    "pinia": "^2.2.6"
+    "pinia": "^2.2.6",
+    "@vueuse/core": "^11.1.0",
+    "apexcharts": "^3.54.1",
+    "flowbite": "^2.5.2",
+    "vue3-apexcharts": "^1.7.0",
+    "@scalar/api-reference": "^1.25.21"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.6.1",

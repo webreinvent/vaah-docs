@@ -1,0 +1,82 @@
+post:
+  summary: User Signin
+  description: |
+    This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/customers/POST/api/store/users) as a cutomer in VaahStore
+  operationId: postSignIn
+  tags:
+    - Authentication
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              description: The email address of the user.
+            password:
+              type: string
+              description: The password for the account.
+          required:
+            - email
+            - password
+  responses:
+    '200':
+      description: User signed in successfully and API token generated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  item:
+                    type: object
+                    description: The authenticated user data including the API token.
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the user.
+                      email:
+                        type: string
+                        format: email
+                        description: The email address of the user.
+                      api_token:
+                        type: string
+                        description: The API token for authenticating future requests.
+    '400':
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["The email field is required.", "The password field is required."]
+    '401':
+      description: Unauthorized, invalid credentials provided.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["Invalid credentials provided."]

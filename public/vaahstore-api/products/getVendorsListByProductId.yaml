@@ -1,0 +1,89 @@
+get:
+  tags:
+    - Products
+  summary: Get Vendors List for Product By Product ID
+  description: |
+    This endpoint retrieves a list of vendors associated with a specific product.
+    It returns vendor details, including the quantity available and their price range.
+    Additionally, it checks for any missing default vendors and includes them in the response.
+  operationId: getVendorsListForProduct
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the product for which to retrieve the vendors.
+      schema:
+        type: integer
+        example: 1
+  responses:
+    200:
+      description: Successfully retrieved the list of vendors.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 109
+                    name:
+                      type: string
+                      example: "Vendor 1"
+                    slug:
+                      type: string
+                      example: "vendor-1"
+                    is_default:
+                      type: integer
+                      example: 1
+                    quantity:
+                      type: integer
+                      example: 0
+                    product_price_range:
+                      type: array
+                      items:
+                        type: number
+                      example: [ ]
+                    pivot_id:
+                      type: integer
+                      example: 79
+                    is_preferred:
+                      type: boolean
+                      nullable: true
+                      example: null
+              message:
+                type: boolean
+                example: false
+    404:
+      description: Product not found or no vendors associated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Product not found or no vendors associated."
+    400:
+      description: Bad Request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Invalid product ID."

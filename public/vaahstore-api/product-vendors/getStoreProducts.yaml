@@ -1,0 +1,84 @@
+post:
+  summary: "Get Products of Store"
+  operationId: "productForStore"
+  tags:
+    - Vendor Products
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: array
+              items:
+                type: integer
+              description: "Array of Store IDs"
+              example: [1, 2, 3]
+            q:
+              type: string
+              description: "Search query for product name or slug"
+              example: "Product Name"
+          required:
+            - id
+            - q
+  responses:
+    '200':
+      description: "List of products for the given store(s)"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Product ID"
+                      example: 1
+                    name:
+                      type: string
+                      description: "Product Name"
+                      example: "Sample Product"
+                    slug:
+                      type: string
+                      description: "Product Slug"
+                      example: "sample-product"
+                    vh_st_store_id:
+                      type: integer
+                      description: "Store ID where the product belongs"
+                      example: 1
+                    store:
+                      type: object
+                      description: "Store object to which the product belongs"
+                      properties:
+                        id:
+                          type: integer
+                          description: "Store ID"
+                          example: 1
+                        name:
+                          type: string
+                          description: "Store Name"
+                          example: "Main Store"
+                        slug:
+                          type: string
+                          description: "Store Slug"
+                          example: "store-slug"
+                        is_default:
+                          type: boolean
+                          nullable: true
+                          description: "Indicates if the store is the default store"
+                          example: null
+                        deleted_at:
+                          type: string
+                          format: date-time
+                          nullable: true
+                          description: "Timestamp if the store is deleted"
+                          example: null

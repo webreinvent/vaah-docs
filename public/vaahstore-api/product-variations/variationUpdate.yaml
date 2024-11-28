@@ -1,0 +1,134 @@
+get:
+  tags:
+    - Product Variations
+  summary: Get variation by ID
+  description: Retrieve a product variation by its unique identifier.
+  operationId: getProductVariationById
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+    - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
+    - '$ref': '../vaahstore.yaml#/components/parameters/include'
+  responses:
+    '200':
+      description: Product Variation Retrieved
+      content:
+        application/json:
+          schema:
+            '$ref': '../vaahstore.yaml#/components/schemas/ProductVariation'
+    '404':
+      description: Record Not Found
+      content:
+        application/json:
+          schema:
+            type: object  # Define the type of the response
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Record not found with ID: {id}"
+                ]
+            required:
+              - errors  # Make errors a required field
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+put:
+  tags:
+    - Product Variations
+  summary: Update an existing  variation
+  description: Update a product variation with the specified ID using the provided details.
+  operationId: updateProduct
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  requestBody:
+    '$ref': '../vaahstore.yaml#/components/requestBodies/ProductVariationRequestBody'
+  responses:
+    '200':
+      description: Saved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/ProductVariation'
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Saved Successfully"
+    400:
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "This name/slug already exist." ]
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+delete:
+  tags:
+    - Product Variations
+  summary: Delete a variation by ID
+  description: Delete a single product variation by its ID.
+  operationId: deleteProductVariationById
+  parameters:
+    - '$ref': '#/components/parameters/id'
+  responses:
+    '200':
+      description: Product Variation Deleted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items: { }
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Record has been deleted"
+    '400':
+      description: Record does not exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: string
+                items:
+                  type: string
+                  example: "Record does not exist."
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+

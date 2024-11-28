@@ -1,0 +1,3601 @@
+openapi: 3.0.0
+info:
+  title: VaahStore
+  description: |
+    VaahStore is  an e-commerce module that provides an API specification for user authentication and store management.
+        To get started, [sign in here](#tag/authentication/POST/api/signin).
+    ### Note:
+        Before testing any requests, make sure to replace the URL placeholder (`{your_url}`) with your actual URL in the server configuration.
+
+    <details>
+              <summary>Example</summary>
+
+              GET `{Your Base URL}`/api/`{path}`
+
+    ## Resources:
+       For more information and updates, visit <a href="https://github.com/webreinvent" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/github.png" alt="GitHub" style="vertical-align: middle; margin-right: 4px;"/></a>.
+
+  version: "Under Development"
+  contact:
+    name: Webreinvent Team
+    url: https://webreinvent.com/
+    email: we@webreinvent.com
+servers:
+
+security:
+  - bearerAuth: []
+  - basicAuth: []
+
+tags:
+  - name: Authentication
+    description: |
+      Provides all the required endpoints to create an account and authorize yourself.
+      Ensure that you replace the base URL with your own domain for all authentication-related requests.
+  - name: Taxonomies
+    description: |
+      Everything about Taxonomies in VaahStore.
+      From here, you can get the taxonomy ID used in VaahStore for various purposes, such as managing statuses.
+      Each CRUD operation has its own associated statuses; for instance, the store entity has specific statuses like `store-status`.
+      You can retrieve all the statuses associated with the store CRUD operations, allowing for better management and understanding of the state of each store.
+  - name: Stores
+    description: Everything about Stores
+  - name: Products
+    description: Everything about Products in VaahStore
+  - name: Vendors
+    description: Everything about Vendors in VaahStore
+  - name: Product Variations
+    description: Everything about Product Variations in VaahStore
+  - name: Vendor Products
+    description: Everything about Vendor Products in VaahStore
+  - name: Product Stocks
+    description: Everything about Product Stocks in VaahStore
+  - name: Carts
+    description: Everything about Cart Process in VaahStore
+  - name: Orders
+    description: Everything about Order Process in VaahStore
+  - name: Payments
+    description: Everything about Payments in VaahStore
+  - name: Shipments
+    description: Everything about Shipments in VaahStore
+  - name: Product Attributes
+    description: Everything about Product Attributes in VaahStore
+  - name: Product Medias
+    description: Everything about Product Medias in VaahStore
+  - name: Categories
+    description: Everything about Categories in VaahStore
+  - name: Brands
+    description: Everything about Brands in VaahStore
+  - name: Warehouses
+    description: Everything about Warehouses in VaahStore
+  - name: Attributes
+    description: Everything about Attributes in VaahStore
+  - name: Attribute Groups
+    description: Everything about Attribute Groups in VaahStore
+  - name: Addresses
+    description: Everything about Addresses in VaahStore
+  - name: Wishlists
+    description: Everything about Wishlists in VaahStore
+  - name: Customers
+    description: Everything about Customers in VaahStore
+  - name: Customer Groups
+    description: Everything about Customer Groups in VaahStore
+  - name: Payment Methods
+    description: Everything about Payment Methods in VaahStore
+  - name: Settings
+    description: >
+      Everything about Settings in VaahStore. This section includes managing various
+      settings and configurations related to VaahStore. Additionally, it covers how to
+      create, read, update, and delete sample records for VaahStore CRUD operations.
+
+
+paths:
+
+  '/api/signin':
+    $ref: './authentication/signin.yaml'  # Reference to the stores file
+
+  '/api/taxonomies':
+    $ref: './taxonomies/index.yaml'  # Reference to the taxonomies file
+
+  '/api/store/stores':
+    $ref: './stores/stores.yaml'  # Reference to the stores file
+  /api/store/stores/{id}/action/{action}:
+    $ref: './stores/storeAction.yaml'  # Reference to the stores item action file
+  /api/store/stores/{id}:
+    $ref: './stores/storeUpdate.yaml'  # Reference to the stores item file
+  /api/store/stores/action/{action}:
+    $ref: './stores/storeListAction.yaml'  # Reference to the stores list action file
+
+  '/api/store/products':
+    $ref: './products/products.yaml'  # Reference to the create products file
+  '/api/store/products/{id}':
+    $ref: './products/productUpdate.yaml'  # Reference to the product item file
+  '/api/store/products/{id}/action/{action}':
+    $ref: './products/productAction.yaml'  # Reference to the product item action file
+  '/api/store/products/action/{action}':
+    $ref: './products/productListAction.yaml'  # Reference to the products list action file
+  '/api/store/products/vendor':
+    $ref: './products/attachVendor.yaml'  # Reference to the attachment with vendor file
+  '/api/store/products/get-vendors-list/{id}':
+    $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
+  '/api/store/products/{id}/action-for-vendor/{action}':
+    $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
+  '/api/store/products/getAttributeList':
+    $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
+  '/api/store/products/getAttributeValue':
+    $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
+  '/api/store/products/variation':
+    $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
+  '/api/store/products/add/product-to-cart':
+    $ref: './products/addToCart.yaml'  # Reference to the add product to cart file
+
+
+  '/api/store/vendors':
+    $ref: './vendors/vendors.yaml'  # Reference to the vendors file
+  '/api/store/vendors/{id}':
+    $ref: './vendors/vendorsUpdate.yaml'  # Reference to the vendors item file
+  '/api/store/vendors/{id}/action/{action}':
+    $ref: './vendors/vendorAction.yaml'  # Reference to the vendors item action file
+  '/api/store/vendors/action/{action}':
+    $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors list actions file
+  '/api/store/vendors/add/product':
+    $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
+  '/api/store/vendors/add/user':
+    $ref: './vendors/addUser.yaml'  # Reference to the vendors attachment with user file
+
+
+  '/api/store/productvariations':
+    $ref: './product-variations/variations.yaml'  # Reference to the productvariations file
+  '/api/store/productvariations/{id}':
+    $ref: './product-variations/variationUpdate.yaml'  # Reference to the productvariations item file
+  '/api/store/productvariations/{id}/action/{action}':
+    $ref: './product-variations/variationAction.yaml'  # Reference to the productvariations item action file
+  '/api/store/productvariations/action/{action}':
+    $ref: './product-variations/variationListActions.yaml'  # Reference to the productvariations list actions file
+  '/api/store/productvariations/add/variation-to-cart':
+    $ref: './product-variations/addToCart.yaml'  # Reference to the add to cart file
+  '/api/store/productvariations/disable/active-cart':
+    $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
+  '/api/store/productvendors':
+    $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
+  '/api/store/productvendors/getProductForStore':
+    $ref: './product-vendors/getStoreProducts.yaml'  # Reference to the product vendors get products of stores file
+  '/api/store/productvendors/{id}':
+    $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
+  '/api/store/productvendors/{id}/action/{action}':
+    $ref: './product-vendors/itemAction.yaml'  # Reference to the product vendor item action file
+  '/api/store/productvendors/action/{action}':
+    $ref: './product-vendors/listAction.yaml'  # Reference to the product vendor list actions file
+  '/api/store/productvendors/product/price':
+    $ref: './product-vendors/addProductPrice.yaml'  # Reference to the add product price file
+
+  '/api/store/productstocks':
+    $ref: './product-stocks/index.yaml'  # Reference to the product stocks file
+  '/api/store/productstocks/{id}':
+    $ref: './product-stocks/update.yaml'  # Reference to the product stocks item file
+  '/api/store/productstocks/{id}/action/{action}':
+    $ref: './product-stocks/itemAction.yaml'  # Reference to the product stocks item action file
+  '/api/store/productstocks/action/{action}':
+    $ref: './product-stocks/listAction.yaml'  # Reference to the product stocks list action file
+
+  '/api/store/carts':
+    $ref: './carts/index.yaml'  # Reference to the carts file
+  '/api/store/carts/{id}':
+    $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
+  '/api/store/carts/cart-check-out/{id}':
+    $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
+  '/api/store/carts/update/quantity':
+    $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
+  '/api/store/carts/delete-cart-item':
+    $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
+  '/api/store/carts/add-to-wishlist':
+    $ref: './carts/addToWishlist.yaml'  # Reference to  add to wishlist  file
+  '/api/store/carts/save/cart-user-address':
+    $ref: './carts/saveAddress.yaml'  # Reference to  save cart user address  file
+  '/api/store/carts/remove/cart-user-address':
+    $ref: './carts/removeAddress.yaml'  # Reference to  remove cart user address  file
+  '/api/store/carts/update/user-shipping-address':
+    $ref: './carts/updateAddress.yaml'  # Reference to  update cart user address  file
+  '/api/store/carts/place-order':
+    $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
+  '/api/store/carts/get-order-details/{order_id}':
+    $ref: './carts/getOrder.yaml'  # Reference to get order file
+  '/api/store/carts/{id}/action/{action}':
+    $ref: './carts/itemAction.yaml'  # Reference to cart item action file
+  '/api/store/carts/action/{action}':
+    $ref: './carts/listAction.yaml'  # Reference to cart list actions file
+
+  '/api/store/orders':
+    $ref: './orders/index.yaml'  # Reference to order file
+  '/api/store/orders/{id}':
+    $ref: './orders/update.yaml'  # Reference to order item file
+  '/api/store/orders/{id}/action/{action}':
+    $ref: './orders/itemAction.yaml'  # Reference to order item action file
+  '/api/store/orders/action/{action}':
+    $ref: './orders/listAction.yaml'  # Reference to order list actions file
+  '/api/store/orders/get-order-items/{id}':
+    $ref: './orders/getOrderItems.yaml'  # Reference to get shipped order item details file
+
+  '/api/store/payments':
+    $ref: './payments/index.yaml'  # Reference to payments file
+  '/api/store/payments/{id}':
+    $ref: './payments/update.yaml'  # Reference to payment item file
+  '/api/store/payments/{id}/action/{action}':
+    $ref: './payments/itemAction.yaml'  # Reference to payment item action file
+  '/api/store/payments/action/{action}':
+    $ref: './payments/listAction.yaml'  # Reference to payment list actions file
+  '/api/store/payments/search/orders':
+    $ref: './payments/searchOrders.yaml'  # Reference to search available orders for payment file
+
+  '/api/store/shipments':
+    $ref: './shipments/index.yaml'  # Reference to shipments file
+  '/api/store/shipments/search/orders':
+    $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
+  '/api/store/shipments/{id}':
+    $ref: './shipments/update.yaml'  # Reference to shipments item file
+  '/api/store/shipments/{id}/get-shipped-item-list':
+    $ref: './shipments/getShippedItem.yaml'  # Reference to get shipment by item id file
+  '/api/store/shipments/update-shipped-item-quantity':
+    $ref: './shipments/updateItemQuantity.yaml'  # Reference to shipments update shipped items quantity file
+  '/api/store/shipments/{id}/action/{action}':
+    $ref: './shipments/itemAction.yaml'  # Reference to payment item actions file
+  '/api/store/shipments/action/{action}':
+    $ref: './shipments/listAction.yaml'  # Reference to payment list actions file
+
+  '/api/store/productattributes':
+    $ref: './product-attributes/index.yaml'  # Reference to product attributes file
+  '/api/store/productattributes/{id}':
+    $ref: './product-attributes/update.yaml'  # Reference to product attributes item file
+  '/api/store/productattributes/{id}/action/{action}':
+    $ref: './product-attributes/itemAction.yaml'  # Reference to product attributes item action file
+  '/api/store/productattributes/action/{action}':
+    $ref: './product-attributes/listAction.yaml'  # Reference to product attributes list actions file
+
+  '/api/store/productmedias':
+    $ref: './product-medias/index.yaml'  # Reference to product medias file
+  '/api/store/productmedias/{id}':
+    $ref: './product-medias/update.yaml'  # Reference to product media item file
+  '/api/store/productmedias/{id}/action/{action}':
+    $ref: './product-medias/itemAction.yaml'  # Reference to product media item action file
+  '/api/store/productmedias/action/{action}':
+    $ref: './product-medias/listAction.yaml'  # Reference to product media list action file
+
+  '/api/store/categories':
+    $ref: './categories/index.yaml'  # Reference to the categories file
+  '/api/store/categories/{id}':
+    $ref: './categories/update.yaml'  # Reference to the category item file
+  '/api/store/categories/{id}/action/{action}':
+    $ref: './categories/itemAction.yaml'  # Reference to the category item actions file
+  '/api/store/categories/action/{action}':
+    $ref: './categories/listAction.yaml'  # Reference to the category list actions file
+
+  '/api/store/brands':
+    $ref: './brands/index.yaml'  # Reference to brands  file
+  '/api/store/brands/{id}':
+    $ref: './brands/update.yaml'  # Reference to brand item  file
+  '/api/store/brands/{id}/action/{action}':
+    $ref: './brands/itemAction.yaml'  # Reference to brand item action file
+  '/api/store/brands/action/{action}':
+    $ref: './brands/listAction.yaml'  # Reference to brand list action file
+
+  '/api/store/warehouses':
+    $ref: './warehouses/index.yaml'  # Reference to warehouses  file
+  '/api/store/warehouses/{id}':
+    $ref: './warehouses/update.yaml'  # Reference to warehouse item file
+  '/api/store/warehouses/{id}/action/{action}':
+    $ref: './warehouses/itemAction.yaml'  # Reference to warehouse item action file
+  '/api/store/warehouses/action/{action}':
+    $ref: './warehouses/listAction.yaml'  # Reference to warehouse list action file
+
+  '/api/store/addresses/assets':
+    $ref: './addresses/getAssets.yaml'  # Reference to addresses assets file
+  '/api/store/addresses':
+    $ref: './addresses/index.yaml'  # Reference to addresses file
+  '/api/store/addresses/{id}':
+    $ref: './addresses/update.yaml'  # Reference to address item file
+  '/api/store/addresses/{id}/action/{action}':
+    $ref: './addresses/itemAction.yaml'  # Reference to address item actions file
+  '/api/store/addresses/action/{action}':
+    $ref: './addresses/listAction.yaml'  # Reference to address list actions file
+
+  '/api/store/wishlists/assets':
+    $ref: './wishlists/getAssets.yaml'  # Reference to wishlists assets file
+  '/api/store/wishlists':
+    $ref: './wishlists/index.yaml'  # Reference to wishlists file
+  '/api/store/wishlists/{id}':
+    $ref: './wishlists/update.yaml'  # Reference to wishlists item file
+  '/api/store/wishlists/{id}/action/{action}':
+    $ref: './wishlists/itemAction.yaml'  # Reference to wishlists item actions file
+  '/api/store/wishlists/{action/{action}':
+    $ref: './wishlists/listAction.yaml'  # Reference to wishlists list actions file
+
+  '/api/store/attributes':
+    $ref: './attributes/index.yaml'  # Reference to attributes file
+  '/api/store/attributes/{id}':
+    $ref: './attributes/update.yaml'  # Reference to attribute item file
+  '/api/store/attributes/{id}/action/{action}':
+    $ref: './attributes/itemAction.yaml'  # Reference to attribute item actions file
+  '/api/store/attributes/action/{action}':
+    $ref: './attributes/listAction.yaml'  # Reference to attribute list actions file
+
+  '/api/store/attributegroups':
+    $ref: './attribute-groups/index.yaml'  # Reference to attribute groups file
+  '/api/store/attributegroups/{id}':
+    $ref: './attribute-groups/update.yaml'  # Reference to attribute groups item file
+  '/api/store/attributegroups/{id}/action/{action}':
+    $ref: './attribute-groups/itemAction.yaml'  # Reference to attribute groups item actions file
+  '/api/store/attributegroups/action/{action}':
+    $ref: './attribute-groups/listAction.yaml'  # Reference to attribute groups list actions file
+
+  '/api/store/users/assets':
+    $ref: './customers/getAssets.yaml'  # Reference to customers assets file
+  '/api/store/users':
+    $ref: './customers/index.yaml'  # Reference to customers file
+  '/api/store/users/{id}':
+    $ref: './customers/update.yaml'  # Reference to customers update file
+
+  '/api/store/customergroups/assets':
+    $ref: './customer-groups/getAssets.yaml'  # Reference to customer groups assets file
+  '/api/store/customergroups':
+    $ref: './customer-groups/index.yaml'  # Reference to customer groups file
+  '/api/store/customergroups/{id}':
+    $ref: './customer-groups/update.yaml'  # Reference to customer group item file
+  '/api/store/customergroups/{id}/action/{actio}':
+    $ref: './customer-groups/itemAction.yaml'  # Reference to customer group item actions file
+  '/api/store/customergroups/action/{actio}':
+    $ref: './customer-groups/listAction.yaml'  # Reference to customer group list actions file
+
+  '/api/store/paymentmethods':
+    $ref: './payment-methods/index.yaml'  # Reference to payment-methods file
+  '/api/store/paymentmethods/{id}':
+    $ref: './payment-methods/update.yaml'  # Reference to payment-methods item file
+  '/api/store/paymentmethods/{id}/action/{action}':
+    $ref: './payment-methods/itemAction.yaml'  # Reference to payment-methods item actions file
+  '/api/store/paymentmethods/action/{action}':
+    $ref: './payment-methods/listAction.yaml'  # Reference to payment-methods list actions file
+
+  '/api/store/settings/get/all-item/count':
+    $ref: './settings/getItemsCount.yaml'  # Reference to get count of all crud in vaahstore file
+  '/api/store/settings/fill/bulk/method':
+    $ref: './settings/createBulkRecords.yaml'  # Reference to get count of all crud in vaahstore file
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Provide your API token in the `Authorization` header as follows:
+        `Authorization: Bearer YOUR_API_TOKEN`.
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |
+        Basic authentication using username and password.
+  parameters:
+    id:
+      name: id
+      description: The unique identifier of the item
+      in: path
+      required: true
+    action:
+      name: action
+      in: path
+      required: true
+      description: The action to perform on the item (activate, deactivate, trash, restore)
+      schema:
+        type: string
+        items:
+          example:
+            - activate
+            - deactivate
+            - trash
+            - restore
+    bulk_action:
+      name: action
+      in: path
+      required: true
+      description: The action to perform (e.g., activate-all, deactivate-all, trash-all, restore-all, delete-all).
+      schema:
+        type: string
+        items:
+          example:
+            - activate-all
+            - deactivate-all
+            - trash-all
+            - restore-all
+
+    limit:
+      name: limit
+      in: query
+      description: The number of items to return
+      required: false
+      schema:
+        type: integer
+        format: int64
+        default: 10
+    offset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set
+      required: false
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    page:
+      name: page
+      in: query
+      required: false
+      description: The page number to retrieve.
+      schema:
+        type: integer
+        example: 1
+
+
+
+    rows:
+      name: rows
+      in: query
+      required: false
+      description: Number of rows per page.
+      schema:
+        type: integer
+      example: 20
+
+    filter_q:
+      name: filter[q]
+      in: query
+      required: false
+      description: Search by name, slug, or id.
+      schema:
+        type: string
+
+    filter_is_active:
+      name: filter[is_active]
+      in: query
+      required: false
+      schema:
+        type: boolean
+    filter_is_default:
+      name: filter[is_default]
+      in: query
+      required: false
+      schema:
+        type: boolean
+
+    filter_trashed:
+      name: filter[trashed]
+      in: query
+      required: false
+      description: Include, exclude, or only show trashed.
+      schema:
+        type: string
+        enum: [ include, exclude, only ]
+
+    filter_date:
+      name: filter[date][]
+      in: query
+      required: false
+      description: Filter by date range.
+      schema:
+        type: array
+        items:
+          type: string
+          format: date
+      example: [ '2024-09-03', '2024-09-11' ]
+
+    min_price:
+      name: filter[min_price]
+      in: query
+      required: false
+      description: Minimum price.
+      schema:
+        type: number
+        format: float
+      example: 10.50
+
+    max_price:
+      name: filter[max_price]
+      in: query
+      required: false
+      description: Maximum price.
+      schema:
+        type: number
+        format: float
+      example: 100.00
+
+    category:
+      name: filter[category][]
+      in: query
+      required: false
+      description: Filter by category. You can provide multiple categories using either category IDs or slugs.
+      schema:
+        type: array
+        items:
+          oneOf:
+            - type: integer
+            - type: string
+      example:
+        - 49
+        - 48
+        - 'electronics'
+
+    product_variations:
+      name: filter[product_variations][]
+      in: query
+      required: false
+      description: Filter by product variation slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'variation-1', 'variation-2' ]
+
+    min_quantity:
+      name: filter[min_quantity]
+      in: query
+      required: false
+      description: Minimum quantity.
+      schema:
+        type: integer
+      example: 5
+
+    max_quantity:
+      name: filter[max_quantity]
+      in: query
+      required: false
+      description: Maximum quantity.
+      schema:
+        type: integer
+      example: 50
+
+    vendors:
+      name: filter[vendors][]
+      in: query
+      required: false
+      description: Filter by vendor slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'vendor-1', 'vendor-2' ]
+
+    stores:
+      name: filter[stores][]
+      in: query
+      required: false
+      description: Filter by store slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'store-1', 'store-2' ]
+    status:
+      name: filter[status][]
+      in: query
+      required: false
+      description: Filter by status slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'pending', 'approved' ]
+
+    products:
+      name: filter[products][]
+      in: query
+      required: false
+      description: Filter by associated products slug.
+      schema:
+        type: array
+        items:
+          type: string
+        example: [ 'product-1', 'product-2' ]
+    warehouses:
+      name: filter[warehouses][]
+      in: query
+      required: false
+      description: Filter by warehouse slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'warehouses-1' ]
+    country:
+      name: filter[country][]
+      in: query
+      required: false
+      description: Filter record by country name
+      schema:
+        type: array
+        items:
+          type: string
+    address:
+      name: filter[state_city]
+      in: query
+      required: false
+      description: Filter records by state, city, or postal code. Partial matching is supported.
+      schema:
+        type: string
+    users:
+      name: filter[users][]
+      in: query
+      required: false
+      description: Filter records by user first name.
+      schema:
+        type: array
+        items:
+          type: string
+    attributes:
+      name: filter[attributes][]
+      in: query
+      required: false
+      description: Filter record by attributes name/slug
+      schema:
+        type: array
+        items:
+          type: string
+    customers:
+      name: filter[customers][]
+      in: query
+      required: false
+      description: Filter by associated customers.
+      schema:
+        type: array
+        items:
+          type: string
+    order:
+      name: filter[order][]
+      in: query
+      required: false
+      description: Filter by associated order.
+      schema:
+        type: array
+        items:
+          type: string
+    ids_query:
+      name: ids
+      in: query
+      required: false
+      description: Filter records by their IDs. Example `?ids=[1,2,3]`
+      schema:
+        type: array
+        items:
+          type: integer
+          example: 1
+    exclude:
+      name: exclude
+      in: query
+      required: false
+      description: Comma-separated list of fields or relations to exclude from the response. Example`?exclude[price,status,productVariations]=true&exclude[medias]=true`
+      schema:
+        type: array
+    include:
+      name: include
+      in: query
+      required: false
+      description: Comma-separated list of fields or relations to include in the response. Example`?include[price,status,productVariations]=true&include[medias]=true`
+      schema:
+        type: array
+    filter_new_arrivals:
+      name: filter[new_arrivals]
+      in: query
+      required: false
+      description: Filters products by the "new arrivals". When using this filter, you must also provide a date range with `filter[from]` and `filter[to]`. Example `?filter[new_arrivals]=true&filter[from]=2024-11-01&filter[to]=2024-11-30`.
+      schema:
+        type: boolean
+        example: true
+    filter_from:
+      name: filter[from]
+      in: query
+      required: false
+      description: The start date for the new arrivals products, i.e., the date when the new product became available (`available_at`). Should be in `YYYY-MM-DD` format. This should be used in combination with `filter[to]` to define a date range for filtering products by their availability..
+      schema:
+        type: string
+        format: date
+        example: "2024-11-01"
+    filter_to:
+      name: filter[to]
+      in: query
+      required: false
+      description: The end date for the filter range. Should be in `YYYY-MM-DD` format. This should be used in combination with `filter[from]`. It filters products that became available on or before this `available_at` date.
+      schema:
+        type: string
+        format: date
+        example: "2024-11-01"
+    homepage_featured:
+      name: filter[featured_on_homepage]
+      in: query
+      required: false
+      description:  Filters products based on whether they are featured on the homepage.Set to `true` to return products that are featured on the homepage.
+      schema:
+        type: boolean
+        example: true
+    categorypage_featured:
+      name: filter[featured_on_category_page]
+      in: query
+      required: false
+      description: Filters products based on whether they are featured on the category page.Set to `true` to return products that are featured on the category page.
+      schema:
+        type: boolean
+        example: true
+    top_sellings_filter:
+      name: filter[top_selling]
+      in: query
+      required: false
+      description: Filters products to return only top-selling items. Set to `true` to filter by top-selling products.
+      schema:
+        type: boolean
+        example: true
+
+
+
+  requestBodies:
+    StoreRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+              - taxonomy_id_store_status
+              - slug
+              - is_multi_currency
+              - is_multi_lingual
+              - is_multi_vendor
+              - allowed_ips
+              - is_default
+              - is_active
+            properties:
+              name:
+                type: string
+                description: The name of the store.
+                example: "My Store"
+              taxonomy_id_store_status:
+                type: integer
+                description: The taxonomy ID representing the store's status.
+                example: 1
+              slug:
+                type: string
+                description: A URL-friendly version of the store name.
+                example: "my-store"
+              notes:
+                type: string
+                description: Optional notes about the store.
+                nullable: true
+                example: "Optional notes about the store"
+              is_multi_currency:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if the store supports multiple currencies.
+                example: 1
+              is_multi_lingual:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if the store supports multiple languages.
+                example: 0
+              is_multi_vendor:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if the store supports multiple vendors.
+                example: 1
+              allowed_ips:
+                type: array
+                items:
+                  type: string
+                  format: ipv4
+                description: List of allowed IP addresses.
+                example:
+                  - "192.168.1.1"
+                  - "192.168.1.2"
+              status_notes:
+                type: string
+                description: Notes regarding the store's status.
+                nullable: true
+                example: "Store is in review"
+              is_default:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if this is the default store.
+                example: 0
+              is_active:
+                type: integer
+                enum: [ 0, 1 ]
+                description: Indicates if the store is active.
+                example: 1
+
+    ProductVariationRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+
+                description: "Name of the product variation."
+              slug:
+                type: string
+                description: "Slug for the product variation."
+              price:
+                type: number
+                example: 59545
+                description: "Price of the product variation."
+              taxonomy_id_variation_status:
+                type: integer
+                description: "Taxonomy ID for the variation's status."
+              vh_st_product_id:
+                type: integer
+                description: "Product ID for the variation belongs to."
+              sku:
+                type: string
+                example: "Rerum sed ut eum aut."
+                description: "Stock Keeping Unit (SKU) of the product variation."
+              product:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    required: true
+                  uuid:
+                    type: string
+                description: "Product information to which the variation belongs."
+              is_active:
+                type: integer
+                example: 1
+                description: "Whether the product variation is active."
+              is_default:
+                type: integer
+                example: 0
+                description: "Flag indicating if the product variation is the default."
+              description:
+                type: string
+                description: "Description of the product variation."
+
+              meta_title:
+                type: string
+                description: "Meta title for SEO purposes."
+              meta_description:
+                type: string
+                description: "Meta description for SEO purposes."
+              meta_keywords:
+                type: array
+                items:
+                  type: string
+                description: "Meta keywords for SEO purposes."
+
+
+              status_notes:
+                type: string
+                description: "Notes related to the status."
+
+              has_media:
+                type: boolean
+                example: false
+                description: "Flag indicating if the variation has associated media."
+            required:
+              - name
+              - slug
+              - price
+              - sku
+              - taxonomy_id_variation_status
+              - vh_st_product_id
+              - is_active
+              - is_default
+              - product
+    ProductVendorRequestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - vh_st_product_id
+              - vh_st_vendor_id
+              - added_by
+              - can_update
+              - product
+              - vendor
+              - taxonomy_id_product_vendor_status
+              - store_vendor_product
+
+            properties:
+              vh_st_product_id:
+                type: integer
+                description: ID of the product being associated with the vendor.
+              vh_st_vendor_id:
+                  type: integer
+                  description: ID of the vendor being associated with the product.
+              added_by:
+                type: integer
+                description: ID of the user responsible for attaching the product to the vendor.
+              can_update:
+                type: integer
+                example: 0
+                description: Indicates whether the product can be updated by the user. A value of `0` means the product cannot be updated, while `1` means it can.
+              is_active:
+                type: integer
+                example: 1
+                description: Flag indicating if the product is active. A value of `1` means active, `0` means inactive.
+              product:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the product.
+                  name:
+                    type: string
+                    description: Name of the product.
+                  vh_st_store_id:
+                    type: integer
+                    description: ID of the store associated with the product.
+              vendor:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the vendor.
+                  name:
+                    type: string
+                    description: Name of the vendor.
+              store_vendor_product:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the store to which the product is linked.
+
+
+              taxonomy_id_product_vendor_status:
+                type: integer
+                description: ID representing the product vendor status based on the taxonomy.
+              status_notes:
+                type: string
+                description: Notes related to the status of the product-vendor relationship.
+    ProductVendorUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+              - vh_st_product_id
+              - vh_st_vendor_id
+              - added_by
+              - can_update
+              - product
+              - vendor
+              - taxonomy_id_product_vendor_status
+              - store_vendor_product
+
+            properties:
+              id:
+                type: string
+                description: "Unique identifier for the product vendor"
+              vh_st_product_id:
+                type: integer
+                description: ID of the product being associated with the vendor.
+              vh_st_vendor_id:
+                type: integer
+                description: ID of the vendor being associated with the product.
+              added_by:
+                type: integer
+                description: ID of the user responsible for attaching the product to the vendor.
+              can_update:
+                type: integer
+                example: 0
+                description: Indicates whether the product can be updated by the user. A value of `0` means the product cannot be updated, while `1` means it can.
+              is_active:
+                type: integer
+                example: 1
+                description: Flag indicating if the product is active. A value of `1` means active, `0` means inactive.
+              product:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the product.
+                  name:
+                    type: string
+                    description: Name of the product.
+                  vh_st_store_id:
+                    type: integer
+                    description: ID of the store associated with the product.
+              vendor:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the vendor.
+                  name:
+                    type: string
+                    description: Name of the vendor.
+              store_vendor_product:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the store to which the product is linked.
+
+
+              taxonomy_id_product_vendor_status:
+                type: integer
+                description: ID representing the product vendor status based on the taxonomy.
+              status_notes:
+                type: string
+                description: Notes related to the status of the product-vendor relationship.
+    ProductStocksRequestBody:
+      description: "Request body for creating a new product stock"
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - vh_st_vendor_id
+              - vh_st_product_id
+              - vh_st_product_variation_id
+              - vh_st_warehouse_id
+              - taxonomy_id_product_stock_status
+              - is_active
+              - quantity
+
+            properties:
+              vh_st_vendor_id:
+                type: integer
+                description: "Unique identifier for the vendor"
+                example: 1
+              vh_st_product_id:
+                type: integer
+                description: "Unique identifier for the product"
+                example: 1
+              vh_st_product_variation_id:
+                type: integer
+                description: "Unique identifier for the product variation"
+                example: 1
+              vh_st_warehouse_id:
+                type: integer
+                description: "Unique identifier for the warehouse"
+              taxonomy_id_product_stock_status:
+                type: integer
+                description: "Taxonomy status id for the product stocks"
+              quantity:
+                type: integer
+                description: "Quantity of the product in stock"
+                example: 100
+              is_active:
+                type: integer
+                description: "Indicates if the product stock is active (default is true)"
+                example: 1
+              status_notes:
+                type: string
+                description: "Additional notes for the product stock"
+                example: "Initial stock addition"
+    BrandsRequestBody:
+      description: "Request body for creating ot updating a brand"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the brand
+              slug:
+                type: string
+                description: Slug for the brand (URL-friendly identifier)
+              status:
+                type: object
+                description: Status details of the brand
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the status
+                required:
+                  - id
+              image:
+                type: string
+                nullable: true
+                description: Image file name or URL for the brand
+              is_active:
+                type: integer
+                description: Indicates if the brand is active (1 = active, 0 = inactive)
+                example: 1
+              meta_title:
+                type: string
+                description: SEO title for the brand
+                example: "samsung"
+              meta_description:
+                type: string
+                description: SEO description for the brand
+                example: "as"
+              meta_keywords:
+                type: array
+                items:
+                  type: string
+                description: SEO keywords for the brand
+                example: [ "as", "as" ]
+              status_notes:
+                type: string
+                nullable: true
+                description: Notes regarding the status of the brand
+                example: "Hello"
+              registered_at:
+                type: string
+                format: date-time
+                description: Date and time when the brand was registered
+                example: "2024-10-07T06:37:58.000Z"
+              registered_by:
+                type: integer
+                description: ID of the user who registered the brand
+                example: 1
+              approved_at:
+                type: string
+                format: date-time
+                description: Date and time when the brand was approved
+                example: "2024-10-07T06:37:58.000Z"
+              approved_by:
+                type: integer
+                description: ID of the user who approved the brand
+                example: 1
+            required:
+              - name
+              - slug
+              - status
+    WarehousesRequestBody:
+      description: "Request body for creating ot updating a warehouse"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the warehouse
+                example: "Warehouse 2"
+              slug:
+                type: string
+                description: URL-friendly identifier for the warehouse
+                example: "warehouse-2"
+              address_1:
+                type: string
+                description: First line of the warehouse address
+                example: "Vitae culpa et debitis."
+              country:
+                type: string
+                description: Country where the warehouse is located
+                example: "India"
+              vendor:
+                type: object
+                description: Vendor associated with the warehouse
+                properties:
+                  id:
+                    type: integer
+                    description: Vendor ID
+                    example: 1
+                  name:
+                    type: string
+                    description: Name of the vendor
+                    example: "Suscipit quos unde quia."
+                  slug:
+                    type: string
+                    description: Slug of the vendor
+                    example: "suscipit-quos-unde-quia"
+                required:
+                  - id
+              vh_st_vendor_id:
+                type: integer
+                description: Vendor ID associated with the warehouse
+                example: 1
+              taxonomy_id_warehouse_status:
+                type: integer
+                description: Taxonomy ID for the warehouse status
+                example: 27
+              address_2:
+                type: string
+                nullable: true
+                description: Second line of the warehouse address
+                example: "Ab hic voluptatem sit."
+              city:
+                type: string
+                description: City where the warehouse is located
+                example: "Eos sint quidem nisi."
+              state:
+                type: string
+                description: State or province where the warehouse is located
+                example: "Ad facilis ut non enim."
+              postal_code:
+                type: string
+                description: Postal or ZIP code of the warehouse
+                example: "123456"
+              is_active:
+                type: integer
+                description: Indicates if the warehouse is active (1 = active, 0 = inactive)
+                example: 1
+              status:
+                type: object
+                description: Status of the warehouse
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the warehouse status
+                    example: 27
+                  uuid:
+                    type: string
+                    description: UUID of the warehouse status
+                    example: "336d82b3-d58a-45cc-9529-e3ecb53b9c4a"
+                required:
+                  - id
+              status_notes:
+                type: string
+                nullable: true
+                description: Notes or comments regarding the status
+                example: "as"
+
+
+            required:
+              - name
+              - slug
+              - vendor
+              - country
+              - address_1
+              - status
+              - vh_st_vendor_id
+              - taxonomy_id_warehouse_status
+    CustomerGroupRequestBody:
+      description: "Request body for creating or updating a customer group"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the customer group.
+                maxLength: 150
+              slug:
+                type: string
+                description: A URL-friendly version of the customer group's name.
+                maxLength: 150
+              customers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the customer.
+                  required:
+                    - id
+              taxonomy_id_customer_groups_status:
+                type: integer
+                description: The identifier for the status of the customer group.
+              status_notes:
+                type: string
+                description: Additional notes regarding the status of the customer group.
+                maxLength: 150
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
+    PaymentMethodRequestBody:
+      description: "Request body for creating or updating a payment method"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the payment method.
+                maxLength: 250
+              slug:
+                type: string
+                description: A URL-friendly version of the payment method's name.
+                maxLength: 250
+              is_active:
+                type: integer
+                example: 1
+                description: "Whether the payment method is active."
+
+            required:
+              - name
+              - slug
+              - customers
+              - taxonomy_id_customer_groups_status
+
+
+
+
+
+
+
+  schemas:
+
+
+    Credentials:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address associated with your account.
+          example: we@webreinvent.com
+        password:
+          type: string
+          description: The password for your account.
+          example: webreinvent
+
+    Token:
+      type: object
+      properties:
+        api_token:
+          type: string
+          description: The token used for authenticating requests. You will receive this token after a successful login.
+          example: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    Store:
+      type: object
+      required:
+        - id
+        - name
+        - taxonomy_id_store_status
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Store Name"
+        slug:
+          type: string
+          example: "store-name"
+        is_multi_currency:
+          type: boolean
+          example: 1
+        is_multi_vendor:
+          type: boolean
+          example: 1
+        is_multi_lingual:
+          type: boolean
+          example: 1
+        allowed_ips:
+          type: array
+          items:
+            type: string
+            format: ipv4
+            example: "192.168.1.1"
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        status_notes:
+          type: string
+          example: "Store status notes"
+        created_at:
+          type: string
+          format: date-time
+
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - store
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        uuid:
+          type: string
+          example: "8952d982-4aca-462e-8e90-2f8340a22582"
+        name:
+          type: string
+          example: "My Product"
+        store:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        available_at:
+          type: string
+          format: date-time
+          example: "2024-10-23T00:00:00Z"
+        brand:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "Nike"
+        product_categories:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 213
+              name:
+                type: string
+                example: "Electronics"
+        product_price_range:
+          type: object
+          properties:
+            price_range:
+              type: array
+              items:
+                type: number
+              example: [ 0, 1 ]
+            quantity:
+              type: integer
+              example: 7
+            selected_vendor:
+              type: object
+              example: {"vendor data"}
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 17
+            name:
+              type: string
+              example: "Approved"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-09-17T10:45:06Z"
+
+    Vendor:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+        - is_default
+        - owned_by
+        - approved_by
+        - taxonomy_id_vendor_status
+        - vh_st_store_id
+        - store
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        uuid:
+          type: string
+          example: "8952d982-4aca-462e-8e90-2f8340a22582"
+        name:
+          type: string
+        slug:
+          type: string
+        store:
+          type: object
+          properties:
+            id:
+              required: true
+              type: integer
+            name:
+              type: string
+
+        registered_at:
+          type: string
+          format: date-time
+          example: "2024-09-27 13:21:21"
+        approvedByUser:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "Admin User"
+        ownedByUser:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: "Owner User"
+        vendorProducts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 101
+              name:
+                type: string
+                example: "Sample Product"
+        users:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 3
+              name:
+                type: string
+                example: "User Name"
+
+        email:
+          type: string
+          nullable: true
+          example: null
+        phone_number:
+          type: string
+          nullable: true
+          example: null
+        address:
+          type: string
+          nullable: true
+          example: null
+        is_active:
+          type: integer
+          nullable: true
+          example: null
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+        deleted_by:
+          type: integer
+          nullable: true
+          example: null
+        business_document_detail:
+          type: string
+          nullable: true
+          example: null
+        business_document_file:
+          type: string
+          nullable: true
+          example: null
+        business_document_type:
+          type: string
+          nullable: true
+          example: null
+        auto_approve_products:
+          type: boolean
+          nullable: true
+          example: null
+        meta:
+          type: object
+          nullable: true
+          example: null
+        services_offered:
+          type: string
+          nullable: true
+          example: null
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-09-27T10:00:00Z"
+        approved_at:
+          type: string
+          format: date-time
+          example: "2024-09-27 13:21:21"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-09-27 13:21:21"
+
+    ProductVariation:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the product variation"
+        uuid:
+          type: string
+          description: "UUID for the product variation"
+        vh_st_product_id:
+          type: integer
+          description: "Product ID to which the variation belongs"
+        name:
+          type: string
+          description: "Name of the product variation"
+        price:
+          type: number
+          description: "Price of the product variation"
+          format: float
+        sku:
+          type: string
+          description: "Stock Keeping Unit for the product variation"
+        slug:
+          type: string
+          description: "Slug identifier for the product variation"
+        quantity:
+          type: integer
+          description: "Quantity of the product variation in stock"
+        in_stock:
+          type: boolean
+          description: "Flag indicating whether the product variation is in stock"
+        is_active:
+          type: boolean
+          description: "Indicates if the product variation is active"
+        is_default:
+          type: boolean
+          description: "Indicates if this variation is the default variation"
+        is_mail_sent:
+          type: boolean
+          description: "Flag to check if email is sent regarding this variation"
+        is_quantity_low:
+          type: boolean
+          description: "Flag to check if the product variation quantity is low"
+        low_stock_at:
+          type: string
+          description: "Timestamp when the stock became low"
+          format: date-time
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier of the status"
+            name:
+              type: string
+              description: "Status name"
+            slug:
+              type: string
+              description: "Slug identifier for the status"
+        status_notes:
+          type: string
+          description: "Notes related to the status"
+          nullable: true
+        taxonomy_id_variation_status:
+          type: integer
+          description: "Taxonomy ID for the variation's status"
+        description:
+          type: string
+          description: "Description of the product variation"
+          nullable: true
+        meta:
+          type: object
+          description: "Meta information for the product variation"
+          nullable: true
+        meta_title:
+          type: string
+          description: "Meta title for SEO purposes"
+          nullable: true
+        meta_description:
+          type: string
+          description: "Meta description for SEO purposes"
+          nullable: true
+        meta_keywords:
+          type: string
+          description: "Meta keywords for SEO purposes"
+          nullable: true
+        has_media:
+          type: boolean
+          description: "Flag indicating whether the variation has associated media"
+          nullable: true
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the product"
+            name:
+              type: string
+              description: "Product name"
+            slug:
+              type: string
+              description: "Slug identifier for the product"
+            deleted_at:
+              type: string
+              description: "Timestamp when the product was deleted"
+              nullable: true
+              format: date-time
+        created_at:
+          type: string
+          description: "Timestamp when the variation was created"
+          format: date-time
+        updated_at:
+          type: string
+          description: "Timestamp when the variation was last updated"
+          format: date-time
+        created_by:
+          type: integer
+          description: "User ID of the creator of the variation"
+        updated_by:
+          type: integer
+          description: "User ID who last updated the variation"
+        deleted_at:
+          type: string
+          description: "Timestamp when the variation was deleted"
+          nullable: true
+          format: date-time
+        deleted_by:
+          type: integer
+          description: "User ID who deleted the variation"
+          nullable: true
+    ProductVendor:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+        vh_st_vendor_id:
+          type: integer
+        vh_st_product_id:
+          type: integer
+        added_by:
+          type: string
+          nullable: true
+        added_by_user:
+          type: string
+          nullable: true
+        can_update:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          nullable: true
+        deleted_at:
+          type: string
+          nullable: true
+        deleted_by:
+          type: string
+          nullable: true
+        is_active:
+          type: integer
+
+        meta:
+          type: object
+          nullable: true
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+            deleted_at:
+              type: string
+              nullable: true
+            product_variations_for_vendor_product:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  uuid:
+                    type: string
+                  vh_st_product_id:
+                    type: integer
+        product_price_range:
+          type: array
+          items:
+            type: integer
+
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+        status_notes:
+          type: string
+          nullable: true
+
+        taxonomy_id_product_vendor_status:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          type: string
+          nullable: true
+        vendor:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+            is_default:
+              type: integer
+            deleted_at:
+              type: string
+              nullable: true
+    ProductStock:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the product stock"
+        uuid:
+          type: string
+          description: "Unique identifier for the product stock instance"
+        vh_st_product_id:
+          type: integer
+          description: "Unique identifier for the vendor product"
+        vh_st_product_variation_id:
+            type: integer
+            description: "Unique identifier for the vendor product variation"
+        vh_st_vendor_id:
+            type: integer
+            description: "Unique identifier for the vendor"
+        vh_st_warehouse_id:
+            type: integer
+            description: "Unique identifier for the warehouse where the product stock is stored"
+        taxonomy_id_product_stock_status:
+            type: integer
+            description: "Taxonomy ID for the product stock status"
+        quantity:
+          type: integer
+          description: "Quantity of the product in stock"
+        is_active:
+          type: integer
+          description: "Indicates if the product stock is active (1 for active, 0 for inactive)"
+        status_notes:
+          type: string
+          description: "Additional notes regarding the status of the product stock"
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the stock status"
+            name:
+              type: string
+              description: "Name of the stock status"
+            slug:
+              type: string
+              description: "URL-friendly slug for the stock status"
+        meta:
+          type: object
+          description: "Meta information about the product stock"
+          nullable: true
+        vendor:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the vendor"
+            name:
+              type: string
+              description: "Name of the vendor"
+            slug:
+              type: string
+              description: "URL-friendly slug for the vendor"
+              nullable: true
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the product"
+            name:
+              type: string
+              description: "Name of the product"
+            slug:
+              type: string
+              description: "URL-friendly slug for the product"
+            deleted_at:
+              type: string
+              format: date-time
+              description: "Timestamp when the product was deleted, if applicable"
+              nullable: true
+        product_variation:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the product variation"
+            name:
+              type: string
+              description: "Name of the product variation"
+            slug:
+              type: string
+              description: "URL-friendly slug for the product variation"
+              nullable: true
+            deleted_at:
+              type: string
+              format: date-time
+              description: "Timestamp when the product variation was deleted, if applicable"
+              nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was last updated"
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the product stock"
+        created_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was created"
+        created_by:
+          type: integer
+          description: "ID of the user who created the product stock"
+        deleted_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the product stock was deleted, if applicable"
+          nullable: true
+        deleted_by:
+          type: integer
+          description: "ID of the user who deleted the product stock, if applicable"
+          nullable: true
+
+      required:
+        - id
+        - quantity
+        - product
+        - product_variation
+        - vendor
+        - vh_st_product_id
+        - vh_st_product_variation_id
+        - vh_st_vendor_id
+        - vh_st_warehouse_id
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the cart"
+          example: 1
+        uuid:
+          type: string
+          description: "Unique UUID for the cart"
+          example: "a1d88c58-70ed-48ea-9188-7e250fa3e815"
+        vh_user_id:
+          type: integer
+          description: "Identifier of the user associated with the cart"
+          example: 121
+        user:
+          type: object
+          description: "Details of the user who owns the cart"
+          properties:
+            id:
+              type: integer
+              description: "Unique identifier for the user"
+              example: 121
+            uuid:
+              type: string
+              description: "Unique UUID for the user"
+
+            email:
+              type: string
+              description: "User's email address"
+              example: "shivam1@zieme.org"
+            # Add other user-related properties as needed
+
+        created_at:
+          type: string
+          format: date-time
+          description: "The date and time when the cart was created"
+          example: "2024-10-01 16:32:56"
+        updated_at:
+          type: string
+          format: date-time
+          description: "The date and time when the cart was last updated"
+          example: "2024-10-01 16:32:56"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: "The date and time when the cart was deleted (if applicable)"
+          example: null
+        created_by:
+          type: integer
+          description: "Identifier of the user who created the cart"
+          example: 1
+        updated_by:
+          type: integer
+          description: "Identifier of the user who last updated the cart"
+          example: 1
+        deleted_by:
+          type: integer
+          nullable: true
+          description: "Identifier of the user who deleted the cart (if applicable)"
+          example: null
+      required:
+        - id
+        - vh_user_id
+        - user
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 6
+          description: The ID of the order.
+        uuid:
+          type: string
+          example: "b067e5fa-bfbc-4e91-beb2-ca0b1000cd53"
+          description: A unique identifier for the order.
+        vh_user_id:
+          type: integer
+          example: 121
+          description: The ID of the user associated with the order.
+        order_status:
+          type: string
+          example: "Placed"
+          description: The current status of the order.
+        taxonomy_id_payment_status:
+          type: integer
+          description: The id of the order payment status.
+        order_shipment_status:
+          type: string
+          example: "Pending"
+          description: The current shipment status of the order.
+        amount:
+          type: number
+          format: float
+          example: 25.00
+          description: The total amount for the order.
+        delivery_fee:
+          type: number
+          format: float
+          example: 0.00
+          description: The delivery fee associated with the order.
+        taxes:
+          type: number
+          format: float
+          example: 0.00
+          description: The total taxes applied to the order.
+        discount:
+          type: number
+          format: float
+          example: 0.00
+          description: The total discount applied to the order.
+        payable:
+          type: number
+          format: float
+          example: 25.00
+          description: The total amount that needs to be paid for the order.
+        paid:
+          type: number
+          format: float
+          example: 0.00
+          description: The amount that has been paid for the order.
+        is_paid:
+          type: integer
+          nullable: true
+          example: 1
+          description: Indicates if the order has been paid for.
+        is_active:
+          type: integer
+          example: 1
+          description: Indicates if the order is currently active.
+        items_count:
+          type: integer
+          example: 2
+          description: The total number of items in the order.
+        payment_method:
+          type: string
+          nullable: true
+          example: null
+          description: The payment method used for the order.
+        order_payment_status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 64
+              description: The ID of the payment status.
+            name:
+              type: string
+              example: "Pending"
+              description: The name of the payment status.
+            slug:
+              type: string
+              example: "pending"
+              description: A URL-friendly version of the payment status name.
+        status:
+          type: string
+          nullable: true
+          example: null
+          description: Additional status information for the order.
+        status_notes:
+          type: string
+          nullable: true
+          example: null
+          description: Any notes related to the status of the order.
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 121
+              description: The ID of the user.
+            first_name:
+              type: string
+              example: "Olin"
+              description: The first name of the user.
+            email:
+              type: string
+              example: "shivam1@zieme.org"
+              description: The email address of the user.
+            phone:
+              type: string
+              example: "2509077310"
+              description: The phone number of the user.
+            display_name:
+              type: string
+              example: "shivam"
+              description: The display name of the user.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the order.
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-10-03T08:05:52Z"
+          description: The date and time when the order was created.
+        created_by:
+          type: integer
+          example: 1
+          description: The ID of the user who created the order.
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-10-03T08:05:52Z"
+          description: The date and time when the order was last updated.
+        updated_by:
+          type: integer
+          example: 1
+          description: The ID of the user who last updated the order.
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          description: Unique identifier for the payment.
+        vh_st_payment_method_id:
+          type: integer
+          description: The ID of the payment method used.
+        amount:
+          type: string
+          description: Total payment amount.
+        transaction_id:
+          type: string
+          description: Unique transaction identifier.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time the payment was last updated.
+        status:
+          type: object
+          description: Status details of the payment.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Status name of the payment.
+            slug:
+              type: string
+              description: Slug of the payment status.
+        payment_method:
+          type: object
+          description: Payment method details.
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              description: Name of the payment method.
+            slug:
+              type: string
+              description: Slug of the payment method.
+        status_notes:
+          type: string
+          description: Notes regarding the payment status.
+        orders_count:
+          type: integer
+          description: The number of orders associated with the payment.
+        meta:
+          type: object
+          description: Additional metadata for the payment.
+        is_active:
+          type: boolean
+          description: Whether the payment is active.
+          nullable: true
+        notes:
+          type: string
+          description: Additional notes regarding the payment.
+          nullable: true
+        payment_gate_status:
+          type: string
+          description: The status of the payment gateway.
+          nullable: true
+        payment_gate_response:
+          type: string
+          description: The response from the payment gateway.
+          nullable: true
+        deleted_at:
+          type: string
+          format: date-time
+          description: The date and time the payment was deleted.
+          nullable: true
+        created_by:
+          type: integer
+          description: ID of the user who created the payment.
+          nullable: true
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the payment.
+          nullable: true
+        deleted_by:
+          type: integer
+          description: ID of the user who deleted the payment.
+          nullable: true
+        date:
+          type: string
+          format: date-time
+          description: The date the payment was processed.
+    ProductAttribute:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the product attribute.
+        uuid:
+          type: string
+          description: The unique UUID for the product attribute.
+        vh_st_attribute_id:
+          type: integer
+          description: The associated attribute ID.
+        vh_st_variation_id:
+          type: integer
+          description: The associated product variation ID.
+        name:
+          type: string
+          description: Name of the product attribute.
+        type:
+          type: string
+          description: Type or category of the product attribute.
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was created.
+        created_by:
+          type: integer
+          description: ID of the user who created the attribute.
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the attribute was last updated.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the attribute.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the attribute was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the attribute, if applicable.
+
+        product_variation:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the product variation.
+            name:
+              type: string
+              description: Name of the product variation.
+            is_default:
+              type: integer
+              description: Whether this is the default variation (0 = no, 1 = yes).
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the variation was deleted, if applicable.
+
+        attribute:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the attribute.
+            name:
+              type: string
+              description: Name of the attribute.
+            type:
+              type: string
+              description: type of the attribute.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when the attribute was deleted, if applicable.
+    ProductMedia:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the product media.
+        uuid:
+          type: string
+          format: uuid
+          description: The UUID of the product media.
+        vh_st_product_id:
+          type: integer
+          description: The ID of the associated product.
+        taxonomy_id_product_media_status:
+          type: integer
+          description: The taxonomy ID of the status of the product media.
+        name:
+          type: string
+          description: The name of the media file.
+        is_active:
+          type: integer
+          description: Whether the media is active.
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time when the media was created.
+        created_by:
+          type: integer
+          description: The ID of the user who created the media.
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the media was last updated.
+        updated_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who last updated the media.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the media was deleted.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The ID of the user who deleted the media.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier of the taxonomy status.
+            name:
+              type: string
+              description: The name of the status.
+            slug:
+              type: string
+              description: The slug for the status.
+
+        product:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier of the product.
+            name:
+              type: string
+              description: The name of the product.
+            slug:
+              type: string
+              description: The slug for the product.
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: The timestamp when the product was deleted.
+        product_variation_media:
+          type: array
+          description: "This contain the array of all the variations exist in this media"
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier of the product variation media.
+              uuid:
+                type: string
+                format: uuid
+                description: The UUID of the product variation media.
+              vh_st_product_id:
+                type: integer
+                description: The ID of the associated product.
+              description:
+                type: string
+                description: A description of the product variation media.
+              is_active:
+                type: boolean
+                description: Whether the product variation media is active.
+              is_default:
+                type: boolean
+                description: Whether the product variation media is the default.
+              created_at:
+                type: string
+                format: date-time
+                description: The date and time when the variation media was created.
+              updated_at:
+                type: string
+                format: date-time
+                nullable: true
+                description: The date and time when the variation media was last updated.
+              pivot:
+                type: object
+                properties:
+                  vh_st_product_media_id:
+                    type: integer
+                    description: The ID of the product media in the pivot table.
+                  vh_st_product_variation_id:
+                    type: integer
+                    description: The ID of the product variation in the pivot table.
+                  vh_st_product_id:
+                    type: integer
+                    description: The ID of the product in the pivot table.
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the category
+        uuid:
+          type: string
+          format: uuid
+          description: UUID of the category
+        parent_id:
+          type: integer
+          nullable: true
+          description: ID of the parent category (nullable)
+        name:
+          type: string
+          description: Name of the category
+        slug:
+          type: string
+          description: Slug of the category
+        is_active:
+          type: integer
+          description: Indicates if the category is active (1 = active, 0 = inactive)
+        meta:
+          type: object
+          nullable: true
+          description: Meta information about the category (nullable)
+        parent_category:
+          type: object
+          nullable: true
+          description: Parent category details
+          properties:
+            id:
+              type: integer
+              description: ID of the parent category
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the parent category
+            parent_id:
+              type: integer
+              nullable: true
+              description: Parent ID of the parent category (nullable)
+            name:
+              type: string
+              description: Name of the parent category
+            slug:
+              type: string
+              description: Slug of the parent category
+            is_active:
+              type: integer
+              description: Indicates if the parent category is active (1 = active, 0 = inactive)
+            meta:
+              type: object
+              nullable: true
+              description: Meta information about the parent category (nullable)
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp of when the category was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of when the category was last updated
+        created_by:
+          type: integer
+          description: ID of the user who created the category
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the category
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of when the category was deleted (nullable)
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the category (nullable)
+    Warehouse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the warehouse
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier for the warehouse
+        name:
+          type: string
+          description: Name of the warehouse
+        slug:
+          type: string
+          description: URL-friendly identifier for the warehouse
+        address_1:
+          type: string
+          description: First line of the warehouse address
+        address_2:
+          type: string
+          nullable: true
+          description: Second line of the warehouse address
+        city:
+          type: string
+          description: City where the warehouse is located
+        state:
+          type: string
+          description: State or province where the warehouse is located
+        postal_code:
+          type: string
+          description: Postal or ZIP code of the warehouse
+        country:
+          type: string
+          description: Country where the warehouse is located
+        is_active:
+          type: integer
+          description: Indicates if the warehouse is active (1 = active, 0 = inactive)
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the warehouse
+        status:
+          type: object
+          description: Status of the warehouse
+          properties:
+            id:
+              type: integer
+              description: ID of the warehouse status
+            name:
+              type: string
+              description: Name of the status
+            slug:
+              type: string
+              description: Slug of the status
+              example: "approved"
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes or comments regarding the status
+        taxonomy_id_warehouse_status:
+          type: integer
+          description: Taxonomy ID for the warehouse status
+        vh_st_vendor_id:
+          type: integer
+          description: Vendor ID associated with the warehouse
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the warehouse was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the warehouse was last updated
+        created_by:
+          type: integer
+          description: ID of the user who created the warehouse
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the warehouse
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the warehouse was deleted, if applicable
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the warehouse, if applicable
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the brand
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier (UUID) for the brand
+        name:
+          type: string
+          description: Name of the brand
+        slug:
+          type: string
+          description: Slug for the brand (URL-friendly identifier)
+        image:
+          type: string
+          nullable: true
+          description: Filename of the brand's image
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata for the brand
+        meta_title:
+          type: string
+          nullable: true
+          description: SEO title for the brand
+        meta_description:
+          type: string
+          nullable: true
+          description: SEO description for the brand
+        meta_keywords:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: SEO keywords for the brand
+        is_active:
+          type: integer
+          description: Indicates if the brand is active (1 = active, 0 = inactive)
+        is_default:
+          type: integer
+          nullable: true
+          description: Indicates if the brand is default (1 = default, 0 = not default)
+        taxonomy_id_brand_status:
+          type: integer
+          description: Status ID for the brand taxonomy
+        status:
+          type: object
+          description: Status details of the brand
+          properties:
+            id:
+              type: integer
+              description: Status ID
+            name:
+              type: string
+              description: Status name
+            slug:
+              type: string
+              description: Status slug (URL-friendly identifier)
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes regarding the status of the brand
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was approved
+        approved_by:
+          type: integer
+          nullable: true
+          description: ID of the user who approved the brand
+        approved_by_user:
+          type: object
+          description: Details of the user who approved the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        registered_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was registered
+        registered_by:
+          type: integer
+          nullable: true
+          description: ID of the user who registered the brand
+        registered_by_user:
+          type: object
+          description: Details of the user who registered the brand
+          properties:
+            id:
+              type: integer
+              description: User ID
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the user
+            email:
+              type: string
+              description: Email of the user
+            username:
+              type: string
+              description: Username of the user
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was created
+        created_by:
+          type: integer
+          description: ID of the user who created the brand
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the brand was last updated
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the brand
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the brand was deleted
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the brand
+        products:
+          type: array
+          description: List of products associated with the brand
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Unique identifier of the product
+              name:
+                type: string
+                description: Name of the product
+              slug:
+                type: string
+                description: Slug for the product
+              vh_st_brand_id:
+                type: integer
+                description: Brand ID associated with the product
+              vh_st_store_id:
+                type: integer
+                description: Store ID associated with the product
+              store:
+                type: object
+                description: Details of the store associated with the product
+                properties:
+                  id:
+                    type: integer
+                    description: Unique identifier of the store
+                  name:
+                    type: string
+                    description: Name of the store
+                  slug:
+                    type: string
+                    description: Slug for the store
+                  is_default:
+                    type: integer
+                    nullable: true
+                    description: Indicates if the store is default (1 = default, 0 = not default)
+
+    Attribute:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the attribute.
+          example: 2
+        uuid:
+          type: string
+          format: uuid
+          description: UUID of the attribute.
+          example: "7412ffaa-2e95-4ee4-a470-8450f7fe9359"
+        name:
+          type: string
+          description: Name of the attribute.
+          example: "Attribute B"
+        slug:
+          type: string
+          description: Slug for the attribute, used for SEO-friendly URLs.
+          example: "attribute-b"
+        description:
+          type: string
+          nullable: true
+          description: Detailed description of the attribute.
+          example: "Et esse explicabo eos ut nemo ratione."
+        type:
+          type: string
+          description: Type of the attribute (e.g., Size, Color, etc.).
+          example: "Size"
+        is_active:
+          type: integer
+          description: Status of the attribute (1 = active, 0 = inactive).
+          example: 1
+        meta:
+          type: string
+          nullable: true
+          description: Additional metadata or information related to the attribute.
+          example: null
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the attribute was created.
+          example: "2024-10-04 10:36:56"
+        created_by:
+          type: integer
+          description: ID of the user who created the attribute.
+          example: 1
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the attribute was last updated.
+          example: "2024-10-04 10:36:56"
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the attribute.
+          example: 1
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the attribute was deleted, if applicable.
+          example: null
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the attribute, if applicable.
+          example: null
+    AttributeGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "The unique identifier for the attribute group."
+        uuid:
+          type: string
+          description: "The universally unique identifier (UUID) for the attribute group."
+        name:
+          type: string
+          description: "The name of the attribute group."
+        slug:
+          type: string
+          description: "The slug, a URL-friendly version of the name."
+        description:
+          type: string
+          description: "A brief description of the attribute group."
+        is_active:
+          type: integer
+          description: "Indicates if the attribute group is active (1 for active, 0 for inactive)."
+        created_at:
+          type: string
+          format: date-time
+          description: "The date and time when the attribute group was created."
+        created_by:
+          type: integer
+          description: "The ID of the user who created the attribute group."
+        updated_at:
+          type: string
+          format: date-time
+          description: "The date and time when the attribute group was last updated."
+        updated_by:
+          type: integer
+          description: "The ID of the user who last updated the attribute group."
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: "The date and time when the attribute group was deleted, if applicable."
+        deleted_by:
+          type: integer
+          nullable: true
+          description: "The ID of the user who deleted the attribute group, if applicable."
+        attributes_list:
+          type: array
+          description: "A list of attributes associated with the attribute group."
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: "The unique identifier for the attribute."
+              name:
+                type: string
+                description: "The name of the attribute."
+              type:
+                type: string
+                description: "The type or category of the attribute."
+              deleted_at:
+                type: string
+                format: date-time
+                nullable: true
+                description: "The date and time when the attribute was deleted, if applicable."
+              pivot:
+                type: object
+                description: "Pivot information linking the attribute to the attribute group."
+                properties:
+                  vh_st_attribute_group_id:
+                    type: integer
+                    description: "The ID of the attribute group."
+                  vh_st_attribute_id:
+                    type: integer
+                    description: "The ID of the attribute."
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "The unique identifier for the address."
+        uuid:
+          type: string
+          description: "The universally unique identifier for the address."
+        vh_user_id:
+          type: integer
+          description: "The ID of the user associated with the address."
+        name:
+          type: string
+          description: "The name of the person or entity associated with the address."
+        address:
+          type: string
+          description: "The complete address."
+        address_line_1:
+          type: string
+          description: "The first line of the address."
+        address_line_2:
+          type: string
+          nullable: true
+          description: "The second line of the address, if available."
+        city:
+          type: string
+          description: "The city of the address."
+        state:
+          type: string
+          description: "The state of the address."
+        pin_code:
+          type: string
+          description: "The postal code or ZIP code for the address."
+        country:
+          type: string
+          description: "The country of the address."
+        phone:
+          type: string
+          description: "The phone number associated with the address."
+        address_type:
+          type: object
+          description: "The type of address, such as Billing or Shipping."
+          properties:
+            id:
+              type: integer
+              description: "The unique identifier for the address type."
+            name:
+              type: string
+              description: "The name of the address type."
+            slug:
+              type: string
+              description: "The slug for the address type."
+        status:
+          type: object
+          description: "The current status of the address."
+          properties:
+            id:
+              type: integer
+              description: "The unique identifier for the address status."
+            name:
+              type: string
+              description: "The name of the address status."
+            slug:
+              type: string
+              description: "The slug for the address status."
+        is_default:
+          type: integer
+          nullable: true
+          description: "Indicates if this is the default address."
+        status_notes:
+          type: string
+          nullable: true
+          description: "Additional notes about the status of the address."
+        created_at:
+          type: string
+          format: date-time
+          description: "The date and time when the address was created."
+        updated_at:
+          type: string
+          format: date-time
+          description: "The date and time when the address was last updated."
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: "The date and time when the address was deleted, if applicable."
+        created_by:
+          type: integer
+          nullable: true
+          description: "The ID of the user who created the address."
+        updated_by:
+          type: integer
+          nullable: true
+          description: "The ID of the user who last updated the address."
+        deleted_by:
+          type: integer
+          nullable: true
+          description: "The ID of the user who deleted the address."
+        user:
+          type: object
+          description: "The user associated with the address."
+          properties:
+            id:
+              type: integer
+              description: "The unique identifier for the user."
+            uuid:
+              type: string
+              description: "The universally unique identifier for the user."
+            first_name:
+              type: string
+              description: "The first name of the user."
+            email:
+              type: string
+              description: "The email address of the user."
+            avatar:
+              type: string
+              description: "The avatar URL of the user."
+            deleted_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: "The date and time when the user was deleted, if applicable."
+    Wishlist:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "ID of the wishlist."
+        uuid:
+          type: string
+          description: "Unique identifier of the wishlist."
+        name:
+          type: string
+          description: "Name of the wishlist."
+        slug:
+          type: string
+          description: "Slugified version of the wishlist name."
+        created_at:
+          type: string
+          format: date-time
+          description: "The timestamp when the wishlist was created."
+        updated_at:
+          type: string
+          format: date-time
+          description: "The timestamp when the wishlist was last updated."
+        created_by:
+          type: integer
+          description: "ID of the user who created the wishlist."
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the wishlist."
+        deleted_at:
+          type: string
+          format: date-time
+          description: "The timestamp when the wishlist was deleted (if applicable)."
+        is_default:
+          type: integer
+          description: "Indicates if this is the default wishlist for the user."
+        meta:
+          type: object
+          description: "Additional metadata associated with the wishlist."
+        status:
+          type: object
+          description: "Status of the wishlist."
+          properties:
+            id:
+              type: integer
+              description: "ID of the wishlist status."
+            name:
+              type: string
+              description: "Name of the status."
+            slug:
+              type: string
+              description: "Slug of the status."
+            status_notes:
+              type: string
+              description: "Notes associated with the status."
+        taxonomy_id_whishlists_status:
+          type: integer
+          description: "Taxonomy ID for the wishlist status."
+        taxonomy_id_whishlists_types:
+          type: integer
+          description: "Taxonomy ID for the wishlist type (if applicable)."
+        type:
+          type: string
+          description: "Type of wishlist (if applicable)."
+        products:
+          type: array
+          description: "List of products in the wishlist."
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: "ID of the product."
+              name:
+                type: string
+                description: "Name of the product."
+              pivot:
+                type: object
+                properties:
+                  vh_st_wishlist_id:
+                    type: integer
+                    description: "ID of the wishlist associated with this product."
+                  vh_st_product_id:
+                    type: integer
+                    description: "ID of the product associated with this wishlist."
+        user:
+          type: object
+          description: "User who owns the wishlist."
+          properties:
+            id:
+              type: integer
+              description: "ID of the user."
+            first_name:
+              type: string
+              description: "First name of the user."
+            username:
+              type: string
+              description: "Username of the user."
+            avatar:
+              type: string
+              description: "Avatar image URL of the user."
+            uuid:
+              type: string
+              description: "Unique identifier of the user."
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique identifier for the customer."
+        uuid:
+          type: string
+          description: "Universally unique identifier (UUID) for the customer."
+        email:
+          type: string
+          description: "Email address of the customer."
+        activated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer was activated."
+          nullable: true
+        active_roles_count:
+          type: integer
+          description: "Number of active roles the customer has."
+        affiliate_code:
+          type: string
+          description: "Affiliate code of the customer."
+        affiliate_code_used_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the affiliate code was used."
+          nullable: true
+        alternate_email:
+          type: string
+          description: "Alternate email address of the customer."
+        avatar:
+          type: string
+          description: "URL to the customer's avatar."
+        avatar_url:
+          type: string
+          description: "Alternative URL for the customer's avatar."
+        bio:
+          type: string
+          description: "Biography or description of the customer."
+        birth:
+          type: string
+          format: date
+          description: "Customer's date of birth."
+        country:
+          type: string
+          description: "Country where the customer is located."
+        country_calling_code:
+          type: integer
+          description: "Country calling code for the customer."
+        country_code:
+          type: string
+          description: "ISO country code of the customer's location."
+        created_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was created."
+        created_by:
+          type: integer
+          description: "ID of the user who created the customer record."
+        created_ip:
+          type: string
+          description: "IP address of the user who created the customer record."
+        customer_groups:
+          type: array
+          description: "Array of customer groups the customer belongs to."
+          items:
+            type: object
+        deleted_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was deleted."
+          nullable: true
+        deleted_by:
+          type: integer
+          description: "ID of the user who deleted the customer record."
+          nullable: true
+        designation:
+          type: string
+          description: "Customer's designation or title."
+        display_name:
+          type: string
+          description: "Display name of the customer."
+        first_name:
+          type: string
+          description: "Customer's first name."
+        foreign_user_id:
+          type: integer
+          description: "Foreign ID for external systems."
+        gender:
+          type: string
+          description: "Gender of the customer."
+        is_active:
+          type: integer
+          description: "Indicates if the customer account is active."
+        last_login_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer last logged in."
+          nullable: true
+        last_login_ip:
+          type: string
+          description: "IP address of the customer's last login."
+        last_name:
+          type: string
+          description: "Customer's last name."
+        meta:
+          type: object
+          description: "Additional metadata about the customer."
+          properties:
+            custom_fields:
+              type: object
+              description: "Custom fields related to the customer."
+              properties:
+                state:
+                  type: string
+                  description: "Custom field for customer state."
+        mfa_methods:
+          type: string
+          description: "Multi-factor authentication methods used by the customer."
+        middle_name:
+          type: string
+          description: "Customer's middle name."
+        name:
+          type: string
+          description: "Customer's full name."
+        phone:
+          type: integer
+          description: "Customer's phone number."
+        registration_id:
+          type: integer
+          description: "Registration ID associated with the customer."
+          nullable: true
+        reset_password_code_sent_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the reset password code was sent."
+          nullable: true
+        reset_password_code_used_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the reset password code was used."
+          nullable: true
+        security_code:
+          type: string
+          description: "Security code for the customer."
+        security_code_expired_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the security code expires."
+          nullable: true
+        status:
+          type: string
+          description: "Status of the customer."
+        timezone:
+          type: string
+          description: "Timezone of the customer."
+        title:
+          type: string
+          description: "Title of the customer (e.g., Mr, Mrs, Miss)."
+        updated_at:
+          type: string
+          format: date-time
+          description: "Timestamp when the customer record was last updated."
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the customer record."
+        username:
+          type: string
+          description: "Username of the customer."
+        website:
+          type: string
+          description: "Customer's website URL."
+    CustomerGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the customer group.
+        uuid:
+          type: string
+          description: The universally unique identifier for the customer group.
+        taxonomy_id_customer_groups_status:
+          type: integer
+          description: The identifier for the status of the customer group.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the customer group was created.
+        created_by:
+          type: integer
+          description: The identifier of the user who created the customer group.
+        updated_at:
+          type: string
+          format: date-time
+          description: The timestamp when the customer group was last updated.
+        updated_by:
+          type: integer
+          description: The identifier of the user who last updated the customer group.
+        deleted_at:
+          type: string
+          nullable: true
+          description: The timestamp when the customer group was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: The identifier of the user who deleted the customer group, if applicable.
+        name:
+          type: string
+          description: The name of the customer group.
+        slug:
+          type: string
+          description: A URL-friendly version of the customer group's name.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The unique identifier for the status of the customer group.
+            name:
+              type: string
+              description: The name of the status of the customer group.
+            slug:
+              type: string
+              description: A URL-friendly version of the status name.
+        status_notes:
+          type: string
+          description: Additional notes regarding the status of the customer group.
+        customers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The unique identifier for the customer.
+              first_name:
+                type: string
+                description: The first name of the customer.
+              last_name:
+                type: string
+                description: The last name of the customer.
+              display_name:
+                type: string
+                description: The display name of the customer.
+              avatar:
+                type: string
+                format: uri
+                description: The URL of the customer's avatar image.
+              pivot:
+                type: object
+                properties:
+                  vh_st_customer_group_id:
+                    type: integer
+                    description: The identifier for the customer group in the pivot table.
+                  vh_st_user_id:
+                    type: integer
+                    description: The identifier for the user in the pivot table.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata associated with the customer group.
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the payment method.
+        uuid:
+          type: string
+          description: Universally Unique Identifier for the payment method.
+        name:
+          type: string
+          description: Name of the payment method.
+        slug:
+          type: string
+          description: A URL-friendly version of the payment method's name.
+        is_active:
+          type: integer
+          description: Status indicating if the payment method is active (1) or inactive (0).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was created.
+        created_by:
+          type: integer
+          description: Identifier of the user who created the payment method.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment method was last updated.
+        updated_by:
+          type: integer
+          description: Identifier of the user who last updated the payment method.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the payment method was deleted (if applicable).
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier of the user who deleted the payment method (if applicable).
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the payment method (optional).
+    Shipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the shipment.
+        uuid:
+          type: string
+          format: uuid
+          description: Universally unique identifier for the shipment.
+        taxonomy_id_shipment_status:
+          type: integer
+          description: Identifier for the shipment status taxonomy.
+        name:
+          type: string
+          description: Name of the product associated with the shipment.
+        tracking_url:
+          type: string
+          format: uri
+          description: URL for tracking the shipment.
+        tracking_key:
+          type: string
+          description: Key used for tracking the shipment.
+        tracking_value:
+          type: string
+          description: Value or description related to the tracking of the shipment.
+        is_trackable:
+          type: integer
+          description: Indicates whether the shipment is trackable (1 for true, 0 for false).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the shipment was created.
+        created_by:
+          type: integer
+          description: Identifier for the user who created the shipment.
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the shipment was deleted, if applicable.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: Identifier for the user who deleted the shipment, if applicable.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata related to the shipment.
+        orders_count:
+          type: integer
+          description: Number of orders associated with the shipment.
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Unique identifier for the shipment status.
+
+            parent_id:
+              type: integer
+              nullable: true
+              description: Identifier for the parent status, if applicable.
+            vh_taxonomy_type_id:
+              type: integer
+              description: Identifier for the taxonomy type of the shipment status.
+            is_active:
+              type: integer
+              description: Indicates whether the shipment status is active (1 for true, 0 for false).
+            name:
+              type: string
+              description: Name of the shipment status.
+            slug:
+              type: string
+              description: URL-friendly version of the shipment status name.
+
+
+
+
+
+
+
+
+
+
+
+
