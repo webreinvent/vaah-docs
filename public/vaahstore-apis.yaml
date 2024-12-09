@@ -1783,7 +1783,7 @@ paths:
                   message:
                     type: string
                     example: Permission denied.
-  /api/store/products/get-vendors-list/{id}:
+  /api/store/products/{id}/vendors:
     get:
       tags:
         - Products
@@ -1873,7 +1873,7 @@ paths:
                   message:
                     type: string
                     example: Product not found or no vendors associated.
-  /api/store/products/{id}/action-for-vendor/{action}:
+  /api/store/products/{id}/vendors/{vendor_id}/action:
     patch:
       tags:
         - Products
@@ -1886,7 +1886,14 @@ paths:
         - name: id
           in: path
           required: true
-          description: The ID of the product vendor to update.
+          description: The ID of the product.
+          schema:
+            type: integer
+            example: 1
+        - name: vendor_id
+          in: path
+          required: true
+          description: The ID of the vendor to mark as preferred or not-preferred for this product id.
           schema:
             type: integer
             example: 1
@@ -1896,12 +1903,12 @@ paths:
           description: The action to perform.
           examples:
             preferred: Mark as preferred.
-            notpreferred: Mark as not preferred.
+            not-preferred: Mark as not preferred.
           schema:
             type: string
             enum:
               - preferred
-              - notpreferred
+              - not-preferred
             example: preferred
       responses:
         '200':
@@ -1918,9 +1925,9 @@ paths:
                     type: string
                     example: Success
                   data:
-                    type: object
-                    description: The product data.
-                    additionalProperties: true
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
         '400':
           description: Bad Request.
           content:
