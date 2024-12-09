@@ -2095,16 +2095,24 @@ paths:
                           id: 1
                     all_attribute_name:
                       - Color
-  /api/store/products/variation:
+  /api/store/products/{id}/variations/generate:
     post:
       tags:
         - Products
-      summary: Create Product Variation
+      summary: Generate Product Variations
       description: |
         This endpoint allows you to create variations for a specific product.
         Each variation can have different attributes and settings.
         If a variation with the same name already exists for the product, an error will be returned.
       operationId: createVariation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the product for which the variation is being created.
+          schema:
+            type: integer
+            example: 1
       requestBody:
         required: true
         content:
@@ -2112,71 +2120,60 @@ paths:
             schema:
               type: object
               required:
-                - id
-                - all_variation
+                - product_variations
               properties:
-                id:
-                  type: integer
-                  example: 23
-                  description: The ID of the product for which the variation is being created.
-                all_variation:
+                product_variations:
                   type: object
                   required:
                     - structured_variation
-                    - all_attribute_name
+                    - all_attribute_names
                   properties:
-                    structured_variation:
+                    structured_variations:
                       type: array
                       items:
                         type: object
                         required:
+                          - Attribute_name_1
                           - variation_name
+                          - is_default
                         properties:
-                          variation_name:
-                            type: string
-                            example: attribute 1 - attribute value
-                            description: The name of the variation, typically a combination of attributes and their values.
-                          is_default:
-                            type: boolean
-                            example: 1
-                            description: Indicates whether this variation is selected as default.
-                          attribute 1:
-                            description: This is the name of the attribute.
+                          Attribute_name_1:
                             type: object
+                            description: Name of the Attribute
                             required:
                               - value
-                              - id
                               - vh_st_attribute_id
+                              - id
                             properties:
                               value:
                                 type: string
-                                example: attribute value
+                                description: The color value of the variation.
+                                example: blue
                               vh_st_attribute_id:
                                 type: integer
-                                example: 7
+                                description: ID of the attribute (e.g., color).
+                                example: 1
                               id:
                                 type: integer
-                                example: 16
-                          attribute 2:
-                            type: object
-                            properties:
-                              value:
-                                type: string
-                                example: attribute value
-                              vh_st_attribute_id:
-                                type: integer
-                                example: 6
-                              id:
-                                type: integer
-                                example: 15
-                    all_attribute_name:
+                                description: ID of the attribute value.
+                                example: 2
+                          variation_name:
+                            type: string
+                            description: The name of the product variation.
+                            example: Test Product-blue12
+                          is_default:
+                            type: boolean
+                            description: Set the variation as default.
+                            example: false
+                    all_attribute_names:
                       type: array
                       items:
                         type: string
-                      example:
-                        - attribute 1 ie.color
-                        - attribute 2
                       description: An array of names of all attributes associated with the variations.
+                      example:
+                        - color
+                        - size
+                        - material
       responses:
         '200':
           description: Variation created successfully
