@@ -58,40 +58,6 @@ post:
               data:
                 type: object
                 properties:
-                  user:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        example: xxx
-                        description: Unique identifier for the user.
-                      uuid:
-                        type: string
-                        example: "abcd1234-abcd1234"
-                        description: Unique identifier for the user in UUID format.
-                      email:
-                        type: string
-                        example: "user@example.com"
-                        description: User's email address.
-                      username:
-                        type: string
-                        example: "john_doe"
-                        description: Username for the user account.
-                      first_name:
-                        type: string
-                        example: "John"
-                        description: User's first name.
-                      last_name:
-                        type: string
-                        example: "Doe"
-                        description: User's last name.
-                      avatar_url:
-                        type: string
-                        example: "https://example.com/avatar.jpg"
-                        description: URL of the user's avatar image.
-                  cart:
-                    type: object
-                    properties:
                       id:
                         type: integer
                         example: xxx
@@ -238,6 +204,34 @@ post:
                                   type: integer
                                   example: xxx
                                   description: Unique identifier for the vendor associated with the product in the pivot table.
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: xxx
+                            description: Unique identifier for the user.
+                          uuid:
+                            type: string
+                            example: "abcd1234-abcd1234"
+                            description: Unique identifier for the user in UUID format.
+                          email:
+                            type: string
+                            example: "user@example.com"
+                            description: User's email address.
+                          username:
+                            type: string
+                            example: "john_doe"
+                            description: Username for the user account.
+                          phone:
+                            type: integer
+                            example: 9191xxxxxx
+                            description: User's phone.
+
+                          avatar:
+                            type: string
+                            example: "https://example.com/avatar.jpg"
+                            description: URL of the user's avatar image.
 
     '400':
       description: Invalid information
