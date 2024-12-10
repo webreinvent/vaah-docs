@@ -1,0 +1,89 @@
+post:
+  tags:
+    - Carts
+  summary: Add a user to the guest cart
+  description: This endpoint allows you to attach a user to a guest cart using the cart's UUID.
+  parameters:
+    - name: uuid
+      in: path
+      required: true
+      description: The UUID of the cart to which the user will be added.
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            user:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the user to be added to the cart.
+                  example: 123
+              required:
+                - id
+          required:
+            - user
+  responses:
+    '200':
+      description: User successfully added to the cart
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    example: "abcd1234-xyz"
+                  vh_user_id:
+                    type: integer
+                    example: 123
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        product_id:
+                          type: integer
+                          example: 101
+                        quantity:
+                          type: integer
+                          example: 2
+    '400':
+      description: Bad Request (e.g., Cart not found or user already attached)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "Cart not found with given uuid."
+    '409':
+      description: Conflict (User already attached to the cart)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "A user is already attached to this cart."
