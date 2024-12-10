@@ -1783,7 +1783,7 @@ paths:
                   message:
                     type: string
                     example: Permission denied.
-  /api/store/products/get-vendors-list/{id}:
+  /api/store/products/{id}/vendors:
     get:
       tags:
         - Products
@@ -1873,7 +1873,7 @@ paths:
                   message:
                     type: string
                     example: Product not found or no vendors associated.
-  /api/store/products/{id}/action-for-vendor/{action}:
+  /api/store/products/{id}/vendors/{vendor_id}/action:
     patch:
       tags:
         - Products
@@ -1886,7 +1886,14 @@ paths:
         - name: id
           in: path
           required: true
-          description: The ID of the product vendor to update.
+          description: The ID of the product.
+          schema:
+            type: integer
+            example: 1
+        - name: vendor_id
+          in: path
+          required: true
+          description: The ID of the vendor to mark as preferred or not-preferred for this product id.
           schema:
             type: integer
             example: 1
@@ -1896,12 +1903,12 @@ paths:
           description: The action to perform.
           examples:
             preferred: Mark as preferred.
-            notpreferred: Mark as not preferred.
+            not-preferred: Mark as not preferred.
           schema:
             type: string
             enum:
               - preferred
-              - notpreferred
+              - not-preferred
             example: preferred
       responses:
         '200':
@@ -1918,9 +1925,9 @@ paths:
                     type: string
                     example: Success
                   data:
-                    type: object
-                    description: The product data.
-                    additionalProperties: true
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
         '400':
           description: Bad Request.
           content:
@@ -2088,16 +2095,24 @@ paths:
                           id: 1
                     all_attribute_name:
                       - Color
-  /api/store/products/variation:
+  /api/store/products/{id}/variations/generate:
     post:
       tags:
         - Products
-      summary: Create Product Variation
+      summary: Generate Product Variations
       description: |
         This endpoint allows you to create variations for a specific product.
         Each variation can have different attributes and settings.
         If a variation with the same name already exists for the product, an error will be returned.
       operationId: createVariation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the product for which the variation is being created.
+          schema:
+            type: integer
+            example: 1
       requestBody:
         required: true
         content:
@@ -2105,71 +2120,60 @@ paths:
             schema:
               type: object
               required:
-                - id
-                - all_variation
+                - product_variations
               properties:
-                id:
-                  type: integer
-                  example: 23
-                  description: The ID of the product for which the variation is being created.
-                all_variation:
+                product_variations:
                   type: object
                   required:
                     - structured_variation
-                    - all_attribute_name
+                    - all_attribute_names
                   properties:
-                    structured_variation:
+                    structured_variations:
                       type: array
                       items:
                         type: object
                         required:
+                          - Attribute_name_1
                           - variation_name
+                          - is_default
                         properties:
-                          variation_name:
-                            type: string
-                            example: attribute 1 - attribute value
-                            description: The name of the variation, typically a combination of attributes and their values.
-                          is_default:
-                            type: boolean
-                            example: 1
-                            description: Indicates whether this variation is selected as default.
-                          attribute 1:
-                            description: This is the name of the attribute.
+                          Attribute_name_1:
                             type: object
+                            description: Name of the Attribute
                             required:
                               - value
-                              - id
                               - vh_st_attribute_id
+                              - id
                             properties:
                               value:
                                 type: string
-                                example: attribute value
+                                description: The color value of the variation.
+                                example: blue
                               vh_st_attribute_id:
                                 type: integer
-                                example: 7
+                                description: ID of the attribute (e.g., color).
+                                example: 1
                               id:
                                 type: integer
-                                example: 16
-                          attribute 2:
-                            type: object
-                            properties:
-                              value:
-                                type: string
-                                example: attribute value
-                              vh_st_attribute_id:
-                                type: integer
-                                example: 6
-                              id:
-                                type: integer
-                                example: 15
-                    all_attribute_name:
+                                description: ID of the attribute value.
+                                example: 2
+                          variation_name:
+                            type: string
+                            description: The name of the product variation.
+                            example: Test Product-blue12
+                          is_default:
+                            type: boolean
+                            description: Set the variation as default.
+                            example: false
+                    all_attribute_names:
                       type: array
                       items:
                         type: string
-                      example:
-                        - attribute 1 ie.color
-                        - attribute 2
                       description: An array of names of all attributes associated with the variations.
+                      example:
+                        - color
+                        - size
+                        - material
       responses:
         '200':
           description: Variation created successfully
@@ -2210,94 +2214,6 @@ paths:
                     example:
                       - This Variation name 'Color - Blue' already exists.
                     description: A list of error messages detailing the issues encountered.
-  /api/store/products/add/product-to-cart:
-    post:
-      tags:
-        - Products
-        - Carts
-      summary: Add a product to the cart
-      description: |
-        This endpoint allows users to add a product to their cart. It requires user information and the product ID. If the product is out of stock or no user information is provided, an error message will be returned.
-      operationId: addProductToCart
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user_info:
-                  type: object
-                  required:
-                    - id
-                  properties:
-                    id:
-                      type: integer
-                      example: 1
-                product:
-                  type: object
-                  required:
-                    - id
-                  properties:
-                    id:
-                      type: integer
-                      example: 1
-              required:
-                - user_info
-                - product
-      responses:
-        '200':
-          description: Product added to cart successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  messages:
-                    type: array
-                    items:
-                      type: string
-                      example: Saved successfully.
-                  data:
-                    type: object
-                    properties:
-                      example: Response data will include user information.
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                      example: Please enter valid user.
-        '404':
-          description: Product Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                      example: This product is out of stock if no vendor is selected or quantity is zero. No product variation is default if there is no default variation for this product.
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                      example: An error occurred while adding the product to the cart.
   /api/store/vendors:
     get:
       tags:
@@ -3869,91 +3785,6 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/productvariations/add/variation-to-cart:
-    post:
-      tags:
-        - Product Variations
-        - Carts
-      summary: Add product variation to cart
-      description: |
-        This endpoint adds a product variation to a user's cart based on the selected variation and vendor.
-      operationId: addVariationToCart
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user_info:
-                  type: object
-                  required:
-                    - id
-                  properties:
-                    id:
-                      type: integer
-                      example: 119
-                product_variation:
-                  type: object
-                  required:
-                    - id
-                  properties:
-                    id:
-                      type: integer
-                    quantity:
-                      type: integer
-                      description: The available total quantity of the variation
-                    vh_st_product_id:
-                      type: integer
-      responses:
-        '200':
-          description: Added to cart successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  messages:
-                    type: array
-                    items:
-                      type: string
-                      example: Saved successfully.
-                  data:
-                    type: object
-                    properties:
-                      example: Response data will include user information.
-        '400':
-          description: Error occurred while adding variation to cart
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                      example:
-                        - Please enter valid user
-                        - This product variation is out of stock for selected vendor
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                      example: An error occurred
   /api/store/productvariations/disable/active-cart:
     post:
       tags:
@@ -5434,6 +5265,265 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /api/store/carts/generate:
+    post:
+      tags:
+        - Carts
+      summary: Generate a cart
+      description: |
+        This endpoint allows users to add multiple products to their cart. The product IDs are required, while the user information is optional. If any product is out of stock, an error message will be returned.
+      operationId: addToCart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                products:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      vendor_id:
+                        type: integer
+                        example: 1
+                      variation_id:
+                        type: integer
+                        example: 1
+                      quantity:
+                        type: integer
+                        example: 1
+              required:
+                - products
+      responses:
+        '200':
+          description: Cart created/generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example:
+                        - Saved successfully.
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: xxx
+                      uuid:
+                        type: string
+                        example: abcd1234-abcd1234
+                      vh_user_id:
+                        type: integer
+                        example: xxx
+                      created_by:
+                        type: integer
+                        example: xxx
+                      updated_by:
+                        type: integer
+                        example: xxx
+                      deleted_by:
+                        type: integer
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2024-12-09 05:56:09'
+                      updated_at:
+                        type: string
+                        example: '2024-12-09 05:56:09'
+                      deleted_at:
+                        type: string
+                        example: null
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: xx
+                              description: Unique identifier for the product.
+                            uuid:
+                              type: string
+                              example: abcd1234-abcd1234
+                            taxonomy_id_product_type:
+                              type: integer
+                              example: xx
+                            vh_st_store_id:
+                              type: integer
+                              example: xx
+                            vh_st_brand_id:
+                              type: integer
+                              example: xx
+                            taxonomy_id_product_status:
+                              type: integer
+                              example: xx
+                            name:
+                              type: string
+                              example: Laptop
+                              description: Name of the product added to the cart.
+                            slug:
+                              type: string
+                              example: laptop
+                            summary:
+                              type: string
+                              example: lorem ipsum
+                            details:
+                              type: string
+                              example: lorem ipsum
+                            quantity:
+                              type: integer
+                              example: xx
+                            in_stock:
+                              type: string
+                              example: null
+                            available_at:
+                              type: string
+                              example: '2025-05-31 00:00:00'
+                            launch_at:
+                              type: string
+                              example: '2025-05-11 00:00:00'
+                            is_featured_on_home_page:
+                              type: integer
+                              example: 1
+                            is_featured_on_category_page:
+                              type: integer
+                              example: 1
+                            is_active:
+                              type: integer
+                              example: 1
+                            is_default:
+                              type: integer
+                              example: 0
+                            status_notes:
+                              type: string
+                              example: lorem ipsum
+                            meta:
+                              type: string
+                              example: null
+                            seo_title:
+                              type: string
+                              example: null
+                            seo_meta_description:
+                              type: string
+                              example: null
+                            seo_meta_keyword:
+                              type: string
+                              example: null
+                            created_by:
+                              type: integer
+                              example: xxx
+                            updated_by:
+                              type: integer
+                              example: xxx
+                            deleted_by:
+                              type: integer
+                              example: null
+                            created_at:
+                              type: string
+                              example: '2024-11-25 12:17:55'
+                            updated_at:
+                              type: string
+                              example: '2024-12-06 16:27:42'
+                            deleted_at:
+                              type: string
+                              example: null
+                            pivot:
+                              type: object
+                              properties:
+                                vh_st_cart_id:
+                                  type: integer
+                                  example: xxx
+                                  description: Unique identifier for the cart in the pivot table.
+                                vh_st_product_id:
+                                  type: integer
+                                  example: xxx
+                                  description: Unique identifier for the product in the pivot table.
+                                vh_st_product_variation_id:
+                                  type: integer
+                                  example: xxx
+                                  description: Unique identifier for the product variation in the pivot table.
+                                quantity:
+                                  type: integer
+                                  example: xxx
+                                  description: Quantity of the product in the cart.
+                                vh_st_vendor_id:
+                                  type: integer
+                                  example: xxx
+                                  description: Unique identifier for the vendor associated with the product in the pivot table.
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: xxx
+                            description: Unique identifier for the user.
+                          uuid:
+                            type: string
+                            example: abcd1234-abcd1234
+                            description: Unique identifier for the user in UUID format.
+                          email:
+                            type: string
+                            example: user@example.com
+                            description: User's email address.
+                          username:
+                            type: string
+                            example: john_doe
+                            description: Username for the user account.
+                          phone:
+                            type: integer
+                            example: 9191xxxxxx
+                            description: User's phone.
+                          avatar:
+                            type: string
+                            example: https://example.com/avatar.jpg
+                            description: URL of the user's avatar image.
+        '400':
+          description: Invalid information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example:
+                        - Invalid product ID xx.
+                        - No default variation found for Product ID xx.
+                        - No vendor is selected for product ID xx.
+                        - Product ID xx is not associated with vendor ID xx.
+                        - Insufficient stock for variation ID xx from vendor ID xx.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: An error occurred while adding the product to the cart.
   /api/store/carts/{id}:
     get:
       tags:

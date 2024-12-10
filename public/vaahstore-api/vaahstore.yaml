@@ -115,18 +115,17 @@ paths:
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
   '/api/store/products/vendor':
     $ref: './products/attachVendor.yaml'  # Reference to the attachment with vendor file
-  '/api/store/products/get-vendors-list/{id}':
+  '/api/store/products/{id}/vendors':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
-  '/api/store/products/{id}/action-for-vendor/{action}':
+  '/api/store/products/{id}/vendors/{vendor_id}/action':
     $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
   '/api/store/products/getAttributeList':
     $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
   '/api/store/products/getAttributeValue':
     $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
-  '/api/store/products/variation':
+  '/api/store/products/{id}/variations/generate':
     $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
-  '/api/store/products/add/product-to-cart':
-    $ref: './products/addToCart.yaml'  # Reference to the add product to cart file
+
 
 
   '/api/store/vendors':
@@ -151,8 +150,7 @@ paths:
     $ref: './product-variations/variationAction.yaml'  # Reference to the productvariations item action file
   '/api/store/productvariations/action/{action}':
     $ref: './product-variations/variationListActions.yaml'  # Reference to the productvariations list actions file
-  '/api/store/productvariations/add/variation-to-cart':
-    $ref: './product-variations/addToCart.yaml'  # Reference to the add to cart file
+
   '/api/store/productvariations/disable/active-cart':
     $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
   '/api/store/productvendors':
@@ -179,6 +177,8 @@ paths:
 
   '/api/store/carts':
     $ref: './carts/index.yaml'  # Reference to the carts file
+  '/api/store/carts/generate':
+    $ref: './carts/addToCart.yaml'  # Reference to the carts file
   '/api/store/carts/{id}':
     $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
   '/api/store/carts/cart-check-out/{id}':
