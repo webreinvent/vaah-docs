@@ -5793,7 +5793,7 @@ paths:
                     type: string
                     example: A user is already attached to this cart.
   /api/store/carts/{uuid}/update:
-    post:
+    put:
       tags:
         - Carts
       summary: Update cart products quantity
