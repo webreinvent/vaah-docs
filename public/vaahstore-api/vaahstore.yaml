@@ -179,11 +179,11 @@ paths:
     $ref: './carts/index.yaml'  # Reference to the carts file
   '/api/store/carts/generate':
     $ref: './carts/addToCart.yaml'  # Reference to the carts file
-  '/api/store/carts/{id}':
+  '/api/store/carts/{uuid}':
     $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
   '/api/store/carts/cart-check-out/{id}':
     $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
-  '/api/store/carts/update/quantity':
+  '/api/store/carts/{uuid}/update':
     $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
   '/api/store/carts/delete-cart-item':
     $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
@@ -377,6 +377,11 @@ components:
     id:
       name: id
       description: The unique identifier of the item
+      in: path
+      required: true
+    uuid:
+      name: uuid
+      description: The Universally Unique Identifier
       in: path
       required: true
     action:
