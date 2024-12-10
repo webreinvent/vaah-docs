@@ -98,6 +98,8 @@ paths:
 
   '/api/store/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
+  '/api/store/stores/default':
+    $ref: './stores/defaultStore.yaml'  # Reference to the default store file
   /api/store/stores/{id}/action/{action}:
     $ref: './stores/storeAction.yaml'  # Reference to the stores item action file
   /api/store/stores/{id}:
