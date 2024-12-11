@@ -115,13 +115,11 @@ paths:
     $ref: './products/productAction.yaml'  # Reference to the product item action file
   '/api/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
-  '/api/store/products/vendor':
-    $ref: './products/attachVendor.yaml'  # Reference to the attachment with vendor file
   '/api/store/products/{id}/vendors':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
   '/api/store/products/{id}/vendors/{vendor_id}/action':
     $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
-  '/api/store/products/getAttributeList':
+  '/api/store/products/attributes':
     $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
   '/api/store/products/getAttributeValue':
     $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
