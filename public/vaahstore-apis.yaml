@@ -1953,7 +1953,7 @@ paths:
                       - id
                       - name
                       - can_update
-                      - status
+                      - taxonomy_id_vendor_status
                     properties:
                       id:
                         type: integer
@@ -1963,19 +1963,14 @@ paths:
                         type: string
                         description: The name of the vendor.
                         example: ''
+                      taxonomy_id_vendor_status:
+                        type: integer
+                        description: The status ID of the vendor.
+                        example: 1
                       can_update:
                         type: boolean
                         description: Indicates if the vendor can update the product.
                         example: true
-                      status:
-                        type: object
-                        required:
-                          - id
-                        properties:
-                          id:
-                            type: integer
-                            description: The status ID of the vendor relationship.
-                            example: 1
                       status_notes:
                         type: string
                         description: Optional notes about the vendor status.
@@ -3129,13 +3124,21 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/vendors/add/product:
+  /api/store/vendors/{id}/products:
     post:
       tags:
         - Vendors
-      summary: Attach products with vendor
+      summary: Attach products to vendor
       description: This endpoint allows adding products to a specific vendor.
-      operationId: createProduct
+      operationId: attachProducts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            description: The ID of the vendor.
+            example: 1
       requestBody:
         required: true
         content:
@@ -3143,58 +3146,39 @@ paths:
             schema:
               type: object
               required:
-                - id
                 - products
               properties:
-                id:
-                  type: integer
-                  description: The ID of the vendor.
-                  example: 6
                 products:
                   type: array
                   items:
                     type: object
                     required:
-                      - product
+                      - id
+                      - name
+                      - vh_st_store_id
                       - can_update
-                      - status
+                      - taxonomy_id_product_status
                     properties:
-                      product:
-                        type: object
-                        required:
-                          - id
-                          - name
-                          - vh_st_store_id
-                        properties:
-                          id:
-                            type: integer
-                            description: The ID of the product.
-                            example: 3
-                          name:
-                            type: string
-                            description: The name of the product.
-                            example: Sony
-                          is_default:
-                            type: integer
-                            description: Whether the product is the default (0 or 1).
-                            example: 0
-                          vh_st_store_id:
-                            type: integer
-                            description: The store ID associated with the product.
-                            example: 1
+                      id:
+                        type: integer
+                        description: The ID of the product
+                        example: 1
+                      name:
+                        type: string
+                        description: The name of the product.
+                        example: laptop-32gb-black
+                      vh_st_store_id:
+                        type: integer
+                        description: The ID of the store to which this product belongs.
+                        example: 1
+                      taxonomy_id_product_status:
+                        type: integer
+                        description: The status ID of the product.
+                        example: 1
                       can_update:
                         type: boolean
                         description: Determines if the product can be updated by the vendor.
                         example: false
-                      status:
-                        type: object
-                        required:
-                          - id
-                        properties:
-                          id:
-                            type: integer
-                            description: The status ID of the product.
-                            example: 18
                       status_notes:
                         type: string
                         description: Optional notes about the status of the product.

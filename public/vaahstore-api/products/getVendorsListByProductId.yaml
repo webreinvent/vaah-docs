@@ -133,7 +133,7 @@ post:
                   - id
                   - name
                   - can_update
-                  - status
+                  - taxonomy_id_vendor_status
 
                 properties:
                   id:
@@ -144,19 +144,15 @@ post:
                     type: string
                     description: The name of the vendor.
                     example: ""
+                  taxonomy_id_vendor_status:
+                    type: integer
+                    description: The status ID of the vendor.
+                    example: 1
                   can_update:
                     type: boolean
                     description: Indicates if the vendor can update the product.
                     example: true
-                  status:
-                    type: object
-                    required:
-                      - id
-                    properties:
-                      id:
-                        type: integer
-                        description: The status ID of the vendor relationship.
-                        example: 1
+
                   status_notes:
                     type: string
                     description: Optional notes about the vendor status.
