@@ -138,7 +138,7 @@ paths:
     $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors list actions file
   '/api/store/vendors/{id}/products':
     $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
-  '/api/store/vendors/add/user':
+  '/api/store/vendors/{id}/users/roles':
     $ref: './vendors/addUser.yaml'  # Reference to the vendors attachment with user file
 
 

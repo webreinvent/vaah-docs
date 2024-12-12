@@ -3232,13 +3232,21 @@ paths:
                   message:
                     type: string
                     example: An error occurred while adding the product.
-  /api/store/vendors/add/user:
+  /api/store/vendors/{id}/users/roles:
     post:
       tags:
         - Vendors
-      summary: Assign user role with vendor
-      description: Adds a user to the vendor with the specified roles.
-      operationId: createVendorUser
+      summary: Assign users and roles to a vendor
+      description: Associates specified users with a vendor and assigns them specific roles.
+      operationId: attachUsersRoles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            description: The ID of the vendor.
+            example: 1
       requestBody:
         required: true
         content:
@@ -3246,20 +3254,9 @@ paths:
             schema:
               type: object
               required:
-                - item
-                - user_details
+                - users
               properties:
-                item:
-                  type: object
-                  description: item containing the vendor id
-                  required:
-                    - id
-                  properties:
-                    id:
-                      type: integer
-                      description: The ID of the vendor.
-                      example: 1
-                user_details:
+                users:
                   type: array
                   description: List of users with their roles.
                   items:
