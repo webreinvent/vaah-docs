@@ -1,11 +1,17 @@
 get:
   tags:
     - Carts
-  summary: Get cart items for checkout by cart ID
-  description: Fetches the items available for checkout based on the specified cart ID. Only items with available stock will be included.
+  summary: Get cart items at checkout by cart Uuid
+  description: Fetches the items available for checkout based on the specified cart Uuis. Only items with available stock will be included.
   operationId: getItemsAtCheckOutById
   parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+    - name: uuid
+      in: path
+      required: true
+      schema:
+        type: string
+        description: The uuid of the cart.
+        example: 1
   responses:
     '200':
       description: Cart items retrieved successfully at checkout
