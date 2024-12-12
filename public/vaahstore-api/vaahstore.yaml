@@ -234,10 +234,9 @@ paths:
     $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
   '/api/store/shipments/{id}':
     $ref: './shipments/update.yaml'  # Reference to shipments item file
-  '/api/store/shipments/{id}/get-shipped-item-list':
+  '/api/store/shipments/{item_id}/items':
     $ref: './shipments/getShippedItem.yaml'  # Reference to get shipment by item id file
-  '/api/store/shipments/update-shipped-item-quantity':
-    $ref: './shipments/updateItemQuantity.yaml'  # Reference to shipments update shipped items quantity file
+
   '/api/store/shipments/{id}/action/{action}':
     $ref: './shipments/itemAction.yaml'  # Reference to payment item actions file
   '/api/store/shipments/action/{action}':

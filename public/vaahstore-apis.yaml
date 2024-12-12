@@ -10439,7 +10439,7 @@ paths:
           content:
             application/json:
               schema: null
-  /api/store/shipments/{id}/get-shipped-item-list:
+  /api/store/shipments/{item_id}/items:
     get:
       tags:
         - Shipments
@@ -10513,8 +10513,7 @@ paths:
                       type: string
                     example:
                       - Record does not exist.
-  /api/store/shipments/update-shipped-item-quantity:
-    post:
+    put:
       summary: Update Shipped Item Quantities
       description: Updates the quantities of shipped items based on the provided shipment item details.
       operationId: saveEditedShippedQuantity
