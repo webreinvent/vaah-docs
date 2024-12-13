@@ -197,10 +197,10 @@ paths:
 #    $ref: './carts/removeAddress.yaml'  # Reference to  remove cart user address  file
 #  '/api/store/carts/update/user-shipping-address':
 #    $ref: './carts/updateAddress.yaml'  # Reference to  update cart user address  file
-  '/api/store/carts/place-order':
-    $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
-  '/api/store/carts/get-order-details/{order_id}':
-    $ref: './carts/getOrder.yaml'  # Reference to get order file
+#  '/api/store/carts/place-order':
+#    $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
+#  '/api/store/carts/get-order-details/{order_id}':
+#    $ref: './carts/getOrder.yaml'  # Reference to get order file
   '/api/store/carts/{id}/action/{action}':
     $ref: './carts/itemAction.yaml'  # Reference to cart item action file
   '/api/store/carts/action/{action}':
@@ -210,6 +210,8 @@ paths:
     $ref: './orders/index.yaml'  # Reference to order file
   '/api/store/orders/{id}':
     $ref: './orders/update.yaml'  # Reference to order item file
+  '/api/store/orders/{uuid}/items':
+    $ref: './carts/getOrder.yaml'  # Reference to order item file
   '/api/store/orders/{id}/action/{action}':
     $ref: './orders/itemAction.yaml'  # Reference to order item action file
   '/api/store/orders/action/{action}':
