@@ -1,11 +1,17 @@
 get:
   tags:
     - Orders
-  summary: Get record by order ID
+  summary: Get record by order UUID
   description: Retrieve a order by its unique identifier.
   operationId: getOrderById
   parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+    - name: uuid
+      in: path
+      required: true
+      description: "The universally unique identifier (UUID) of the order."
+      schema:
+        type: string
+        example: "abcd1234-abcd1234"
   responses:
     '200':
       description: Order Retrieved Successfully

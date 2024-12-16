@@ -7316,15 +7316,21 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/orders/{id}:
+  /api/store/orders/{uuid}:
     get:
       tags:
         - Orders
-      summary: Get record by order ID
+      summary: Get record by order UUID
       description: Retrieve a order by its unique identifier.
       operationId: getOrderById
       parameters:
-        - $ref: '#/components/parameters/id'
+        - name: uuid
+          in: path
+          required: true
+          description: The universally unique identifier (UUID) of the order.
+          schema:
+            type: string
+            example: abcd1234-abcd1234
       responses:
         '200':
           description: Order Retrieved Successfully
@@ -7823,7 +7829,7 @@ paths:
                     example: Order not found.
                   data:
                     type: null
-  /api/store/orders/{id}/action/{action}:
+  /api/store/orders/{uuid}/action/{action}:
     patch:
       tags:
         - Orders
@@ -7832,7 +7838,7 @@ paths:
         This endpoint allows you to perform various actions on a order item, such as activating, deactivating, trashing, or restoring a order.
       operationId: itemActiOnOrder
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/uuid'
         - $ref: '#/components/parameters/action'
       responses:
         '200':
@@ -7962,21 +7968,21 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/orders/get-order-items/{id}:
+  /api/store/orders/{uuid}/shipment/items:
     get:
-      summary: Get shipped order items by ID
+      summary: Get shipped order items by UUID
       description: Retrieve order items shipment details for a specified order ID, including product variations, vendor information, and quantities shipped.
       operationId: getShippedOrderItems
       tags:
         - Orders
       parameters:
-        - name: id
+        - name: uuid
           in: path
           required: true
-          description: The ID of the order to retrieve shipped items for.
+          description: The universally unique identifier (UUID) of the order.
           schema:
-            type: integer
-            example: 1
+            type: string
+            example: abcd1234-abcd1234
       responses:
         '200':
           description: Successfully retrieved shipped order items

@@ -208,15 +208,15 @@ paths:
 
   '/api/store/orders':
     $ref: './orders/index.yaml'  # Reference to order file
-  '/api/store/orders/{id}':
+  '/api/store/orders/{uuid}':
     $ref: './orders/update.yaml'  # Reference to order item file
   '/api/store/orders/{uuid}/items':
     $ref: './carts/getOrder.yaml'  # Reference to order item file
-  '/api/store/orders/{id}/action/{action}':
+  '/api/store/orders/{uuid}/action/{action}':
     $ref: './orders/itemAction.yaml'  # Reference to order item action file
   '/api/store/orders/action/{action}':
     $ref: './orders/listAction.yaml'  # Reference to order list actions file
-  '/api/store/orders/get-order-items/{id}':
+  '/api/store/orders/{uuid}/shipment/items':
     $ref: './orders/getOrderItems.yaml'  # Reference to get shipped order item details file
 
   '/api/store/payments':
