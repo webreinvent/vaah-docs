@@ -163,7 +163,7 @@ paths:
     $ref: './product-vendors/itemAction.yaml'  # Reference to the product vendor item action file
   '/api/store/productvendors/action/{action}':
     $ref: './product-vendors/listAction.yaml'  # Reference to the product vendor list actions file
-  '/api/store/productvendors/product/price':
+  '/api/store/productvendors/{id}/prices':
     $ref: './product-vendors/addProductPrice.yaml'  # Reference to the add product price file
 
   '/api/store/productstocks':
