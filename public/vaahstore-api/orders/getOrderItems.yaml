@@ -1,17 +1,17 @@
 get:
-  summary: Get shipped order items by ID
+  summary: Get shipped order items by UUID
   description: Retrieve order items shipment details for a specified order ID, including product variations, vendor information, and quantities shipped.
   operationId: getShippedOrderItems
   tags:
     - Orders
   parameters:
-    - name: id
+    - name: uuid
       in: path
       required: true
-      description: The ID of the order to retrieve shipped items for.
+      description: "The universally unique identifier (UUID) of the order."
       schema:
-        type: integer
-        example: 1
+        type: string
+        example: "abcd1234-abcd1234"
   responses:
     '200':
       description: Successfully retrieved shipped order items

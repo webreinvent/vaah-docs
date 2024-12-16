@@ -87,3 +87,123 @@ get:
               message:
                 type: string
                 example: "Invalid product ID."
+
+post:
+  tags:
+    - Products
+  summary: Attach vendors to a product
+  description: |
+    This endpoint allows you to create or attach vendors to a specific product.
+    By providing the product ID and vendors details, you can associate one or more vendors
+    with a product. This operation also verifies if the vendor already exists for the given product
+    and includes validation for required fields.
+
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        description: The ID of the product.
+        example: 1
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - store
+            - vendors
+          properties:
+            store:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the store to which this vendor associated..
+                  example: 1
+            vendors:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                  - name
+                  - can_update
+                  - taxonomy_id_vendor_status
+
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the vendor.
+                    example: 1
+                  name:
+                    type: string
+                    description: The name of the vendor.
+                    example: ""
+                  taxonomy_id_vendor_status:
+                    type: integer
+                    description: The status ID of the vendor.
+                    example: 1
+                  can_update:
+                    type: boolean
+                    description: Indicates if the vendor can update the product.
+                    example: true
+
+                  status_notes:
+                    type: string
+                    description: Optional notes about the vendor status.
+                    example: null
+                    nullable: true
+
+  responses:
+    200:
+      description: Vendors attached successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "saved successfully." ]
+              data:
+                type: object
+                description: The product data.
+                '$ref': '../vaahstore.yaml#/components/schemas/Product'
+    400:
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "Vendor ID is required.", "Vendor name is required.","This Vendor {vendor_name} already exists." ,"Can Update required"]
+    401:
+      description: Unauthorized, user does not have permission to create vendor.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Permission denied."

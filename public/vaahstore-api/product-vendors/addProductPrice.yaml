@@ -4,6 +4,14 @@ post:
   summary: "Add product price by vendor"
   description: This endpoint allows create the product price according to the specefic vendor.
   operationId: "vendorProductPrice"
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: "Unique identifier for the vendor product"
+      schema:
+        type: integer
+        example: 1
   requestBody:
     description: "Request body for adding product price by vendor"
     content:
@@ -11,9 +19,6 @@ post:
         schema:
           type: object
           properties:
-            id:
-              type: string
-              description: "Unique identifier for the vendor product"
             vh_st_vendor_id:
               type: string
               description: "Unique identifier for the vendor"

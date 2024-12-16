@@ -7,7 +7,7 @@ patch:
 
   operationId: itemActiOnOrder
   parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+    - '$ref': '../vaahstore.yaml#/components/parameters/uuid'
     - '$ref': '../vaahstore.yaml#/components/parameters/action'
 
   responses:

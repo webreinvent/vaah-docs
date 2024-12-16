@@ -2,14 +2,14 @@ get:
   summary: Get order details after placing an order
   operationId: getOrderDetails
   tags:
-    - Carts
+    - Orders
   parameters:
-    - name: order_id
+    - name: uuid
       in: path
       required: true
-      description: The ID of the order to retrieve details for.
+      description: The Uuid or Id of the order to retrieve details for.
       schema:
-        type: integer
+        type: string
         example: 1
   responses:
     '200':
