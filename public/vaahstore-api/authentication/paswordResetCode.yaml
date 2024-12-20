@@ -1,0 +1,75 @@
+post:
+  summary: Send password reset ocde
+  description: |
+    This endpoint allows users to request a reset code for reset their account password sent to their registered email. The code can be used to reset their account password.
+  operationId: sendPasswordCode
+  tags:
+    - Authentication
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              description: The email address of the user.
+          required:
+            - email
+
+  responses:
+    '200':
+      description: A password reset code is sent to your email.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  type: object
+                example: [ ]
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "A password reset code is sent to your email."
+
+
+    '400':
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["The email field is required."]
+    '401':
+      description: Unauthorized, invalid credentials provided.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["Invalid credentials provided."]
