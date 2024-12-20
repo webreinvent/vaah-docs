@@ -245,7 +245,7 @@ paths:
                       - Invalid credentials provided.
   /api/password-reset/code:
     post:
-      summary: Send password reset ocde
+      summary: Send password reset code
       description: |
         This endpoint allows users to request a reset code for reset their account password sent to their registered email. The code can be used to reset their account password.
       operationId: sendPasswordCode
@@ -17480,7 +17480,7 @@ paths:
     post:
       tags:
         - Customers
-      summary: User change password
+      summary: Change User Password
       description: |
         This endpoint allows users to change their password. After a successful password change, users must log in again to access their customer data.
       operationId: changePassword

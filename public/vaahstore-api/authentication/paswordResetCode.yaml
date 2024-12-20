@@ -1,5 +1,5 @@
 post:
-  summary: Send password reset ocde
+  summary: Send password reset code
   description: |
     This endpoint allows users to request a reset code for reset their account password sent to their registered email. The code can be used to reset their account password.
   operationId: sendPasswordCode
