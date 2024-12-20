@@ -333,6 +333,8 @@ paths:
     $ref: './customers/getAssets.yaml'  # Reference to customers assets file
   '/api/store/users':
     $ref: './customers/index.yaml'  # Reference to customers file
+  '/api/store/users/change/password':
+    $ref: './customers/changePassword.yaml'  # Reference to customers file
   '/api/store/users/{id}':
     $ref: './customers/update.yaml'  # Reference to customers update file
 

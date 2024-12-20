@@ -16912,42 +16912,6 @@ paths:
                       type: string
                       example: Trace details...
   /api/store/users:
-    get:
-      tags:
-        - Customers
-      summary: Get list of all customers
-      description: Retrieve list of all the customers.
-      operationId: getCustomers
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/rows'
-        - $ref: '#/components/parameters/filter_q'
-        - $ref: '#/components/parameters/filter_is_active'
-        - $ref: '#/components/parameters/filter_trashed'
-        - $ref: '#/components/parameters/filter_date'
-      responses:
-        '200':
-          description: List retrieved Successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  current_page:
-                    type: integer
-                    example: 1
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Customer'
-                  first_page_url:
-                    type: string
-                    example: http://127.0.0.1:8000/backend/store/users?page=1
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema: null
     post:
       tags:
         - Customers
@@ -17039,6 +17003,42 @@ paths:
                       type: string
                     example:
                       - ' '
+    get:
+      tags:
+        - Customers
+      summary: Get list of all customers
+      description: Retrieve list of all the customers.
+      operationId: getCustomers
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/filter_q'
+        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/filter_trashed'
+        - $ref: '#/components/parameters/filter_date'
+      responses:
+        '200':
+          description: List retrieved Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+                  first_page_url:
+                    type: string
+                    example: http://127.0.0.1:8000/backend/store/users?page=1
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
     put:
       tags:
         - Customers
@@ -17240,6 +17240,91 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /api/store/users/change/password:
+    post:
+      tags:
+        - Customers
+      summary: User change password
+      description: |
+        This endpoint allows users to change their password. After a successful password change, users must log in again to access their customer data.
+      operationId: changePassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                current_password:
+                  type: string
+                  description: Current password of the user.
+                new_password:
+                  type: string
+                  description: New password for the user.
+                confirm_password:
+                  type: string
+                  description: Confirm New password for the user.
+              required:
+                - current_password
+                - new_password
+                - confirm_password
+      responses:
+        '200':
+          description: User password changed sucesfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Action was successful
+                  data:
+                    type: object
+                    properties:
+                      redirect_url:
+                        type: string
+                        example: ''
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The current password field is required.
+                      - The new password field is required.
+                      - The confirm password field is required.
+        '401':
+          description: Unauthorized, invalid credentials provided.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Invalid credentials provided.
   /api/store/users/{id}:
     get:
       tags:

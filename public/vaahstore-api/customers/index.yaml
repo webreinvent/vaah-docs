@@ -1,42 +1,3 @@
-get:
-  tags:
-    - Customers
-  summary: Get list of all customers
-  description: Retrieve list of all the customers.
-  operationId: getCustomers
-  parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/page'
-    - '$ref': '../vaahstore.yaml#/components/parameters/rows'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
-
-  responses:
-    '200':
-      description: List retrieved Successfully
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              current_page:
-                type: integer
-                example: 1
-              data:
-                type: array
-                items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/Customer'
-              first_page_url:
-                type: string
-                example: "http://127.0.0.1:8000/backend/store/users?page=1"
-
-    '500':
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-
 post:
   tags:
     - Customers
@@ -132,6 +93,47 @@ post:
                 example: [
                     " "
                 ]
+
+get:
+  tags:
+    - Customers
+  summary: Get list of all customers
+  description: Retrieve list of all the customers.
+  operationId: getCustomers
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/page'
+    - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
+
+  responses:
+    '200':
+      description: List retrieved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              current_page:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  '$ref': '../vaahstore.yaml#/components/schemas/Customer'
+              first_page_url:
+                type: string
+                example: "http://127.0.0.1:8000/backend/store/users?page=1"
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+
 put:
   tags:
     - Customers
