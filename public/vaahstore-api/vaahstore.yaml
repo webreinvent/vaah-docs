@@ -90,10 +90,11 @@ tags:
 
 paths:
 
-  '/api/signin':
-    $ref: './authentication/signin.yaml'  # Reference to the stores file
+
   '/api/signin/generate/otp':
     $ref: './authentication/signinOTP.yaml'  # Reference to the stores file
+  '/api/signin':
+    $ref: './authentication/signin.yaml'  # Reference to the stores file
   '/api/password-reset/code':
     $ref: './authentication/paswordResetCode.yaml'  # Reference to the stores file
   '/api/password-reset':

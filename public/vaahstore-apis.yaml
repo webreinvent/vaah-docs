@@ -82,95 +82,9 @@ tags:
     description: |
       Everything about Settings in VaahStore. This section includes managing various settings and configurations related to VaahStore. Additionally, it covers how to create, read, update, and delete sample records for VaahStore CRUD operations.
 paths:
-  /api/signin:
-    post:
-      summary: User Signin
-      description: |
-        This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/customers/POST/api/store/users) as a cutomer in VaahStore
-      operationId: postSignIn
-      tags:
-        - Authentication
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                  description: The email address of the user.
-                password:
-                  type: string
-                  description: The password for the account.
-              required:
-                - email
-                - password
-      responses:
-        '200':
-          description: User signed in successfully and API token generated.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    properties:
-                      item:
-                        type: object
-                        description: The authenticated user data including the API token.
-                        properties:
-                          id:
-                            type: integer
-                            description: The unique identifier for the user.
-                          email:
-                            type: string
-                            format: email
-                            description: The email address of the user.
-                          api_token:
-                            type: string
-                            description: The API token for authenticating future requests.
-        '400':
-          description: Bad Request, validation errors occurred.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - The email field is required.
-                      - The password field is required.
-        '401':
-          description: Unauthorized, invalid credentials provided.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - Invalid credentials provided.
   /api/signin/generate/otp:
     post:
-      summary: Generate OTP for login
+      summary: Generate OTP for signin
       description: |
         This endpoint allows users to request a one-time password (OTP) for logging into their account. Upon successful request, an OTP will be sent to the user's registered email. The user can then use this OTP to log in
       operationId: generateOTP
@@ -227,6 +141,111 @@ paths:
                       type: string
                     example:
                       - The email field is required.
+        '401':
+          description: Unauthorized, invalid credentials provided.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Invalid credentials provided.
+  /api/signin:
+    post:
+      summary: User Signin
+      description: |
+        This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/customers/POST/api/store/users) as a cutomer in VaahStore
+      operationId: postSignIn
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: The email address of the user.
+                type:
+                  type: string
+                  enum:
+                    - otp
+                  description: The type of authentication. If 'otp' is provided, `login_otp` becomes required.
+                password:
+                  type: string
+                  description: The password for the account.
+                login_otp:
+                  type: string
+                  description: The one-time password (OTP) used for authentication.
+              required:
+                - email
+              oneOf:
+                - required:
+                    - password
+                  not:
+                    required:
+                      - login_otp
+                - required:
+                    - login_otp
+                  not:
+                    required:
+                      - password
+      responses:
+        '200':
+          description: User signed in successfully and API token generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      item:
+                        type: object
+                        description: The authenticated user data including the API token.
+                        properties:
+                          id:
+                            type: integer
+                            description: The unique identifier for the user.
+                          email:
+                            type: string
+                            format: email
+                            description: The email address of the user.
+                          api_token:
+                            type: string
+                            description: The API token for authenticating future requests.
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The email field is required.
+                      - The password field is required.
+                      - The login OTP field is required.
         '401':
           description: Unauthorized, invalid credentials provided.
           content:

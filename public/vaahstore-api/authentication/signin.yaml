@@ -16,12 +16,27 @@ post:
               type: string
               format: email
               description: The email address of the user.
+            type:
+              type: string
+              enum: [ otp ]
+              description: The type of authentication. If 'otp' is provided, `login_otp` becomes required.
             password:
               type: string
               description: The password for the account.
+            login_otp:
+              type: string
+              description: The one-time password (OTP) used for authentication.
           required:
             - email
-            - password
+          oneOf:
+            - required: [ password ]
+              not:
+                required: [ login_otp ]
+            - required: [ login_otp ]
+              not:
+                required: [ password ]
+
+
   responses:
     '200':
       description: User signed in successfully and API token generated.
@@ -64,7 +79,7 @@ post:
                 type: array
                 items:
                   type: string
-                example: ["The email field is required.", "The password field is required."]
+                example: ["The email field is required.", "The password field is required.", "The login OTP field is required."]
     '401':
       description: Unauthorized, invalid credentials provided.
       content:
