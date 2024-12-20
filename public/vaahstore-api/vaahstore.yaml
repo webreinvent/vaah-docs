@@ -92,6 +92,8 @@ paths:
 
   '/api/signin':
     $ref: './authentication/signin.yaml'  # Reference to the stores file
+  '/api/signin/generate/otp':
+    $ref: './authentication/signinOTP.yaml'  # Reference to the stores file
 
   '/api/taxonomies':
     $ref: './taxonomies/index.yaml'  # Reference to the taxonomies file

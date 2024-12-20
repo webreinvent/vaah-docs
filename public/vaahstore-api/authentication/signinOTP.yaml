@@ -1,0 +1,76 @@
+post:
+  summary: Generate OTP for login
+  description: |
+    This endpoint allows users to request a one-time password (OTP) for logging into their account. Upon successful request, an OTP will be sent to the user's registered email. The user can then use this OTP to log in
+  operationId: generateOTP
+  tags:
+    - Authentication
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              description: The email address of the user.
+
+          required:
+            - email
+
+  responses:
+    '200':
+      description: A one-time password (OTP) has been sent to your email.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  type: object
+                example: [ ]
+              messages:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "A one time password (OTP) has been sent to your email."
+
+
+    '400':
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["The email field is required."]
+    '401':
+      description: Unauthorized, invalid credentials provided.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["Invalid credentials provided."]
