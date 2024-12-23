@@ -26,6 +26,11 @@ post:
             login_otp:
               type: string
               description: The one-time password (OTP) used for authentication.
+              example: 12345
+            remember:
+              type: boolean
+              description: Whether the user should be remembered across sessions. `true` for "Remember me", `false` for no persistence.
+              example: true
           required:
             - email
           oneOf:
@@ -65,6 +70,9 @@ post:
                       api_token:
                         type: string
                         description: The API token for authenticating future requests.
+                      remember_token:
+                        type: string
+                        description: The remember token used to maintain user sessions across visits. It is often used to implement "Remember Me" functionality, allowing users to stay logged in even after their session expires.
     '400':
       description: Bad Request, validation errors occurred.
       content:

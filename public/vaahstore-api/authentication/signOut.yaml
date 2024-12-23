@@ -1,0 +1,61 @@
+post:
+  summary: User Signout
+  description: |
+    This endpoint allows a user to sign out from the application, effectively invalidating their session and API token. You must provide the `api_token` in the header to authenticate the request.
+  operationId: postSignOut
+  tags:
+    - Authentication
+  security:
+    - api_key: []  # Indicates that the API key (api_token) is required in the header
+  responses:
+    '200':
+      description: User signed out successfully, and the session was terminated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: "vaahcms-general.logout_success"
+              data:
+                type: array
+                description: The data returned after successful signout (typically empty).
+                example: []
+
+    '400':
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["Invalid session, user not logged in."]
+
+    '401':
+      description: Unauthorized, the user is not authenticated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: ["User not authenticated or session expired."]
+
+

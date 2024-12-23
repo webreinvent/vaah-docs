@@ -99,6 +99,8 @@ paths:
     $ref: './authentication/paswordResetCode.yaml'  # Reference to the stores file
   '/api/password-reset':
     $ref: './authentication/resetPassword.yaml'  # Reference to the stores file
+  '/api/signout':
+    $ref: './authentication/signOut.yaml'  # Reference to the stores file
 
   '/api/taxonomies':
     $ref: './taxonomies/index.yaml'  # Reference to the taxonomies file

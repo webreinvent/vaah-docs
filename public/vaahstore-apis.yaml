@@ -187,6 +187,11 @@ paths:
                 login_otp:
                   type: string
                   description: The one-time password (OTP) used for authentication.
+                  example: 12345
+                remember:
+                  type: boolean
+                  description: Whether the user should be remembered across sessions. `true` for "Remember me", `false` for no persistence.
+                  example: true
               required:
                 - email
               oneOf:
@@ -228,6 +233,9 @@ paths:
                           api_token:
                             type: string
                             description: The API token for authenticating future requests.
+                          remember_token:
+                            type: string
+                            description: The remember token used to maintain user sessions across visits. It is often used to implement "Remember Me" functionality, allowing users to stay logged in even after their session expires.
         '400':
           description: Bad Request, validation errors occurred.
           content:
@@ -423,6 +431,66 @@ paths:
                       type: string
                     example:
                       - Invalid credentials provided.
+  /api/signout:
+    post:
+      summary: User Signout
+      description: |
+        This endpoint allows a user to sign out from the application, effectively invalidating their session and API token. You must provide the `api_token` in the header to authenticate the request.
+      operationId: postSignOut
+      tags:
+        - Authentication
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: User signed out successfully, and the session was terminated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: vaahcms-general.logout_success
+                  data:
+                    type: array
+                    description: The data returned after successful signout (typically empty).
+                    example: []
+        '400':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Invalid session, user not logged in.
+        '401':
+          description: Unauthorized, the user is not authenticated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - User not authenticated or session expired.
   /api/taxonomies:
     get:
       tags:
