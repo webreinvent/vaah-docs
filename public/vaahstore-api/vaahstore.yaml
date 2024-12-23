@@ -188,7 +188,7 @@ paths:
     $ref: './carts/addToCart.yaml'  # Reference to the carts file
   '/api/store/carts/{uuid}':
     $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
-  '/api/store/carts/{uuid}/add':
+  '/api/store/carts/{uuid}/add/user':
     $ref: './carts/adduserToCart.yaml'  # Reference to the update cart items quantity file
   '/api/store/carts/{uuid}/update':
     $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file

@@ -5671,7 +5671,7 @@ paths:
     post:
       tags:
         - Carts
-      summary: Generate a cart
+      summary: Generate a cart or add to cart
       description: |
         This endpoint allows users to add multiple products to their cart. The product IDs are required, while the user information is optional. If any product is out of stock, an error message will be returned.
       operationId: addToCart
@@ -5688,6 +5688,10 @@ paths:
                     id:
                       type: integer
                       example: 1
+                uuid:
+                  type: string
+                  description: UUID of the cart. If provided, the product will be added to this specific cart.
+                  example: abcd1234-abcd1234
                 products:
                   type: array
                   items:
@@ -6104,7 +6108,7 @@ paths:
           content:
             application/json:
               schema: null
-  /api/store/carts/{uuid}/add:
+  /api/store/carts/{uuid}/add/user:
     post:
       tags:
         - Carts
