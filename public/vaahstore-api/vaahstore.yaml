@@ -162,7 +162,7 @@ paths:
     $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
   '/api/store/productvendors':
     $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
-  '/api/store/productvendors/getProductForStore':
+  '/api/store/productvendors/products':
     $ref: './product-vendors/getStoreProducts.yaml'  # Reference to the product vendors get products of stores file
   '/api/store/productvendors/{id}':
     $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
@@ -239,8 +239,6 @@ paths:
 
   '/api/store/shipments':
     $ref: './shipments/index.yaml'  # Reference to shipments file
-  '/api/store/shipments/search/orders':
-    $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
   '/api/store/shipments/{id}':
     $ref: './shipments/update.yaml'  # Reference to shipments item file
   '/api/store/shipments/{item_id}/items':
@@ -250,6 +248,8 @@ paths:
     $ref: './shipments/itemAction.yaml'  # Reference to payment item actions file
   '/api/store/shipments/action/{action}':
     $ref: './shipments/listAction.yaml'  # Reference to payment list actions file
+  '/api/store/shipments/search/orders':
+    $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
 
   '/api/store/productattributes':
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file

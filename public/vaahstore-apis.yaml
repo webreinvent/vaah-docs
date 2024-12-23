@@ -4523,9 +4523,9 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/productvendors/getProductForStore:
+  /api/store/productvendors/products:
     post:
-      summary: Get Products of Store
+      summary: Get Product list of Stores
       operationId: productForStore
       tags:
         - Vendor Products
@@ -9694,106 +9694,6 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/shipments/search/orders:
-    post:
-      summary: Search/get Orders with the Quantities Records
-      operationId: searchOrders
-      tags:
-        - Shipments
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                query:
-                  type: string
-                  description: The search query string (can be user display name, first name, or email).
-      responses:
-        '200':
-          description: A list of orders with quantities records
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          description: Order ID
-                          example: 1
-                        amount:
-                          type: number
-                          format: float
-                          description: Total order amount
-                          example: 99.99
-                        paid:
-                          type: boolean
-                          description: Whether the order is paid
-                          example: true
-                        created_at:
-                          type: string
-                          format: date-time
-                          description: Order creation timestamp
-                          example: '2023-10-10T12:00:00Z'
-                        updated_at:
-                          type: string
-                          format: date-time
-                          description: Order update timestamp
-                          example: '2023-10-10T14:00:00Z'
-                        user_name:
-                          type: string
-                          description: User's display name
-                          example: John Doe
-                        items:
-                          type: array
-                          description: Items associated with the order
-                          items:
-                            type: object
-                            properties:
-                              id:
-                                type: integer
-                                description: Item ID
-                                example: 1
-                              uuid:
-                                type: string
-                                description: Item UUID
-                              vh_st_product_variation_id:
-                                type: integer
-                                description: Product variation ID
-                                example: 1
-                              quantity:
-                                type: integer
-                                description: Ordered quantity
-                                example: 10
-                              name:
-                                type: string
-                                description: Product variation name
-                                example: Product Variation Name
-                              shipped:
-                                type: integer
-                                description: Shipped quantity
-                                example: 5
-                              pending:
-                                type: integer
-                                description: Pending quantity
-                                example: 5
-                              overall_shipped_quantity:
-                                type: integer
-                                description: Overall shipped quantity
-                                example: 5
-                              exists_in_shipment:
-                                type: boolean
-                                description: Whether the item exists in a shipment
-                                example: true
   /api/store/shipments/{id}:
     get:
       tags:
@@ -10696,6 +10596,106 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /api/store/shipments/search/orders:
+    post:
+      summary: Search/get Orders with the Quantities Records
+      operationId: searchOrders
+      tags:
+        - Shipments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The search query string (can be user display name, first name, or email).
+      responses:
+        '200':
+          description: A list of orders with quantities records
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Order ID
+                          example: 1
+                        amount:
+                          type: number
+                          format: float
+                          description: Total order amount
+                          example: 99.99
+                        paid:
+                          type: boolean
+                          description: Whether the order is paid
+                          example: true
+                        created_at:
+                          type: string
+                          format: date-time
+                          description: Order creation timestamp
+                          example: '2023-10-10T12:00:00Z'
+                        updated_at:
+                          type: string
+                          format: date-time
+                          description: Order update timestamp
+                          example: '2023-10-10T14:00:00Z'
+                        user_name:
+                          type: string
+                          description: User's display name
+                          example: John Doe
+                        items:
+                          type: array
+                          description: Items associated with the order
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                description: Item ID
+                                example: 1
+                              uuid:
+                                type: string
+                                description: Item UUID
+                              vh_st_product_variation_id:
+                                type: integer
+                                description: Product variation ID
+                                example: 1
+                              quantity:
+                                type: integer
+                                description: Ordered quantity
+                                example: 10
+                              name:
+                                type: string
+                                description: Product variation name
+                                example: Product Variation Name
+                              shipped:
+                                type: integer
+                                description: Shipped quantity
+                                example: 5
+                              pending:
+                                type: integer
+                                description: Pending quantity
+                                example: 5
+                              overall_shipped_quantity:
+                                type: integer
+                                description: Overall shipped quantity
+                                example: 5
+                              exists_in_shipment:
+                                type: boolean
+                                description: Whether the item exists in a shipment
+                                example: true
   /api/store/productattributes:
     get:
       tags:
