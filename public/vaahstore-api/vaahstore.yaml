@@ -194,7 +194,7 @@ paths:
     $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
   '/api/store/carts/{uuid}/checkout':
     $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
-  '/api/store/carts/delete-cart-item':
+  '/api/store/carts/{uuid}/item/{action}':
     $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
   '/api/store/carts/add-to-wishlist':
     $ref: './carts/addToWishlist.yaml'  # Reference to  add to wishlist  file
