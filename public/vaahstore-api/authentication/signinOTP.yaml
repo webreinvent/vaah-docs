@@ -1,5 +1,5 @@
 post:
-  summary: Generate OTP for signin
+  summary: Generate OTP for sign in
   description: |
     This endpoint allows users to request a one-time password (OTP) for logging into their account. Upon successful request, an OTP will be sent to the user's registered email. The user can then use this OTP to log in
   operationId: generateOTP

@@ -86,7 +86,7 @@ paths:
     post:
       tags:
         - Authentication
-      summary: Signup as a user
+      summary: Sign up as a customer
       operationId: signUp
       requestBody:
         required: true
@@ -98,25 +98,25 @@ paths:
                 email:
                   type: string
                   format: email
-                  description: The user's email address.
+                  description: The customer's email address.
                   maxLength: 150
                 first_name:
                   type: string
-                  description: The user's first name.
+                  description: The customer's first name.
                   maxLength: 150
                 username:
                   type: string
-                  description: User username
+                  description: Customer username
                 password:
                   type: string
-                  description: The user's password.
+                  description: The customer's password.
                 status:
                   type: string
-                  description: The user's status.
+                  description: The customer's status.
                   example: active
                 is_active:
                   type: integer
-                  description: Indicates whether the user is active or not.
+                  description: Indicates whether the customer is active or not.
               required:
                 - email
                 - first_name
@@ -142,7 +142,34 @@ paths:
                     example:
                       - Saved successfully
                   data:
-                    $ref: '#/components/schemas/Customer'
+                    type: object
+                    properties:
+                      item:
+                        type: object
+                        description: The authenticated user data including the API token.
+                        properties:
+                          id:
+                            type: integer
+                            description: The unique identifier for the user.
+                          email:
+                            type: string
+                            format: email
+                            description: The email address of the user.
+                          username:
+                            type: string
+                            description: Username of the customer/user.
+                          first_name:
+                            type: string
+                            description: FIrst name of the customer/user.
+                          name:
+                            type: string
+                            description: Customer's full name.
+                          created_ip:
+                            type: string
+                            description: IP address of the user who created the customer record.
+                          api_token:
+                            type: string
+                            description: The API token for authenticating future requests.
         '400':
           description: Validation error
           content:
@@ -182,7 +209,7 @@ paths:
                       - 'Username is already registered.. '
   /api/signin/generate/otp:
     post:
-      summary: Generate OTP for signin
+      summary: Generate OTP for sign in
       description: |
         This endpoint allows users to request a one-time password (OTP) for logging into their account. Upon successful request, an OTP will be sent to the user's registered email. The user can then use this OTP to log in
       operationId: generateOTP
@@ -257,9 +284,9 @@ paths:
                       - Invalid credentials provided.
   /api/signin:
     post:
-      summary: User Signin
+      summary: Sign in
       description: |
-        This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/customers/POST/api/store/users) as a cutomer in VaahStore
+        This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/authentication/POST/api/signup) as a cutomer in VaahStore
       operationId: postSignIn
       tags:
         - Authentication
@@ -328,12 +355,21 @@ paths:
                             type: string
                             format: email
                             description: The email address of the user.
+                          username:
+                            type: string
+                            description: Username of the customer/user.
+                          first_name:
+                            type: string
+                            description: FIrst name of the customer/user.
+                          name:
+                            type: string
+                            description: Customer's full name.
+                          created_ip:
+                            type: string
+                            description: IP address of the user who created the customer record.
                           api_token:
                             type: string
                             description: The API token for authenticating future requests.
-                          remember_token:
-                            type: string
-                            description: The remember token used to maintain user sessions across visits. It is often used to implement "Remember Me" functionality, allowing users to stay logged in even after their session expires.
         '400':
           description: Bad Request, validation errors occurred.
           content:
@@ -531,7 +567,7 @@ paths:
                       - Invalid credentials provided.
   /api/signout:
     post:
-      summary: User Signout
+      summary: Sign out
       description: |
         This endpoint allows a user to sign out from the application, effectively invalidating their session and API token. You must provide the `api_token` in the header to authenticate the request.
       operationId: postSignOut

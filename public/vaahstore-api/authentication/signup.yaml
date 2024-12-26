@@ -1,7 +1,7 @@
 post:
   tags:
     - Authentication
-  summary: "Signup as a user"
+  summary: "Sign up as a customer"
   operationId: "signUp"
   requestBody:
     required: true
@@ -13,25 +13,25 @@ post:
             email:
               type: string
               format: email
-              description: "The user's email address."
+              description: "The customer's email address."
               maxLength: 150
             first_name:
               type: string
-              description: "The user's first name."
+              description: "The customer's first name."
               maxLength: 150
             username:
               type: string
-              description: "User username"
+              description: "Customer username"
             password:
               type: string
-              description: "The user's password."
+              description: "The customer's password."
             status:
               type: string
-              description: "The user's status."
+              description: "The customer's status."
               example: "active"
             is_active:
               type: integer
-              description: "Indicates whether the user is active or not."
+              description: "Indicates whether the customer is active or not."
           required:
             - email
             - first_name
@@ -59,7 +59,35 @@ post:
                     "Saved successfully"
                 ]
               data:
-                $ref: '../vaahstore.yaml#/components/schemas/Customer'
+                type: object
+                properties:
+                  item:
+                    type: object
+                    description: The authenticated user data including the API token.
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the user.
+                      email:
+                        type: string
+                        format: email
+                        description: The email address of the user.
+                      username:
+                        type: string
+                        description: Username of the customer/user.
+                      first_name:
+                        type: string
+                        description: FIrst name of the customer/user.
+                      name:
+                        type: string
+                        description: "Customer's full name."
+                      created_ip:
+                        type: string
+                        description: "IP address of the user who created the customer record."
+                      api_token:
+                        type: string
+                        description: The API token for authenticating future requests.
+
     '400':
       description: "Validation error"
       content:

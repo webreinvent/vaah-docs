@@ -1,5 +1,5 @@
 post:
-  summary: User Signout
+  summary: Sign out
   description: |
     This endpoint allows a user to sign out from the application, effectively invalidating their session and API token. You must provide the `api_token` in the header to authenticate the request.
   operationId: postSignOut

@@ -1,7 +1,7 @@
 post:
-  summary: User Signin
+  summary: Sign in
   description: |
-    This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/customers/POST/api/store/users) as a cutomer in VaahStore
+    This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/authentication/POST/api/signup) as a cutomer in VaahStore
   operationId: postSignIn
   tags:
     - Authentication
@@ -67,12 +67,21 @@ post:
                         type: string
                         format: email
                         description: The email address of the user.
+                      username:
+                        type: string
+                        description: Username of the customer/user.
+                      first_name:
+                        type: string
+                        description: FIrst name of the customer/user.
+                      name:
+                        type: string
+                        description: "Customer's full name."
+                      created_ip:
+                        type: string
+                        description: "IP address of the user who created the customer record."
                       api_token:
                         type: string
                         description: The API token for authenticating future requests.
-                      remember_token:
-                        type: string
-                        description: The remember token used to maintain user sessions across visits. It is often used to implement "Remember Me" functionality, allowing users to stay logged in even after their session expires.
     '400':
       description: Bad Request, validation errors occurred.
       content:
