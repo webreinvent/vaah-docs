@@ -1,0 +1,100 @@
+post:
+  tags:
+    - Authentication
+  summary: "Signup as a user"
+  operationId: "signUp"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              description: "The user's email address."
+              maxLength: 150
+            first_name:
+              type: string
+              description: "The user's first name."
+              maxLength: 150
+            username:
+              type: string
+              description: "User username"
+            password:
+              type: string
+              description: "The user's password."
+            status:
+              type: string
+              description: "The user's status."
+              example: "active"
+            is_active:
+              type: integer
+              description: "Indicates whether the user is active or not."
+          required:
+            - email
+            - first_name
+            - status
+            - is_active
+            - password
+            - username
+
+  responses:
+    '200':
+      description: "User/Customer signup Successfully"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Saved successfully"
+                ]
+              data:
+                $ref: '../vaahstore.yaml#/components/schemas/Customer'
+    '400':
+      description: "Validation error"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "The email field is required.",
+                    "The email must be a valid email address.",
+                    "The first name field is required.", "The password field is required.",
+                    "The status field is required."
+                ]
+    '409':
+      description: "Conflict error if user/customer already exists"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Email is already registered.. ",
+                    "Username is already registered.. ",
+                ]

@@ -90,7 +90,8 @@ tags:
 
 paths:
 
-
+  '/api/signup':
+    $ref: './authentication/signup.yaml'  # Reference to the stores file
   '/api/signin/generate/otp':
     $ref: './authentication/signinOTP.yaml'  # Reference to the stores file
   '/api/signin':
