@@ -592,6 +592,16 @@ components:
         items:
           type: string
       example: [ 'store-1', 'store-2' ]
+    brands:
+      name: filter[brands][]
+      in: query
+      required: false
+      description: Filter by brands slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'brand-1', 'brand-2' ]
     status:
       name: filter[status][]
       in: query

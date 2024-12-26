@@ -25,6 +25,7 @@ get:
     - '$ref': '../vaahstore.yaml#/components/parameters/category'
     - '$ref': '../vaahstore.yaml#/components/parameters/product_variations'
     - '$ref': '../vaahstore.yaml#/components/parameters/stores'
+    - '$ref': '../vaahstore.yaml#/components/parameters/brands'
     - '$ref': '../vaahstore.yaml#/components/parameters/vendors'
     - '$ref': '../vaahstore.yaml#/components/parameters/min_quantity'
     - '$ref': '../vaahstore.yaml#/components/parameters/max_quantity'

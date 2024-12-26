@@ -1531,6 +1531,7 @@ paths:
         - $ref: '#/components/parameters/category'
         - $ref: '#/components/parameters/product_variations'
         - $ref: '#/components/parameters/stores'
+        - $ref: '#/components/parameters/brands'
         - $ref: '#/components/parameters/vendors'
         - $ref: '#/components/parameters/min_quantity'
         - $ref: '#/components/parameters/max_quantity'
@@ -19592,6 +19593,18 @@ components:
       example:
         - store-1
         - store-2
+    brands:
+      name: filter[brands][]
+      in: query
+      required: false
+      description: Filter by brands slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example:
+        - brand-1
+        - brand-2
     status:
       name: filter[status][]
       in: query
