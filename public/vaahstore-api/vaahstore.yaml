@@ -125,6 +125,12 @@ paths:
     $ref: './products/productAction.yaml'  # Reference to the product item action file
   '/api/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
+  '/api/store/products/top/sellings':
+    $ref: './products/topSellingProducts.yaml'  # Reference to the product item file
+  '/api/store/products/top/brands':
+    $ref: './products/topSellingBrands.yaml'  # Reference to the product item file
+  '/api/store/products/top/categories':
+    $ref: './products/topSellingCategories.yaml'  # Reference to the product item file
   '/api/store/products/{id}/vendors':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
   '/api/store/products/{id}/vendors/{vendor_id}/action':

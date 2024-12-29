@@ -25,20 +25,14 @@ post:
             password:
               type: string
               description: "The customer's password."
-            status:
-              type: string
-              description: "The customer's status."
-              example: "active"
             is_active:
               type: integer
               description: "Indicates whether the customer is active or not."
           required:
             - email
             - first_name
-            - status
-            - is_active
-            - password
             - username
+            - password
 
   responses:
     '200':

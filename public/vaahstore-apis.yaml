@@ -110,20 +110,14 @@ paths:
                 password:
                   type: string
                   description: The customer's password.
-                status:
-                  type: string
-                  description: The customer's status.
-                  example: active
                 is_active:
                   type: integer
                   description: Indicates whether the customer is active or not.
               required:
                 - email
                 - first_name
-                - status
-                - is_active
-                - password
                 - username
+                - password
       responses:
         '200':
           description: User/Customer signup Successfully
@@ -2277,6 +2271,203 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /api/store/products/top/sellings:
+    get:
+      tags:
+        - Products
+      summary: Top-selling products within a date range
+      description: Retrieve a list of top 5 products based on the provided date range and optional filters.
+      operationId: getTopSellings
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/rows'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_date:
+                  type: string
+                  format: date-time
+                  example: '2024-12-01T00:00:00.000Z'
+                  description: Start date of the period for fetching top-selling categories.
+                end_date:
+                  type: string
+                  format: date-time
+                  example: '2024-12-26T00:00:00.000Z'
+                  description: End date of the period for fetching top-selling categories.
+                filter_all:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: Optional filter to apply to the category list (e.g., all, null, etc.).
+              required:
+                - start_date
+                - end_date
+      responses:
+        '200':
+          description: Products Retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 889
+                        name:
+                          type: string
+                          example: Tata Coffee
+                        slug:
+                          type: string
+                          example: tata-coffee
+                        total_sales:
+                          type: string
+                          example: '1000'
+                        image_urls:
+                          type: array
+                          items:
+                            type: string
+                            example: ''
+                        brand:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            name:
+                              type: string
+                              example: Tata
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /api/store/products/top/brands:
+    get:
+      tags:
+        - Products
+      summary: Top-selling brands within a date range
+      description: Retrieve a list of top 5 brands based on the provided date range and optional filters.
+      operationId: getTopSellingBrands
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_date:
+                  type: string
+                  format: date-time
+                  example: '2024-12-01T00:00:00.000Z'
+                  description: Start date of the period for fetching top-selling brands.
+                end_date:
+                  type: string
+                  format: date-time
+                  example: '2024-12-26T00:00:00.000Z'
+                  description: End date of the period for fetching top-selling brands.
+                filter_all:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: Optional filter to apply to the brand list (e.g., all, null, etc.).
+      responses:
+        '200':
+          description: Brands Retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 889
+                        name:
+                          type: string
+                          example: Tata Coffee
+                        slug:
+                          type: string
+                          example: tata-coffee
+                        total_sales:
+                          type: string
+                          example: '1000'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
+  /api/store/products/top/categories:
+    get:
+      tags:
+        - Products
+      summary: Top-selling categories within a date range
+      description: Retrieve a list of top 5 categories based on the provided date range and optional filters.
+      operationId: getTopSellingCategories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_date:
+                  type: string
+                  format: date-time
+                  example: '2024-12-01T00:00:00.000Z'
+                  description: Start date of the period for fetching top-selling categories.
+                end_date:
+                  type: string
+                  format: date-time
+                  example: '2024-12-26T00:00:00.000Z'
+                  description: End date of the period for fetching top-selling categories.
+                filter_all:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: Optional filter to apply to the category list (e.g., all, null, etc.).
+              required:
+                - start_date
+                - end_date
+      responses:
+        '200':
+          description: Categories Retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 889
+                        name:
+                          type: string
+                          example: Tata Coffee
+                        slug:
+                          type: string
+                          example: tata-coffee
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
   /api/store/products/{id}/vendors:
     get:
       tags:
