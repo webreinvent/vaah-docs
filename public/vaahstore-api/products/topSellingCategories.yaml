@@ -4,8 +4,19 @@ get:
   summary: Top-selling categories within a date range
   description: Retrieve a list of top 5 categories based on the provided date range and optional filters.
   operationId: getTopSellingCategories
+  parameters:
+    - name: limit
+      in: query
+      description: Number of top categories to retrieve. Defaults to 5 if not provided.
+      required: false
+      schema:
+        type: integer
+        example: 2
   requestBody:
     required: true
+    description: >
+      The request body requires `start_date` and `end_date` to fetch data for the specified period.
+      If these values are not provided, the API will return data for the current day by default.
     content:
       application/json:
         schema:

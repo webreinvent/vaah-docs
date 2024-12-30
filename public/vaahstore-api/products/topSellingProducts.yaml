@@ -7,9 +7,19 @@ get:
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/page'
     - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - name: limit
+      in: query
+      description: Number of top products to retrieve. Defaults to 5 if not provided.
+      required: false
+      schema:
+        type: integer
+        example: 2
 
   requestBody:
     required: true
+    description: >
+      The request body requires `start_date` and `end_date` to fetch data for the specified period.
+      If these values are not provided, the API will return data for the current day by default.
     content:
       application/json:
         schema:

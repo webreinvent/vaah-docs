@@ -99,7 +99,7 @@ post:
                 example: [
                     "The email field is required.",
                     "The email must be a valid email address.",
-                    "The first name field is required.", "The password field is required.",
+                    "The first name field is required.","The username field is required.", "The password field is required.",
                     "The status field is required."
                 ]
     '409':

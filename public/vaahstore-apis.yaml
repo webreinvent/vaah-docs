@@ -182,6 +182,7 @@ paths:
                       - The email field is required.
                       - The email must be a valid email address.
                       - The first name field is required.
+                      - The username field is required.
                       - The password field is required.
                       - The status field is required.
         '409':
@@ -2281,8 +2282,17 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/rows'
+        - name: limit
+          in: query
+          description: Number of top products to retrieve. Defaults to 5 if not provided.
+          required: false
+          schema:
+            type: integer
+            example: 2
       requestBody:
         required: true
+        description: |
+          The request body requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return data for the current day by default.
         content:
           application/json:
             schema:
@@ -2357,8 +2367,18 @@ paths:
       summary: Top-selling brands within a date range
       description: Retrieve a list of top 5 brands based on the provided date range and optional filters.
       operationId: getTopSellingBrands
+      parameters:
+        - name: limit
+          in: query
+          description: Number of top brands to retrieve. Defaults to 5 if not provided.
+          required: false
+          schema:
+            type: integer
+            example: 2
       requestBody:
         required: true
+        description: |
+          The request body requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return data for the current day by default.
         content:
           application/json:
             schema:
@@ -2416,8 +2436,18 @@ paths:
       summary: Top-selling categories within a date range
       description: Retrieve a list of top 5 categories based on the provided date range and optional filters.
       operationId: getTopSellingCategories
+      parameters:
+        - name: limit
+          in: query
+          description: Number of top categories to retrieve. Defaults to 5 if not provided.
+          required: false
+          schema:
+            type: integer
+            example: 2
       requestBody:
         required: true
+        description: |
+          The request body requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return data for the current day by default.
         content:
           application/json:
             schema:
