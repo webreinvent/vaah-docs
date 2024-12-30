@@ -15,13 +15,13 @@ get:
           schema:
             type: object
             properties:
-
+              success:
+                type: boolean
+                example: true
               data:
-                type: array
+                type: object
                 description: Default store data.
-                items:
-                  type: object
-                  properties:
+                properties:
                     id:
                       type: integer
                       description: Unique identifier for the store.

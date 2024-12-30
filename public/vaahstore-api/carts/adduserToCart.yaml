@@ -39,6 +39,11 @@ post:
               success:
                 type: boolean
                 example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "User successfully added to cart."
               data:
                 type: object
                 properties:

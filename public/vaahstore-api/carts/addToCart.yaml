@@ -53,6 +53,9 @@ post:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: true
               messages:
                 type: array
                 items:
@@ -244,6 +247,9 @@ post:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: false
               errors:
                 type: array
                 items:
@@ -264,6 +270,9 @@ post:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: false
               errors:
                 type: array
                 items:

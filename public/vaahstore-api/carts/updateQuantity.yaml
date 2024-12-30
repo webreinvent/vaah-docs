@@ -51,6 +51,9 @@ put:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: true
               messages:
                 type: array
                 items:

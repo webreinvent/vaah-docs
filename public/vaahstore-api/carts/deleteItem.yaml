@@ -49,17 +49,19 @@ delete:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: true
               data:
                 type: object
-                properties:
-                  cart:
-                    type: object
-                    description: The updated cart object.
+                nullable: true
+                description: "Details of the deleted cart item, can be null"
               messages:
                 type: array
                 items:
                   type: string
-                  example: "Record deleted."
+                  example: "Record deleted successfully."
+
     '400':
       description: Invalid request
       content:
