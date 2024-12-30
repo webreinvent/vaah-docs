@@ -3,6 +3,8 @@ post:
   description: |
     This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/authentication/POST/api/signup) as a cutomer in VaahStore
   operationId: postSignIn
+  security:
+    - api_key: [ ]
   tags:
     - Authentication
   requestBody:

@@ -3,6 +3,8 @@ post:
     - Authentication
   summary: "Sign up as a customer"
   operationId: "signUp"
+  security:
+    - api_key: [ ] 
   requestBody:
     required: true
     content:

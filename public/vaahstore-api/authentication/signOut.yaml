@@ -5,8 +5,7 @@ post:
   operationId: postSignOut
   tags:
     - Authentication
-  security:
-    - api_key: []  # Indicates that the API key (api_token) is required in the header
+
   responses:
     '200':
       description: User signed out successfully, and the session was terminated.

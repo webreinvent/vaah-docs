@@ -88,6 +88,8 @@ paths:
         - Authentication
       summary: Sign up as a customer
       operationId: signUp
+      security:
+        - api_key: []
       requestBody:
         required: true
         content:
@@ -208,6 +210,8 @@ paths:
       description: |
         This endpoint allows users to request a one-time password (OTP) for logging into their account. Upon successful request, an OTP will be sent to the user's registered email. The user can then use this OTP to log in
       operationId: generateOTP
+      security:
+        - api_key: []
       tags:
         - Authentication
       requestBody:
@@ -283,6 +287,8 @@ paths:
       description: |
         This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/authentication/POST/api/signup) as a cutomer in VaahStore
       operationId: postSignIn
+      security:
+        - api_key: []
       tags:
         - Authentication
       requestBody:
@@ -407,6 +413,8 @@ paths:
       operationId: sendPasswordCode
       tags:
         - Authentication
+      security:
+        - api_key: []
       requestBody:
         required: true
         content:
@@ -481,6 +489,8 @@ paths:
         This endpoint allows users to reset their password by providing a valid reset code sent to their registered email address.
         Upon successful validation of the reset code and submission of the new password, the user's password will be updated, and they can log in with the new credentials
       operationId: resetPassword
+      security:
+        - api_key: []
       tags:
         - Authentication
       requestBody:
@@ -568,8 +578,6 @@ paths:
       operationId: postSignOut
       tags:
         - Authentication
-      security:
-        - api_key: []
       responses:
         '200':
           description: User signed out successfully, and the session was terminated.

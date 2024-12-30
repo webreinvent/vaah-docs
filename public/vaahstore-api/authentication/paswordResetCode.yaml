@@ -5,6 +5,8 @@ post:
   operationId: sendPasswordCode
   tags:
     - Authentication
+  security:
+    - api_key: [ ]
   requestBody:
     required: true
     content:
