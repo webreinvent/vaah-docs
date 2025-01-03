@@ -1478,6 +1478,13 @@ components:
             name:
               type: string
               example: "Nike"
+        variations:
+          type: array
+          description: "An array of variation IDs associated with the product."
+          items:
+            type: integer
+            example: 106
+          example: [ 106, 107, 108 ]
         product_categories:
           type: array
           items:
