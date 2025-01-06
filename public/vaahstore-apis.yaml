@@ -6589,7 +6589,7 @@ paths:
     post:
       tags:
         - Carts
-      summary: Generate a cart or add to cart
+      summary: Generate a cart or add products to a cart
       description: |
         This endpoint allows users to add multiple products to their cart. The product IDs are required, while the user information is optional. If any product is out of stock, an error message will be returned.
       operationId: addToCart
@@ -6600,6 +6600,31 @@ paths:
             schema:
               type: object
               properties:
+                products:
+                  type: array
+                  description: A list of products associated with the request or response.
+                  items:
+                    type: object
+                    required:
+                      - id
+                    description: Details of a product in the list.
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                        description: The unique identifier for the product.
+                      vendor_id:
+                        type: integer
+                        example: 1
+                        description: The identifier for the vendor associated with the product.
+                      variation_id:
+                        type: integer
+                        example: 1
+                        description: The identifier for the specific variation of the product.
+                      quantity:
+                        type: integer
+                        example: 1
+                        description: The number of units of the product being referenced.
                 user:
                   type: object
                   properties:
@@ -6610,25 +6635,6 @@ paths:
                   type: string
                   description: UUID of the cart. If provided, the product will be added to this specific cart.
                   example: abcd1234-abcd1234
-                products:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                      - id
-                    properties:
-                      id:
-                        type: integer
-                        example: 1
-                      vendor_id:
-                        type: integer
-                        example: 1
-                      variation_id:
-                        type: integer
-                        example: 1
-                      quantity:
-                        type: integer
-                        example: 1
               required:
                 - products
       responses:
@@ -7044,7 +7050,7 @@ paths:
           content:
             application/json:
               schema: null
-  /api/store/carts/{uuid}/add/user:
+  /api/store/carts/{uuid}/user:
     post:
       tags:
         - Carts
