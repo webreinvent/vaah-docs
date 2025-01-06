@@ -82,7 +82,7 @@ tags:
     description: |
       Everything about Settings in VaahStore. This section includes managing various settings and configurations related to VaahStore. Additionally, it covers how to create, read, update, and delete sample records for VaahStore CRUD operations.
 paths:
-  /api/signup:
+  /api/sign-up:
     post:
       tags:
         - Authentication
@@ -204,7 +204,7 @@ paths:
                     example:
                       - 'Email is already registered.. '
                       - 'Username is already registered.. '
-  /api/signin/generate/otp:
+  /api/sign-in/otp:
     post:
       summary: Generate OTP for sign in
       description: |
@@ -281,7 +281,7 @@ paths:
                       type: string
                     example:
                       - Invalid credentials provided.
-  /api/signin:
+  /api/sign-in:
     post:
       summary: Sign in
       description: |
@@ -300,26 +300,22 @@ paths:
               properties:
                 email:
                   type: string
-                  format: email
-                  description: The email address of the user.
+                  description: The email address of the user or username.
+                password:
+                  type: string
+                  description: The password for the account.
                 type:
                   type: string
                   enum:
                     - otp
-                  description: The type of authentication. If 'otp' is provided, `login_otp` becomes required.
-                password:
-                  type: string
-                  description: The password for the account.
+                  description: The type of authentication. If `otp` is provided, `login_otp` becomes required, and `password` is not required.
                 login_otp:
                   type: string
                   description: The one-time password (OTP) used for authentication.
                   example: 12345
-                remember:
-                  type: boolean
-                  description: Whether the user should be remembered across sessions. `true` for "Remember me", `false` for no persistence.
-                  example: true
               required:
                 - email
+                - password
               oneOf:
                 - required:
                     - password
@@ -405,7 +401,7 @@ paths:
                       type: string
                     example:
                       - Invalid credentials provided.
-  /api/password-reset/code:
+  /api/password-reset-code:
     post:
       summary: Send password reset code
       description: |
@@ -570,7 +566,7 @@ paths:
                       type: string
                     example:
                       - Invalid credentials provided.
-  /api/signout:
+  /api/sign-out:
     post:
       summary: Sign out
       description: |
@@ -2460,7 +2456,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/products/top/sellings:
+  /api/store/products/top-sellings:
     get:
       tags:
         - Products
@@ -2551,7 +2547,7 @@ paths:
           content:
             application/json:
               schema: null
-  /api/store/products/top/brands:
+  /api/store/products/top-brands:
     get:
       tags:
         - Products
@@ -2623,7 +2619,7 @@ paths:
           content:
             application/json:
               schema: null
-  /api/store/products/top/categories:
+  /api/store/products/top-categories:
     get:
       tags:
         - Products
@@ -3127,7 +3123,7 @@ paths:
                           id: 1
                     all_attribute_name:
                       - Color
-  /api/store/products/{id}/variations/generate:
+  /api/store/products/{id}/generate-variations:
     post:
       tags:
         - Products
@@ -7949,7 +7945,7 @@ paths:
                     items:
                       type: string
                       example: User or product not found.
-  /api/store/carts/{id}/action/{action}:
+  /api/store/carts/{uuid}/action/{action}:
     patch:
       tags:
         - Carts
@@ -7958,7 +7954,13 @@ paths:
         This endpoint allows you to perform various actions on a cart item, such as trashing, or restoring a payment.
       operationId: itemActiOnCart
       parameters:
-        - $ref: '#/components/parameters/id'
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The UUID of the cart.
+          example: '1'
         - $ref: '#/components/parameters/action'
       responses:
         '200':
@@ -8034,7 +8036,7 @@ paths:
     put:
       tags:
         - Carts
-      summary: bulk actions on carts
+      summary: Bulk actions on carts
       description: This endpoint allows various bulk actions to be performed on carts list based on the provided action type.
       operationId: bulkActionsCarts
       parameters:

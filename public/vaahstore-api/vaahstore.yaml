@@ -90,17 +90,17 @@ tags:
 
 paths:
 
-  '/api/signup':
+  '/api/sign-up':
     $ref: './authentication/signup.yaml'  # Reference to the stores file
-  '/api/signin/generate/otp':
+  '/api/sign-in/otp':
     $ref: './authentication/signinOTP.yaml'  # Reference to the stores file
-  '/api/signin':
+  '/api/sign-in':
     $ref: './authentication/signin.yaml'  # Reference to the stores file
-  '/api/password-reset/code':
+  '/api/password-reset-code':
     $ref: './authentication/paswordResetCode.yaml'  # Reference to the stores file
   '/api/password-reset':
     $ref: './authentication/resetPassword.yaml'  # Reference to the stores file
-  '/api/signout':
+  '/api/sign-out':
     $ref: './authentication/signOut.yaml'  # Reference to the stores file
 
   '/api/taxonomies':
@@ -125,11 +125,11 @@ paths:
     $ref: './products/productAction.yaml'  # Reference to the product item action file
   '/api/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
-  '/api/store/products/top/sellings':
+  '/api/store/products/top-sellings':
     $ref: './products/topSellingProducts.yaml'  # Reference to the product item file
-  '/api/store/products/top/brands':
+  '/api/store/products/top-brands':
     $ref: './products/topSellingBrands.yaml'  # Reference to the product item file
-  '/api/store/products/top/categories':
+  '/api/store/products/top-categories':
     $ref: './products/topSellingCategories.yaml'  # Reference to the product item file
   '/api/store/products/{id}/vendors':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
@@ -139,7 +139,7 @@ paths:
     $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
   '/api/store/products/getAttributeValue':
     $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
-  '/api/store/products/{id}/variations/generate':
+  '/api/store/products/{id}/generate-variations':
     $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
 
 
@@ -217,7 +217,7 @@ paths:
 #    $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
 #  '/api/store/carts/get-order-details/{order_id}':
 #    $ref: './carts/getOrder.yaml'  # Reference to get order file
-  '/api/store/carts/{id}/action/{action}':
+  '/api/store/carts/{uuid}/action/{action}':
     $ref: './carts/itemAction.yaml'  # Reference to cart item action file
   '/api/store/carts/action/{action}':
     $ref: './carts/listAction.yaml'  # Reference to cart list actions file

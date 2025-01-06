@@ -1,7 +1,7 @@
 put:
   tags:
     - Carts
-  summary: bulk actions on carts
+  summary: Bulk actions on carts
   description: This endpoint allows various bulk actions to be performed on carts list based on the provided action type.
   operationId: bulkActionsCarts
   parameters:

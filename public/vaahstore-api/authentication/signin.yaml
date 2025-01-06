@@ -16,25 +16,21 @@ post:
           properties:
             email:
               type: string
-              format: email
-              description: The email address of the user.
-            type:
-              type: string
-              enum: [ otp ]
-              description: The type of authentication. If 'otp' is provided, `login_otp` becomes required.
+              description: The email address of the user or username.
             password:
               type: string
               description: The password for the account.
+            type:
+              type: string
+              enum: [ otp ]
+              description: The type of authentication. If `otp` is provided, `login_otp` becomes required, and `password` is not required.
             login_otp:
               type: string
               description: The one-time password (OTP) used for authentication.
               example: 12345
-            remember:
-              type: boolean
-              description: Whether the user should be remembered across sessions. `true` for "Remember me", `false` for no persistence.
-              example: true
           required:
             - email
+            - password
           oneOf:
             - required: [ password ]
               not:
