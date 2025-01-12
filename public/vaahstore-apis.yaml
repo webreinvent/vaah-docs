@@ -4174,7 +4174,7 @@ paths:
                   message:
                     type: string
                     example: An error occurred while adding the product.
-  /api/store/vendors/{id}/users/roles:
+  /api/store/vendors/{id}/users-roles:
     post:
       tags:
         - Vendors
@@ -9242,7 +9242,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/orders/{uuid}/shipment/items:
+  /api/store/orders/{uuid}/shipment-items:
     get:
       summary: Get shipped order items by UUID
       description: Retrieve order items shipment details for a specified order ID, including product variations, vendor information, and quantities shipped.
@@ -19186,7 +19186,7 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/users/change/password:
+  /api/store/users/change-password:
     post:
       tags:
         - Customers

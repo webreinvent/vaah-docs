@@ -154,7 +154,7 @@ paths:
     $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors list actions file
   '/api/store/vendors/{id}/products':
     $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
-  '/api/store/vendors/{id}/users/roles':
+  '/api/store/vendors/{id}/users-roles':
     $ref: './vendors/addUser.yaml'  # Reference to the vendors attachment with user file
 
 
@@ -232,7 +232,7 @@ paths:
     $ref: './orders/itemAction.yaml'  # Reference to order item action file
   '/api/store/orders/action/{action}':
     $ref: './orders/listAction.yaml'  # Reference to order list actions file
-  '/api/store/orders/{uuid}/shipment/items':
+  '/api/store/orders/{uuid}/shipment-items':
     $ref: './orders/getOrderItems.yaml'  # Reference to get shipped order item details file
 
   '/api/store/payments':
@@ -349,7 +349,7 @@ paths:
     $ref: './customers/getAssets.yaml'  # Reference to customers assets file
   '/api/store/users':
     $ref: './customers/index.yaml'  # Reference to customers file
-  '/api/store/users/change/password':
+  '/api/store/users/change-password':
     $ref: './customers/changePassword.yaml'  # Reference to customers file
   '/api/store/users/{id}':
     $ref: './customers/update.yaml'  # Reference to customers update file
