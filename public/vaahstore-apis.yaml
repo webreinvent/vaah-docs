@@ -298,27 +298,31 @@ paths:
             schema:
               type: object
               properties:
-                email:
-                  type: string
-                  description: The email address of the user or username.
-                password:
-                  type: string
-                  description: The password for the account.
-                type:
+                identifier_key:
                   type: string
                   enum:
-                    - otp
-                  description: The type of authentication. If `otp` is provided, `login_otp` becomes required, and `password` is not required.
-                login_otp:
+                    - email
+                    - phone
+                    - username
+                  description: The identifier type (email, mobile, or username). Default `identifier_key:email`
+                identifier_value:
                   type: string
-                  description: The one-time password (OTP) used for authentication.
-                  example: 12345
+                  description: The value corresponding to the identifier key (actual email, mobile number, or username).
+                authentication_type:
+                  type: string
+                  enum:
+                    - password
+                    - otp
+                  description: The type of authentication (password or otp).Default `authentication_type:password`
+                authentication_value:
+                  type: string
+                  description: The value for authentication (password or OTP).
               required:
-                - email
-                - password
+                - identifier_value
+                - authentication_value
               oneOf:
                 - required:
-                    - password
+                    - authentication_value
                   not:
                     required:
                       - login_otp
@@ -326,7 +330,7 @@ paths:
                     - login_otp
                   not:
                     required:
-                      - password
+                      - authentication_value
       responses:
         '200':
           description: User signed in successfully and API token generated.
@@ -585,9 +589,12 @@ paths:
                   success:
                     type: boolean
                     example: true
-                  message:
-                    type: string
-                    example: vaahcms-general.logout_success
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Logout successfully
                   data:
                     type: array
                     description: The data returned after successful signout (typically empty).
@@ -607,7 +614,7 @@ paths:
                     items:
                       type: string
                     example:
-                      - Invalid session, user not logged in.
+                      - No user is currently logged in.
         '401':
           description: Unauthorized, the user is not authenticated.
           content:
@@ -623,7 +630,7 @@ paths:
                     items:
                       type: string
                     example:
-                      - User not authenticated or session expired.
+                      - ''
   /api/taxonomies:
     get:
       tags:

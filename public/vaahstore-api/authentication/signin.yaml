@@ -14,30 +14,33 @@ post:
         schema:
           type: object
           properties:
-            email:
+            identifier_key:
               type: string
-              description: The email address of the user or username.
-            password:
+              enum: [ email, phone, username ]
+              description: The identifier type (email, mobile, or username). Default `identifier_key:email`
+            identifier_value:
               type: string
-              description: The password for the account.
-            type:
+              description: The value corresponding to the identifier key (actual email, mobile number, or username).
+            authentication_type:
               type: string
-              enum: [ otp ]
-              description: The type of authentication. If `otp` is provided, `login_otp` becomes required, and `password` is not required.
-            login_otp:
+              enum: [ password, otp ]
+              description: The type of authentication (password or otp).Default `authentication_type:password`
+            authentication_value:
               type: string
-              description: The one-time password (OTP) used for authentication.
-              example: 12345
+              description: The value for authentication (password or OTP).
           required:
-            - email
-            - password
+
+            - identifier_value
+
+            - authentication_value
           oneOf:
-            - required: [ password ]
+            - required: [ authentication_value ]
               not:
                 required: [ login_otp ]
             - required: [ login_otp ]
               not:
-                required: [ password ]
+                required: [ authentication_value ]
+
 
 
   responses:
