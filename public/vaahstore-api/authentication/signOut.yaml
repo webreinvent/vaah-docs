@@ -29,7 +29,7 @@ post:
                 description: The data returned after successful signout (typically empty).
                 example: []
 
-    '400':
+    '422':
       description: Bad Request, validation errors occurred.
       content:
         application/json:

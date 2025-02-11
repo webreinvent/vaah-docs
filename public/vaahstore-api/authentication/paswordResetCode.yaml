@@ -45,7 +45,7 @@ post:
                   - "A password reset code is sent to your email."
 
 
-    '400':
+    '422':
       description: Bad Request, validation errors occurred.
       content:
         application/json:

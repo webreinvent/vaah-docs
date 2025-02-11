@@ -83,7 +83,7 @@ post:
                       api_token:
                         type: string
                         description: The API token for authenticating future requests.
-    '400':
+    422:
       description: Bad Request, validation errors occurred.
       content:
         application/json:
@@ -97,7 +97,10 @@ post:
                 type: array
                 items:
                   type: string
-                example: ["The email field is required.", "The password field is required.", "The login OTP field is required."]
+                example:
+                  - "Identifier value is required."
+                  - "The phone number must be a valid numeric value."
+                  - "Authentication value is required."
     '401':
       description: Unauthorized, invalid credentials provided.
       content:

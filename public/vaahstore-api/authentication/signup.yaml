@@ -4,7 +4,7 @@ post:
   summary: "Sign up as a customer"
   operationId: "signUp"
   security:
-    - api_key: [ ] 
+    - api_key: [ ]
   requestBody:
     required: true
     content:
@@ -84,7 +84,7 @@ post:
                         type: string
                         description: The API token for authenticating future requests.
 
-    '400':
+    '422':
       description: "Validation error"
       content:
         application/json:

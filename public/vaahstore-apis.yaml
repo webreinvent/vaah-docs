@@ -166,7 +166,24 @@ paths:
                           api_token:
                             type: string
                             description: The API token for authenticating future requests.
-        '400':
+        '409':
+          description: Conflict error if user/customer already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - 'Email is already registered.. '
+                      - 'Username is already registered.. '
+        '422':
           description: Validation error
           content:
             application/json:
@@ -187,23 +204,6 @@ paths:
                       - The username field is required.
                       - The password field is required.
                       - The status field is required.
-        '409':
-          description: Conflict error if user/customer already exists
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - 'Email is already registered.. '
-                      - 'Username is already registered.. '
   /api/sign-in/otp:
     post:
       summary: Generate OTP for sign in
@@ -249,22 +249,6 @@ paths:
                       type: string
                     example:
                       - A one time password (OTP) has been sent to your email.
-        '400':
-          description: Bad Request, validation errors occurred.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - The email field is required.
         '401':
           description: Unauthorized, invalid credentials provided.
           content:
@@ -281,6 +265,22 @@ paths:
                       type: string
                     example:
                       - Invalid credentials provided.
+        '422':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The email field is required.
   /api/sign-in:
     post:
       summary: Sign in
@@ -371,24 +371,6 @@ paths:
                           api_token:
                             type: string
                             description: The API token for authenticating future requests.
-        '400':
-          description: Bad Request, validation errors occurred.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - The email field is required.
-                      - The password field is required.
-                      - The login OTP field is required.
         '401':
           description: Unauthorized, invalid credentials provided.
           content:
@@ -405,6 +387,24 @@ paths:
                       type: string
                     example:
                       - Invalid credentials provided.
+        '422':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Identifier value is required.
+                      - The phone number must be a valid numeric value.
+                      - Authentication value is required.
   /api/password-reset-code:
     post:
       summary: Send password reset code
@@ -450,22 +450,6 @@ paths:
                       type: string
                     example:
                       - A password reset code is sent to your email.
-        '400':
-          description: Bad Request, validation errors occurred.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - The email field is required.
         '401':
           description: Unauthorized, invalid credentials provided.
           content:
@@ -482,6 +466,22 @@ paths:
                       type: string
                     example:
                       - Invalid credentials provided.
+        '422':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - The email field is required.
   /api/password-reset:
     post:
       summary: Reset password using reset code
@@ -535,7 +535,23 @@ paths:
                       type: string
                     example:
                       - Your password has been reset successfully.
-        '400':
+        '401':
+          description: Unauthorized, invalid credentials provided.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Invalid credentials provided.
+        '422':
           description: Bad Request, validation errors occurred.
           content:
             application/json:
@@ -554,22 +570,6 @@ paths:
                       - The reset password code field is required.
                       - The password field must be at least 6 characters.
                       - The password confirmation does not match.
-        '401':
-          description: Unauthorized, invalid credentials provided.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - Invalid credentials provided.
   /api/sign-out:
     post:
       summary: Sign out
@@ -599,22 +599,6 @@ paths:
                     type: array
                     description: The data returned after successful signout (typically empty).
                     example: []
-        '400':
-          description: Bad Request, validation errors occurred.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example:
-                      - No user is currently logged in.
         '401':
           description: Unauthorized, the user is not authenticated.
           content:
@@ -631,6 +615,22 @@ paths:
                       type: string
                     example:
                       - ''
+        '422':
+          description: Bad Request, validation errors occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - No user is currently logged in.
   /api/taxonomies:
     get:
       tags:

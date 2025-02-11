@@ -46,7 +46,7 @@ post:
                   - "A one time password (OTP) has been sent to your email."
 
 
-    '400':
+    '422':
       description: Bad Request, validation errors occurred.
       content:
         application/json:
