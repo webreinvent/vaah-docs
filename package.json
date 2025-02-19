@@ -28,7 +28,7 @@
     "apexcharts": "^3.54.1",
     "flowbite": "^2.5.2",
     "vue3-apexcharts": "^1.7.0",
-    "@scalar/api-reference": "^1.25.21"
+    "@scalar/api-reference": "^1.25.119"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.6.1",
