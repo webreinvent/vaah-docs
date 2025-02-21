@@ -13217,6 +13217,16 @@ paths:
         - $ref: '#/components/parameters/filter_trashed'
         - $ref: '#/components/parameters/filter_date'
         - $ref: '#/components/parameters/category'
+        - name: include
+          in: query
+          required: false
+          description: |
+            Query to retrieve categories in a nested structure,displaying parent categories along with their child categories.
+            Example: `?include[nested]=true`
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: List retrieved Successfully
