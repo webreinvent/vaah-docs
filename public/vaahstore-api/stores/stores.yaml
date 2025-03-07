@@ -89,7 +89,7 @@ get:
 post:
   tags:
     - Stores
-  summary: Create a new Store
+  summary: Create a new store
   description: Create a new store with the provided details.
   operationId: createStore
   requestBody:

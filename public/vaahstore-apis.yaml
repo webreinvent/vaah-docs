@@ -855,7 +855,7 @@ paths:
     post:
       tags:
         - Stores
-      summary: Create a new Store
+      summary: Create a new store
       description: Create a new store with the provided details.
       operationId: createStore
       requestBody:
@@ -1353,7 +1353,7 @@ paths:
     get:
       tags:
         - Stores
-      summary: Get a Store by ID
+      summary: Get a store by ID
       description: Retrieve a single store by its ID.
       operationId: getStoreById
       parameters:
@@ -1400,7 +1400,7 @@ paths:
     put:
       tags:
         - Stores
-      summary: Update an existing Store
+      summary: Update an existing store
       description: Update a store with the specified ID using the provided details.
       operationId: updateStore
       parameters:
@@ -1511,7 +1511,7 @@ paths:
     delete:
       tags:
         - Stores
-      summary: Delete a Store by ID
+      summary: Delete a store by ID
       description: Delete a single store by its ID.
       operationId: deleteStoreById
       parameters:

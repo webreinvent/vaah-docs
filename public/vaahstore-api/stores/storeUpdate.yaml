@@ -1,7 +1,7 @@
 get:
   tags:
     - Stores
-  summary: Get a Store by ID
+  summary: Get a store by ID
   description: Retrieve a single store by its ID.
   operationId: getStoreById
   parameters:
@@ -51,7 +51,7 @@ get:
 put:
   tags:
     - Stores
-  summary: Update an existing Store
+  summary: Update an existing store
   description: Update a store with the specified ID using the provided details.
   operationId: updateStore
   parameters:
@@ -155,7 +155,7 @@ put:
 delete:
   tags:
     - Stores
-  summary: Delete a Store by ID
+  summary: Delete a store by ID
   description: Delete a single store by its ID.
   operationId: deleteStoreById
   parameters:
