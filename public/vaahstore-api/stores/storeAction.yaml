@@ -22,8 +22,6 @@ patch: # or any other appropriate method based on your setup
                 type: boolean
                 example: true
               data:
-                type: array
-                items:
                   '$ref': '../vaahstore.yaml#/components/schemas/Store'
 
     '403':

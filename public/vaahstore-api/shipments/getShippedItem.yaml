@@ -70,3 +70,90 @@ get:
                 items:
                   type: string
                 example: ["Record does not exist."]
+
+put:
+  summary: Update Shipped Item Quantities
+  description: Updates the quantities of shipped items based on the provided shipment item details.
+  operationId: saveEditedShippedQuantity
+  tags:
+    - Shipments
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            shipment_id:
+              type: integer
+              description: The ID of the shipment being updated.
+            available_quantity:
+              type: integer
+              description: The Total available quantity of the order item.
+            shipment_items:
+              type: array
+              description: List of shipment items with their updated quantities.
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the shipment item.
+                  vh_st_order_item_id:
+                    type: integer
+                    description: The ID of the order item associated with this shipment item.
+                  quantity:
+                    type: integer
+                    description: The updated quantity of this item that has been shipped.
+                  pending:
+                    type: integer
+                    description: The updated quantity of this item that is pending shipment.
+                required:
+                  - id
+                  - vh_st_order_item_id
+                  - quantity
+                  - pending
+          required:
+            - shipment_id
+            - available_quantity
+            - shipment_items
+  responses:
+    '200':
+      description: Successful update of shipped item quantities.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example: ["Saved successfully."]
+              data:
+                type: array
+                items:
+                  '$ref': '../vaahstore.yaml#/components/schemas/Shipment'
+    '400':
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "The record does not exist for shipment item ID:",
+                    "The record does not exist for order item ID:",
+                    "Shipment quantity exceeds available quantity for item ID:",
+                    "Total shipment quantity exceeds available quantity."
+                ]

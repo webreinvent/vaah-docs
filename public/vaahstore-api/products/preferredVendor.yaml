@@ -10,20 +10,27 @@ patch:
     - name: id
       in: path
       required: true
-      description: The ID of the product vendor to update.
+      description: The ID of the product.
       schema:
         type: integer
         example: 1
+    - name: vendor_id
+      in: path
+      required: true
+      description: The ID of the vendor to mark as preferred or not-preferred for this product id.
+      schema:
+          type: integer
+          example: 1
     - name: action
       in: path
       required: true
       description: The action to perform.
       examples:
         preferred: Mark as preferred.
-        notpreferred: Mark as not preferred.
+        not-preferred: Mark as not preferred.
       schema:
         type: string
-        enum: [preferred, notpreferred]
+        enum: [preferred, not-preferred]
         example: "preferred"
 
   responses:
@@ -42,9 +49,9 @@ patch:
 
                 example:  "Success"
               data:
-                type: object
-                description: The product data.
-                additionalProperties: true
+                type: array
+                items:
+                  '$ref': '../vaahstore.yaml#/components/schemas/Product'
     404:
       description: Product vendor not found.
       content:

@@ -57,6 +57,9 @@ patch:
           schema:
             type: object  # Define the type of the response
             properties:
+              success:
+                type: boolean
+                example: false
               errors:
                 type: array
                 items:

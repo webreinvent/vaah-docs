@@ -30,16 +30,66 @@ get:
           schema:
             type: object
             properties:
-              current_page:
-                type: integer
-                example: 1
+              success:
+                type: boolean
+                example: true
               data:
-                type: array
-                items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/ProductStock'
-              first_page_url:
-                type: string
-                example: "http://127.0.0.1:8000/backend/store/productstocks?page=1"
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      '$ref': '../vaahstore.yaml#/components/schemas/ProductStock'
+                  first_page_url:
+                    type: string
+                    example: "http://url/api/store/productstocks?page=1"
+                  from:
+                    type: integer
+                    example: 1
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: "http://url/api/store/productstocks?page=1"
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          nullable: true
+                          example: null
+                        label:
+                          type: string
+                          example: "&laquo; Previous"
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    nullable: true
+                    example: null
+                  path:
+                    type: string
+                    example: "http://url/api/store/productstocks"
+                  per_page:
+                    type: integer
+                    example: 20
+                  prev_page_url:
+                    type: string
+                    nullable: true
+                    example: null
+                  to:
+                    type: integer
+                    example: 3
+                  total:
+                    type: integer
+                    example: 3
 
     '500':
       description: Internal Server Error

@@ -223,6 +223,9 @@ put:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: true
               data:
                 '$ref': '../vaahstore.yaml#/components/schemas/Payment'
               messages:

@@ -22,14 +22,7 @@ patch: # or any other appropriate method based on your setup
                 type: boolean
                 example: true
               data:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  is_active:
-                    type: integer
-                    example: 1
+                '$ref': '../vaahstore.yaml#/components/schemas/Product'
               messages:
                 type: array
                 items:

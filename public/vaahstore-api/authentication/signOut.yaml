@@ -1,49 +1,36 @@
-put:
+post:
+  summary: Sign out
+  description: |
+    This endpoint allows a user to sign out from the application, effectively invalidating their session and API token. You must provide the `api_token` in the header to authenticate the request.
+  operationId: postSignOut
   tags:
-    - Carts
-  summary: Bulk actions on carts
-  description: This endpoint allows various bulk actions to be performed on carts list based on the provided action type.
-  operationId: bulkActionsCarts
-  parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/bulk_action'
+    - Authentication
 
   responses:
     '200':
-      description: Action was successful
+      description: User signed out successfully, and the session was terminated.
       content:
         application/json:
           schema:
             type: object
             properties:
               success:
-                type: boolean
-                example: true
-              data:
                 type: boolean
                 example: true
               messages:
                 type: array
                 items:
                   type: string
-                  example: "Action was successful."
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              success:
-                type: boolean
-                example: false
-              errors:
+                example: [
+                    "Logout successfully"
+                ]
+              data:
                 type: array
-                items:
-                  type: string
-                  example: "Invalid input data."
+                description: The data returned after successful signout (typically empty).
+                example: []
 
-    '500':
-      description: Internal Server Error
+    '422':
+      description: Bad Request, validation errors occurred.
       content:
         application/json:
           schema:
@@ -56,4 +43,22 @@ put:
                 type: array
                 items:
                   type: string
-                  example: "An unexpected error occurred."
+                example: ["No user is currently logged in."]
+
+    '401':
+      description: Unauthorized, the user is not authenticated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [""]
+
+

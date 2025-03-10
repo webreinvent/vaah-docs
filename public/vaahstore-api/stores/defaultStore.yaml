@@ -1,0 +1,163 @@
+get:
+  tags:
+    - Stores
+  summary: Get default store
+  description: |
+    This endpoint retrieves default store available.
+  operationId: defaultStore
+
+
+  responses:
+    '200':
+      description: Default store retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                description: Default store data.
+                properties:
+                    id:
+                      type: integer
+                      description: Unique identifier for the store.
+                      example: 1
+                    uuid:
+                      type: string
+                      description: Universally unique identifier for the store.
+                      example: "946a52e8-f04b-40a2-9589-5edbd445dd24"
+                    taxonomy_id_store_status:
+                      type: integer
+                      description: Taxonomy ID representing the store's status.
+                      example: 12
+                    name:
+                      type: string
+                      description: The name of the store.
+                      example: "Store 1"
+                    slug:
+                      type: string
+                      description: The URL-friendly identifier for the store.
+                      example: "store-1"
+                    notes:
+                      type: string
+                      nullable: true
+                      description: Additional notes about the store.
+                      example: null
+                    is_multi_currency:
+                      type: boolean
+                      description: Whether the store supports multiple currencies.
+                      example: true
+                    is_multi_lingual:
+                      type: boolean
+                      description: Whether the store supports multiple languages.
+                      example: true
+                    is_multi_vendor:
+                      type: boolean
+                      description: Whether the store supports multiple vendors.
+                      example: true
+                    allowed_ips:
+                      type: array
+                      description: List of IPs allowed for the store.
+                      items:
+                        type: string
+                      example:
+                        - "1.103.89.74"
+                        - "26.243.219.91"
+                    status_notes:
+                      type: string
+                      description: Notes about the store's status.
+                      example: "Nobis et quia nam vel."
+                    is_default:
+                      type: boolean
+                      description: Whether the store is the default store.
+                      example: true
+                    is_active:
+                      type: boolean
+                      description: Whether the store is currently active.
+                      example: true
+                    meta:
+                      type: string
+                      description: Additional metadata about the store.
+                      example: "Sed aut vitae eius nisi quasi."
+                    created_by:
+                      type: integer
+                      description: ID of the user who created the store.
+                      example: 1
+                    updated_by:
+                      type: integer
+                      description: ID of the user who last updated the store.
+                      example: 1
+                    deleted_by:
+                      type: integer
+                      nullable: true
+                      description: ID of the user who deleted the store, if applicable.
+                      example: null
+                    created_at:
+                      type: string
+                      format: date-time
+                      description: The date and time when the store was created.
+                      example: "2024-11-25 12:09:01"
+                    updated_at:
+                      type: string
+                      format: date-time
+                      description: The date and time when the store was last updated.
+                      example: "2024-12-10 10:39:36"
+                    deleted_at:
+                      type: string
+                      format: date-time
+                      nullable: true
+                      description: The date and time when the store was deleted, if applicable.
+                      example: null
+                    currencies:
+                      type: array
+                      description: List of currencies supported by the store.
+                      items:
+                        type: object
+                        properties:
+                          vh_st_store_id:
+                            type: integer
+                            description: Store ID associated with the currency.
+                            example: 1
+                          name:
+                            type: string
+                            description: Name of the currency.
+                            example: "Afghan Afghani"
+                          code:
+                            type: string
+                            nullable: true
+                            description: Code of the currency.
+                            example: null
+                          symbol:
+                            type: string
+                            nullable: true
+                            description: Symbol of the currency.
+                            example: null
+                          is_default:
+                            type: boolean
+                            description: Whether this is the default currency for the store.
+                            example: true
+                    languages:
+                      type: array
+                      description: List of languages supported by the store.
+                      items:
+                        type: object
+                        properties:
+                          vh_st_store_id:
+                            type: integer
+                            description: Store ID associated with the language.
+                            example: 1
+                          name:
+                            type: string
+                            description: Name of the language.
+                            example: "Afrikaans"
+                          is_default:
+                            type: boolean
+                            description: Whether this is the default language for the store.
+                            example: true
+
+
+

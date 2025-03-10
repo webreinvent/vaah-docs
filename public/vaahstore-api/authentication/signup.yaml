@@ -1,12 +1,10 @@
 post:
-  summary: Sign in
-  description: |
-    This endpoint allows users to sign in to their account. Upon successful authentication, a new API token will be generated for the user, which can be used for subsequent authenticated requests. Click [For signup](#tag/authentication/POST/api/signup) as a cutomer in VaahStore
-  operationId: postSignIn
-  security:
-    - api_key: [ ]
   tags:
     - Authentication
+  summary: "Sign up as a customer"
+  operationId: "signUp"
+  security:
+    - api_key: [ ]
   requestBody:
     required: true
     content:
@@ -14,38 +12,33 @@ post:
         schema:
           type: object
           properties:
-            identifier_key:
+            email:
               type: string
-              enum: [ email, phone, username ]
-              description: The identifier type (email, mobile, or username). Default `identifier_key:email`
-            identifier_value:
+              format: email
+              description: "The customer's email address."
+              maxLength: 150
+            first_name:
               type: string
-              description: The value corresponding to the identifier key (actual email, mobile number, or username).
-            authentication_type:
+              description: "The customer's first name."
+              maxLength: 150
+            username:
               type: string
-              enum: [ password, otp ]
-              description: The type of authentication (password or otp).Default `authentication_type:password`
-            authentication_value:
+              description: "Customer username"
+            password:
               type: string
-              description: The value for authentication (password or OTP).
+              description: "The customer's password."
+            is_active:
+              type: integer
+              description: "Indicates whether the customer is active or not."
           required:
-
-            - identifier_value
-
-            - authentication_value
-          oneOf:
-            - required: [ authentication_value ]
-              not:
-                required: [ login_otp ]
-            - required: [ login_otp ]
-              not:
-                required: [ authentication_value ]
-
-
+            - email
+            - first_name
+            - username
+            - password
 
   responses:
     '200':
-      description: User signed in successfully and API token generated.
+      description: "User/Customer signup Successfully"
       content:
         application/json:
           schema:
@@ -54,6 +47,13 @@ post:
               success:
                 type: boolean
                 example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "Saved successfully"
+                ]
               data:
                 type: object
                 properties:
@@ -83,8 +83,9 @@ post:
                       api_token:
                         type: string
                         description: The API token for authenticating future requests.
-    422:
-      description: Bad Request, validation errors occurred.
+
+    '422':
+      description: "Validation error"
       content:
         application/json:
           schema:
@@ -97,12 +98,14 @@ post:
                 type: array
                 items:
                   type: string
-                example:
-                  - "Identifier value is required."
-                  - "The phone number must be a valid numeric value."
-                  - "Authentication value is required."
-    '401':
-      description: Unauthorized, invalid credentials provided.
+                example: [
+                    "The email field is required.",
+                    "The email must be a valid email address.",
+                    "The first name field is required.","The username field is required.", "The password field is required.",
+                    "The status field is required."
+                ]
+    '409':
+      description: "Conflict error if user/customer already exists"
       content:
         application/json:
           schema:
@@ -115,4 +118,7 @@ post:
                 type: array
                 items:
                   type: string
-                example: ["Invalid credentials provided."]
+                example: [
+                    "Email is already registered.. ",
+                    "Username is already registered.. ",
+                ]

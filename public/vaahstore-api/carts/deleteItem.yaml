@@ -1,9 +1,19 @@
-post:
+delete:
   tags:
     - Carts
   summary: Delete cart item
   description: Removes a specified product or product variation from the cart. If no variation ID is provided, the entire product will be removed.
   operationId: deleteCartItem
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/uuid'
+    - name: action
+      in: query
+      description: Specifies the action to perform. The only allowed value is `delete`.
+      required: true
+      schema:
+        type: string
+        enum:
+            - delete
   requestBody:
     required: true
     content:
@@ -11,13 +21,13 @@ post:
         schema:
           type: object
           properties:
-            cart_product_details:
+            item:
               type: object
               properties:
-                vh_st_cart_id:
+                id:
                   type: integer
                   example: 1
-                  description: The ID of the cart.
+                  description: The ID of the cart item.
                 vh_st_product_id:
                   type: integer
                   example: 1
@@ -26,14 +36,11 @@ post:
                   type: integer
                   example: 1
                   description: The ID of the product variation to be deleted (optional).
-                vh_st_vendor_id:
-                  type: integer
-                  example: 1
-                  description: The ID of the vendor associated with the product.
+
               required:
-                - vh_st_cart_id
+                - id
                 - vh_st_product_id
-                - vh_st_vendor_id
+                - vh_st_product_variation_id
   responses:
     '200':
       description: Cart item deleted successfully
@@ -42,17 +49,19 @@ post:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: true
               data:
                 type: object
-                properties:
-                  cart:
-                    type: object
-                    description: The updated cart object.
+                nullable: true
+                description: "Details of the deleted cart item, can be null"
               messages:
                 type: array
                 items:
                   type: string
-                  example: "Record deleted."
+                  example: "Record deleted successfully."
+
     '400':
       description: Invalid request
       content:

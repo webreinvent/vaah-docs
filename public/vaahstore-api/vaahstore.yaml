@@ -90,14 +90,26 @@ tags:
 
 paths:
 
-  '/api/signin':
+  '/api/sign-up':
+    $ref: './authentication/signup.yaml'  # Reference to the stores file
+  '/api/sign-in/otp':
+    $ref: './authentication/signinOTP.yaml'  # Reference to the stores file
+  '/api/sign-in':
     $ref: './authentication/signin.yaml'  # Reference to the stores file
+  '/api/password-reset-code':
+    $ref: './authentication/paswordResetCode.yaml'  # Reference to the stores file
+  '/api/password-reset':
+    $ref: './authentication/resetPassword.yaml'  # Reference to the stores file
+  '/api/sign-out':
+    $ref: './authentication/signOut.yaml'  # Reference to the stores file
 
   '/api/taxonomies':
     $ref: './taxonomies/index.yaml'  # Reference to the taxonomies file
 
   '/api/store/stores':
     $ref: './stores/stores.yaml'  # Reference to the stores file
+  '/api/store/stores/default':
+    $ref: './stores/defaultStore.yaml'  # Reference to the default store file
   /api/store/stores/{id}/action/{action}:
     $ref: './stores/storeAction.yaml'  # Reference to the stores item action file
   /api/store/stores/{id}:
@@ -113,20 +125,23 @@ paths:
     $ref: './products/productAction.yaml'  # Reference to the product item action file
   '/api/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
-  '/api/store/products/vendor':
-    $ref: './products/attachVendor.yaml'  # Reference to the attachment with vendor file
-  '/api/store/products/get-vendors-list/{id}':
+  '/api/store/products/top-sellings':
+    $ref: './products/topSellingProducts.yaml'  # Reference to the product item file
+  '/api/store/products/top-brands':
+    $ref: './products/topSellingBrands.yaml'  # Reference to the product item file
+  '/api/store/products/top-categories':
+    $ref: './products/topSellingCategories.yaml'  # Reference to the product item file
+  '/api/store/products/{id}/vendors':
     $ref: './products/getVendorsListByProductId.yaml'  # Reference to the get list of vendors with product id file
-  '/api/store/products/{id}/action-for-vendor/{action}':
+  '/api/store/products/{id}/vendors/{vendor_id}/action':
     $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
-  '/api/store/products/getAttributeList':
+  '/api/store/products/attributes':
     $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
   '/api/store/products/getAttributeValue':
     $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
-  '/api/store/products/variation':
+  '/api/store/products/{id}/generate-variations':
     $ref: './products/createVariation.yaml'  # Reference to the creation of variation of a product file
-  '/api/store/products/add/product-to-cart':
-    $ref: './products/addToCart.yaml'  # Reference to the add product to cart file
+
 
 
   '/api/store/vendors':
@@ -137,9 +152,9 @@ paths:
     $ref: './vendors/vendorAction.yaml'  # Reference to the vendors item action file
   '/api/store/vendors/action/{action}':
     $ref: './vendors/vendorsListActions.yaml'  # Reference to the vendors list actions file
-  '/api/store/vendors/add/product':
+  '/api/store/vendors/{id}/products':
     $ref: './vendors/attachProducts.yaml'  # Reference to the attachment with product file
-  '/api/store/vendors/add/user':
+  '/api/store/vendors/{id}/users-roles':
     $ref: './vendors/addUser.yaml'  # Reference to the vendors attachment with user file
 
 
@@ -151,13 +166,12 @@ paths:
     $ref: './product-variations/variationAction.yaml'  # Reference to the productvariations item action file
   '/api/store/productvariations/action/{action}':
     $ref: './product-variations/variationListActions.yaml'  # Reference to the productvariations list actions file
-  '/api/store/productvariations/add/variation-to-cart':
-    $ref: './product-variations/addToCart.yaml'  # Reference to the add to cart file
+
   '/api/store/productvariations/disable/active-cart':
     $ref: './product-variations/disableCart.yaml'  # Reference  to disable active session  file
   '/api/store/productvendors':
     $ref: './product-vendors/index.yaml'  # Reference to the product vendors file
-  '/api/store/productvendors/getProductForStore':
+  '/api/store/productvendors/products':
     $ref: './product-vendors/getStoreProducts.yaml'  # Reference to the product vendors get products of stores file
   '/api/store/productvendors/{id}':
     $ref: './product-vendors/update.yaml'  # Reference to the product vendor item file
@@ -165,7 +179,7 @@ paths:
     $ref: './product-vendors/itemAction.yaml'  # Reference to the product vendor item action file
   '/api/store/productvendors/action/{action}':
     $ref: './product-vendors/listAction.yaml'  # Reference to the product vendor list actions file
-  '/api/store/productvendors/product/price':
+  '/api/store/productvendors/{id}/prices':
     $ref: './product-vendors/addProductPrice.yaml'  # Reference to the add product price file
 
   '/api/store/productstocks':
@@ -179,40 +193,36 @@ paths:
 
   '/api/store/carts':
     $ref: './carts/index.yaml'  # Reference to the carts file
-  '/api/store/carts/{id}':
+  '/api/store/carts/generate':
+    $ref: './carts/addToCart.yaml'  # Reference to the carts file
+  '/api/store/carts/{uuid}':
     $ref: './carts/cartDetail.yaml'  # Reference to the cart details file
-  '/api/store/carts/cart-check-out/{id}':
-    $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
-  '/api/store/carts/update/quantity':
+  '/api/store/carts/{uuid}/user':
+    $ref: './carts/adduserToCart.yaml'  # Reference to the update cart items quantity file
+  '/api/store/carts/{uuid}/update':
     $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
-  '/api/store/carts/delete-cart-item':
+  '/api/store/carts/{uuid}/checkout':
+    $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
+  '/api/store/carts/{uuid}/item/{action}':
     $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
   '/api/store/carts/add-to-wishlist':
     $ref: './carts/addToWishlist.yaml'  # Reference to  add to wishlist  file
-  '/api/store/carts/save/cart-user-address':
-    $ref: './carts/saveAddress.yaml'  # Reference to  save cart user address  file
-  '/api/store/carts/remove/cart-user-address':
-    $ref: './carts/removeAddress.yaml'  # Reference to  remove cart user address  file
-  '/api/store/carts/update/user-shipping-address':
-    $ref: './carts/updateAddress.yaml'  # Reference to  update cart user address  file
-  '/api/store/carts/place-order':
-    $ref: './carts/placeOrder.yaml'  # Reference to cart place order  file
-  '/api/store/carts/get-order-details/{order_id}':
-    $ref: './carts/getOrder.yaml'  # Reference to get order file
-  '/api/store/carts/{id}/action/{action}':
+  '/api/store/carts/{uuid}/action/{action}':
     $ref: './carts/itemAction.yaml'  # Reference to cart item action file
   '/api/store/carts/action/{action}':
     $ref: './carts/listAction.yaml'  # Reference to cart list actions file
 
   '/api/store/orders':
     $ref: './orders/index.yaml'  # Reference to order file
-  '/api/store/orders/{id}':
+  '/api/store/orders/{uuid}':
     $ref: './orders/update.yaml'  # Reference to order item file
-  '/api/store/orders/{id}/action/{action}':
+  '/api/store/orders/{uuid}/items':
+    $ref: './carts/getOrder.yaml'  # Reference to order item file
+  '/api/store/orders/{uuid}/action/{action}':
     $ref: './orders/itemAction.yaml'  # Reference to order item action file
   '/api/store/orders/action/{action}':
     $ref: './orders/listAction.yaml'  # Reference to order list actions file
-  '/api/store/orders/get-order-items/{id}':
+  '/api/store/orders/{uuid}/shipment-items':
     $ref: './orders/getOrderItems.yaml'  # Reference to get shipped order item details file
 
   '/api/store/payments':
@@ -228,18 +238,17 @@ paths:
 
   '/api/store/shipments':
     $ref: './shipments/index.yaml'  # Reference to shipments file
-  '/api/store/shipments/search/orders':
-    $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
   '/api/store/shipments/{id}':
     $ref: './shipments/update.yaml'  # Reference to shipments item file
-  '/api/store/shipments/{id}/get-shipped-item-list':
+  '/api/store/shipments/{item_id}/items':
     $ref: './shipments/getShippedItem.yaml'  # Reference to get shipment by item id file
-  '/api/store/shipments/update-shipped-item-quantity':
-    $ref: './shipments/updateItemQuantity.yaml'  # Reference to shipments update shipped items quantity file
+
   '/api/store/shipments/{id}/action/{action}':
     $ref: './shipments/itemAction.yaml'  # Reference to payment item actions file
   '/api/store/shipments/action/{action}':
     $ref: './shipments/listAction.yaml'  # Reference to payment list actions file
+  '/api/store/shipments/search/orders':
+    $ref: './shipments/getOrders.yaml'  # Reference to shipments get valid orders file
 
   '/api/store/productattributes':
     $ref: './product-attributes/index.yaml'  # Reference to product attributes file
@@ -330,6 +339,8 @@ paths:
     $ref: './customers/getAssets.yaml'  # Reference to customers assets file
   '/api/store/users':
     $ref: './customers/index.yaml'  # Reference to customers file
+  '/api/store/users/change-password':
+    $ref: './customers/changePassword.yaml'  # Reference to customers file
   '/api/store/users/{id}':
     $ref: './customers/update.yaml'  # Reference to customers update file
 
@@ -377,6 +388,11 @@ components:
     id:
       name: id
       description: The unique identifier of the item
+      in: path
+      required: true
+    uuid:
+      name: uuid
+      description: The Universally Unique Identifier
       in: path
       required: true
     action:
@@ -572,6 +588,16 @@ components:
         items:
           type: string
       example: [ 'store-1', 'store-2' ]
+    brands:
+      name: filter[brands][]
+      in: query
+      required: false
+      description: Filter by brands slugs.
+      schema:
+        type: array
+        items:
+          type: string
+      example: [ 'brand-1', 'brand-2' ]
     status:
       name: filter[status][]
       in: query
@@ -1442,6 +1468,13 @@ components:
             name:
               type: string
               example: "Nike"
+        variations:
+          type: array
+          description: "An array of variation IDs associated with the product."
+          items:
+            type: integer
+            example: 106
+          example: [ 106, 107, 108 ]
         product_categories:
           type: array
           items:
