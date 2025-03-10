@@ -12,6 +12,17 @@ get:
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
     - '$ref': '../vaahstore.yaml#/components/parameters/category'
+    - name: include
+      in: query
+      required: false
+      description: |
+        Query to retrieve categories in a nested structure,displaying parent categories along with their child categories.
+        Example: `?include[nested]=true`
+      schema:
+        type: array
+        items:
+          type: string
+
 
 
 
@@ -26,16 +37,66 @@ get:
           schema:
             type: object
             properties:
-              current_page:
-                type: integer
-                example: 1
+              success:
+                type: boolean
+                example: true
               data:
-                type: array
-                items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/Category'
-              first_page_url:
-                type: string
-                example: "http://127.0.0.1:8000/backend/store/categories?page=1"
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      '$ref': '../vaahstore.yaml#/components/schemas/Category'
+                  first_page_url:
+                    type: string
+                    example: "http://url/api/store/categories?page=1"
+                  from:
+                    type: integer
+                    example: 1
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: "http://url/api/store/categories?page=1"
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          nullable: true
+                          example: null
+                        label:
+                          type: string
+                          example: "&laquo; Previous"
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    nullable: true
+                    example: null
+                  path:
+                    type: string
+                    example: "http://url/api/store/categories"
+                  per_page:
+                    type: integer
+                    example: 20
+                  prev_page_url:
+                    type: string
+                    nullable: true
+                    example: null
+                  to:
+                    type: integer
+                    example: 3
+                  total:
+                    type: integer
+                    example: 3
 
     '500':
       description: Internal Server Error
@@ -190,9 +251,9 @@ put:
           schema:
             type: object
             properties:
-              failed:
+              success:
                 type: boolean
-                example: true
+                example: false
               messages:
                 type: array
                 items:
@@ -205,9 +266,10 @@ put:
           schema:
             type: object
             properties:
-              failed:
-                type: boolean
-                example: true
+              properties:
+                success:
+                  type: boolean
+                  example: false
               messages:
                 type: array
                 items:
@@ -291,9 +353,10 @@ delete:
           schema:
             type: object
             properties:
-              failed:
-                type: boolean
-                example: true
+              properties:
+                success:
+                  type: boolean
+                  example: false
               messages:
                 type: array
                 items:
@@ -306,9 +369,9 @@ delete:
           schema:
             type: object
             properties:
-              failed:
+              success:
                 type: boolean
-                example: true
+                example: false
               messages:
                 type: array
                 items:

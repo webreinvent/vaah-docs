@@ -1,3 +1,220 @@
+post:
+  tags:
+    - Orders
+  summary: Place an order
+  description: Places an order for the items in the cart and updates stock levels accordingly.
+  operationId: placeOrder
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            order_details:
+              type: object
+              description: Contains details of the order to be placed.
+              properties:
+                cart_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the user's cart.
+                total_amount:
+                  type: number
+                  format: float
+                  example: 150.00
+                  description: The total amount for the order.
+                payable:
+                  type: number
+                  format: float
+                  example: 150.00
+                  description: The amount that needs to be paid.
+                discounts:
+                  type: number
+                  format: float
+                  example: 10.00
+                  description: The total discount applied to the order.
+                taxes:
+                  type: number
+                  format: float
+                  example: 5.00
+                  description: The total taxes applied to the order.
+                delivery_fee:
+                  type: number
+                  format: float
+                  example: 5.00
+                  description: The delivery fee for the order.
+                shipping_address:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 101
+                      description: The ID of the shipping address.
+                    vh_user_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the user associated with the order.
+                  required:
+                    - id
+                    - vh_user_id
+                billing_address:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 102
+                      description: The ID of the billing address.
+                    vh_user_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the user associated with the order.
+                  required:
+                    - id
+                    - vh_user_id
+                payment_method:
+                  type: string
+                  example: "COD"
+                  description: The payment method selected for the order.
+                order_items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product_id:
+                        type: integer
+                        example: 1
+                        description: The ID of the product.
+                      name:
+                        type: string
+                        example: "product name"
+                        description: The name of the product.
+                      pivot:
+                        type: object
+                        properties:
+                          cart_product_variation:
+                            type: string
+                            example: "variation name"
+                            description: The name of the product variation.
+                          product_variation_id:
+                            type: integer
+                            example: 2
+                            description: The ID of the product variation.
+                          selected_vendor_id:
+                            type: integer
+                            example: 1
+                            description: The ID of the selected vendor.
+                          quantity:
+                            type: integer
+                            example: 1
+                            description: The quantity of the product ordered.
+                          price:
+                            type: number
+                            format: float
+                            example: 50.00
+                            description: The price of the product.
+                          subtotal:
+                            type: number
+                            format: float
+                            example: 50.00
+                            description: The total as quantity * price for the item.
+                        required:
+                          - cart_product_variation
+                          - product_variation_id
+                          - selected_vendor_id
+                          - quantity
+                          - price
+                    required:
+                      - product_id
+                      - name
+                      - pivot
+              required:
+                - cart_id
+                - total_amount
+                - payable
+                - discounts
+                - taxes
+                - delivery_fee
+                - shipping_address
+                - billing_address
+                - payment_method
+                - order_items
+          required:
+            - order_details
+
+  responses:
+    '200':
+      description: Order placed successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+                description: Indicates if the operation was successful.
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "Order placed successfully."
+              data:
+                type: object
+                properties:
+                  order:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                        description: The ID of the placed order.
+                      amount:
+                        type: number
+                        format: float
+                        example: 150.00
+                        description: The total amount for the order.
+                      order_status:
+                        type: string
+                        example: "Placed"
+                        description: The current status of the order.
+
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example:
+                    - "Provide shipping details"
+                    - "Provide billing details"
+                    - "Select payment type"
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              messages:
+                type: array
+                items:
+                  type: string
+                  example: "An error occurred while placing the order."
+
+
 get:
   tags:
     - Orders
@@ -19,16 +236,66 @@ get:
           schema:
             type: object
             properties:
-              current_page:
-                type: integer
-                example: 1
+              success:
+                type: boolean
+                example: true
               data:
-                type: array
-                items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/Order'
-              first_page_url:
-                type: string
-                example: "http://127.0.0.1:8000/backend/store/orders?page=1"
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      '$ref': '../vaahstore.yaml#/components/schemas/Order'
+                  first_page_url:
+                    type: string
+                    example: "http://url/api/store/orders?page=1"
+                  from:
+                    type: integer
+                    example: 1
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: "http://url/api/store/orders?page=1"
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          nullable: true
+                          example: null
+                        label:
+                          type: string
+                          example: "&laquo; Previous"
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    nullable: true
+                    example: null
+                  path:
+                    type: string
+                    example: "http://url/api/store/orders"
+                  per_page:
+                    type: integer
+                    example: 20
+                  prev_page_url:
+                    type: string
+                    nullable: true
+                    example: null
+                  to:
+                    type: integer
+                    example: 3
+                  total:
+                    type: integer
+                    example: 3
 
     '500':
       description: Internal Server Error

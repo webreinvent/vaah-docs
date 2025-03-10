@@ -1,0 +1,287 @@
+post:
+  tags:
+    - Carts
+  summary: Generate a cart or add products to a cart
+  description: |
+    This endpoint allows users to add multiple products to their cart. The product IDs are required, while the user information is optional. If any product is out of stock, an error message will be returned.
+
+  operationId: addToCart
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            products:
+              type: array
+              description: A list of products associated with the request or response.
+              items:
+                type: object
+                required:
+                  - id
+                description: Details of a product in the list.
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                    description: The unique identifier for the product.
+                  vendor_id:
+                    type: integer
+                    example: 1
+                    description: The identifier for the vendor associated with the product.
+                  variation_id:
+                    type: integer
+                    example: 1
+                    description: The identifier for the specific variation of the product.
+                  quantity:
+                    type: integer
+                    example: 1
+                    description: The number of units of the product being referenced.
+            user:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+            uuid:
+              type: string
+              description: UUID of the cart. If provided, the product will be added to this specific cart.
+              example: "abcd1234-abcd1234"
+
+          required:
+            - products
+
+  responses:
+    '200':
+      description: Cart created/generated successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                  example:
+                    - "Saved successfully."
+              data:
+                type: object
+                properties:
+                      id:
+                        type: integer
+                        example: xxx
+                      uuid:
+                        type: string
+                        example: "abcd1234-abcd1234"
+                      vh_user_id:
+                        type: integer
+                        example: xxx
+
+                      created_by:
+                        type: integer
+                        example: xxx
+                      updated_by:
+                        type: integer
+                        example: xxx
+                      deleted_by:
+                        type: integer
+                        example: null
+                      created_at:
+                        type: string
+                        example: "2024-12-09 05:56:09"
+                      updated_at:
+                        type: string
+                        example: "2024-12-09 05:56:09"
+                      deleted_at:
+                        type: string
+                        example: null
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: xx
+                              description: Unique identifier for the product.
+                            uuid:
+                              type: string
+                              example: "abcd1234-abcd1234"
+                            taxonomy_id_product_type:
+                              type: integer
+                              example: xx
+                            vh_st_store_id:
+                              type: integer
+                              example: xx
+                            vh_st_brand_id:
+                              type: integer
+                              example: xx
+
+                            taxonomy_id_product_status:
+                              type: integer
+                              example: xx
+                            name:
+                              type: string
+                              example: "Laptop"
+                              description: Name of the product added to the cart.
+                            slug:
+                              type: string
+                              example: "laptop"
+                            summary:
+                              type: string
+                              example: "lorem ipsum"
+                            details:
+                              type: string
+                              example: "lorem ipsum"
+                            quantity:
+                              type: integer
+                              example: xx
+                            in_stock:
+                              type: string
+                              example: null
+                            available_at:
+                              type: string
+                              example: "2025-05-31 00:00:00"
+                            launch_at:
+                              type: string
+                              example: "2025-05-11 00:00:00"
+                            is_featured_on_home_page:
+                              type: integer
+                              example: 1
+                            is_featured_on_category_page:
+                              type: integer
+                              example: 1
+                            is_active:
+                              type: integer
+                              example: 1
+                            is_default:
+                              type: integer
+                              example: 0
+                            status_notes:
+                              type: string
+                              example: "lorem ipsum"
+                            meta:
+                              type: string
+                              example: null
+                            seo_title:
+                              type: string
+                              example: null
+                            seo_meta_description:
+                              type: string
+                              example: null
+                            seo_meta_keyword:
+                              type: string
+                              example: null
+                            created_by:
+                              type: integer
+                              example: xxx
+                            updated_by:
+                              type: integer
+                              example: xxx
+                            deleted_by:
+                              type: integer
+                              example: null
+                            created_at:
+                              type: string
+                              example: "2024-11-25 12:17:55"
+                            updated_at:
+                              type: string
+                              example: "2024-12-06 16:27:42"
+                            deleted_at:
+                              type: string
+                              example: null
+                            pivot:
+                              type: object
+                              properties:
+                                vh_st_cart_id:
+                                  type: integer
+                                  example: xxx
+                                  description: Unique identifier for the cart in the pivot table.
+                                vh_st_product_id:
+                                  type: integer
+                                  example: xxx
+                                  description: Unique identifier for the product in the pivot table.
+                                vh_st_product_variation_id:
+                                  type: integer
+                                  example: xxx
+                                  description: Unique identifier for the product variation in the pivot table.
+                                quantity:
+                                  type: integer
+                                  example: xxx
+                                  description: Quantity of the product in the cart.
+                                vh_st_vendor_id:
+                                  type: integer
+                                  example: xxx
+                                  description: Unique identifier for the vendor associated with the product in the pivot table.
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: xxx
+                            description: Unique identifier for the user.
+                          uuid:
+                            type: string
+                            example: "abcd1234-abcd1234"
+                            description: Unique identifier for the user in UUID format.
+                          email:
+                            type: string
+                            example: "user@example.com"
+                            description: User's email address.
+                          username:
+                            type: string
+                            example: "john_doe"
+                            description: Username for the user account.
+                          phone:
+                            type: integer
+                            example: 9191xxxxxx
+                            description: User's phone.
+
+                          avatar:
+                            type: string
+                            example: "https://example.com/avatar.jpg"
+                            description: URL of the user's avatar image.
+
+    '400':
+      description: Invalid information
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example:
+                    - "Invalid product ID xx."
+                    - "No default variation found for Product ID xx."
+                    - "No vendor is selected for product ID xx."
+                    - "Product ID xx is not associated with vendor ID xx."
+                    - "Insufficient stock for variation ID xx from vendor ID xx."
+
+
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                  example: "An error occurred while adding the product to the cart."

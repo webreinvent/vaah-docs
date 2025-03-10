@@ -1,0 +1,80 @@
+get:
+  tags:
+    - Products
+  summary: Top-selling categories within a date range
+  description: Retrieve a list of top 5 categories based on the provided date range and optional filters.
+  operationId: getTopSellingCategories
+  parameters:
+    - name: limit
+      in: query
+      description: Number of top categories to retrieve. Defaults to 5 if not provided.
+      required: false
+      schema:
+        type: integer
+        example: 2
+  requestBody:
+    required: true
+    description: >
+      The request body requires `start_date` and `end_date` to fetch data for the specified period.
+      If these values are not provided, the API will return data for the current day by default.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date-time
+              example: "2024-12-01T00:00:00.000Z"
+              description: Start date of the period for fetching top-selling categories.
+            end_date:
+              type: string
+              format: date-time
+              example: "2024-12-26T00:00:00.000Z"
+              description: End date of the period for fetching top-selling categories.
+            filter_all:
+              type: string
+              nullable: true
+              example: null
+              description: Optional filter to apply to the category list (e.g., all, null, etc.).
+          required:
+            - start_date
+            - end_date
+
+
+
+  responses:
+    '200':
+      description: Categories Retrieved
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 889
+                    name:
+                      type: string
+                      example: "Tata Coffee"
+                    slug:
+                      type: string
+                      example: "tata-coffee"
+
+
+
+
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:

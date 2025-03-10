@@ -1,9 +1,11 @@
-post:
+put:
   tags:
     - Carts
-  summary: Update cart item quantity
-  description: Updates the quantity of a specified product in the cart. If the new quantity is less than 1, the product will be removed from the cart.
+  summary: Update cart products quantity
+  description: Updates the quantity of a specified products in the cart. If the new quantity is less than 1, the product will be removed from the cart.
   operationId: updateQuantity
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/uuid'
   requestBody:
     required: true
     content:
@@ -11,52 +13,220 @@ post:
         schema:
           type: object
           properties:
-            cart_product_details:
-              type: object
-              properties:
-                vh_st_cart_id:
-                  type: integer
-                  example: 1
-                  description: The ID of the cart.
-                vh_st_product_id:
-                  type: integer
-                  example: 1
-                  description: The ID of the product.
-                vh_st_product_variation_id:
-                  type: integer
-                  example: 1
-                  description: The ID of the product variation.
-                vh_st_vendor_id:
-                  type: integer
-                  example: 1
-                  description: The ID of the vendor.
-              required:
-                - vh_st_cart_id
-                - vh_st_product_id
-                - vh_st_product_variation_id
-                - vh_st_vendor_id
-            quantity:
-              type: integer
-              example: 3
-              description: The new quantity for the product.
+            products:
+              type: array
+              description: List of cart products with their details and quantity.
+              items:
+                type: object
+                properties:
+                  vh_st_product_id:
+                    type: integer
+                    example: 1
+                    description: The ID of the product.
+                  vh_st_product_variation_id:
+                    type: integer
+                    example: 2
+                    description: The ID of the product variation.
+                  vh_st_vendor_id:
+                    type: integer
+                    example: 3
+                    description: The ID of the vendor.
+                  quantity:
+                    type: integer
+                    example: 5
+                    description: The new quantity for the product. A value of 0 or less indicates removal.
+                required:
+                  - vh_st_product_id
+                  - vh_st_product_variation_id
+                  - vh_st_vendor_id
+                  - quantity
           required:
-            - quantity
-            - cart_product_details
+            - products
+
   responses:
     '200':
-      description: Cart item quantity updated successfully
+      description: Cart products quantity updated successfully
       content:
         application/json:
           schema:
             type: object
             properties:
-              data:
-                '$ref': '../vaahstore.yaml#/components/schemas/Cart'
+              success:
+                type: boolean
+                example: true
               messages:
                 type: array
                 items:
                   type: string
                   example: "Saved successfully."
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: xxx
+                    description: "The unique identifier of the cart."
+                  uuid:
+                    type: string
+                    example: "abcd1234-abcd1234"
+                    description: "A universally unique identifier (UUID) for the cart."
+                  vh_user_id:
+                    type: integer
+                    example: xxx
+                    description: "The ID of the user who owns the cart."
+                  created_by:
+                    type: integer
+                    example: xxx
+                    description: "The ID of the user who created the cart."
+                  updated_by:
+                    type: integer
+                    example: xxx
+                    description: "The ID of the user who last updated the cart."
+                  deleted_by:
+                    type: integer
+                    example: null
+                    description: "The ID of the user who deleted the cart (null if not deleted)."
+                  created_at:
+                    type: string
+                    example: "2024-12-09 05:56:09"
+                    description: "The timestamp when the cart was created."
+                  updated_at:
+                    type: string
+                    example: "2024-12-09 05:56:09"
+                    description: "The timestamp when the cart was last updated."
+                  deleted_at:
+                    type: string
+                    example: null
+                    description: "The timestamp when the cart was deleted (null if not deleted)."
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: xx
+                          description: "The unique identifier of the product."
+                        uuid:
+                          type: string
+                          example: "abcd1234-abcd1234"
+                          description: "The UUID of the product."
+                        taxonomy_id_product_type:
+                          type: integer
+                          example: xx
+                          description: "The ID of the product type taxonomy."
+                        vh_st_store_id:
+                          type: integer
+                          example: xx
+                          description: "The ID of the store where the product is listed."
+                        vh_st_brand_id:
+                          type: integer
+                          example: xx
+                          description: "The ID of the brand associated with the product."
+                        taxonomy_id_product_status:
+                          type: integer
+                          example: xx
+                          description: "The ID of the product's status taxonomy."
+                        name:
+                          type: string
+                          example: "Laptop"
+                          description: "The name of the product added to the cart."
+                        slug:
+                          type: string
+                          example: "laptop"
+                          description: "The URL-friendly version of the product name."
+                        summary:
+                          type: string
+                          example: "lorem ipsum"
+                          description: "A short summary of the product."
+                        details:
+                          type: string
+                          example: "lorem ipsum"
+                          description: "Detailed information about the product."
+                        quantity:
+                          type: integer
+                          example: xx
+                          description: "The Available quantity of the product in the cart."
+                        in_stock:
+                          type: string
+                          example: null
+                          description: "The stock availability status of the product (null if not available)."
+                        available_at:
+                          type: string
+                          example: "2025-05-31 00:00:00"
+                          description: "The date when the product will be available."
+                        launch_at:
+                          type: string
+                          example: "2025-05-11 00:00:00"
+                          description: "The launch date of the product."
+                        is_featured_on_home_page:
+                          type: integer
+                          example: 1
+                          description: "Indicates if the product is featured on the home page (1 for true, 0 for false)."
+                        is_featured_on_category_page:
+                          type: integer
+                          example: 1
+                          description: "Indicates if the product is featured on the category page (1 for true, 0 for false)."
+                        is_active:
+                          type: integer
+                          example: 1
+                          description: "Indicates if the product is active (1 for true, 0 for false)."
+                        is_default:
+                          type: integer
+                          example: 0
+                          description: "Indicates if the product is the default product (1 for true, 0 for false)."
+                        status_notes:
+                          type: string
+                          example: "lorem ipsum"
+                          description: "Notes about the status of the product."
+                        created_by:
+                          type: integer
+                          example: xxx
+                          description: "The ID of the user who created the product."
+                        updated_by:
+                          type: integer
+                          example: xxx
+                          description: "The ID of the user who last updated the product."
+                        deleted_by:
+                          type: integer
+                          example: null
+                          description: "The ID of the user who deleted the product (null if not deleted)."
+                        created_at:
+                          type: string
+                          example: "2024-11-25 12:17:55"
+                          description: "The timestamp when the product was created."
+                        updated_at:
+                          type: string
+                          example: "2024-12-06 16:27:42"
+                          description: "The timestamp when the product was last updated."
+                        deleted_at:
+                          type: string
+                          example: null
+                          description: "The timestamp when the product was deleted (null if not deleted)."
+                        pivot:
+                          type: object
+                          properties:
+                            vh_st_cart_id:
+                              type: integer
+                              example: xxx
+                              description: "The ID of the cart in the pivot table."
+                            vh_st_product_id:
+                              type: integer
+                              example: xxx
+                              description: "The ID of the product in the pivot table."
+                            vh_st_product_variation_id:
+                              type: integer
+                              example: xxx
+                              description: "The ID of the product variation in the pivot table."
+                            quantity:
+                              type: integer
+                              example: xxx
+                              description: "The quantity of the product in the cart, as recorded in the pivot table."
+                            vh_st_vendor_id:
+                              type: integer
+                              example: xxx
+                              description: "The ID of the vendor associated with the product in the pivot table."
+
 
     '400':
       description: Invalid request
@@ -72,7 +242,7 @@ post:
                 type: array
                 items:
                   type: string
-                  example: "Invalid input."
+                  example: "Cart products list is required."
 
     '404':
       description: Cart not found

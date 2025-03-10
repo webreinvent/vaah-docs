@@ -14,7 +14,13 @@ get:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/schemas/ProductVariation'
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/ProductVariation'
     '404':
       description: Record Not Found
       content:
@@ -56,6 +62,9 @@ put:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: true
               data:
                 '$ref': '../vaahstore.yaml#/components/schemas/ProductVariation'
               messages:

@@ -7,8 +7,15 @@ patch:
 
   operationId: itemActiOnCart
   parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/id'
-    - '$ref': '../vaahstore.yaml#/components/parameters/action'
+    - name: uuid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The UUID of the cart.
+      example: "1"
+    - $ref: '../vaahstore.yaml#/components/parameters/action'
+
 
   responses:
     '200':

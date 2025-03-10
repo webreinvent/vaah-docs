@@ -1,5 +1,5 @@
 post:
-  summary: "Get Products of Store"
+  summary: "Get Product list of Stores"
   operationId: "productForStore"
   tags:
     - Vendor Products

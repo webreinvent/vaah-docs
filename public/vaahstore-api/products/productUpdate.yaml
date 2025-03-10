@@ -14,7 +14,13 @@ get:
       content:
         application/json:
           schema:
-            '$ref': '../vaahstore.yaml#/components/schemas/Product'
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                '$ref': '../vaahstore.yaml#/components/schemas/Product'
     '404':
       description: Product Not Found
       content:
@@ -144,6 +150,9 @@ put:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                example: true
               data:
                 '$ref': '../vaahstore.yaml#/components/schemas/Product'
               messages:

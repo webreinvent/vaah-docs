@@ -1,42 +1,3 @@
-get:
-  tags:
-    - Customers
-  summary: Get list of all customers
-  description: Retrieve list of all the customers.
-  operationId: getCustomers
-  parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/page'
-    - '$ref': '../vaahstore.yaml#/components/parameters/rows'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
-
-  responses:
-    '200':
-      description: List retrieved Successfully
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              current_page:
-                type: integer
-                example: 1
-              data:
-                type: array
-                items:
-                  '$ref': '../vaahstore.yaml#/components/schemas/Customer'
-              first_page_url:
-                type: string
-                example: "http://127.0.0.1:8000/backend/store/users?page=1"
-
-    '500':
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-
 post:
   tags:
     - Customers
@@ -113,7 +74,10 @@ post:
                 items:
                   type: string
                 example: [
-                    " "
+                    "The email field is required.",
+                    "The email must be a valid email address.",
+                    "The first name field is required.", "The password field is required.",
+                    "The status field is required."
                 ]
     '409':
       description: "Conflict error if user/customer already exists"
@@ -130,8 +94,100 @@ post:
                 items:
                   type: string
                 example: [
-                    " "
+                    "Email is already registered.. ",
+                    "Username is already registered.. ",
                 ]
+
+get:
+  tags:
+    - Customers
+  summary: Get list of all customers
+  description: Retrieve list of all the customers.
+  operationId: getCustomers
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/page'
+    - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
+    - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
+
+  responses:
+    '200':
+      description: List retrieved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      '$ref': '../vaahstore.yaml#/components/schemas/Customer'
+                  first_page_url:
+                    type: string
+                    example: "http://url/api/store/customers?page=1"
+                  from:
+                    type: integer
+                    example: 1
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: "http://url/api/store/customers?page=1"
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          nullable: true
+                          example: null
+                        label:
+                          type: string
+                          example: "&laquo; Previous"
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    nullable: true
+                    example: null
+                  path:
+                    type: string
+                    example: "http://url/api/store/customers"
+                  per_page:
+                    type: integer
+                    example: 20
+                  prev_page_url:
+                    type: string
+                    nullable: true
+                    example: null
+                  to:
+                    type: integer
+                    example: 3
+                  total:
+                    type: integer
+                    example: 3
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+
+
 put:
   tags:
     - Customers
@@ -193,9 +249,9 @@ put:
           schema:
             type: object
             properties:
-              failed:
+              success:
                 type: boolean
-                example: true
+                example: false
               messages:
                 type: array
                 items:
@@ -208,9 +264,9 @@ put:
           schema:
             type: object
             properties:
-              failed:
+              success:
                 type: boolean
-                example: true
+                example: false
               messages:
                 type: array
                 items:
@@ -294,9 +350,9 @@ delete:
           schema:
             type: object
             properties:
-              failed:
+              success:
                 type: boolean
-                example: true
+                example: false
               messages:
                 type: array
                 items:
@@ -309,9 +365,9 @@ delete:
           schema:
             type: object
             properties:
-              failed:
+              success:
                 type: boolean
-                example: true
+                example: false
               messages:
                 type: array
                 items:
