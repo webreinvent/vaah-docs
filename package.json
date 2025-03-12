@@ -21,7 +21,7 @@
     "@nuxtjs/google-fonts": "^3.2.0",
     "@pinia/nuxt": "^0.7.0",
     "medium-zoom": "^1.1.0",
-    "nuxt": "^3.14.159",
+    "nuxt": "^3.16.0",
     "nuxt-og-image": "^3.0.8",
     "pinia": "^2.2.6",
     "@vueuse/core": "^11.1.0",
