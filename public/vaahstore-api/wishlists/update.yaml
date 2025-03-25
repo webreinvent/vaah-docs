@@ -153,16 +153,13 @@ get:
                         is_selected:
                           type: boolean
                           description: "Indicates if the product is selected."
-                        product:
-                          type: object
-                          description: "Details of the product in the wishlist."
-                          properties:
-                            id:
-                              type: integer
-                              description: "The unique identifier of the product."
-                            name:
-                              type: string
-                              description: "The name of the product."
+                        id:
+                          type: integer
+                          description: "The unique identifier of the product."
+                        name:
+                            type: string
+                            description: "The name of the product."
+
 
 
 
@@ -194,7 +191,7 @@ get:
 put:
   tags:
     - Wishlists
-  summary: Update an existing record
+  summary: Update an existing record or add products in a wishlist
   description: Update a wishlist record with the specified ID using the provided details and also add a product to the wishlist.
   operationId: updateWishlist
   parameters:
@@ -237,20 +234,12 @@ put:
                   is_selected:
                     type: boolean
                     description: "Indicates if the product is selected."
-                  product:
-                    type: object
-                    description: "Details of the product in the wishlist."
-                    properties:
-                      id:
-                        type: integer
-                        description: "The unique identifier of the product."
-                      name:
-                        type: string
-                        description: "The name of the product."
-                    required:
-                      - id
+                  id:
+                    type: integer
+                    description: "The unique identifier of the product."
                 required:
-                  - product
+                  - id
+
 
           required:
             - name
