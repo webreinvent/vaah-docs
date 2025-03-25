@@ -6,12 +6,6 @@ get:
   operationId: getCustomerById
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/id'
-    - name: x-xsrf-token
-      in: header
-      required: true
-      description: The XSRF token for security.
-      schema:
-        type: string
 
   responses:
     '200':
