@@ -16678,7 +16678,7 @@ paths:
     put:
       tags:
         - Wishlists
-      summary: Update an existing record or add prodcuts in a wishlist
+      summary: Update an existing record or add products in a wishlist
       description: Update a wishlist record with the specified ID using the provided details and also add a product to the wishlist.
       operationId: updateWishlist
       parameters:
