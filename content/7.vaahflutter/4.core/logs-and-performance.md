@@ -13,11 +13,15 @@ Logging library which handles cloud (e.g. sentry, crashanalytics) and local (e.g
 ::alert{type="info" class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"}
 tip Cloud logging services
 
-- As of now we have implemented [Sentry](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service) to log and measure performance. Any other service is not available yet. To setup Sentry please check [this](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service.md#configuration).
+- As of now we have implemented [Sentry](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service) & [Datadog](../directory_structure/vaahextendflutter/services/logging_library/_cloud/datadog_logging_service) to log and measure performance. Any other service is not available yet.
+
+- To setup Sentry, refer to [this](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service.md#configuration).
+
+- To setup Datadog refer to [this](../directory_structure/vaahextendflutter/services/logging_library/_cloud/datadog_logging_service.md#configuration).
 
 - You can check out more details about it here: [Sentry](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service) and [Performance](../directory_structure/vaahextendflutter/services/performance_monitoring)
 
-- Also to enable sentry; developer will have to pass `sentryConfig` in [environment](../essentials/environments).
+- Also to enable Sentry & Datadog, developer will have to pass `sentryConfig` & `datadogConfig` respectively in [environment](../essentials/environments).
 
 ::
 
@@ -25,7 +29,7 @@ tip Cloud logging services
 
 <img src="/images/flutter/components/log/hierarchy.png" alt="hierarchy">
 
-- To setup Sentry please check [this](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service.md#configuration).
+- To setup Sentry, refer to [this](../directory_structure/vaahextendflutter/services/logging_library/_cloud/sentry_logging_service.md#configuration).
 
 ### Use cases
 
