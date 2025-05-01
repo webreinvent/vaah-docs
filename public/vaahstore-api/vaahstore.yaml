@@ -125,6 +125,8 @@ paths:
     $ref: './products/productAction.yaml'  # Reference to the product item action file
   '/api/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
+  '/api/store/products/add-to-wishlist':
+    $ref: './carts/addToWishlist.yaml'  # Reference to  add to wishlist  file
   '/api/store/products/top-sellings':
     $ref: './products/topSellingProducts.yaml'  # Reference to the product item file
   '/api/store/products/top-brands':

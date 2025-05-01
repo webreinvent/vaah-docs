@@ -2463,6 +2463,124 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /api/store/products/add-to-wishlist:
+    post:
+      tags:
+        - Carts
+        - Products
+      summary: Add or Delete item from the wishlist
+      description: Adds or removes a specified product to/from a user's wishlist. By default, the product is saved to the "Save For Later" wishlist. If the product is already in the wishlist, it will not be added again. If the operation is "delete", the specified product will be removed from the wishlist.
+      operationId: addToWishlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_detail:
+                  type: object
+                  description: |
+                    Contains details about the product in the cart that will be added to or delete from the wishlist.
+                    Includes information such as the product ID, product variation ID, vendor ID, and wishlist ID.
+                  properties:
+                    vh_st_product_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the product to add to the wishlist.
+                    vh_st_product_variation_id:
+                      type: integer
+                      example: 2
+                      description: The ID of the product variation.
+                    vh_st_vendor_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the vendor for the product.
+                    vh_st_wishlist_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the wishlist of a user to add the product to.
+                  required:
+                    - vh_st_cart_id
+                    - vh_st_product_id
+                    - vh_st_product_variation_id
+                    - vh_st_vendor_id
+                selected_store_id:
+                  type: integer
+                  example: 51
+                  description: The ID of the selected store to which the product belongs.
+                type:
+                  type: string
+                  example: add/delete
+                  description: The type of action to perform (e.g., "add" to add the item to the wishlist, "delete" to remove it).
+                user_detail:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 121
+                      description: The ID of the user.
+                  required:
+                    - id
+              required:
+                - item_detail
+                - user_detail
+                - selected_store_id
+                - type
+      responses:
+        '200':
+          description: Item added to wishlist successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: Indicates the operation was successful.
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Saved successfully.
+                  data:
+                    type: object
+                    properties:
+                      is_wishlisted:
+                        type: integer
+                        example: true
+                        description: Indicates whether the product is in the wishlist .
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: Invalid input.
+        '404':
+          description: User or product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                      example: User or product not found.
   /api/store/products/top-sellings:
     get:
       tags:
@@ -7836,8 +7954,9 @@ paths:
     post:
       tags:
         - Carts
-      summary: Add an item to the wishlist
-      description: Adds a specified product from the cart to the user's wishlist. If the item is already wishlisted, it will not be added again.
+        - Products
+      summary: Add or Delete item from the wishlist
+      description: Adds or removes a specified product to/from a user's wishlist. By default, the product is saved to the "Save For Later" wishlist. If the product is already in the wishlist, it will not be added again. If the operation is "delete", the specified product will be removed from the wishlist.
       operationId: addToWishlist
       requestBody:
         required: true
@@ -7849,13 +7968,9 @@ paths:
                 item_detail:
                   type: object
                   description: |
-                    Contains details about the product in the cart that will be added to or removed from the wishlist.
-                    Includes information such as the cart ID, product ID, product variation ID, quantity, vendor ID, and wishlist status.
+                    Contains details about the product in the cart that will be added to or delete from the wishlist.
+                    Includes information such as the product ID, product variation ID, vendor ID, and wishlist ID.
                   properties:
-                    vh_st_cart_id:
-                      type: integer
-                      example: 3
-                      description: The ID of the cart containing the product.
                     vh_st_product_id:
                       type: integer
                       example: 1
@@ -7864,25 +7979,27 @@ paths:
                       type: integer
                       example: 2
                       description: The ID of the product variation.
-                    quantity:
-                      type: integer
-                      example: 1
-                      description: The quantity of the product.
                     vh_st_vendor_id:
                       type: integer
                       example: 1
                       description: The ID of the vendor for the product.
-                    is_wishlisted:
+                    vh_st_wishlist_id:
                       type: integer
-                      example: 0
-                      description: Indicates if the product is already in the wishlist.Set to 1 for adding the product to the wishlist, and 0 if you want to remove the product from the wishlist.
+                      example: 1
+                      description: The ID of the wishlist of a user to add the product to.
                   required:
                     - vh_st_cart_id
                     - vh_st_product_id
                     - vh_st_product_variation_id
-                    - quantity
                     - vh_st_vendor_id
-                    - is_wishlisted
+                selected_store_id:
+                  type: integer
+                  example: 51
+                  description: The ID of the selected store to which the product belongs.
+                type:
+                  type: string
+                  example: add/delete
+                  description: The type of action to perform (e.g., "add" to add the item to the wishlist, "delete" to remove it).
                 user_detail:
                   type: object
                   properties:
@@ -7890,16 +8007,13 @@ paths:
                       type: integer
                       example: 121
                       description: The ID of the user.
-                    username:
-                      type: string
-                      example: 58a55727-2084-448c-89bd-c3146f8d52f8
-                      description: The username of the user, it is for the purpose making new wishlist also.
                   required:
                     - id
-                    - username
               required:
                 - item_detail
                 - user_detail
+                - selected_store_id
+                - type
       responses:
         '200':
           description: Item added to wishlist successfully
@@ -7920,8 +8034,10 @@ paths:
                   data:
                     type: object
                     properties:
-                      cart:
-                        $ref: '#/components/schemas/Cart'
+                      is_wishlisted:
+                        type: integer
+                        example: true
+                        description: Indicates whether the product is in the wishlist .
         '400':
           description: Invalid request
           content:
