@@ -1644,6 +1644,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/selected_store'
         - $ref: '#/components/parameters/ids_query'
         - $ref: '#/components/parameters/exclude'
         - $ref: '#/components/parameters/include'
@@ -16612,7 +16613,7 @@ paths:
                     items:
                       type: string
                     example:
-                      - The User field is required
+                      - User ID is required
                       - The Address Line 1 field is required
                       - The Type field is required
                       - The Status field is required
@@ -20880,6 +20881,14 @@ components:
       schema:
         type: integer
       example: 20
+    selected_store:
+      name: selected_store
+      in: query
+      required: false
+      description: Load products from the selected store. If not provided, products from the default store will be loaded.
+      schema:
+        type: integer
+      example: 20
     filter_q:
       name: filter[q]
       in: query
@@ -21856,6 +21865,30 @@ components:
         name:
           type: string
           example: My Product
+        price:
+          type: object
+          description: Price details including the amount and associated currency information.
+          properties:
+            amount:
+              type: string
+              description: The price amount as a string (to preserve formatting such as decimals).
+              example: '10.00'
+            currency:
+              type: object
+              description: Currency details for the given amount.
+              properties:
+                code:
+                  type: string
+                  description: The ISO currency code (e.g., USD, IRR).
+                  example: USD
+                symbol:
+                  type: string
+                  description: The currency symbol, may include HTML or Unicode representations.
+                  example: '&#xFDFC;'
+                rate:
+                  type: number
+                  description: The exchange rate or base rate for the currency.
+                  example: 1
         store:
           type: object
           properties:
@@ -21897,7 +21930,7 @@ components:
               name:
                 type: string
                 example: Electronics
-        product_price_range:
+        vendor_product_data:
           type: object
           properties:
             price_range:
