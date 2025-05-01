@@ -16241,6 +16241,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/exclude'
+        - $ref: '#/components/parameters/include'
         - $ref: '#/components/parameters/filter_q'
         - $ref: '#/components/parameters/filter_is_active'
         - $ref: '#/components/parameters/filter_trashed'
@@ -23862,6 +23864,37 @@ components:
         slug:
           type: string
           description: Slugified version of the wishlist name.
+        type:
+          type: integer
+          description: Type of wishlist (if applicable).
+        taxonomy_id_whishlists_status:
+          type: integer
+          description: Taxonomy ID for the wishlist status.
+        taxonomy_id_whishlists_types:
+          type: integer
+          nullable: true
+          description: Taxonomy ID for the wishlist type (if applicable).
+        is_default:
+          type: integer
+          description: Indicates if this is the default wishlist for the user.
+        meta:
+          type: object
+          nullable: true
+          description: Additional metadata associated with the wishlist.
+        status_notes:
+          type: string
+          nullable: true
+          description: Notes associated with the status.
+        created_by:
+          type: integer
+          description: ID of the user who created the wishlist.
+        updated_by:
+          type: integer
+          description: ID of the user who last updated the wishlist.
+        deleted_by:
+          type: integer
+          nullable: true
+          description: ID of the user who deleted the wishlist (if applicable).
         created_at:
           type: string
           format: date-time
@@ -23870,87 +23903,97 @@ components:
           type: string
           format: date-time
           description: The timestamp when the wishlist was last updated.
-        created_by:
-          type: integer
-          description: ID of the user who created the wishlist.
-        updated_by:
-          type: integer
-          description: ID of the user who last updated the wishlist.
         deleted_at:
           type: string
           format: date-time
+          nullable: true
           description: The timestamp when the wishlist was deleted (if applicable).
-        is_default:
+        users_count:
           type: integer
-          description: Indicates if this is the default wishlist for the user.
-        meta:
-          type: object
-          description: Additional metadata associated with the wishlist.
-        status:
-          type: object
-          description: Status of the wishlist.
-          properties:
-            id:
-              type: integer
-              description: ID of the wishlist status.
-            name:
-              type: string
-              description: Name of the status.
-            slug:
-              type: string
-              description: Slug of the status.
-            status_notes:
-              type: string
-              description: Notes associated with the status.
-        taxonomy_id_whishlists_status:
-          type: integer
-          description: Taxonomy ID for the wishlist status.
-        taxonomy_id_whishlists_types:
-          type: integer
-          description: Taxonomy ID for the wishlist type (if applicable).
-        type:
-          type: string
-          description: Type of wishlist (if applicable).
-        products:
+          description: Total number of users who have this wishlist.
+        user_wishlist_products:
           type: array
-          description: List of products in the wishlist.
+          description: List of users who have added this wishlist.
           items:
             type: object
             properties:
               id:
                 type: integer
-                description: ID of the product.
-              name:
+              uuid:
                 type: string
-                description: Name of the product.
-              pivot:
-                type: object
-                properties:
-                  vh_st_wishlist_id:
-                    type: integer
-                    description: ID of the wishlist associated with this product.
-                  vh_st_product_id:
-                    type: integer
-                    description: ID of the product associated with this wishlist.
-        user:
-          type: object
-          description: User who owns the wishlist.
-          properties:
-            id:
-              type: integer
-              description: ID of the user.
-            first_name:
-              type: string
-              description: First name of the user.
-            username:
-              type: string
-              description: Username of the user.
-            avatar:
-              type: string
-              description: Avatar image URL of the user.
-            uuid:
-              type: string
-              description: Unique identifier of the user.
+                nullable: true
+              email:
+                type: string
+              username:
+                type: string
+              display_name:
+                type: string
+              title:
+                type: string
+              designation:
+                type: string
+                nullable: true
+              first_name:
+                type: string
+              products:
+                type: array
+                description: List of products in the wishlist.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    uuid:
+                      type: string
+                    taxonomy_id_product_type:
+                      type: integer
+                    vh_st_store_id:
+                      type: integer
+                    vh_st_brand_id:
+                      type: integer
+                    vh_cms_content_form_field_id:
+                      type: integer
+                      nullable: true
+                    taxonomy_id_product_status:
+                      type: integer
+                    name:
+                      type: string
+                    slug:
+                      type: string
+                    summary:
+                      type: string
+                    details:
+                      type: string
+                      nullable: true
+                    quantity:
+                      type: integer
+                    in_stock:
+                      type: boolean
+                      nullable: true
+                    selected_variation:
+                      type: object
+                      description: Selected variation of the product.
+                      properties:
+                        id:
+                          type: integer
+                        uuid:
+                          type: string
+                        vh_st_product_id:
+                          type: integer
+                        taxonomy_id_variation_status:
+                          type: integer
+                        sku:
+                          type: string
+                          nullable: true
+                        name:
+                          type: string
+                        slug:
+                          type: string
+                        quantity:
+                          type: integer
+                        is_default:
+                          type: boolean
+                          nullable: true
     Customer:
       type: object
       properties:
