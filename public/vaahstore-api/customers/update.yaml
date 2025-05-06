@@ -48,8 +48,8 @@ get:
 put:
   tags:
     - Customers
-  summary: Update an existing record
-  description: Update a customer record with the specified ID using the provided details.
+  summary: Update an customer account profile
+  description: Update the details of a customer account by providing the customer ID and the updated information.
   operationId: updateBrand
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/id'
@@ -72,22 +72,14 @@ put:
             username:
               type: string
               description: "User username"
-            password:
+            last_name:
               type: string
-              description: "The user's password."
-            status:
-              type: string
-              description: "The user's status."
-            is_active:
-              type: integer
-              description: "Indicates whether the user is active or not."
-          required:
-            - email
-            - first_name
-            - status
-            - is_active
-            - password
-            - username
+              description: "The user's last name."
+            phone:
+              type: number
+              description: "The user's phone number."
+
+
   responses:
     '200':
       description: Saved Successfully
