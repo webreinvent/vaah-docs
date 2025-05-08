@@ -6,6 +6,7 @@ get:
   operationId: getCartById
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
     - name: uuid
       in: path
       required: true

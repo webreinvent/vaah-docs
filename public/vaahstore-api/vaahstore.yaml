@@ -467,7 +467,7 @@ components:
       name: selected_store
       in: query
       required: false
-      description: Load products from the `selected store`. If not provided, products from the `default store` will be loaded.
+      description: Load items related to  `selected store`. If not provided, items from the `default store` will be loaded.
       schema:
         type: integer
       example: 20

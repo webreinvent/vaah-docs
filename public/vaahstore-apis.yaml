@@ -6962,6 +6962,7 @@ paths:
       operationId: getCartById
       parameters:
         - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/selected_store'
         - name: uuid
           in: path
           required: true
@@ -8624,6 +8625,20 @@ paths:
           schema:
             type: string
             example: abcd1234-abcd1234
+        - name: include[]
+          in: query
+          required: false
+          description: |
+            Include related data in the response. - Use `include[]=payments` to include payment data. - Use `include[]=shipments` to include shipment data.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - payments
+                - shipments
+              example:
+                - payments
       responses:
         '200':
           description: Order Retrieved Successfully
@@ -8640,123 +8655,89 @@ paths:
                     properties:
                       id:
                         type: integer
-                        example: 6
-                        description: The ID of the order.
+                        example: 335
                       uuid:
                         type: string
-                        example: b067e5fa-bfbc-4e91-beb2-ca0b1000cd53
-                        description: A unique identifier for the order.
+                        example: 624833d5-bcfe-49c8-8641-34e5cf3dedda
                       vh_user_id:
                         type: integer
-                        example: 121
-                        description: The ID of the user associated with the order.
+                        example: 55136
                       order_status:
                         type: string
-                        example: Placed
-                        description: The current status of the order.
+                        example: Completed
                       taxonomy_id_payment_status:
                         type: integer
-                        description: The ID of the order payment status.
+                        example: 65
+                      vh_st_payment_method_id:
+                        type: integer
+                        example: 4
                       order_shipment_status:
                         type: string
                         example: Pending
-                        description: The current shipment status of the order.
                       amount:
                         type: number
                         format: float
-                        example: 25
-                        description: The total amount for the order.
+                        example: 912
                       delivery_fee:
                         type: number
                         format: float
                         example: 0
-                        description: The delivery fee associated with the order.
                       taxes:
                         type: number
                         format: float
                         example: 0
-                        description: The total taxes applied to the order.
                       discount:
                         type: number
                         format: float
                         example: 0
-                        description: The total discount applied to the order.
                       payable:
                         type: number
                         format: float
-                        example: 25
-                        description: The total amount that needs to be paid for the order.
+                        example: 912
                       paid:
                         type: number
                         format: float
-                        example: 0
-                        description: The amount that has been paid for the order.
+                        example: 912
                       is_paid:
                         type: integer
                         nullable: true
                         example: 1
-                        description: Indicates if the order has been paid for.
                       is_active:
                         type: integer
                         example: 1
-                        description: Indicates if the order is currently active.
-                      items_count:
-                        type: integer
-                        example: 2
-                        description: The total number of items in the order.
-                      payment_method:
-                        type: string
-                        nullable: true
-                        example: null
-                        description: The payment method used for the order.
-                      order_payment_status:
+                      meta:
                         type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 64
-                            description: The ID of the payment status.
-                          name:
-                            type: string
-                            example: Pending
-                            description: The name of the payment status.
-                          slug:
-                            type: string
-                            example: pending
-                            description: A URL-friendly version of the payment status name.
-                      status:
-                        type: string
                         nullable: true
-                        example: null
-                        description: Additional status information for the order.
                       status_notes:
                         type: string
                         nullable: true
-                        example: null
-                        description: Any notes related to the status of the order.
-                      user:
+                      created_by:
+                        type: integer
+                        example: 1
+                      updated_by:
+                        type: integer
+                        example: 1
+                      deleted_by:
+                        type: integer
+                        nullable: true
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-04-30 05:10:03'
+                      updated_at:
+                        type: string
+                        format: date-time
+                        example: '2025-04-03 04:51:52'
+                      deleted_at:
+                        type: string
+                        format: date-time
+                        nullable: true
+                      shipping_address:
                         type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 121
-                            description: The ID of the user.
-                          first_name:
-                            type: string
-                            example: Olin
-                            description: The first name of the user.
-                          email:
-                            type: string
-                            example: shivam1@zieme.org
-                            description: The email address of the user.
-                          phone:
-                            type: string
-                            example: '2509077310'
-                            description: The phone number of the user.
-                          display_name:
-                            type: string
-                            example: shivam
-                            description: The display name of the user.
+                        nullable: true
+                      billing_address:
+                        type: object
+                        nullable: true
                       payments:
                         type: array
                         items:
@@ -8810,6 +8791,7 @@ paths:
                               format: date-time
                             deleted_at:
                               type: string
+                              format: date-time
                               nullable: true
                             pivot:
                               type: object
@@ -8829,21 +8811,76 @@ paths:
                                   format: date-time
                             created_by_user:
                               type: object
-                              properties:
-                                id:
-                                  type: integer
-                                uuid:
-                                  type: string
-                                first_name:
-                                  type: string
-                                last_name:
-                                  type: string
-                                email:
-                                  type: string
-                                avatar:
-                                  type: string
-                                name:
-                                  type: string
+                              nullable: true
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                            vh_st_order_id:
+                              type: integer
+                            vh_user_id:
+                              type: integer
+                            vh_st_customer_group_id:
+                              type: integer
+                              nullable: true
+                            taxonomy_id_order_items_types:
+                              type: integer
+                            taxonomy_id_order_items_status:
+                              type: integer
+                            vh_shipping_address_id:
+                              type: integer
+                              nullable: true
+                            vh_billing_address_id:
+                              type: integer
+                              nullable: true
+                            vh_st_product_id:
+                              type: integer
+                            vh_st_product_variation_id:
+                              type: integer
+                            vh_st_vendor_id:
+                              type: integer
+                            quantity:
+                              type: integer
+                            price:
+                              type: string
+                            is_invoice_available:
+                              type: integer
+                            invoice_url:
+                              type: string
+                            tracking:
+                              type: string
+                            is_active:
+                              type: integer
+                            meta:
+                              type: object
+                              nullable: true
+                            status_notes:
+                              type: string
+                            created_by:
+                              type: integer
+                            updated_by:
+                              type: integer
+                            deleted_by:
+                              type: integer
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                            deleted_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            ordered_product:
+                              type: array
+                              nullable: true
         '404':
           description: Record Not Found
           content:
@@ -21014,7 +21051,7 @@ components:
       name: selected_store
       in: query
       required: false
-      description: Load products from the `selected store`. If not provided, products from the `default store` will be loaded.
+      description: Load items related to  `selected store`. If not provided, items from the `default store` will be loaded.
       schema:
         type: integer
       example: 20
