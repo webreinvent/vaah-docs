@@ -138,6 +138,8 @@ paths:
     $ref: './products/preferredVendor.yaml'  # Reference to make product vendor preferred file
   '/api/store/products/attributes':
     $ref: './products/getAttributesList.yaml'  # Reference to get list of attributes in product file
+  '/api/store/products/{id}/variation':
+    $ref: './products/variationByAttribute.yaml'  # Reference to the product item file
   '/api/store/products/getAttributeValue':
     $ref: './products/getAttributeValue.yaml'  # Reference to get list of attributes values in product file
   '/api/store/products/{id}/generate-variations':
