@@ -5,6 +5,7 @@ get:
   description: Retrieve a cart items by its universal unique identifier.
   operationId: getCartById
   parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
     - name: uuid
       in: path
       required: true
@@ -29,29 +30,20 @@ get:
                   id:
                     type: integer
                     description: "Unique identifier for the cart"
+                    example: 14
                   uuid:
                     type: string
                     description: "Universally unique identifier for the cart"
-                  vh_user_id:
+                    example: "3e48cbb5-19f2-453f-afdd-21049ad5fc22"
+                  user_id:
                     type: integer
                     description: "Unique identifier for the user associated with the cart"
-                  user:
-                    type: object
-                    description: "Details of the user who owns the cart"
-                    properties:
-                      id:
-                        type: integer
-                        description: "Unique identifier of the user"
-                      uuid:
-                        type: string
-                        description: "Universally unique identifier of the user"
-                      email:
-                        type: string
-                        description: "Email address of the user"
+                    example: 55126
                   total_amount:
                     type: number
                     format: float
-                    description: "Total amount calculated based on the sum of each item's price multiplied by its quantity in the cart."
+                    description: "Total cart amount (sum of product prices × quantity)"
+                    example: 500.0
                   products:
                     type: array
                     description: "List of products in the cart"
@@ -61,106 +53,161 @@ get:
                         id:
                           type: integer
                           description: "Unique identifier of the product"
+                          example: 49
                         uuid:
                           type: string
                           description: "Universally unique identifier of the product"
-                        available_stock_quantity:
-                          type: integer
-                          description: "Available stock quantity of the product"
-                        taxonomy_id_product_type:
-                          type: integer
-                          description: "Product type taxonomy identifier"
-                        vh_st_store_id:
-                          type: integer
-                          description: "Store identifier where the product is available"
-                        vh_st_brand_id:
-                          type: integer
-                          nullable: true
-                          description: "Brand identifier associated with the product, if available"
-                        pivot:
-                          type: object
-                          description: "Details of the relationship between the cart and the product"
-                          properties:
-                            vh_st_cart_id:
-                              type: integer
-                              description: "Cart identifier for the product in the cart"
-                            vh_st_product_id:
-                              type: integer
-                              description: "Product identifier in the cart"
-                            vh_st_product_variation_id:
-                              type: integer
-                              description: "Product variation identifier in the cart"
-                            quantity:
-                              type: integer
-                              description: "The quantity of the product set by the user to order"
-                            vh_st_vendor_id:
-                              type: integer
-                              description: "Vendor identifier associated with the product"
-                            is_stock_available:
-                              type: integer
-                              description: "Flag indicating whether the product is available in stock"
-                            is_wishlisted:
-                              type: integer
-                              description: "Flag indicating whether the product is in the user's wishlist"
-                            cart_product_variation:
-                              type: string
-                              description: "The variation name of the product associated with the cart"
-                            price:
-                              type: number
-                              format: float
-                              description: "Price of the product variation in the cart"
-                        taxonomy_id_product_status:
-                          type: integer
-                          description: "Product status taxonomy identifier"
+                          example: "08928907-3a1c-4682-b878-0837d54c043c"
                         name:
                           type: string
                           description: "Name of the product"
                         slug:
                           type: string
                           description: "SEO-friendly URL slug for the product"
-                        vh_cms_content_form_field_id:
-                          type: integer
-                          nullable: true
-                          description: "Identifier for the CMS content form field, if applicable"
+                        summary:
+                          type: string
+                          description: "Short summary of the product"
                         quantity:
                           type: integer
-                          description: "Total quantity of products in the cart, including variations"
-                        in_stock:
+                          description: "Quantity added to cart"
+                          example: 2
+                        price:
+                          type: object
+                          properties:
+                            amount:
+                              type: string
+                              description: "Price amount"
+                              example: "200.00"
+                            currency:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  example: "USD"
+                                symbol:
+                                  type: string
+                                  example: "&#36;"
+                                rate:
+                                  type: number
+                                  example: 1
+                        total_price:
+                          type: number
+                          format: float
+                          description: "Total price for the product (quantity * price)"
+                          example: 400.0
+                        is_stock_available:
                           type: boolean
-                          nullable: true
-                          description: "Indicates if the product is currently in stock"
-                        is_active:
-                          type: boolean
-                          description: "Flag indicating whether the product is active"
-                  created_by_user:
-                    type: object
-                    description: "User who created the cart"
-                    properties:
-                      id:
-                        type: integer
-                        description: "Identifier of the user who created the cart"
-                      uuid:
-                        type: string
-                        description: "Universally unique identifier of the user who created the cart"
-                      first_name:
-                        type: string
-                        description: "First name of the user who created the cart"
-                      last_name:
-                        type: string
-                        description: "Last name of the user who created the cart"
-                  created_at:
-                    type: string
-                    format: date-time
-                    description: "Timestamp when the cart was created"
-                  updated_at:
-                    type: string
-                    format: date-time
-                    description: "Timestamp when the cart was last updated"
-                  deleted_at:
-                    type: string
-                    format: date-time
-                    nullable: true
-                    description: "Timestamp when the cart was deleted, if applicable"
+                          example: true
+                        wishlist_ids:
+                          type: array
+                          items:
+                            type: integer
+                        vendor_product_data:
+                          type: object
+                          properties:
+                            price_range:
+                              type: array
+                              items:
+                                type: string
+                            quantity:
+                              type: string
+                            selected_vendor:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                uuid:
+                                  type: string
+                                name:
+                                  type: string
+                                slug:
+                                  type: string
+                                is_active:
+                                  type: boolean
+                                taxonomy_id_vendor_status:
+                                  type: integer
+                                status_notes:
+                                  type: string
+                        product_variation:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            slug:
+                              type: string
+                            price:
+                              type: number
+                              format: float
+                            media:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  title:
+                                    type: string
+                                  is_default:
+                                    type: integer
+                                  images:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        url:
+                                          type: string
+                                        url_thumbnail:
+                                          type: string
+                                        webp_url:
+                                          type: string
+                                        type:
+                                          type: string
+                            wishlist_ids:
+                              type: array
+                              items:
+                                type: integer
+                        media:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                              is_default:
+                                type: integer
+                              images:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    url:
+                                      type: string
+                                    url_thumbnail:
+                                      type: string
+                                    webp_url:
+                                      type: string
+                                    type:
+                                      type: string
+                        pivot:
+                          type: object
+                          properties:
+                            vh_st_cart_id:
+                              type: integer
+                            vh_st_product_id:
+                              type: integer
+                            vh_st_product_variation_id:
+                              type: integer
+                            vh_st_vendor_id:
+                              type: integer
+                            quantity:
+                              type: integer
+                            price:
+                              type: number
+                            is_stock_available:
+                              type: integer
+                            is_wishlisted:
+                              type: integer
+
 
 
 
