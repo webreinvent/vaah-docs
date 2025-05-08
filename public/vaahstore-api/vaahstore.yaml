@@ -125,6 +125,7 @@ paths:
     $ref: './products/productAction.yaml'  # Reference to the product item action file
   '/api/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
+
   '/api/store/products/top-sellings':
     $ref: './products/topSellingProducts.yaml'  # Reference to the product item file
   '/api/store/products/top-brands':
@@ -205,8 +206,7 @@ paths:
     $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
   '/api/store/carts/{uuid}/item/{action}':
     $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
-  '/api/store/carts/add-to-wishlist':
-    $ref: './carts/addToWishlist.yaml'  # Reference to  add to wishlist  file
+
   '/api/store/carts/{uuid}/action/{action}':
     $ref: './carts/itemAction.yaml'  # Reference to cart item action file
   '/api/store/carts/action/{action}':
@@ -312,6 +312,8 @@ paths:
     $ref: './wishlists/index.yaml'  # Reference to wishlists file
   '/api/store/wishlists/{id}':
     $ref: './wishlists/update.yaml'  # Reference to wishlists item file
+  '/api/store/wishlists/{id}/products':
+    $ref: './wishlists/addProduct.yaml'  # Reference to wishlists item file
   '/api/store/wishlists/{id}/action/{action}':
     $ref: './wishlists/itemAction.yaml'  # Reference to wishlists item actions file
   '/api/store/wishlists/{action/{action}':
@@ -456,6 +458,14 @@ components:
       in: query
       required: false
       description: Number of rows per page.
+      schema:
+        type: integer
+      example: 20
+    selected_store:
+      name: selected_store
+      in: query
+      required: false
+      description: Load products from the `selected store`. If not provided, products from the `default store` will be loaded.
       schema:
         type: integer
       example: 20
@@ -698,6 +708,16 @@ components:
       description: Comma-separated list of fields or relations to exclude from the response. Example`?exclude[price,status,productVariations]=true&exclude[medias]=true`
       schema:
         type: array
+    frontend_ui:
+      name: frontend_ui
+      in: query
+      required: false
+      schema:
+        type: string
+        example:  primevue/tailwind
+      description: |
+        If set to `?frontend_ui=primevue`,  the response will include only structured and optimized data suitable for PrimeVue UI components.
+
     include:
       name: include
       in: query
@@ -1448,6 +1468,45 @@ components:
         name:
           type: string
           example: "My Product"
+        summary:
+          type: string
+          example: "My Product Summary"
+        details:
+          type: string
+          example: "My Product Details"
+        price:
+          type: object
+          description: Price details including the amount and associated currency information.
+          properties:
+            amount:
+              type: string
+              description: The price amount as a string (to preserve formatting such as decimals).
+              example: "10.00"
+            currency:
+              type: object
+              description: Currency details for the given amount.
+              properties:
+                code:
+                  type: string
+                  description: The ISO currency code (e.g., USD, IRR).
+                  example: "USD"
+                symbol:
+                  type: string
+                  description: The currency symbol, may include HTML or Unicode representations.
+                  example: "&#xFDFC;"
+                rate:
+                  type: number
+                  description: The exchange rate or base rate for the currency.
+                  example: 1
+        wishlist_ids:
+          type: array
+          items:
+            type: integer
+          example: [ 1, 2 ]
+          description: IDs of wishlists in which this product exists for the authenticated user.
+
+
+
         store:
           type: object
           properties:
@@ -1468,13 +1527,7 @@ components:
             name:
               type: string
               example: "Nike"
-        variations:
-          type: array
-          description: "An array of variation IDs associated with the product."
-          items:
-            type: integer
-            example: 106
-          example: [ 106, 107, 108 ]
+
         product_categories:
           type: array
           items:
@@ -1482,11 +1535,28 @@ components:
             properties:
               id:
                 type: integer
-                example: 213
+                example: 42
               name:
                 type: string
-                example: "Electronics"
-        product_price_range:
+                example: "Footwear"
+              slug:
+                type: string
+                example: "footwear"
+              parent_id:
+                type: integer
+                nullable: true
+                example: null
+              pivot:
+                type: object
+                properties:
+                  vh_st_product_id:
+                    type: integer
+                    example: 49
+                  vh_st_category_id:
+                    type: integer
+                    example: 42
+
+        vendor_product_data:
           type: object
           properties:
             price_range:
@@ -3149,6 +3219,37 @@ components:
         slug:
           type: string
           description: "Slugified version of the wishlist name."
+        type:
+          type: integer
+          description: "Type of wishlist (if applicable)."
+        taxonomy_id_whishlists_status:
+          type: integer
+          description: "Taxonomy ID for the wishlist status."
+        taxonomy_id_whishlists_types:
+          type: integer
+          nullable: true
+          description: "Taxonomy ID for the wishlist type (if applicable)."
+        is_default:
+          type: integer
+          description: "Indicates if this is the default wishlist for the user."
+        meta:
+          type: object
+          nullable: true
+          description: "Additional metadata associated with the wishlist."
+        status_notes:
+          type: string
+          nullable: true
+          description: "Notes associated with the status."
+        created_by:
+          type: integer
+          description: "ID of the user who created the wishlist."
+        updated_by:
+          type: integer
+          description: "ID of the user who last updated the wishlist."
+        deleted_by:
+          type: integer
+          nullable: true
+          description: "ID of the user who deleted the wishlist (if applicable)."
         created_at:
           type: string
           format: date-time
@@ -3157,87 +3258,99 @@ components:
           type: string
           format: date-time
           description: "The timestamp when the wishlist was last updated."
-        created_by:
-          type: integer
-          description: "ID of the user who created the wishlist."
-        updated_by:
-          type: integer
-          description: "ID of the user who last updated the wishlist."
         deleted_at:
           type: string
           format: date-time
+          nullable: true
           description: "The timestamp when the wishlist was deleted (if applicable)."
-        is_default:
+        users_count:
           type: integer
-          description: "Indicates if this is the default wishlist for the user."
-        meta:
-          type: object
-          description: "Additional metadata associated with the wishlist."
-        status:
-          type: object
-          description: "Status of the wishlist."
-          properties:
-            id:
-              type: integer
-              description: "ID of the wishlist status."
-            name:
-              type: string
-              description: "Name of the status."
-            slug:
-              type: string
-              description: "Slug of the status."
-            status_notes:
-              type: string
-              description: "Notes associated with the status."
-        taxonomy_id_whishlists_status:
-          type: integer
-          description: "Taxonomy ID for the wishlist status."
-        taxonomy_id_whishlists_types:
-          type: integer
-          description: "Taxonomy ID for the wishlist type (if applicable)."
-        type:
-          type: string
-          description: "Type of wishlist (if applicable)."
-        products:
+          description: "Total number of users who have this wishlist."
+        user_wishlist_products:
           type: array
-          description: "List of products in the wishlist."
+          description: "List of users who have added this wishlist."
           items:
             type: object
             properties:
               id:
                 type: integer
-                description: "ID of the product."
-              name:
+              uuid:
                 type: string
-                description: "Name of the product."
-              pivot:
-                type: object
-                properties:
-                  vh_st_wishlist_id:
-                    type: integer
-                    description: "ID of the wishlist associated with this product."
-                  vh_st_product_id:
-                    type: integer
-                    description: "ID of the product associated with this wishlist."
-        user:
-          type: object
-          description: "User who owns the wishlist."
-          properties:
-            id:
-              type: integer
-              description: "ID of the user."
-            first_name:
-              type: string
-              description: "First name of the user."
-            username:
-              type: string
-              description: "Username of the user."
-            avatar:
-              type: string
-              description: "Avatar image URL of the user."
-            uuid:
-              type: string
-              description: "Unique identifier of the user."
+                nullable: true
+              email:
+                type: string
+              username:
+                type: string
+              display_name:
+                type: string
+              title:
+                type: string
+              designation:
+                type: string
+                nullable: true
+              first_name:
+                type: string
+              products:
+                type: array
+                description: "List of products in the wishlist."
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    uuid:
+                      type: string
+                    taxonomy_id_product_type:
+                      type: integer
+                    vh_st_store_id:
+                      type: integer
+                    vh_st_brand_id:
+                      type: integer
+                    vh_cms_content_form_field_id:
+                      type: integer
+                      nullable: true
+                    taxonomy_id_product_status:
+                      type: integer
+                    name:
+                      type: string
+                    slug:
+                      type: string
+                    summary:
+                      type: string
+                    details:
+                      type: string
+                      nullable: true
+                    quantity:
+                      type: integer
+                    in_stock:
+                      type: boolean
+                      nullable: true
+                    selected_variation:
+                      type: object
+                      description: "Selected variation of the product."
+                      properties:
+                        id:
+                          type: integer
+                        uuid:
+                          type: string
+                        vh_st_product_id:
+                          type: integer
+                        taxonomy_id_variation_status:
+                          type: integer
+                        sku:
+                          type: string
+                          nullable: true
+                        name:
+                          type: string
+                        slug:
+                          type: string
+                        quantity:
+                          type: integer
+                        is_default:
+                          type: boolean
+                          nullable: true
+
+
     Customer:
       type: object
       properties:

@@ -18,147 +18,7 @@ get:
                 type: boolean
                 description: "Indicates if the request was successful."
               data:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    description: "The unique identifier of the wishlist."
-                  uuid:
-                    type: string
-                    description: "The universally unique identifier (UUID) of the wishlist."
-                  name:
-                    type: string
-                    description: "The name of the wishlist."
-                  slug:
-                    type: string
-                    description: "The slug or URL-friendly name of the wishlist."
-                  type:
-                    type: string
-                    nullable: true
-                    description: "The type of the wishlist (nullable)."
-                  vh_user_id:
-                    type: integer
-                    description: "The unique identifier of the user who owns the wishlist."
-                  taxonomy_id_whishlists_status:
-                    type: integer
-                    description: "The status taxonomy ID associated with the wishlist."
-                  taxonomy_id_whishlists_types:
-                    type: string
-                    nullable: true
-                    description: "The type taxonomy ID associated with the wishlist (nullable)."
-                  is_default:
-                    type: integer
-                    description: "Indicates whether the wishlist is the default wishlist for the user."
-                  meta:
-                    type: string
-                    nullable: true
-                    description: "Additional metadata for the wishlist (nullable)."
-                  status_notes:
-                    type: string
-                    description: "Any notes related to the status of the wishlist."
-                  created_by:
-                    type: string
-                    nullable: true
-                    description: "The identifier of the user who created the wishlist (nullable)."
-                  updated_by:
-                    type: integer
-                    description: "The identifier of the user who last updated the wishlist."
-                  deleted_by:
-                    type: string
-                    nullable: true
-                    description: "The identifier of the user who deleted the wishlist (nullable)."
-                  created_at:
-                    type: string
-                    format: date-time
-                    description: "The timestamp when the wishlist was created."
-                  updated_at:
-                    type: string
-                    format: date-time
-                    description: "The timestamp when the wishlist was last updated."
-                  deleted_at:
-                    type: string
-                    nullable: true
-                    description: "The timestamp when the wishlist was deleted (nullable)."
-                  created_by_user:
-                    type: string
-                    nullable: true
-                    description: "Details of the user who created the wishlist (nullable)."
-                  updated_by_user:
-                    type: object
-                    description: "Details of the user who last updated the wishlist."
-                    properties:
-                      id:
-                        type: integer
-                        description: "The unique identifier of the user who updated the wishlist."
-                      uuid:
-                        type: string
-                        description: "The UUID of the user who updated the wishlist."
-                      first_name:
-                        type: string
-                        description: "The first name of the user who updated the wishlist."
-                      last_name:
-                        type: string
-                        description: "The last name of the user who updated the wishlist."
-                      email:
-                        type: string
-                        description: "The email of the user who updated the wishlist."
-                      avatar:
-                        type: string
-                        description: "The avatar URL of the user who updated the wishlist."
-                      name:
-                        type: string
-                        description: "The full name of the user who updated the wishlist."
-                  deleted_by_user:
-                    type: string
-                    nullable: true
-                    description: "Details of the user who deleted the wishlist (nullable)."
-                  user:
-                    type: object
-                    description: "Details of the user who owns the wishlist."
-                    properties:
-                      id:
-                        type: integer
-                        description: "The unique identifier of the user."
-                      first_name:
-                        type: string
-                        description: "The first name of the user."
-                      username:
-                        type: string
-                        description: "The username of the user."
-                      avatar:
-                        type: string
-                        description: "The avatar URL of the user."
-                      name:
-                        type: string
-                        description: "The full name of the user."
-                  status:
-                    type: object
-                    description: "The current status of the wishlist."
-                    properties:
-                      id:
-                        type: integer
-                        description: "The unique identifier of the status."
-                      name:
-                        type: string
-                        description: "The name of the status."
-                      slug:
-                        type: string
-                        description: "The slug or URL-friendly name of the status."
-                  products:
-                    type: array
-                    description: "A list of products associated with the wishlist."
-                    items:
-                      type: object
-                      properties:
-                        is_selected:
-                          type: boolean
-                          description: "Indicates if the product is selected."
-                        id:
-                          type: integer
-                          description: "The unique identifier of the product."
-                        name:
-                            type: string
-                            description: "The name of the product."
+                $ref: '../vaahstore.yaml#/components/schemas/Wishlist'
 
 
 
@@ -191,8 +51,8 @@ get:
 put:
   tags:
     - Wishlists
-  summary: Update an existing record or add products in a wishlist
-  description: Update a wishlist record with the specified ID using the provided details and also add a product to the wishlist.
+  summary: Update an existing wishlist
+  description: Update a wishlist record with the specified ID using the provided details.
   operationId: updateWishlist
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/id'
@@ -214,40 +74,18 @@ put:
               type: string
               nullable: true
               description: "The type of the wishlist (nullable)."
-            vh_user_id:
-              type: integer
-              description: "ID of the user creating the wishlist"
-              example: 121
-            taxonomy_id_whishlists_status:
-              type: integer
-              description: "The status taxonomy ID associated with the wishlist."
+
 
             is_default:
               type: integer
               description: "Indicates whether the wishlist is the default wishlist for the user."
-            products:
-              type: array
-              description: "A list of products associated with the wishlist."
-              items:
-                type: object
-                properties:
-                  is_selected:
-                    type: boolean
-                    description: "Indicates if the product is selected."
-                  id:
-                    type: integer
-                    description: "The unique identifier of the product."
-                required:
-                  - id
+
 
 
           required:
             - name
             - slug
-            - is_default
-            - taxonomy_id_whishlists_status
-            - products
-            - vh_user_id
+
 
   responses:
     '200':

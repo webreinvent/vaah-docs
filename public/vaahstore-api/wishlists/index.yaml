@@ -7,6 +7,8 @@ get:
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/page'
     - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
+    - '$ref': '../vaahstore.yaml#/components/parameters/include'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
@@ -108,22 +110,22 @@ post:
               type: integer
               description: "ID of the user creating the wishlist"
               example: 121
-            taxonomy_id_whishlists_status:
-              type: integer
-              description: "Status of the wishlist"
-              example: 59
+
             is_default:
               type: integer
               description: "Whether the wishlist is set as default (1 for true, 0 for false)"
               example: 1
             name:
               type: string
-              description: "Name of the wishlist"
-              example: "Rahul"
+              description: >
+                "Name of the wishlist"
+                Note: The names "Save For Later" and "My List" are reserved for system-defined wishlists
+                    and may have special behavior in the application.
+              example: "My Favourites"
             slug:
               type: string
               description: "Slugified version of the wishlist name"
-              example: "rahul"
+              example: "my-favourites"
             type:
               type: integer
               description: "Type of the wishlist i.e shareable or non-shareable"

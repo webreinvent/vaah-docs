@@ -1,0 +1,89 @@
+post:
+  tags:
+    - Wishlists
+    - Products
+  summary:  Add or remove products from a user's wishlist
+  description: Allows adding or removing one or more products to/from a user's wishlist by specifying the wishlist ID and action type (`add` or `delete`).
+  operationId: updateWishlist
+  parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/id'
+  requestBody:
+    description: "Add or remove products from a user's wishlist by specifying the action."
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            vh_user_id:
+              type: integer
+              description: ID of the user
+              example: 55126
+            products:
+              type: array
+              description: List of products with their variation IDs
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Product ID
+                    example: 40
+                  vh_st_product_variation_id:
+                    type: integer
+                    description: Product Variation ID
+                    example: 432
+            action:
+              type: string
+              description: The type of action to perform ("add" to add the product, "delete" to remove it)
+              enum: [ add, delete ]
+              example: add
+          required:
+            - vh_user_id
+            - products
+            - action
+
+
+
+  responses:
+    '200':
+      description: Saved Successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: "Indicates if the request was successful."
+                example: true
+              data:
+                type: array
+                items:
+                  '$ref': '../vaahstore.yaml#/components/schemas/Wishlist'
+    400:
+      description: Bad Request, validation errors occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "User ID is required",
+                    "The Address Line 1 field is required",
+                    "The Type field is required",
+                    "The Status field is required",
+
+                ]
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
