@@ -24,13 +24,19 @@ Developer Guide
 
 Currently, three types of logging functions are there in abstract class `LoggingService`.
 
-1. event
-2. exception
-3. transaction
+1. init
+2. event
+3. exception
+4. transaction
+5. setUserInfo
+6. unsetUserInfo
 
+- init is used to initialize the service accordingly.
 - event is used to for log, info, success, and warning.
 - exception is used to for logging exceptions.
 - transaction is used to for logging transactions.
+- setUserInfo is used to populate the attributes/error thrown by user via custom metdadata ex. id, email & region etc.
+- unsetUserInfo is used to remove the custom metadata that has been set by user for it'ss session.
 
 ## LoggingService
 
@@ -41,27 +47,38 @@ Currently, three types of logging functions are there in abstract class `Logging
 - This service defines basic structure for services which implements `LoggingService` so when different services are used in [logging_library](../logging_library.md), they do provide basic functions needed.
 
 ```dart
+import 'package:flutter/material.dart';
 import '../models/log.dart';
 
 abstract class LoggingService {
-  static logEvent({
+  Future<Widget> init({
+    required Widget app,
+  });
+
+  void logEvent({
     required String message,
     required EventType type,
-    Object? data,
-  }) =>
-      UnimplementedError();
+    Map<String, dynamic>? data,
+  });
 
-  static logException(
+  void logException(
     dynamic throwable, {
-    dynamic stackTrace,
-    dynamic hint,
-  }) =>
-      UnimplementedError();
+    StackTrace? stackTrace,
+    Map<String, dynamic>? hint,
+  });
 
-  static logTransaction({
+  Future<void> logTransaction({
     required Function execute,
     required TransactionDetails details,
-  }) async =>
-      UnimplementedError();
+  });
+
+  void setUserInfo({
+    String? id,
+    String? name,
+    String? email,
+    Map<String, dynamic>? metaData,
+  });
+
+  void unsetUserInfo();
 }
 ```
