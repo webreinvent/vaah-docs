@@ -465,7 +465,7 @@ components:
       name: selected_store
       in: query
       required: false
-      description: Load products from the selected store. If not provided, products from the default store will be loaded.
+      description: Load products from the `selected store`. If not provided, products from the `default store` will be loaded.
       schema:
         type: integer
       example: 20
@@ -708,6 +708,16 @@ components:
       description: Comma-separated list of fields or relations to exclude from the response. Example`?exclude[price,status,productVariations]=true&exclude[medias]=true`
       schema:
         type: array
+    frontend_ui:
+      name: frontend_ui
+      in: query
+      required: false
+      schema:
+        type: string
+        example:  primevue/tailwind
+      description: |
+        If set to `?frontend_ui=primevue`,  the response will include only structured and optimized data suitable for PrimeVue UI components.
+
     include:
       name: include
       in: query
@@ -1458,6 +1468,12 @@ components:
         name:
           type: string
           example: "My Product"
+        summary:
+          type: string
+          example: "My Product Summary"
+        details:
+          type: string
+          example: "My Product Details"
         price:
           type: object
           description: Price details including the amount and associated currency information.
@@ -1482,6 +1498,13 @@ components:
                   type: number
                   description: The exchange rate or base rate for the currency.
                   example: 1
+        wishlist_ids:
+          type: array
+          items:
+            type: integer
+          example: [ 1, 2 ]
+          description: IDs of wishlists in which this product exists for the authenticated user.
+
 
 
         store:
@@ -1504,13 +1527,7 @@ components:
             name:
               type: string
               example: "Nike"
-        variations:
-          type: array
-          description: "An array of variation IDs associated with the product."
-          items:
-            type: integer
-            example: 106
-          example: [ 106, 107, 108 ]
+
         product_categories:
           type: array
           items:
@@ -1518,10 +1535,27 @@ components:
             properties:
               id:
                 type: integer
-                example: 213
+                example: 42
               name:
                 type: string
-                example: "Electronics"
+                example: "Footwear"
+              slug:
+                type: string
+                example: "footwear"
+              parent_id:
+                type: integer
+                nullable: true
+                example: null
+              pivot:
+                type: object
+                properties:
+                  vh_st_product_id:
+                    type: integer
+                    example: 49
+                  vh_st_category_id:
+                    type: integer
+                    example: 42
+
         vendor_product_data:
           type: object
           properties:
