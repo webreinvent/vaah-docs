@@ -96,7 +96,7 @@ paths:
     $ref: './authentication/signinOTP.yaml'  # Reference to the stores file
   '/api/sign-in':
     $ref: './authentication/signin.yaml'  # Reference to the stores file
-  '/api/password-reset-code':
+  '/api/password-reset/code':
     $ref: './authentication/paswordResetCode.yaml'  # Reference to the stores file
   '/api/password-reset':
     $ref: './authentication/resetPassword.yaml'  # Reference to the stores file
