@@ -5,20 +5,27 @@ get:
   description: Retrieve list of all the addresses.
   operationId: getAddresses
   parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/page'
-    - '$ref': '../vaahstore.yaml#/components/parameters/rows'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_default'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'
-    - '$ref': '../vaahstore.yaml#/components/parameters/filter_date'
-    - '$ref': '../vaahstore.yaml#/components/parameters/status'
-    - '$ref': '../vaahstore.yaml#/components/parameters/users'
+    - $ref: '../vaahstore.yaml#/components/parameters/page'
+    - $ref: '../vaahstore.yaml#/components/parameters/rows'
+    - $ref: '../vaahstore.yaml#/components/parameters/frontend_ui'
+    - name: fetch_all
+      in: query
+      required: true
+      schema:
+        type: boolean
+      description: "If `fetch_all=true`, load all addresses of a logged-in user without pagination."
+    - $ref: '../vaahstore.yaml#/components/parameters/filter_q'
+    - $ref: '../vaahstore.yaml#/components/parameters/filter_is_active'
+    - $ref: '../vaahstore.yaml#/components/parameters/filter_is_default'
+    - $ref: '../vaahstore.yaml#/components/parameters/filter_trashed'
+    - $ref: '../vaahstore.yaml#/components/parameters/filter_date'
+    - $ref: '../vaahstore.yaml#/components/parameters/status'
+    - $ref: '../vaahstore.yaml#/components/parameters/users'
 
 
   responses:
     '200':
-      description: List retrieved Successfully
+      description: List retrieved Successfully Based on the `?frontend_ui=primevue&fetch_all=true`
       content:
         application/json:
           schema:

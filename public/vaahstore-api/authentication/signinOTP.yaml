@@ -34,10 +34,8 @@ post:
                 type: boolean
                 example: true
               data:
-                type: array
-                items:
-                  type: object
-                example: [ ]
+                type: object
+                example: null
               messages:
                 type: array
                 items:

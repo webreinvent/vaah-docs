@@ -25,9 +25,8 @@ post:
                     "Logout successfully"
                 ]
               data:
-                type: array
-                description: The data returned after successful signout (typically empty).
-                example: []
+                type: object
+                example: null
 
     '422':
       description: Bad Request, validation errors occurred.

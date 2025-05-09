@@ -139,33 +139,65 @@ paths:
                       - Saved successfully
                   data:
                     type: object
+                    description: The authenticated user data including the API token.
                     properties:
-                      item:
-                        type: object
-                        description: The authenticated user data including the API token.
-                        properties:
-                          id:
-                            type: integer
-                            description: The unique identifier for the user.
-                          email:
-                            type: string
-                            format: email
-                            description: The email address of the user.
-                          username:
-                            type: string
-                            description: Username of the customer/user.
-                          first_name:
-                            type: string
-                            description: FIrst name of the customer/user.
-                          name:
-                            type: string
-                            description: Customer's full name.
-                          created_ip:
-                            type: string
-                            description: IP address of the user who created the customer record.
-                          api_token:
-                            type: string
-                            description: The API token for authenticating future requests.
+                      id:
+                        type: integer
+                        description: The unique identifier for the user.
+                      uuid:
+                        type: string
+                        nullable: true
+                        description: UUID of the user.
+                      email:
+                        type: string
+                        format: email
+                        description: The email address of the user.
+                      username:
+                        type: string
+                        description: Username of the customer/user.
+                      first_name:
+                        type: string
+                        description: First name of the customer/user.
+                      last_name:
+                        type: string
+                        description: Last name of the user.
+                      phone:
+                        type: integer
+                        description: Phone number of the user.
+                      name:
+                        type: string
+                        description: Customer's full name.
+                      created_ip:
+                        type: string
+                        nullable: true
+                        description: IP address of the user who created the customer record.
+                      updated_by:
+                        type: integer
+                        nullable: true
+                        description: User ID who last updated the record.
+                      updated_at:
+                        type: string
+                        format: date-time
+                        description: Timestamp when the record was last updated.
+                      created_by:
+                        type: integer
+                        nullable: true
+                        description: User ID who created the record.
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: Timestamp when the record was created.
+                      avatar:
+                        type: string
+                        format: uri
+                        description: URL to the avatar image.
+                      api_token:
+                        type: string
+                        description: The API token for authenticating future requests.
+                      expires_at:
+                        type: string
+                        format: date-time
+                        description: Expiry datetime of the API token.
         '409':
           description: Conflict error if user/customer already exists
           content:
@@ -239,10 +271,8 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    type: array
-                    items:
-                      type: object
-                    example: []
+                    type: object
+                    example: null
                   messages:
                     type: array
                     items:
@@ -342,35 +372,73 @@ paths:
                   success:
                     type: boolean
                     example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - SignIn Successfully.
                   data:
                     type: object
+                    description: The authenticated user data including the API token.
                     properties:
-                      item:
-                        type: object
-                        description: The authenticated user data including the API token.
-                        properties:
-                          id:
-                            type: integer
-                            description: The unique identifier for the user.
-                          email:
-                            type: string
-                            format: email
-                            description: The email address of the user.
-                          username:
-                            type: string
-                            description: Username of the customer/user.
-                          first_name:
-                            type: string
-                            description: FIrst name of the customer/user.
-                          name:
-                            type: string
-                            description: Customer's full name.
-                          created_ip:
-                            type: string
-                            description: IP address of the user who created the customer record.
-                          api_token:
-                            type: string
-                            description: The API token for authenticating future requests.
+                      id:
+                        type: integer
+                        description: The unique identifier for the user.
+                      uuid:
+                        type: string
+                        nullable: true
+                        description: UUID of the user.
+                      email:
+                        type: string
+                        format: email
+                        description: The email address of the user.
+                      username:
+                        type: string
+                        description: Username of the customer/user.
+                      first_name:
+                        type: string
+                        description: First name of the customer/user.
+                      last_name:
+                        type: string
+                        description: Last name of the user.
+                      phone:
+                        type: integer
+                        description: Phone number of the user.
+                      name:
+                        type: string
+                        description: Customer's full name.
+                      created_ip:
+                        type: string
+                        nullable: true
+                        description: IP address of the user who created the customer record.
+                      updated_by:
+                        type: integer
+                        nullable: true
+                        description: User ID who last updated the record.
+                      updated_at:
+                        type: string
+                        format: date-time
+                        description: Timestamp when the record was last updated.
+                      created_by:
+                        type: integer
+                        nullable: true
+                        description: User ID who created the record.
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: Timestamp when the record was created.
+                      avatar:
+                        type: string
+                        format: uri
+                        description: URL to the avatar image.
+                      api_token:
+                        type: string
+                        description: The API token for authenticating future requests.
+                      expires_at:
+                        type: string
+                        format: date-time
+                        description: Expiry datetime of the API token.
         '401':
           description: Unauthorized, invalid credentials provided.
           content:
@@ -405,7 +473,7 @@ paths:
                       - Identifier value is required.
                       - The phone number must be a valid numeric value.
                       - Authentication value is required.
-  /api/password-reset-code:
+  /api/password-reset/code:
     post:
       summary: Send password reset code
       description: |
@@ -440,10 +508,8 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    type: array
-                    items:
-                      type: object
-                    example: []
+                    type: object
+                    example: null
                   messages:
                     type: array
                     items:
@@ -525,10 +591,8 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    type: array
-                    items:
-                      type: object
-                    example: []
+                    type: object
+                    example: null
                   messages:
                     type: array
                     items:
@@ -596,9 +660,8 @@ paths:
                     example:
                       - Logout successfully
                   data:
-                    type: array
-                    description: The data returned after successful signout (typically empty).
-                    example: []
+                    type: object
+                    example: null
         '401':
           description: Unauthorized, the user is not authenticated.
           content:
@@ -3038,6 +3101,91 @@ paths:
                           type: string
                           description: The type of the attribute (only applicable for attributes).
                           example: string
+  /api/store/products/{id}/variation:
+    get:
+      tags:
+        - Products
+      summary: Get product variation details by selected attribute values
+      description: Get product variation details by selected attribute values
+      operationId: getProductById
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - name: attribute_value_id[]
+          in: query
+          required: true
+          description: Selected attribute value IDs to find the matching variation, e.g `?attribute_value_id[]=1&attribute_value_id[]=20`
+          schema:
+            type: array
+            items:
+              type: integer
+          style: form
+          explode: true
+          example:
+            - 1
+            - 20
+      responses:
+        '200':
+          description: Matching variation found
+          content:
+            application/json:
+              example:
+                success: true
+                data:
+                  variation_id: 636
+                  name: INVICTUS Men Round Toe Formal Loafers-Blue/Polyester
+                  price:
+                    amount: '0.00'
+                    currency:
+                      code: USD
+                      symbol: '&#36;'
+                      rate: 1
+                  quantity: 0
+                  wishlist_ids:
+                    - 1
+                    - 2
+                  selected_vendor_id: 5
+                  media:
+                    - title: qr-code.png
+                      images:
+                        - webp_url: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9.webp
+                          url: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9.png
+                          url_thumbnail: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9-thumbnail.png
+                          type: image
+                      is_default: 0
+                    - title: 4th-category.png
+                      images:
+                        - webp_url: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x.webp
+                          url: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x.png
+                          url_thumbnail: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x-thumbnail.png
+                          type: image
+                        - webp_url: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN.webp
+                          url: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN.png
+                          url_thumbnail: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN-thumbnail.png
+                          type: image
+                      is_default: 0
+        '404':
+          description: No matcing variation exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - No matching variation found for selected attributes.
+                required:
+                  - errors
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema: null
   /api/store/products/getAttributeValue:
     post:
       tags:
@@ -6876,6 +7024,8 @@ paths:
       description: Retrieve a cart items by its universal unique identifier.
       operationId: getCartById
       parameters:
+        - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/selected_store'
         - name: uuid
           in: path
           required: true
@@ -6900,29 +7050,20 @@ paths:
                       id:
                         type: integer
                         description: Unique identifier for the cart
+                        example: 14
                       uuid:
                         type: string
                         description: Universally unique identifier for the cart
-                      vh_user_id:
+                        example: 3e48cbb5-19f2-453f-afdd-21049ad5fc22
+                      user_id:
                         type: integer
                         description: Unique identifier for the user associated with the cart
-                      user:
-                        type: object
-                        description: Details of the user who owns the cart
-                        properties:
-                          id:
-                            type: integer
-                            description: Unique identifier of the user
-                          uuid:
-                            type: string
-                            description: Universally unique identifier of the user
-                          email:
-                            type: string
-                            description: Email address of the user
+                        example: 55126
                       total_amount:
                         type: number
                         format: float
-                        description: Total amount calculated based on the sum of each item's price multiplied by its quantity in the cart.
+                        description: Total cart amount (sum of product prices × quantity)
+                        example: 500
                       products:
                         type: array
                         description: List of products in the cart
@@ -6932,106 +7073,160 @@ paths:
                             id:
                               type: integer
                               description: Unique identifier of the product
+                              example: 49
                             uuid:
                               type: string
                               description: Universally unique identifier of the product
-                            available_stock_quantity:
-                              type: integer
-                              description: Available stock quantity of the product
-                            taxonomy_id_product_type:
-                              type: integer
-                              description: Product type taxonomy identifier
-                            vh_st_store_id:
-                              type: integer
-                              description: Store identifier where the product is available
-                            vh_st_brand_id:
-                              type: integer
-                              nullable: true
-                              description: Brand identifier associated with the product, if available
-                            pivot:
-                              type: object
-                              description: Details of the relationship between the cart and the product
-                              properties:
-                                vh_st_cart_id:
-                                  type: integer
-                                  description: Cart identifier for the product in the cart
-                                vh_st_product_id:
-                                  type: integer
-                                  description: Product identifier in the cart
-                                vh_st_product_variation_id:
-                                  type: integer
-                                  description: Product variation identifier in the cart
-                                quantity:
-                                  type: integer
-                                  description: The quantity of the product set by the user to order
-                                vh_st_vendor_id:
-                                  type: integer
-                                  description: Vendor identifier associated with the product
-                                is_stock_available:
-                                  type: integer
-                                  description: Flag indicating whether the product is available in stock
-                                is_wishlisted:
-                                  type: integer
-                                  description: Flag indicating whether the product is in the user's wishlist
-                                cart_product_variation:
-                                  type: string
-                                  description: The variation name of the product associated with the cart
-                                price:
-                                  type: number
-                                  format: float
-                                  description: Price of the product variation in the cart
-                            taxonomy_id_product_status:
-                              type: integer
-                              description: Product status taxonomy identifier
+                              example: 08928907-3a1c-4682-b878-0837d54c043c
                             name:
                               type: string
                               description: Name of the product
                             slug:
                               type: string
                               description: SEO-friendly URL slug for the product
-                            vh_cms_content_form_field_id:
-                              type: integer
-                              nullable: true
-                              description: Identifier for the CMS content form field, if applicable
+                            summary:
+                              type: string
+                              description: Short summary of the product
                             quantity:
                               type: integer
-                              description: Total quantity of products in the cart, including variations
-                            in_stock:
+                              description: Quantity added to cart
+                              example: 2
+                            price:
+                              type: object
+                              properties:
+                                amount:
+                                  type: string
+                                  description: Price amount
+                                  example: '200.00'
+                                currency:
+                                  type: object
+                                  properties:
+                                    code:
+                                      type: string
+                                      example: USD
+                                    symbol:
+                                      type: string
+                                      example: '&#36;'
+                                    rate:
+                                      type: number
+                                      example: 1
+                            total_price:
+                              type: number
+                              format: float
+                              description: Total price for the product (quantity * price)
+                              example: 400
+                            is_stock_available:
                               type: boolean
-                              nullable: true
-                              description: Indicates if the product is currently in stock
-                            is_active:
-                              type: boolean
-                              description: Flag indicating whether the product is active
-                      created_by_user:
-                        type: object
-                        description: User who created the cart
-                        properties:
-                          id:
-                            type: integer
-                            description: Identifier of the user who created the cart
-                          uuid:
-                            type: string
-                            description: Universally unique identifier of the user who created the cart
-                          first_name:
-                            type: string
-                            description: First name of the user who created the cart
-                          last_name:
-                            type: string
-                            description: Last name of the user who created the cart
-                      created_at:
-                        type: string
-                        format: date-time
-                        description: Timestamp when the cart was created
-                      updated_at:
-                        type: string
-                        format: date-time
-                        description: Timestamp when the cart was last updated
-                      deleted_at:
-                        type: string
-                        format: date-time
-                        nullable: true
-                        description: Timestamp when the cart was deleted, if applicable
+                              example: true
+                            wishlist_ids:
+                              type: array
+                              items:
+                                type: integer
+                            vendor_product_data:
+                              type: object
+                              properties:
+                                price_range:
+                                  type: array
+                                  items:
+                                    type: string
+                                quantity:
+                                  type: string
+                                selected_vendor:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                    uuid:
+                                      type: string
+                                    name:
+                                      type: string
+                                    slug:
+                                      type: string
+                                    is_active:
+                                      type: boolean
+                                    taxonomy_id_vendor_status:
+                                      type: integer
+                                    status_notes:
+                                      type: string
+                            product_variation:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+                                slug:
+                                  type: string
+                                price:
+                                  type: number
+                                  format: float
+                                media:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      title:
+                                        type: string
+                                      is_default:
+                                        type: integer
+                                      images:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            url:
+                                              type: string
+                                            url_thumbnail:
+                                              type: string
+                                            webp_url:
+                                              type: string
+                                            type:
+                                              type: string
+                                wishlist_ids:
+                                  type: array
+                                  items:
+                                    type: integer
+                            media:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  title:
+                                    type: string
+                                  is_default:
+                                    type: integer
+                                  images:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        url:
+                                          type: string
+                                        url_thumbnail:
+                                          type: string
+                                        webp_url:
+                                          type: string
+                                        type:
+                                          type: string
+                            pivot:
+                              type: object
+                              properties:
+                                vh_st_cart_id:
+                                  type: integer
+                                vh_st_product_id:
+                                  type: integer
+                                vh_st_product_variation_id:
+                                  type: integer
+                                vh_st_vendor_id:
+                                  type: integer
+                                quantity:
+                                  type: integer
+                                price:
+                                  type: number
+                                is_stock_available:
+                                  type: integer
+                                is_wishlisted:
+                                  type: integer
         '404':
           description: Record Not Found
           content:
@@ -8493,6 +8688,20 @@ paths:
           schema:
             type: string
             example: abcd1234-abcd1234
+        - name: include[]
+          in: query
+          required: false
+          description: |
+            Include related data in the response. - Use `include[]=payments` to include payment data. - Use `include[]=shipments` to include shipment data.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - payments
+                - shipments
+              example:
+                - payments
       responses:
         '200':
           description: Order Retrieved Successfully
@@ -8509,123 +8718,89 @@ paths:
                     properties:
                       id:
                         type: integer
-                        example: 6
-                        description: The ID of the order.
+                        example: 335
                       uuid:
                         type: string
-                        example: b067e5fa-bfbc-4e91-beb2-ca0b1000cd53
-                        description: A unique identifier for the order.
+                        example: 624833d5-bcfe-49c8-8641-34e5cf3dedda
                       vh_user_id:
                         type: integer
-                        example: 121
-                        description: The ID of the user associated with the order.
+                        example: 55136
                       order_status:
                         type: string
-                        example: Placed
-                        description: The current status of the order.
+                        example: Completed
                       taxonomy_id_payment_status:
                         type: integer
-                        description: The ID of the order payment status.
+                        example: 65
+                      vh_st_payment_method_id:
+                        type: integer
+                        example: 4
                       order_shipment_status:
                         type: string
                         example: Pending
-                        description: The current shipment status of the order.
                       amount:
                         type: number
                         format: float
-                        example: 25
-                        description: The total amount for the order.
+                        example: 912
                       delivery_fee:
                         type: number
                         format: float
                         example: 0
-                        description: The delivery fee associated with the order.
                       taxes:
                         type: number
                         format: float
                         example: 0
-                        description: The total taxes applied to the order.
                       discount:
                         type: number
                         format: float
                         example: 0
-                        description: The total discount applied to the order.
                       payable:
                         type: number
                         format: float
-                        example: 25
-                        description: The total amount that needs to be paid for the order.
+                        example: 912
                       paid:
                         type: number
                         format: float
-                        example: 0
-                        description: The amount that has been paid for the order.
+                        example: 912
                       is_paid:
                         type: integer
                         nullable: true
                         example: 1
-                        description: Indicates if the order has been paid for.
                       is_active:
                         type: integer
                         example: 1
-                        description: Indicates if the order is currently active.
-                      items_count:
-                        type: integer
-                        example: 2
-                        description: The total number of items in the order.
-                      payment_method:
-                        type: string
-                        nullable: true
-                        example: null
-                        description: The payment method used for the order.
-                      order_payment_status:
+                      meta:
                         type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 64
-                            description: The ID of the payment status.
-                          name:
-                            type: string
-                            example: Pending
-                            description: The name of the payment status.
-                          slug:
-                            type: string
-                            example: pending
-                            description: A URL-friendly version of the payment status name.
-                      status:
-                        type: string
                         nullable: true
-                        example: null
-                        description: Additional status information for the order.
                       status_notes:
                         type: string
                         nullable: true
-                        example: null
-                        description: Any notes related to the status of the order.
-                      user:
+                      created_by:
+                        type: integer
+                        example: 1
+                      updated_by:
+                        type: integer
+                        example: 1
+                      deleted_by:
+                        type: integer
+                        nullable: true
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-04-30 05:10:03'
+                      updated_at:
+                        type: string
+                        format: date-time
+                        example: '2025-04-03 04:51:52'
+                      deleted_at:
+                        type: string
+                        format: date-time
+                        nullable: true
+                      shipping_address:
                         type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 121
-                            description: The ID of the user.
-                          first_name:
-                            type: string
-                            example: Olin
-                            description: The first name of the user.
-                          email:
-                            type: string
-                            example: shivam1@zieme.org
-                            description: The email address of the user.
-                          phone:
-                            type: string
-                            example: '2509077310'
-                            description: The phone number of the user.
-                          display_name:
-                            type: string
-                            example: shivam
-                            description: The display name of the user.
+                        nullable: true
+                      billing_address:
+                        type: object
+                        nullable: true
                       payments:
                         type: array
                         items:
@@ -8679,6 +8854,7 @@ paths:
                               format: date-time
                             deleted_at:
                               type: string
+                              format: date-time
                               nullable: true
                             pivot:
                               type: object
@@ -8698,21 +8874,76 @@ paths:
                                   format: date-time
                             created_by_user:
                               type: object
-                              properties:
-                                id:
-                                  type: integer
-                                uuid:
-                                  type: string
-                                first_name:
-                                  type: string
-                                last_name:
-                                  type: string
-                                email:
-                                  type: string
-                                avatar:
-                                  type: string
-                                name:
-                                  type: string
+                              nullable: true
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                            vh_st_order_id:
+                              type: integer
+                            vh_user_id:
+                              type: integer
+                            vh_st_customer_group_id:
+                              type: integer
+                              nullable: true
+                            taxonomy_id_order_items_types:
+                              type: integer
+                            taxonomy_id_order_items_status:
+                              type: integer
+                            vh_shipping_address_id:
+                              type: integer
+                              nullable: true
+                            vh_billing_address_id:
+                              type: integer
+                              nullable: true
+                            vh_st_product_id:
+                              type: integer
+                            vh_st_product_variation_id:
+                              type: integer
+                            vh_st_vendor_id:
+                              type: integer
+                            quantity:
+                              type: integer
+                            price:
+                              type: string
+                            is_invoice_available:
+                              type: integer
+                            invoice_url:
+                              type: string
+                            tracking:
+                              type: string
+                            is_active:
+                              type: integer
+                            meta:
+                              type: object
+                              nullable: true
+                            status_notes:
+                              type: string
+                            created_by:
+                              type: integer
+                            updated_by:
+                              type: integer
+                            deleted_by:
+                              type: integer
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                            deleted_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            ordered_product:
+                              type: array
+                              nullable: true
         '404':
           description: Record Not Found
           content:
@@ -15163,6 +15394,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/frontend_ui'
+        - name: fetch_all
+          in: query
+          required: true
+          schema:
+            type: boolean
+          description: If `fetch_all=true`, load all addresses of a logged-in user without pagination.
         - $ref: '#/components/parameters/filter_q'
         - $ref: '#/components/parameters/filter_is_active'
         - $ref: '#/components/parameters/filter_is_default'
@@ -15172,7 +15410,7 @@ paths:
         - $ref: '#/components/parameters/users'
       responses:
         '200':
-          description: List retrieved Successfully
+          description: List retrieved Successfully Based on the `?frontend_ui=primevue&fetch_all=true`
           content:
             application/json:
               schema:
@@ -20876,7 +21114,7 @@ components:
       name: selected_store
       in: query
       required: false
-      description: Load products from the `selected store`. If not provided, products from the `default store` will be loaded.
+      description: Load items related to  `selected store`. If not provided, items from the `default store` will be loaded.
       schema:
         type: integer
       example: 20
@@ -23466,126 +23704,121 @@ components:
     Address:
       type: object
       properties:
+        Shipping:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressItem'
+        Billing:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressItem'
+        Home:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressItem'
+        Business:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressItem'
+        Contact:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressItem'
+    AddressItem:
+      type: object
+      properties:
         id:
           type: integer
-          description: The unique identifier for the address.
         uuid:
           type: string
-          description: The universally unique identifier for the address.
+          format: uuid
         vh_user_id:
           type: integer
-          description: The ID of the user associated with the address.
-        name:
-          type: string
-          description: The name of the person or entity associated with the address.
-        address:
-          type: string
-          description: The complete address.
+        taxonomy_id_address_types:
+          type: integer
+        taxonomy_id_address_status:
+          type: integer
         address_line_1:
           type: string
-          description: The first line of the address.
         address_line_2:
           type: string
+        name:
+          type: string
           nullable: true
-          description: The second line of the address, if available.
-        city:
-          type: string
-          description: The city of the address.
-        state:
-          type: string
-          description: The state of the address.
-        pin_code:
-          type: string
-          description: The postal code or ZIP code for the address.
-        country:
-          type: string
-          description: The country of the address.
         phone:
           type: string
-          description: The phone number associated with the address.
-        address_type:
-          type: object
-          description: The type of address, such as Billing or Shipping.
-          properties:
-            id:
-              type: integer
-              description: The unique identifier for the address type.
-            name:
-              type: string
-              description: The name of the address type.
-            slug:
-              type: string
-              description: The slug for the address type.
-        status:
-          type: object
-          description: The current status of the address.
-          properties:
-            id:
-              type: integer
-              description: The unique identifier for the address status.
-            name:
-              type: string
-              description: The name of the address status.
-            slug:
-              type: string
-              description: The slug for the address status.
-        is_default:
-          type: integer
+        pin_code:
+          type: string
           nullable: true
-          description: Indicates if this is the default address.
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        meta:
+          type: object
+          nullable: true
         status_notes:
           type: string
           nullable: true
-          description: Additional notes about the status of the address.
+        is_default:
+          type: integer
+        created_by:
+          type: integer
+        updated_by:
+          type: integer
+        deleted_by:
+          type: integer
+          nullable: true
         created_at:
           type: string
           format: date-time
-          description: The date and time when the address was created.
         updated_at:
           type: string
           format: date-time
-          description: The date and time when the address was last updated.
         deleted_at:
           type: string
           format: date-time
           nullable: true
-          description: The date and time when the address was deleted, if applicable.
-        created_by:
-          type: integer
-          nullable: true
-          description: The ID of the user who created the address.
-        updated_by:
-          type: integer
-          nullable: true
-          description: The ID of the user who last updated the address.
-        deleted_by:
-          type: integer
-          nullable: true
-          description: The ID of the user who deleted the address.
+        address:
+          type: string
         user:
           type: object
-          description: The user associated with the address.
           properties:
             id:
               type: integer
-              description: The unique identifier for the user.
-            uuid:
-              type: string
-              description: The universally unique identifier for the user.
             first_name:
               type: string
-              description: The first name of the user.
             email:
               type: string
-              description: The email address of the user.
-            avatar:
-              type: string
-              description: The avatar URL of the user.
             deleted_at:
               type: string
               format: date-time
               nullable: true
-              description: The date and time when the user was deleted, if applicable.
+            avatar:
+              type: string
+              format: uri
+            name:
+              type: string
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
+        address_type:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            slug:
+              type: string
     Wishlist:
       type: object
       properties:

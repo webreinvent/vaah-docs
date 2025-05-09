@@ -1,0 +1,84 @@
+get:
+  tags:
+    - Products
+  summary: Get product variation details by selected attribute values
+  description: Get product variation details by selected attribute values
+  operationId: getProductById
+  parameters:
+    - $ref: '../vaahstore.yaml#/components/parameters/id'
+    - name: attribute_value_id[]
+      in: query
+      required: true
+      description: Selected attribute value IDs to find the matching variation, e.g `?attribute_value_id[]=1&attribute_value_id[]=20`
+      schema:
+        type: array
+        items:
+          type: integer
+      style: form
+      explode: true
+      example: [ 1, 20 ]
+
+  responses:
+    '200':
+      description: Matching variation found
+      content:
+        application/json:
+          example:
+            success: true
+            data:
+              variation_id: 636
+              name: INVICTUS Men Round Toe Formal Loafers-Blue/Polyester
+              price:
+                amount: "0.00"
+                currency:
+                  code: USD
+                  symbol: "&#36;"
+                  rate: 1
+              quantity: 0
+              wishlist_ids: [1,2 ]
+              selected_vendor_id: 5
+              media:
+                - title: qr-code.png
+                  images:
+                    - webp_url: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9.webp
+                      url: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9.png
+                      url_thumbnail: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9-thumbnail.png
+                      type: image
+                  is_default: 0
+                - title: 4th-category.png
+                  images:
+                    - webp_url: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x.webp
+                      url: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x.png
+                      url_thumbnail: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x-thumbnail.png
+                      type: image
+                    - webp_url: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN.webp
+                      url: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN.png
+                      url_thumbnail: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN-thumbnail.png
+                      type: image
+                  is_default: 0
+
+    '404':
+      description: No matcing variation exist.
+      content:
+        application/json:
+          schema:
+            type: object  # Define the type of the response
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [
+                    "No matching variation found for selected attributes."
+                ]
+            required:
+              - errors  # Make errors a required field
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
