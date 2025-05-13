@@ -56,33 +56,65 @@ post:
                 ]
               data:
                 type: object
+                description: The authenticated user data including the API token.
                 properties:
-                  item:
-                    type: object
-                    description: The authenticated user data including the API token.
-                    properties:
-                      id:
-                        type: integer
-                        description: The unique identifier for the user.
-                      email:
-                        type: string
-                        format: email
-                        description: The email address of the user.
-                      username:
-                        type: string
-                        description: Username of the customer/user.
-                      first_name:
-                        type: string
-                        description: FIrst name of the customer/user.
-                      name:
-                        type: string
-                        description: "Customer's full name."
-                      created_ip:
-                        type: string
-                        description: "IP address of the user who created the customer record."
-                      api_token:
-                        type: string
-                        description: The API token for authenticating future requests.
+                  id:
+                    type: integer
+                    description: The unique identifier for the user.
+                  uuid:
+                    type: string
+                    nullable: true
+                    description: UUID of the user.
+                  email:
+                    type: string
+                    format: email
+                    description: The email address of the user.
+                  username:
+                    type: string
+                    description: Username of the customer/user.
+                  first_name:
+                    type: string
+                    description: First name of the customer/user.
+                  last_name:
+                    type: string
+                    description: Last name of the user.
+                  phone:
+                    type: integer
+                    description: Phone number of the user.
+                  name:
+                    type: string
+                    description: Customer's full name.
+                  created_ip:
+                    type: string
+                    nullable: true
+                    description: IP address of the user who created the customer record.
+                  updated_by:
+                    type: integer
+                    nullable: true
+                    description: User ID who last updated the record.
+                  updated_at:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the record was last updated.
+                  created_by:
+                    type: integer
+                    nullable: true
+                    description: User ID who created the record.
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the record was created.
+                  avatar:
+                    type: string
+                    format: uri
+                    description: URL to the avatar image.
+                  api_token:
+                    type: string
+                    description: The API token for authenticating future requests.
+                  expires_at:
+                    type: string
+                    format: date-time
+                    description: Expiry datetime of the API token.
 
     '422':
       description: "Validation error"
