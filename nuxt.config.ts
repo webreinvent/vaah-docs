@@ -1,4 +1,4 @@
-const routeRules = require("./json/routeRules.json");
+import routeRules from './json/routeRules.json'
 
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
@@ -80,7 +80,9 @@ export default defineNuxtConfig({
   // Fonts
   fontMetrics: {
     fonts: ['DM Sans']
-  },
+  },  
+
+
 
   googleFonts: {
     display: 'swap',
