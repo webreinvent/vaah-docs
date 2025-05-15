@@ -1,127 +1,116 @@
 <script setup lang="ts">
-import type {ParsedContent} from '@nuxt/content/dist/runtime/types'
-import {useRootStore} from '@/stores/root'
+import type { ParsedContentFile } from "@nuxt/content";
 
-const searchRef = ref()
+const route = useRoute();
+const colorMode = useColorMode();
 
-const route = useRoute()
-const colorMode = useColorMode()
-const {branch} = useContentSource()
+const { seo } = useAppConfig();
 
-const {seo} = useAppConfig()
-
-const {data: navigation} = await useAsyncData('navigation', () => fetchContentNavigation())
-const {data: files} = useLazyFetch<ParsedContent[]>('/api/search.json', {
+const { data: navigation } = await useAsyncData("navigation", () =>
+  fetchContentNavigation()
+);
+const { data: files } = useLazyFetch<ParsedContentFile[]>("/api/search.json", {
   default: () => [],
-  server: false
-})
+  server: false,
+});
 
 useHead({
-  meta: [
-    {name: 'viewport', content: 'width=device-width, initial-scale=1'}
-  ],
-  link: [
-    {rel: 'icon', href: '/favicon.ico'}
-  ],
+  meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
+  link: [{ rel: "icon", href: "/favicon.ico" }],
   htmlAttrs: {
-    lang: 'en'
-  }
-})
+    lang: "en",
+  },
+});
 
 useSeoMeta({
   ogSiteName: seo?.siteName,
-  twitterCard: 'summary_large_image'
-})
-
-const color = computed(() => colorMode.value === 'dark' ? '#18181b' : 'white')
+  twitterCard: "summary_large_image",
+});
 
 const links = computed(() => {
   return [
     {
-    label: 'Docs',
-    icon: 'i-heroicons-book-open',
-    to: '/getting-started',
-  },
-    {
-    label: 'VaahCMS',
-    icon: 'i-heroicons-rocket-launch',
-    to: '/vaahcms-2x',
-    active: route.path.startsWith('/vaahcms')
-  },
-    {
-      label: 'VaahCLI',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/vaahcli',
-      active: route.path.startsWith('/vaahcli')
+      label: "Docs",
+      icon: "i-heroicons-book-open",
+      to: "/getting-started",
     },
     {
-      label: 'VaahFlutter',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/vaahflutter',
-      active: route.path.startsWith('/vaahflutter')
+      label: "VaahCMS",
+      icon: "i-heroicons-rocket-launch",
+      to: "/vaahcms-2x",
+      active: route.path.startsWith("/vaahcms"),
     },
     {
-      label: 'VaahStore',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/vaahstore',
-      active: route.path.startsWith('/vaahstore')
+      label: "VaahCLI",
+      icon: "i-heroicons-rocket-launch",
+      to: "/vaahcli",
+      active: route.path.startsWith("/vaahcli"),
     },
     {
-      label: 'VaahShare',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/vaahshare',
-      active: route.path.startsWith('/vaahshare')
+      label: "VaahFlutter",
+      icon: "i-heroicons-rocket-launch",
+      to: "/vaahflutter",
+      active: route.path.startsWith("/vaahflutter"),
     },
     {
-      label: 'VaahNuxt',
-      icon: 'i-heroicons-command-line',
-      to: '/vaahnuxt',
-      active: route.path.startsWith('/vaahnuxt')
+      label: "VaahStore",
+      icon: "i-heroicons-rocket-launch",
+      to: "/vaahstore",
+      active: route.path.startsWith("/vaahstore"),
     },
     {
-      label: 'Guide',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/guide',
-      active: route.path.startsWith('/guide')
+      label: "VaahShare",
+      icon: "i-heroicons-rocket-launch",
+      to: "/vaahshare",
+      active: route.path.startsWith("/vaahshare"),
     },
     {
-      label: 'Laravel',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/laravel/collections-and-arrays',
-      active: route.path.startsWith('/laravel')
+      label: "VaahNuxt",
+      icon: "i-heroicons-command-line",
+      to: "/vaahnuxt",
+      active: route.path.startsWith("/vaahnuxt"),
     },
     {
-      label: 'Testing',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/testing/automation/introduction',
-      active: route.path.startsWith('/testing')
-    },].filter(Boolean)
-})
+      label: "Guide",
+      icon: "i-heroicons-rocket-launch",
+      to: "/guide",
+      active: route.path.startsWith("/guide"),
+    },
+    {
+      label: "Laravel",
+      icon: "i-heroicons-rocket-launch",
+      to: "/laravel/collections-and-arrays",
+      active: route.path.startsWith("/laravel"),
+    },
+    {
+      label: "Testing",
+      icon: "i-heroicons-rocket-launch",
+      to: "/testing/automation/introduction",
+      active: route.path.startsWith("/testing"),
+    },
+  ].filter(Boolean);
+});
 
-
-const rootStore = useRootStore()
-
-provide('navigation', navigation)
+provide("navigation", navigation);
 </script>
 
 <template>
   <div>
-    <Header :links="links"/>
+    <Header :links="links" />
 
     <UMain>
       <NuxtLoadingIndicator />
       <NuxtLayout>
-        <NuxtPage/>
+        <NuxtPage />
       </NuxtLayout>
     </UMain>
 
-    <Footer/>
+    <Footer />
 
     <ClientOnly>
-      <LazyUDocsSearch :files="files" :navigation="navigation"/>
+      <LazyUDocsSearch :files="files" :navigation="navigation" />
     </ClientOnly>
 
-    <UNotifications/>
-
+    <UNotifications />
   </div>
 </template>

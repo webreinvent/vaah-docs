@@ -1,4 +1,4 @@
-import mediumZoom, { Zoom } from 'medium-zoom'
+import mediumZoom,{ type Zoom } from 'medium-zoom'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const selector = 'img'
