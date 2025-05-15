@@ -1,65 +1,50 @@
 ---
+customer_count_grouped:
+  - name: "Customers"
+    data: [30, 40, 45, 50, 49, 60, 70, 80, 85, 60, 70, 100]
+  - name: "Active Customers"
+    data: [10, 20, 15, 30, 35, 40, 45, 50, 55, 60, 65, 70]
 
-customer_count_grouped: [
-{
-name: 'Customers',
-data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100]
-},
+customer_count_simple:
+  - name: "Customers"
+    data: [30, 40, 45, 50, 49, 60, 70, 54, 25, 60, 45, 90]
 
-{
-name: 'Active Customers',
-data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70]
-}
+data_labels:
+  labels: ["January", "February", "March", "April", "May", "June", "July"]
 
-]
-
-
-customer_count_simple: [
-{
-name: 'Customers',
-data: [30, 40, 45, 50, 49, 60, 70,54,25,60,45,90]
-}
-
-]
-
-
-
-
-data_labels: {
-labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-}
-
-
-chartOptions: {
-chart: {
-background: '#ffffff',
-toolbar: {
-show: false,
-},
-},
-xaxis: {
-type: 'datetime',
-categories: [
-'2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
-'2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
-'2024-11-01', '2024-12-01'
-],},
-
-}
+chartOptions:
+  chart:
+    background: "#ffffff"
+    toolbar:
+      show: false
+  xaxis:
+    type: datetime
+    categories:
+      - "2024-01-01"
+      - "2024-02-01"
+      - "2024-03-01"
+      - "2024-04-01"
+      - "2024-05-01"
+      - "2024-06-01"
+      - "2024-07-01"
+      - "2024-08-01"
+      - "2024-09-01"
+      - "2024-10-01"
+      - "2024-11-01"
+      - "2024-12-01"
 ---
 
 ## Overview
-The Bar Chart is an essential visualization tool for displaying categorical data. In this documentation, we will 
+
+The Bar Chart is an essential visualization tool for displaying categorical data. In this documentation, we will
 focus on how to effectively represent customer count data using a bar chart, allowing for easy comparison across different time periods or categories.
 
-## Reusable  Components
+## Reusable Components
+
 The bar chart is designed as a reusable component. This means you can easily adapt it for different
 datasets by changing the naming conventions and data inputs according to your CRUD operations. For Example->
 
-
-##  Monthly Customer Count Bar Chart Component
-
-
+## Monthly Customer Count Bar Chart Component
 
 ::preview{component='<Charts/>' path='./components/store/Charts.vue' }
 
@@ -67,51 +52,71 @@ datasets by changing the naming conventions and data inputs according to your CR
 
 :charts{type='bar' title='Customer Count Bar Chart' height=350 width=600 :chartOptions="chartOptions" :chartSeries="customer_count_simple"}
 
-
 </div>
-
 
 #shortCode
 
 ```vue
-
-<Charts type="bar" title='Customer Count Bar Chart' height=400 width=600 titleAlign='center' :chartSeries="[{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,54,34,56,78,30] }]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}"/>
+<Charts
+  type="bar"
+  title="Customer Count Bar Chart"
+  height="400"
+  width="600"
+  titleAlign="center"
+  :chartSeries="[
+    {
+      name: 'Customers',
+      data: [30, 40, 45, 50, 49, 60, 70, 54, 34, 56, 78, 30],
+    },
+  ]"
+  :chartOptions="{
+    xaxis: {
+      categories: [
+        'January',
+        'febraury',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
+    },
+  }"
+/>
 ```
 
-
 #code
-
 
 ```vue
 <template>
   <div>
-    <apexchart
-      :options="chartOptions"
-      :series="chartSeries"
-      v-bind="$attrs"
-
-    />
+    <apexchart :options="chartOptions" :series="chartSeries" v-bind="$attrs" />
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, watch } from 'vue';
+import { ref, defineProps, watch } from "vue";
 
 defineOptions({
   inheritAttrs: false,
-})
+});
 // Define props to make the component dynamic
 const props = defineProps({
   stacked: {
     type: Boolean,
-    default: false
+    default: false,
   },
   stackType: {
     type: String,
   },
   title: {
     type: String,
-    default: 'Bar Chart'
+    default: "Bar Chart",
   },
 
   chartOptions: {
@@ -125,9 +130,8 @@ const props = defineProps({
 
   titleAlign: {
     type: String,
-    default: 'center'
+    default: "center",
   },
-
 });
 
 // Chart options and series using refs to make them reactive
@@ -137,50 +141,47 @@ const chartOptions = ref({
     stackType: props.stackType,
   },
   plotOptions: {
-    bar: { },
+    bar: {},
   },
   xaxis: {
-    categories: props.chartOptions.categories || []
+    categories: props.chartOptions.categories || [],
   },
   yaxis: {
     title: {
-      text: props.chartOptions.yaxisTitle ,
+      text: props.chartOptions.yaxisTitle,
     },
   },
   title: {
     text: props.title,
-    align: props.titleAlign
+    align: props.titleAlign,
   },
-
 });
 
 // Define chartSeries as a reactive ref
 const chartSeries = ref(props.chartSeries);
 
 // Watch for prop changes to update chart options and series dynamically
-watch(() => props.chartOptions, (newOptions) => {
-  chartOptions.value = { ...chartOptions.value, ...newOptions };
-}, { immediate: true });
+watch(
+  () => props.chartOptions,
+  (newOptions) => {
+    chartOptions.value = { ...chartOptions.value, ...newOptions };
+  },
+  { immediate: true }
+);
 
-watch(() => props.chartSeries, (newSeries) => {
-  chartSeries.value = newSeries; // Update the chart series reactively
-}, { immediate: true });
-
-
+watch(
+  () => props.chartSeries,
+  (newSeries) => {
+    chartSeries.value = newSeries; // Update the chart series reactively
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
 /* Add any component-specific styles here */
 </style>
-
-
-
-
 ```
-
-
-
-
 
 #expandCode
 
@@ -218,33 +219,33 @@ Below is the example code for fetch the customer count data over months.
 
 ```js
 // stores/yourStore.js
-import { defineStore } from 'pinia';
-import {vaah} from 'your-vaah-instance'; // Adjust this import based on your setup
+import { defineStore } from "pinia";
+import { vaah } from "your-vaah-instance"; // Adjust this import based on your setup
 
-export const useYourStore = defineStore('store', {
+export const useYourStore = defineStore("store", {
   state: () => ({
     chartOptions: {},
     chartSeries: [],
   }),
-  
+
   actions: {
     async fetchCustomersCountData() {
       const options = {
-        method: 'post',
+        method: "post",
       };
       await vaah().ajax(
-        this.ajax_url + '/charts/data',
+        this.ajax_url + "/charts/data",
         this.fetchCustomersCountDataAfter,
         options
       );
     },
     //---------------------------------------------------
-    fetchCustomersCountDataAfter(data,res){
+    fetchCustomersCountDataAfter(data, res) {
       if (!data || !Array.isArray(data.chart_series)) {
-        return; 
+        return;
       }
-      const seriesData = data.chart_series.map(series => ({
-        name: series.name ,
+      const seriesData = data.chart_series.map((series) => ({
+        name: series.name,
         data: Array.isArray(series.data) ? series.data : [],
       }));
       this.updateChartSeries(seriesData);
@@ -253,12 +254,11 @@ export const useYourStore = defineStore('store', {
         title: {
           ...res.data.chart_options.title, // Retain existing title settings if they exist
           // If you want to add or modify sections like title,yaxis, grid, etc., you can do it here
-          text: 'Your Desired Title', // Set the new title
+          text: "Your Desired Title", // Set the new title
           // You can also add other title properties if needed
         },
       };
       this.updateChartOptions(updatedOptions);
-      
     },
     //---------------------------------------------------
     updateChartOptions(newOptions) {
@@ -272,20 +272,19 @@ export const useYourStore = defineStore('store', {
     //---------------------------------------------------
   },
 });
-
 ```
 
 #### Usage in a Vue Component
 
 ```vue
-
 <template>
   <div>
     <Charts
       type="bar"
       :chartOptions="store.chartOptions"
       :chartSeries="store.chartSeries"
-      height=300 width=600
+      height="300"
+      width="600"
       title="Customer Count Bar Chart"
       titleAlign="center"
     />
@@ -293,8 +292,8 @@ export const useYourStore = defineStore('store', {
 </template>
 
 <script setup>
-import {useYourStore} from '@/stores/yourStore'; // Adjust the path as needed
-import {onMounted} from 'vue';
+import { useYourStore } from "@/stores/yourStore"; // Adjust the path as needed
+import { onMounted } from "vue";
 import Charts from "./Charts";
 const store = useYourStore(); // Use the store
 // Fetch data when the component mounts
@@ -302,7 +301,6 @@ onMounted(() => {
   store.fetchCustomersCountData(); // Calls the method to fetch data
 });
 </script>
-
 ```
 
 **Steps To Backend Data Flow:**
@@ -341,7 +339,7 @@ public function fetchCustomersCountData(Request $request)
 
 **Model Method for Return Monthly Customer Counts**
 
-```php
+````php
 public static function fetchCustomersCountData(Request $request)
     {
         $start_date = isset($request->start_date) ? Carbon::parse($request->start_date)->startOfDay()
@@ -396,7 +394,7 @@ public static function fetchCustomersCountData(Request $request)
                     'xaxis' => [
                         'type' => 'category',
                         'categories' => $labels,
-                    ],                    
+                    ],
                     'title' => [
                         'text' => 'Customer Count Bar Chart',
                         'align' => 'center',
@@ -436,12 +434,12 @@ public static function fetchCustomersCountData(Request $request)
 { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
 { name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
 ]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" />
-```
+````
 
 ::
 
-
 **Sample Data For Grouped Chart**
+
 ```json
   //For Grouped Chart
   "data": {
@@ -456,10 +454,10 @@ public static function fetchCustomersCountData(Request $request)
       }
       // Add more series as needed
     ],
-    
+
   }
   "chart_options":{
-  "xaxis":{ 
+  "xaxis":{
      "categories":["Label 1","Label 2","Label 3"] //e.g ["Jan","Feb",..]
      "type":"string" //category-months
     },
@@ -587,29 +585,58 @@ public static function fetchCustomersCountData(Request $request)
 
 ```
 
-
 ### Stacked
 
 ::preview{component='<Charts />'}
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:charts{type='bar' title='Stacked Bar Chart' stacked  width=600 height=400  :chartOptions="chartOptions" :chartSeries="customer_count_grouped"}
+:charts{type='bar' title='Stacked Bar Chart' stacked width=600 height=400 :chartOptions="chartOptions" :chartSeries="customer_count_grouped"}
 
 </div>
 
 #shortCode
 
 ```vue
-<Charts type="bar" title='Stacked Bar Chart' titleAlign='center' width=600 height=400 stacked :chartSeries="[
-{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
-{ name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
-]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" />
+<Charts
+  type="bar"
+  title="Stacked Bar Chart"
+  titleAlign="center"
+  width="600"
+  height="400"
+  stacked
+  :chartSeries="[
+    {
+      name: 'Customers',
+      data: [30, 40, 45, 50, 49, 60, 70, 80, 85, 60, 70, 100],
+    },
+    {
+      name: 'Active Customers',
+      data: [10, 20, 15, 30, 35, 40, 45, 50, 55, 60, 65, 70],
+    },
+  ]"
+  :chartOptions="{
+    xaxis: {
+      categories: [
+        'January',
+        'febraury',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
+    },
+  }"
+/>
 ```
 
 ::
-
-
 
 ### Stacked 100%
 
@@ -617,17 +644,50 @@ public static function fetchCustomersCountData(Request $request)
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:charts{type='bar' title='100% Stacked Bar Chart' h titleAlign='center' height=400 width=600 stacked stackType='100%'  :chartOptions="chartOptions" :chartSeries="customer_count_grouped"}
+:charts{type='bar' title='100% Stacked Bar Chart' h titleAlign='center' height=400 width=600 stacked stackType='100%' :chartOptions="chartOptions" :chartSeries="customer_count_grouped"}
 
 </div>
 
 #shortCode
 
 ```vue
-<Charts type="bar" title='Stacked Bar Chart' titleAlign='center' width=600 height=400 stacked stackType='100%' :chartSeries="[
-{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
-{ name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
-]" :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" />
+<Charts
+  type="bar"
+  title="Stacked Bar Chart"
+  titleAlign="center"
+  width="600"
+  height="400"
+  stacked
+  stackType="100%"
+  :chartSeries="[
+    {
+      name: 'Customers',
+      data: [30, 40, 45, 50, 49, 60, 70, 80, 85, 60, 70, 100],
+    },
+    {
+      name: 'Active Customers',
+      data: [10, 20, 15, 30, 35, 40, 45, 50, 55, 60, 65, 70],
+    },
+  ]"
+  :chartOptions="{
+    xaxis: {
+      categories: [
+        'January',
+        'febraury',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
+    },
+  }"
+/>
 ```
 
 ::
@@ -645,13 +705,42 @@ public static function fetchCustomersCountData(Request $request)
 #shortCode
 
 ```vue
-<Charts type="line" title='Simple Line Chart' titleAlign='center' height=400 width=600  :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" :chartSeries="[ { name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,54,34,56,78,30] }]" />
+<Charts
+  type="line"
+  title="Simple Line Chart"
+  titleAlign="center"
+  height="400"
+  width="600"
+  :chartOptions="{
+    xaxis: {
+      categories: [
+        'January',
+        'febraury',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
+    },
+  }"
+  :chartSeries="[
+    {
+      name: 'Customers',
+      data: [30, 40, 45, 50, 49, 60, 70, 54, 34, 56, 78, 30],
+    },
+  ]"
+/>
 ```
 
 ::
 
-
-### Grouped Line Chart 
+### Grouped Line Chart
 
 ::preview{component='<Charts />'}
 
@@ -664,17 +753,48 @@ public static function fetchCustomersCountData(Request $request)
 #shortCode
 
 ```vue
-<Charts type="line" title='Simple Line Chart' titleAlign='center' height=400 width=600  :chartOptions="{ xaxis:{categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'] }}" :chartSeries="[{ name: 'Customers', data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100] },
-{ name: 'Active Customers', data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70] }
-]" />
+<Charts
+  type="line"
+  title="Simple Line Chart"
+  titleAlign="center"
+  height="400"
+  width="600"
+  :chartOptions="{
+    xaxis: {
+      categories: [
+        'January',
+        'febraury',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
+    },
+  }"
+  :chartSeries="[
+    {
+      name: 'Customers',
+      data: [30, 40, 45, 50, 49, 60, 70, 80, 85, 60, 70, 100],
+    },
+    {
+      name: 'Active Customers',
+      data: [10, 20, 15, 30, 35, 40, 45, 50, 55, 60, 65, 70],
+    },
+  ]"
+/>
 ```
 
 ::
 
-
 ### Props
 
->Note-> For Read More About Apexchart Props [Visit Here](https://apexcharts.com/){:target="_blank"}.
+> Note-> For Read More About Apexchart Props [Visit Here](https://apexcharts.com/){:target="\_blank"}.
 
 <div class="relative overflow-x-auto rounded-lg border dark:border-0">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -880,5 +1000,3 @@ public static function fetchCustomersCountData(Request $request)
         </tbody>
     </table>
 </div>
-
-

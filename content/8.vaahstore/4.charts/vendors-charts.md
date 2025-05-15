@@ -1,120 +1,49 @@
 ---
-
-line_chart_options: {
-chart: {
-id: 'vendor-sales-line-chart',
-type: 'line',
-background: '#fff',
-toolbar: { show: false },
-zoom: { enabled: true }
-},
-xaxis: {
-type: 'datetime',
-categories: ['2024-11-04','2024-11-05', '2024-11-06', '2024-11-07']
-},
-dataLabels: {
-enabled: false,
-},
-stroke: { curve: 'smooth', width: 4 },
-title: {
-text: 'Vendor Sales Over Selected Date Range',
-align: 'center',
-style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' }
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: { fontSize: '14px' }
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-}
-}
-
-line_chart_options_with_labels: {
-chart: {
-id: 'vendor-sales-line-chart',
-type: 'line',
-background: '#fff',
-toolbar: { show: false },
-zoom: { enabled: true }
-},
-xaxis: {
-type: 'datetime',
-categories: ['2024-11-04','2024-11-05', '2024-11-06', '2024-11-07']
-},
-dataLabels: {
-enabled: true,
-},
-stroke: { curve: 'smooth', width: 4 },
-title: {
-text: 'Vendor Sales Over Selected Date Range',
-align: 'center',
-style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' }
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: { fontSize: '14px' }
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-}
-}
-
-data_line_chart: [
-{
-name: 'Vendor 1',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 10 },
-{ x: '2024-11-06', y: 60 },
-{ x: '2024-11-07', y: 20 }
-]
-},
-{
-name: 'Vendor 2',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 20 },
-{ x: '2024-11-06', y: 70 },
-{ x: '2024-11-07', y: 30 }
-]
-},
-{
-name: 'Vendor 3',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 30 },
-{ x: '2024-11-06', y: 80 },
-{ x: '2024-11-07', y: 40 }
-]
-},
-{
-name: 'Vendor 4',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 40 },
-{ x: '2024-11-06', y: 90 },
-{ x: '2024-11-07', y: 50 }
-]
-}
-]
-
-
-
+data_line_chart:
+  - name: "Vendor 1"
+    data:
+      - x: "2024-11-04"
+        y: 0
+      - x: "2024-11-05"
+        y: 10
+      - x: "2024-11-06"
+        y: 60
+      - x: "2024-11-07"
+        y: 20
+  - name: "Vendor 2"
+    data:
+      - x: "2024-11-04"
+        y: 0
+      - x: "2024-11-05"
+        y: 20
+      - x: "2024-11-06"
+        y: 70
+      - x: "2024-11-07"
+        y: 30
+  - name: "Vendor 3"
+    data:
+      - x: "2024-11-04"
+        y: 0
+      - x: "2024-11-05"
+        y: 30
+      - x: "2024-11-06"
+        y: 80
+      - x: "2024-11-07"
+        y: 40
+  - name: "Vendor 4"
+    data:
+      - x: "2024-11-04"
+        y: 0
+      - x: "2024-11-05"
+        y: 40
+      - x: "2024-11-06"
+        y: 90
+      - x: "2024-11-07"
+        y: 50
 ---
 
-
-
-
 ## Vendor Sales Over Selected Date Range
+
 The Vendor Sales Over Selected Date Range feature allows users to query and visualize the sales performance of vendors within a specific date range.
 
 **Example Usage:**
@@ -130,13 +59,9 @@ In Vendors List, a user can select a start and end date (e.g., from 2024-11-04 t
 
 </div>
 
-
-
-
 #shortCode
 
 ```vue
-
 <template>
   <div class="flex justify-center items-center">
     <Charts
@@ -152,69 +77,69 @@ In Vendors List, a user can select a start and end date (e.g., from 2024-11-04 t
 <script setup>
 const line_chart_options = {
   chart: {
-    id: 'vendor-sales-line-chart',
-    type: 'line',
-    background: '#fff',
+    id: "vendor-sales-line-chart",
+    type: "line",
+    background: "#fff",
     toolbar: { show: true },
     zoom: { enabled: true },
   },
   xaxis: {
-    type: 'datetime',
-    categories: ['2024-11-05', '2024-11-06', '2024-11-07'],
+    type: "datetime",
+    categories: ["2024-11-05", "2024-11-06", "2024-11-07"],
   },
   dataLabels: {
     enabled: true,
   },
-  stroke: { curve: 'smooth', width: 4 },
+  stroke: { curve: "smooth", width: 4 },
   title: {
-    text: 'Vendor Sales Over Selected Date Range',
-    align: 'center',
-    style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' },
+    text: "Vendor Sales Over Selected Date Range",
+    align: "center",
+    style: { fontSize: "16px", fontWeight: "bold", color: "#263238" },
   },
   tooltip: {
     enabled: true,
     shared: true,
-    style: { fontSize: '14px' },
+    style: { fontSize: "14px" },
   },
   legend: {
-    position: 'top',
-    horizontalAlign: 'center',
+    position: "top",
+    horizontalAlign: "center",
     floating: false,
-    fontSize: '14px',
+    fontSize: "14px",
   },
 };
 
 const data_line_chart = [
   {
-    name: 'Vendor 1',
+    name: "Vendor 1",
     data: [
-      { x: '2024-11-05', y: 0 },
-      { x: '2024-11-06', y: 0 },
-      { x: '2024-11-07', y: 0 },
+      { x: "2024-11-05", y: 0 },
+      { x: "2024-11-06", y: 0 },
+      { x: "2024-11-07", y: 0 },
     ],
   },
   {
-    name: 'Vendor 2',
+    name: "Vendor 2",
     data: [
-      { x: '2024-11-05', y: 13 },
-      { x: '2024-11-06', y: 0 },
-      { x: '2024-11-07', y: 0 },
+      { x: "2024-11-05", y: 13 },
+      { x: "2024-11-06", y: 0 },
+      { x: "2024-11-07", y: 0 },
     ],
   },
   {
-    name: 'Vendor 3',
+    name: "Vendor 3",
     data: [
-      { x: '2024-11-05', y: 50 },
-      { x: '2024-11-06', y: 0 },
-      { x: '2024-11-07', y: 0 },
+      { x: "2024-11-05", y: 50 },
+      { x: "2024-11-06", y: 0 },
+      { x: "2024-11-07", y: 0 },
     ],
   },
   {
-    name: 'Vendor 4',
+    name: "Vendor 4",
     data: [
-      { x: '2024-11-05', y: 100 },
-      { x: '2024-11-06', y: 0 },
-      { x: '2024-11-07', y: 0 },
+      { x: "2024-11-05", y: 100 },
+      { x: "2024-11-06", y: 0 },
+      { x: "2024-11-07", y: 0 },
     ],
   },
 ];
@@ -228,33 +153,28 @@ const data_line_chart = [
 ```vue
 <template>
   <div>
-    <apexchart
-      :options="chartOptions"
-      :series="chartSeries"
-      v-bind="$attrs"
-
-    />
+    <apexchart :options="chartOptions" :series="chartSeries" v-bind="$attrs" />
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, watch } from 'vue';
+import { ref, defineProps, watch } from "vue";
 
 defineOptions({
   inheritAttrs: false,
-})
+});
 // Define props to make the component dynamic
 const props = defineProps({
   stacked: {
     type: Boolean,
-    default: false
+    default: false,
   },
   stackType: {
     type: String,
   },
   title: {
     type: String,
-    default: 'Bar Chart'
+    default: "Bar Chart",
   },
 
   chartOptions: {
@@ -268,9 +188,8 @@ const props = defineProps({
 
   titleAlign: {
     type: String,
-    default: 'center'
+    default: "center",
   },
-
 });
 
 // Chart options and series using refs to make them reactive
@@ -280,47 +199,47 @@ const chartOptions = ref({
     stackType: props.stackType,
   },
   plotOptions: {
-    bar: { },
+    bar: {},
   },
   xaxis: {
-    categories: props.chartOptions.categories || []
+    categories: props.chartOptions.categories || [],
   },
   yaxis: {
     title: {
-      text: props.chartOptions.yaxisTitle ,
+      text: props.chartOptions.yaxisTitle,
     },
   },
   title: {
     text: props.title,
-    align: props.titleAlign
+    align: props.titleAlign,
   },
-
 });
 
 // Define chartSeries as a reactive ref
 const chartSeries = ref(props.chartSeries);
 
 // Watch for prop changes to update chart options and series dynamically
-watch(() => props.chartOptions, (newOptions) => {
-  chartOptions.value = { ...chartOptions.value, ...newOptions };
-}, { immediate: true });
+watch(
+  () => props.chartOptions,
+  (newOptions) => {
+    chartOptions.value = { ...chartOptions.value, ...newOptions };
+  },
+  { immediate: true }
+);
 
-watch(() => props.chartSeries, (newSeries) => {
-  chartSeries.value = newSeries; // Update the chart series reactively
-}, { immediate: true });
-
-
+watch(
+  () => props.chartSeries,
+  (newSeries) => {
+    chartSeries.value = newSeries; // Update the chart series reactively
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
 /* Add any component-specific styles here */
 </style>
-
-
-
-
 ```
-
 
 #expandCode
 
@@ -332,131 +251,124 @@ watch(() => props.chartSeries, (newSeries) => {
 
 ```js
 // stores/yourStore.js
-import { defineStore } from 'pinia';
-import {vaah} from 'your-vaah-instance'; // Adjust this import based on your setup
+import { defineStore } from "pinia";
+import { vaah } from "your-vaah-instance"; // Adjust this import based on your setup
 
-export const useYourStore = defineStore('store', {
+export const useYourStore = defineStore("store", {
   state: () => ({
     line_chart_options: {},
     data_line_chart: [],
   }),
-  
- actions: {
-   async vendorSalesByRange() {
-     let params = {
-       start_date: this.filter_start_date ?? null,
-       end_date: this.filter_end_date ?? null,
-     }
-     let options = {
-       params: params,
-       method: 'POST'
-     }
-     await vaah().ajax(
-       this.ajax_url + '/charts/sales-by-range',
-       this.vendorSalesByRangeAfter,
-       options
-     );
-   },
-   //---------------------------------------------------
 
-   vendorSalesByRangeAfter(data,res){
-    
-     const series_data = data.chart_series.map(series => ({
-       name: series.name,
-       data: Array.isArray(series.data) ? series.data : [],
-     }));
+  actions: {
+    async vendorSalesByRange() {
+      let params = {
+        start_date: this.filter_start_date ?? null,
+        end_date: this.filter_end_date ?? null,
+      };
+      let options = {
+        params: params,
+        method: "POST",
+      };
+      await vaah().ajax(
+        this.ajax_url + "/charts/sales-by-range",
+        this.vendorSalesByRangeAfter,
+        options
+      );
+    },
+    //---------------------------------------------------
 
-     this.updateChartSeries(series_data);
+    vendorSalesByRangeAfter(data, res) {
+      const series_data = data.chart_series.map((series) => ({
+        name: series.name,
+        data: Array.isArray(series.data) ? series.data : [],
+      }));
 
-     const updated_line_chart_options = {
-       ...data.chart_options, // Merge existing options
-       stroke: {
-         curve: 'smooth',
-         width: 3,
-       },
-       title: {
-         text: 'Vendor Sales Over Selected Date Range', // Chart title
-         align: 'center', // Title alignment
-         offsetY: 12, // Add margin between title and chart/toolbar
-         style: {
-           fontSize: '16px',
-           fontWeight: 'bold',
-           color: '#263238'
-         }
-       },
-       chart: {
-         toolbar: {
-           show: false, // This should be under the chart key
-         },
-         background: '#ffffff',
-       },
-       legend: {
-         show: false,
-         position: 'bottom',
-         horizontalAlign: 'center',
-         floating: false,
-         fontSize: '14px',
-         
-       },
-       dataLabels: {
-         enabled: false,
-       },
-       grid: {
-         show: false,
-       }
-     };
+      this.updateChartSeries(series_data);
 
-     this.updateChartOptions(updated_line_chart_options);
-   },
-   //---------------------------------------------------
+      const updated_line_chart_options = {
+        ...data.chart_options, // Merge existing options
+        stroke: {
+          curve: "smooth",
+          width: 3,
+        },
+        title: {
+          text: "Vendor Sales Over Selected Date Range", // Chart title
+          align: "center", // Title alignment
+          offsetY: 12, // Add margin between title and chart/toolbar
+          style: {
+            fontSize: "16px",
+            fontWeight: "bold",
+            color: "#263238",
+          },
+        },
+        chart: {
+          toolbar: {
+            show: false, // This should be under the chart key
+          },
+          background: "#ffffff",
+        },
+        legend: {
+          show: false,
+          position: "bottom",
+          horizontalAlign: "center",
+          floating: false,
+          fontSize: "14px",
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        grid: {
+          show: false,
+        },
+      };
 
-   updateChartOptions(newOptions) {
-     this.line_chart_options = newOptions;
-   },
+      this.updateChartOptions(updated_line_chart_options);
+    },
+    //---------------------------------------------------
 
-   //---------------------------------------------------
-   updateChartSeries(newSeries) {
-     // Ensure chartSeries is updated reactively
-     this.data_line_chart = [...newSeries]; // Shallow copy to trigger reactivity
-   },
+    updateChartOptions(newOptions) {
+      this.line_chart_options = newOptions;
+    },
 
-  //---------------------------------------------------
-  
-}
+    //---------------------------------------------------
+    updateChartSeries(newSeries) {
+      // Ensure chartSeries is updated reactively
+      this.data_line_chart = [...newSeries]; // Shallow copy to trigger reactivity
+    },
+
+    //---------------------------------------------------
+  },
 });
 ```
-
 
 #### Usage in a Component
 
 ```vue
-
 <template>
   <div>
     <Charts
       type="pie"
       :chartOptions="store.line_chart_options"
       :chartSeries="store.data_line_chart"
-      height=400 width=600
+      height="400"
+      width="600"
       titleAlign="center"
-
     />
   </div>
 </template>
 
 <script setup>
-import {useYourStore} from '@/stores/yourStore'; // Adjust the path as needed
-import {onMounted} from 'vue';
-import Charts  from "./Charts ";
+import { useYourStore } from "@/stores/yourStore"; // Adjust the path as needed
+import { onMounted } from "vue";
+import Charts from "./Charts ";
 const store = useYourStore(); // Use the store
 // Fetch data when the component mounts
 onMounted(() => {
   store.vendorSalesByRange(); // Calls the method to fetch data
 });
 </script>
-
 ```
-
 
 **Steps To Backend Data Flow:**
 
@@ -518,7 +430,7 @@ public static function vendorSalesByRange(Request $request)
             ->map(function ($item) use ($start_date, $end_date, $request, $labels) {
                 // Get sales data per day for the vendor within the date range
                 $sales_data = OrderItem::where('vh_st_vendor_id', $item->vh_st_vendor_id)
-                    ->whereBetween('created_at', [$start_date, $end_date])                   
+                    ->whereBetween('created_at', [$start_date, $end_date])
                     ->selectRaw('DATE(created_at) as sales_date')
                     ->selectRaw('SUM(quantity) as total_sales')
                     ->groupBy('sales_date')
@@ -531,7 +443,7 @@ public static function vendorSalesByRange(Request $request)
                 foreach ($labels as $date_string) {
                     $formatted_data[] = [
                         'x' => $date_string, // Date in ms for ApexCharts
-                        'y' => isset($sales_data[$date_string]) 
+                        'y' => isset($sales_data[$date_string])
                         ? (int) $sales_data[$date_string]->total_sales : 0,
                          // Use 0 if no sales
                     ];
@@ -556,11 +468,12 @@ public static function vendorSalesByRange(Request $request)
         ];
     }
     //----------------------------------------------------------------------------------
-    
+
 
 ```
 
 ### Line Chart with datalabels
+
 The dataLabels configuration has been added to the line_chart_options:
 
 **enabled**: true: Activates data labels for each point on the chart.
@@ -576,6 +489,7 @@ The dataLabels configuration has been added to the line_chart_options:
 ::
 
 ## Top Vendors List By Sales
+
 This represents the sum of all sales generated by a vendor. By analyzing total sales, we can quickly determine top-performing vendors.
 <img src="/images/vaahstore/Vendors/vendor-by-sales-list.png" alt="Top Vendors" style="max-height: 300px; max-width: 100%;"/>
 

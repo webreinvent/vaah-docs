@@ -1,164 +1,163 @@
 ---
+shipment_chart_options:
+  chart:
+    id: "vendor-sales-line-chart"
+    type: "line"
+    background: "#fff"
+    toolbar:
+      show: false
+    zoom:
+      enabled: true
+  xaxis:
+    type: "datetime"
+    categories:
+      - "2024-11-04"
+      - "2024-11-05"
+      - "2024-11-06"
+      - "2024-11-07"
+  dataLabels:
+    enabled: false
+  stroke:
+    curve: "smooth"
+    width: 4
+  title:
+    text: "Orders Shipment Over Date Range"
+    align: "center"
+    style:
+      fontSize: "16px"
+      fontWeight: "bold"
+      color: "#263238"
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: "14px"
+  legend:
+    position: "top"
+    horizontalAlign: "center"
+    floating: false
+    fontSize: "14px"
 
-shipment_chart_options: {
-chart: {
-id: 'vendor-sales-line-chart',
-type: 'line',
-background: '#fff',
-toolbar: { show: false },
-zoom: { enabled: true }
-},
-xaxis: {
-type: 'datetime',
-categories: ['2024-11-04','2024-11-05', '2024-11-06', '2024-11-07']
-},
-dataLabels: {
-enabled: false,
-},
-stroke: { curve: 'smooth', width: 4 },
-title: {
-text: 'Orders Shipment Over Date Range',
-align: 'center',
-style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' }
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: { fontSize: '14px' }
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-}
-}
+line_chart_options_with_labels:
+  chart:
+    id: "vendor-sales-line-chart"
+    type: "line"
+    background: "#fff"
+    toolbar:
+      show: false
+    zoom:
+      enabled: true
+  xaxis:
+    type: "datetime"
+    categories:
+      - "2024-11-04"
+      - "2024-11-05"
+      - "2024-11-06"
+      - "2024-11-07"
+  dataLabels:
+    enabled: true
+  stroke:
+    curve: "smooth"
+    width: 4
+  title:
+    text: "Orders Shipment Over Date Range"
+    align: "center"
+    style:
+      fontSize: "16px"
+      fontWeight: "bold"
+      color: "#263238"
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: "14px"
+  legend:
+    position: "top"
+    horizontalAlign: "center"
+    floating: false
+    fontSize: "14px"
 
-line_chart_options_with_labels: {
-chart: {
-id: 'vendor-sales-line-chart',
-type: 'line',
-background: '#fff',
-toolbar: { show: false },
-zoom: { enabled: true }
-},
-xaxis: {
-type: 'datetime',
-categories: ['2024-11-04','2024-11-05', '2024-11-06', '2024-11-07']
-},
-dataLabels: {
-enabled: true,
-},
-stroke: { curve: 'smooth', width: 4 },
-title: {
-text: 'Orders Shipment Over Date Range',
-align: 'center',
-style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' }
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: { fontSize: '14px' }
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-}
-}
+shipment_data_chart:
+  - name: "Pending Orders Shipment"
+    data:
+      - x: "2024-11-04"
+        y: 0
+      - x: "2024-11-05"
+        y: 20
+      - x: "2024-11-06"
+        y: 70
+      - x: "2024-11-07"
+        y: 30
+  - name: "Orders Shipped"
+    data:
+      - x: "2024-11-04"
+        y: 0
+      - x: "2024-11-05"
+        y: 10
+      - x: "2024-11-06"
+        y: 60
+      - x: "2024-11-07"
+        y: 20
 
-shipment_data_chart: [
-{
-name: 'Pending Orders Shipment',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 20 },
-{ x: '2024-11-06', y: 70 },
-{ x: '2024-11-07', y: 30 }
-]
-},
-{
-name: 'Orders Shipped',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 10 },
-{ x: '2024-11-06', y: 60 },
-{ x: '2024-11-07', y: 20 }
-]
-}
-]
+shipped_quantity_status_data:
+  - name: "Item Qty."
+    data:
+      - 3033
+      - 4033
+      - 4533
+      - 5033
+      - 5523
 
-shipped_quantity_status_data: [
-{
-name: 'Item Qty.',
-data: [3033, 4033, 4533, 5033, 5523]
-}
-
-]
-
-
-shipped_quantity_status_chart_options: {
-xaxis: {
-categories: ['Partially Shipped', 'Shipped', 'Delivered', 'Partially Delivered', 'In Transit'],
-},
-
-title: {
-text: 'Shipped Quantity Status',
-align: 'center',
-offsetY: 12,
-style: {
-fontSize: '16px',
-fontWeight: 'bold',
-color: '#263238',
-},
-},
-dataLabels: {
-enabled: true,
-textAnchor: 'start',
-style: {
-colors: ['#000'],
-},
-offsetX: 0,
-dropShadow: {
-enabled: false,
-},
-},
-yaxis: {
-labels: {
-show: true,
-},
-},
-plotOptions: {
-bar: {
-barHeight: '80%',
-distributed: true,
-horizontal: true,
-dataLabels: {
-position: 'bottom',
-},
-},
-},
-tooltip: {
-theme: 'dark',
-},
-legend: {
-show: false,
-}
-}
-
+shipped_quantity_status_chart_options:
+  xaxis:
+    categories:
+      - "Partially Shipped"
+      - "Shipped"
+      - "Delivered"
+      - "Partially Delivered"
+      - "In Transit"
+  title:
+    text: "Shipped Quantity Status"
+    align: "center"
+    offsetY: 12
+    style:
+      fontSize: "16px"
+      fontWeight: "bold"
+      color: "#263238"
+  dataLabels:
+    enabled: true
+    textAnchor: "start"
+    style:
+      colors:
+        - "#000"
+    offsetX: 0
+    dropShadow:
+      enabled: false
+  yaxis:
+    labels:
+      show: true
+  plotOptions:
+    bar:
+      barHeight: "80%"
+      distributed: true
+      horizontal: true
+      dataLabels:
+        position: "bottom"
+  tooltip:
+    theme: "dark"
+  legend:
+    show: false
 ---
 
-
-
-
 ## Orders Shipment Over Date Range
+
 The Orders Shipment Over Date Range feature allows users to query and visualize the shipment performance over a specific date range.
 
 **Example Usage:**
-In the Shipments section, a user can select a start and end date (e.g., from 2024-11-04 to 2024-11-07) and see a line chart 
-displaying the cumulative orders entered on shipment each day during this period. 
+In the Shipments section, a user can select a start and end date (e.g., from 2024-11-04 to 2024-11-07) and see a line chart
+displaying the cumulative orders entered on shipment each day during this period.
 This visualization helps track shipment progress and pending orders over the selected date range.
+
 ### Line Chart
 
 ::preview{component='<Charts/>' path='./components/store/Charts.vue' }
@@ -169,13 +168,9 @@ This visualization helps track shipment progress and pending orders over the sel
 
 </div>
 
-
-
-
 #shortCode
 
 ```vue
-
 <template>
   <div class="flex justify-center items-center">
     <Charts
@@ -191,57 +186,57 @@ This visualization helps track shipment progress and pending orders over the sel
 <script setup>
 const order_shipped_chart_options = {
   chart: {
-    id: 'shipped-orders-chart',
-    type: 'line',
-    background: '#fff',
+    id: "shipped-orders-chart",
+    type: "line",
+    background: "#fff",
     toolbar: { show: true },
     zoom: { enabled: true },
   },
   xaxis: {
-    type: 'datetime',
-    categories: ['2024-11-05', '2024-11-06', '2024-11-07'],
+    type: "datetime",
+    categories: ["2024-11-05", "2024-11-06", "2024-11-07"],
   },
   dataLabels: {
     enabled: true,
   },
-  stroke: { curve: 'smooth', width: 4 },
+  stroke: { curve: "smooth", width: 4 },
   title: {
-    text: 'Vendor Sales Over Selected Date Range',
-    align: 'center',
-    style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' },
+    text: "Vendor Sales Over Selected Date Range",
+    align: "center",
+    style: { fontSize: "16px", fontWeight: "bold", color: "#263238" },
   },
   tooltip: {
     enabled: true,
     shared: true,
-    style: { fontSize: '14px' },
+    style: { fontSize: "14px" },
   },
   legend: {
-    position: 'top',
-    horizontalAlign: 'center',
+    position: "top",
+    horizontalAlign: "center",
     floating: false,
-    fontSize: '14px',
+    fontSize: "14px",
   },
 };
 
 const order_shipped_data = [
   {
-    name: 'Pending Orders Shipment',
+    name: "Pending Orders Shipment",
     data: [
-      { x: '2024-11-04', y: 0 },
-      { x: '2024-11-05', y: 20 },
-      { x: '2024-11-06', y: 70 },
-      { x: '2024-11-07', y: 30 }
+      { x: "2024-11-04", y: 0 },
+      { x: "2024-11-05", y: 20 },
+      { x: "2024-11-06", y: 70 },
+      { x: "2024-11-07", y: 30 },
     ],
   },
   {
-    name: 'Orders Shipped',
+    name: "Orders Shipped",
     data: [
-      { x: '2024-11-04', y: 0 },
-      { x: '2024-11-05', y: 10 },
-      { x: '2024-11-06', y: 60 },
-      { x: '2024-11-07', y: 20 }
+      { x: "2024-11-04", y: 0 },
+      { x: "2024-11-05", y: 10 },
+      { x: "2024-11-06", y: 60 },
+      { x: "2024-11-07", y: 20 },
     ],
-  }
+  },
 ];
 </script>
 ```
@@ -253,33 +248,28 @@ const order_shipped_data = [
 ```vue
 <template>
   <div>
-    <apexchart
-      :options="chartOptions"
-      :series="chartSeries"
-      v-bind="$attrs"
-
-    />
+    <apexchart :options="chartOptions" :series="chartSeries" v-bind="$attrs" />
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, watch } from 'vue';
+import { ref, defineProps, watch } from "vue";
 
 defineOptions({
   inheritAttrs: false,
-})
+});
 // Define props to make the component dynamic
 const props = defineProps({
   stacked: {
     type: Boolean,
-    default: false
+    default: false,
   },
   stackType: {
     type: String,
   },
   title: {
     type: String,
-    default: 'Bar Chart'
+    default: "Bar Chart",
   },
 
   chartOptions: {
@@ -293,9 +283,8 @@ const props = defineProps({
 
   titleAlign: {
     type: String,
-    default: 'center'
+    default: "center",
   },
-
 });
 
 // Chart options and series using refs to make them reactive
@@ -305,47 +294,47 @@ const chartOptions = ref({
     stackType: props.stackType,
   },
   plotOptions: {
-    bar: { },
+    bar: {},
   },
   xaxis: {
-    categories: props.chartOptions.categories || []
+    categories: props.chartOptions.categories || [],
   },
   yaxis: {
     title: {
-      text: props.chartOptions.yaxisTitle ,
+      text: props.chartOptions.yaxisTitle,
     },
   },
   title: {
     text: props.title,
-    align: props.titleAlign
+    align: props.titleAlign,
   },
-
 });
 
 // Define chartSeries as a reactive ref
 const chartSeries = ref(props.chartSeries);
 
 // Watch for prop changes to update chart options and series dynamically
-watch(() => props.chartOptions, (newOptions) => {
-  chartOptions.value = { ...chartOptions.value, ...newOptions };
-}, { immediate: true });
+watch(
+  () => props.chartOptions,
+  (newOptions) => {
+    chartOptions.value = { ...chartOptions.value, ...newOptions };
+  },
+  { immediate: true }
+);
 
-watch(() => props.chartSeries, (newSeries) => {
-  chartSeries.value = newSeries; // Update the chart series reactively
-}, { immediate: true });
-
-
+watch(
+  () => props.chartSeries,
+  (newSeries) => {
+    chartSeries.value = newSeries; // Update the chart series reactively
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
 /* Add any component-specific styles here */
 </style>
-
-
-
-
 ```
-
 
 #expandCode
 
@@ -357,129 +346,120 @@ watch(() => props.chartSeries, (newSeries) => {
 
 ```js
 // stores/yourStore.js
-import { defineStore } from 'pinia';
-import {vaah} from 'your-vaah-instance'; // Adjust this import based on your setup
+import { defineStore } from "pinia";
+import { vaah } from "your-vaah-instance"; // Adjust this import based on your setup
 
-export const useYourStore = defineStore('store', {
+export const useYourStore = defineStore("store", {
   state: () => ({
     order_shipped_chart_options: {},
     order_shipped_data: [],
   }),
-  
- actions: {
-   async ordersShipmentByDateRange() {
 
+  actions: {
+    async ordersShipmentByDateRange() {
+      let params = {
+        start_date: this.filter_start_date ?? null,
+        end_date: this.filter_end_date ?? null,
+      };
+      let options = {
+        params: params,
+        method: "POST",
+      };
+      await vaah().ajax(
+        this.ajax_url + "/charts/orders-shipments-by-range",
+        this.ordersShipmentByDateRangeAfter,
+        options
+      );
+    },
+    //---------------------------------------------------
 
-     let params = {
+    ordersShipmentByDateRangeAfter(data, res) {
+      // this.updateDateFilter();
+      const series_data = data.chart_series.map((series) => ({
+        name: series.name,
+        data: Array.isArray(series.data) ? series.data : [],
+      }));
 
-       start_date: this.filter_start_date ?? null,
-       end_date: this.filter_end_date ?? null,
+      this.updateChartSeries(series_data);
 
-     }
-     let options = {
-       params: params,
-       method: 'POST'
-     }
-     await vaah().ajax(
-       this.ajax_url + '/charts/orders-shipments-by-range',
-       this.ordersShipmentByDateRangeAfter,
-       options
-     );
-   },
-   //---------------------------------------------------
+      const updated_area_chart_options = {
+        ...data.chart_options, // Merge existing options
+        stroke: {
+          curve: "smooth",
+          width: 3,
+        },
+        title: {
+          text: "Orders Shipment Over Date Range", // Chart title
+          align: "center", // Title alignment
+        },
+        chart: {
+          toolbar: {
+            show: false, // This should be under the chart key
+          },
+        },
 
-   ordersShipmentByDateRangeAfter(data,res){
-     // this.updateDateFilter();
-     const series_data = data.chart_series.map(series => ({
-       name: series.name,
-       data: Array.isArray(series.data) ? series.data : [],
-     }));
+        legend: {
+          show: false,
+        },
+        dataLabels: {
+          enabled: true,
+        },
+        tooltip: {
+          enabled: true,
+          shared: true,
+          style: { fontSize: "14px" },
+        },
+        grid: {
+          show: false,
+        },
+      };
 
-     this.updateChartSeries(series_data);
+      this.updateChartOptions(updated_area_chart_options);
+    },
+    //---------------------------------------------------
 
-     const updated_area_chart_options = {
-       ...data.chart_options, // Merge existing options
-       stroke: {
-         curve: 'smooth',
-         width: 3,
-       },
-       title: {
-         text: 'Orders Shipment Over Date Range', // Chart title
-         align: 'center', // Title alignment
-       },
-       chart: {
-         toolbar: {
-           show: false, // This should be under the chart key
-         },
-       },
+    updateChartOptions(newOptions) {
+      this.order_shipped_chart_options = newOptions;
+    },
 
-       legend: {
-         show: false,
-       },
-       dataLabels: {
-         enabled: true,
-       },
-       tooltip: {
-         enabled: true,
-         shared: true,
-         style: { fontSize: '14px' },
-       },
-       grid: {
-         show: false,
-       }
-     };
+    //---------------------------------------------------
+    updateChartSeries(newSeries) {
+      // Ensure chartSeries is updated reactively
+      this.order_shipped_data = [...newSeries]; // Shallow copy to trigger reactivity
+    },
 
-     this.updateChartOptions(updated_area_chart_options);
-   },
-   //---------------------------------------------------
-
-   updateChartOptions(newOptions) {
-     this.order_shipped_chart_options = newOptions;
-   },
-
-   //---------------------------------------------------
-   updateChartSeries(newSeries) {
-     // Ensure chartSeries is updated reactively
-     this.order_shipped_data = [...newSeries]; // Shallow copy to trigger reactivity
-   },
-
-  //---------------------------------------------------
-  
-}
+    //---------------------------------------------------
+  },
 });
 ```
-
 
 #### Usage in a Component
 
 ```vue
-
 <template>
   <div>
     <Charts
       type="pie"
       :chartOptions="store.order_shipped_chart_options"
       :chartSeries="store.order_shipped_data"
-      height=400 width=600
+      height="400"
+      width="600"
       titleAlign="center"
-
     />
   </div>
 </template>
 
 <script setup>
-import {useYourStore} from '@/stores/yourStore'; // Adjust the path as needed
-import {onMounted} from 'vue';
-import Charts  from "./Charts ";
+import { useYourStore } from "@/stores/yourStore"; // Adjust the path as needed
+import { onMounted } from "vue";
+import Charts from "./Charts ";
 const store = useYourStore(); // Use the store
 // Fetch data when the component mounts
 onMounted(() => {
   store.ordersShipmentByDateRange(); // Calls the method to fetch data
 });
 </script>
-
 ```
-
 
 **Steps To Backend Data Flow:**
 
@@ -572,11 +552,12 @@ public function ordersShipmentByDateRange(Request $request)
         ];
     }
     //----------------------------------------------------------------------------------
-    
+
 
 ```
 
 ### Area Chart with datalabels
+
 The dataLabels configuration has been added to the shipment_chart_options prop:
 
 **enabled**: true: Activates data labels for each point on the chart.
@@ -592,71 +573,79 @@ The dataLabels configuration has been added to the shipment_chart_options prop:
 ::
 
 ### Bar Chart
+
 #### Shipped Quantity Status
 
 ::preview{component='<Charts />'}
 
 <div class="flex flex-wrap gap-3 justify-center items-center">
 
-:charts{type='bar' :chartOptions="shipped_quantity_status_chart_options" title='Shipped Quantity Status' height=300 width=600  :chartSeries="shipped_quantity_status_data"}
+:charts{type='bar' :chartOptions="shipped_quantity_status_chart_options" title='Shipped Quantity Status' height=300 width=600 :chartSeries="shipped_quantity_status_data"}
 
 </div>
 
 #shortCode
 
 ```vue
-
-<Charts type="bar" title='Stocks Available In Warehouse'
-        height=300 width=600 titleAlign='center'
-        :chartSeries="[{ name: 'Item Qty.', data: [3033, 4033, 4533, 5033, 5523] }]"
-        :chartOptions="{ 
-          xaxis:
-          {
-            categories: ['Partially Shipped', 'Shipped', 'Delivered', 'Partially Delivered', 'In Transit']
-          },
-          title: {
-            text: 'Shipped Quantity Status',
-            align: 'center',
-            offsetY: 12,
-            style: {
-            fontSize: '16px',
-            fontWeight: 'bold',
-            color: '#263238',
-                }
-          },
-          dataLabels: {
-          enabled: true,
-          textAnchor: 'start',
-          style: {
-          colors: ['#000'],
-          },
-          offsetX: 0,
-          dropShadow: {
-          enabled: false,
-              },
-          },
-          yaxis: {
-          labels: {
-          show: true,
-              },
-          },
-          plotOptions: {
-            bar: {
-            barHeight: '80%',
-            distributed: true,
-            horizontal: true,
-            dataLabels: {
-            position: 'bottom',
-              },
-            },
-          },
-          tooltip: {
-                    theme: 'dark',
-                },
-          legend: {
-          show: false,
-          }
-        }
-"/>
-
+<Charts
+  type="bar"
+  title="Stocks Available In Warehouse"
+  height="300"
+  width="600"
+  titleAlign="center"
+  :chartSeries="[{ name: 'Item Qty.', data: [3033, 4033, 4533, 5033, 5523] }]"
+  :chartOptions="{
+    xaxis: {
+      categories: [
+        'Partially Shipped',
+        'Shipped',
+        'Delivered',
+        'Partially Delivered',
+        'In Transit',
+      ],
+    },
+    title: {
+      text: 'Shipped Quantity Status',
+      align: 'center',
+      offsetY: 12,
+      style: {
+        fontSize: '16px',
+        fontWeight: 'bold',
+        color: '#263238',
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      textAnchor: 'start',
+      style: {
+        colors: ['#000'],
+      },
+      offsetX: 0,
+      dropShadow: {
+        enabled: false,
+      },
+    },
+    yaxis: {
+      labels: {
+        show: true,
+      },
+    },
+    plotOptions: {
+      bar: {
+        barHeight: '80%',
+        distributed: true,
+        horizontal: true,
+        dataLabels: {
+          position: 'bottom',
+        },
+      },
+    },
+    tooltip: {
+      theme: 'dark',
+    },
+    legend: {
+      show: false,
+    },
+  }"
+/>
 ```
