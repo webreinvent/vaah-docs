@@ -7,12 +7,17 @@ const colorMode = useColorMode();
 const { seo } = useAppConfig();
 
 const { data: navigation } = await useAsyncData("navigation", () =>
-  fetchContentNavigation()
+  queryCollectionNavigation("content")
 );
-const { data: files } = useLazyFetch<ParsedContentFile[]>("/api/search.json", {
-  default: () => [],
-  server: false,
-});
+const { data: files } = await useAsyncData<any>(
+  "content-files",
+  () =>
+    queryCollection("content")
+      .where("type", "=", "markdown")
+      .where("navigation", "NOT LIKE", false)
+      .all(),
+  { server: false }
+);
 
 useHead({
   meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],

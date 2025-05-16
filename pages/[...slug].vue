@@ -8,9 +8,12 @@ definePageMeta({
 const route = useRoute();
 const { toc, seo } = useAppConfig();
 
+// Fetch the current page from content collection
 const { data: page } = await useAsyncData(route.path, () =>
-  queryContent(route.path).findOne()
+  queryCollection("content").path(withoutTrailingSlash(route.path)).first()
 );
+
+// 404 if page doesn't exist
 if (!page.value) {
   throw createError({
     statusCode: 404,
@@ -19,33 +22,41 @@ if (!page.value) {
   });
 }
 
+// Fetch surrounding pages (prev/next)
 const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
-  queryContent()
-    .where({ _extension: "md", navigation: { $ne: false } })
-    .only(["title", "description", "_path"])
-    .findSurround(withoutTrailingSlash(route.path))
+  queryCollectionItemSurroundings("content", route.path, {
+    fields: ["title", "description", "navigation"],
+  })
 );
 
+// Filter out null values
+const surroundArray = computed(() =>
+  (surround.value?.filter(Boolean) ?? []).map((item) => ({
+    _path: item.path,
+    title: item.title,
+    description: item.description || "",
+  }))
+);
+// SEO metadata
 useSeoMeta({
-  titleTemplate: `%s - ${seo?.siteName}`,
-  title: page.value.title,
-  ogTitle: `${page.value.title} - ${seo?.siteName}`,
-  description: page.value.description,
-  ogDescription: page.value.description,
+  titleTemplate: `%s - ${seo?.siteName ?? "Docs"}`,
+  title: page.value?.title,
+  ogTitle: `${page.value?.title} - ${seo?.siteName ?? "Docs"}`,
+  description: page.value?.description,
+  ogDescription: page.value?.description,
 });
 
-defineOgImage({
-  component: "Docs",
-});
+// OG image config (custom component)
+defineOgImage({ component: "Docs" });
 
+// Headline and links
 const headline = computed(() => findPageHeadline(page.value));
-
 const links = computed(() =>
   [
     toc?.bottom?.edit && {
       icon: "i-heroicons-pencil-square",
       label: "Edit this page",
-      to: `${toc.bottom.edit}/${page?.value?._file}`,
+      to: `${toc.bottom.edit}/${page.value?.path}`,
       target: "_blank",
     },
     ...(toc?.bottom?.links || []),
@@ -58,11 +69,12 @@ const links = computed(() =>
     <UPageHeader
       :title="page.title"
       :description="page.description"
-      :links="page.links"
+      :links="links"
       :headline="headline"
     />
 
     <UPageBody prose>
+      <!-- Warning for outdated docs -->
       <Alert
         v-if="route.path.includes('vaahcms-1x')"
         type="warning"
@@ -73,20 +85,22 @@ const links = computed(() =>
           NOTE <br />
           YOU'RE READING AN OUTDATED DOCUMENTATION. <br />
           Latest documentation of <code>VaahCMS 2.x</code> is available at:
-          <br />
         </div>
         <div>
           <ULink to="/vaahcms-2x"> Checkout VaahCMS 2.x Documentation </ULink>
         </div>
       </Alert>
 
-      <ContentRenderer v-if="page.body" :value="page" />
+      <!-- Main content renderer -->
+      <ContentRenderer v-if="page?.body" :value="page" />
 
-      <hr v-if="surround?.length" />
-
-      <UContentSurround :surround="surround" />
+      <!-- Prev/Next links -->
+      <hr v-if="surroundArray.length" />
+      {{ surroundArray }}
+      <UContentSurround v-if="surroundArray.length" :surround="surroundArray" />
     </UPageBody>
 
+    <!-- Table of contents and links -->
     <template v-if="page.toc !== false" #right>
       <UContentToc :title="toc?.title" :links="page.body?.toc?.links">
         <template v-if="toc?.bottom" #bottom>
@@ -95,7 +109,6 @@ const links = computed(() =>
             :class="{ '!mt-6': page.body?.toc?.links?.length }"
           >
             <UDivider v-if="page.body?.toc?.links?.length" type="dashed" />
-
             <UPageLinks :title="toc.bottom.title" :links="links" />
           </div>
         </template>

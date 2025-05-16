@@ -192,12 +192,7 @@
       "statusCode": 301
     }
   },
-  "/vaahcms-2": {
-    "redirect": {
-      "to": "/vaahcms-2x",
-      "statusCode": 301
-    }
-  },
+  
   "/vaahcms-2/the-basics/advanced/jobs": {
     "redirect": {
       "to": "/vaahcms-2x/the-basics/advanced/jobs",
@@ -261,12 +256,6 @@
   "/vaahcms-2/theme/develop-theme": {
     "redirect": {
       "to": "/vaahcms-2x/theme/develop-theme",
-      "statusCode": 301
-    }
-  },
-  "/vaahcms-2": {
-    "redirect": {
-      "to": "/vaahcms-2x",
       "statusCode": 301
     }
   },

@@ -18,14 +18,16 @@ useHead({
 });
 
 const { data: navigation } = await useAsyncData("navigation", () =>
-  fetchContentNavigation()
+  queryCollectionNavigation("content")
 );
-const { data: files } = useLazyFetch<ParsedContentFile[]>("/api/search.json", {
-  default: () => [],
-  server: false,
-});
-
+// const { data: files } = await useAsyncData<any>("content-files", () =>
+//   queryCollection("content")
+//     .where("type", "=", "md")
+//     .where("navigation", "NOT LIKE", false)
+//     .all()
+// );
 provide("navigation", navigation);
+// console.log("files", files);
 </script>
 
 <template>
@@ -43,7 +45,7 @@ provide("navigation", navigation);
     <Footer />
 
     <ClientOnly>
-      <LazyUDocsSearch :files="files" :navigation="navigation" />
+      <UContentSearchButton />
     </ClientOnly>
 
     <UNotifications />

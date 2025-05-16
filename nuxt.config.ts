@@ -10,12 +10,12 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@nuxt/content',
     '@nuxt/ui',
     '@nuxtjs/fontaine',
     '@nuxtjs/google-fonts',
     'nuxt-og-image',
     '@pinia/nuxt',
+    '@nuxt/content',
   ],
 
   plugins: [
@@ -102,5 +102,5 @@ export default defineNuxtConfig({
     strict: false
   },
 
-  compatibilityDate: '2024-11-12'
+  compatibilityDate: '2024-05-05'
 })

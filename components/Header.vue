@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type { NavItem } from "@nuxt/content";
 import type { HeaderLink } from "@nuxt/ui-pro/types";
-
+import type { ContentNavigationItem } from "@nuxt/content";
 defineProps<{
   links: HeaderLink[];
 }>();
@@ -9,7 +8,7 @@ defineProps<{
 const route = useRoute();
 const { metaSymbol } = useShortcuts();
 
-const nav = inject<Ref<NavItem[]>>("navigation");
+const nav = inject<Ref<ContentNavigationItem[]>>("navigation");
 </script>
 
 <template>
@@ -35,7 +34,7 @@ const nav = inject<Ref<NavItem[]>>("navigation");
       <ColorPicker />
 
       <UTooltip text="Search" :shortcuts="[metaSymbol, 'K']">
-        <UContentSearchButton :label="null" />
+        <UContentSearchButton />
       </UTooltip>
 
       <UColorModeButton />

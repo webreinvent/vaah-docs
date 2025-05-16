@@ -1,30 +1,40 @@
 <script setup lang="ts">
-import type { NavItem } from "@nuxt/content";
 import BranchSelect from "../components/BranchSelect.vue";
+import type { ContentNavigationItem } from "@nuxt/content";
 const route = useRoute();
+const nav = inject<Ref<ContentNavigationItem[]>>("navigation", ref([]));
 
-const nav = inject<Ref<NavItem[]>>("navigation");
+function transformItems(items: ContentNavigationItem[]) {
+  return items.map((item) => {
+    const transformed = {
+      title: item.title,
+      _path: item.path,
+    };
+
+    if (item.children && item.children.length > 0) {
+      transformed.children = transformItems(item.children);
+    }
+
+    return transformed;
+  });
+}
 
 const navigation = computed(() => {
-  const currentPath = route.path;
-  const firstSegment = "/" + currentPath.split("/")[1];
+  const n = nav.value.filter((item) => {
+    return item.path.startsWith("/" + route.path.split("/")[1]);
+  })[0]["children"];
 
-  const filtered = nav.value.filter((item) => item._path === firstSegment);
-
-  const n = filtered.length > 0 ? filtered[0].children : [];
-
-  if (!n || n.length === 0) return [];
-
+  let result = n;
   if (n.at(0)?.children) {
-    return n.at(0).children.map((item) => {
-      if (item._path === "/vaahstore/api") {
-        return { ...item, _path: "/vaahstore/api" };
+    result = n.at(0)?.children.map((item) => {
+      if (item.path === "/vaahstore/api") {
+        return { ...item, path: "/vaahstore/api" };
       }
       return item;
     });
-  } else {
-    return n;
   }
+
+  return transformItems(result);
 });
 </script>
 
