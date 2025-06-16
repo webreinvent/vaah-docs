@@ -67,10 +67,10 @@ const links = computed(() => {
       active: route.path.startsWith('/vaahstore')
     },
     {
-      label: 'VaahShare',
+      label: 'Nuxt',
       icon: 'i-heroicons-rocket-launch',
-      to: '/vaahshare',
-      active: route.path.startsWith('/vaahshare')
+      to: '/nuxt',
+      active: route.path.startsWith('/nuxt')
     },
     {
       label: 'VaahNuxt',
