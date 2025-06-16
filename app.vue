@@ -67,12 +67,6 @@ const links = computed(() => {
       active: route.path.startsWith('/vaahstore')
     },
     {
-      label: 'Nuxt',
-      icon: 'i-heroicons-rocket-launch',
-      to: '/nuxt',
-      active: route.path.startsWith('/nuxt')
-    },
-    {
       label: 'VaahNuxt',
       icon: 'i-heroicons-command-line',
       to: '/vaahnuxt',
@@ -83,6 +77,12 @@ const links = computed(() => {
       icon: 'i-heroicons-rocket-launch',
       to: '/guide',
       active: route.path.startsWith('/guide')
+    },
+    {
+      label: 'Nuxt',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/nuxt',
+      active: route.path.startsWith('/nuxt')
     },
     {
       label: 'Laravel',
