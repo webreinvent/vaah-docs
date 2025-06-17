@@ -538,7 +538,7 @@ components:
       name: filter[category][]
       in: query
       required: false
-      description: Filter by category. You can provide multiple categories using either category IDs or slugs.
+      description: Filter by category. You can provide multiple categories using either category IDs or slugs. Example?filter[category][]=product-caegory
       schema:
         type: array
         items:
@@ -578,6 +578,16 @@ components:
       schema:
         type: integer
       example: 50
+    sort_price:
+      name: filter[sort]
+      in: query
+      required: false
+      description: Sort by price. Use `price:asc` for ascending or `price:desc` for descending order. Example `?filter[sort]=price:asc`
+      schema:
+        type: string
+        enum: [ price:asc, price:desc ]
+      example: price:asc
+
 
     vendors:
       name: filter[vendors][]

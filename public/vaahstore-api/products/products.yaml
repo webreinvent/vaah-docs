@@ -12,6 +12,7 @@ get:
     - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
     - '$ref': '../vaahstore.yaml#/components/parameters/include'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
+    - '$ref': '../vaahstore.yaml#/components/parameters/sort_price'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_new_arrivals'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_from'
