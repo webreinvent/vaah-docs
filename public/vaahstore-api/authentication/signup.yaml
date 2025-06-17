@@ -27,9 +27,12 @@ post:
             password:
               type: string
               description: "The customer's password."
-            is_active:
+            country_calling_code:
               type: integer
-              description: "Indicates whether the customer is active or not."
+              description: "International dialing code (e.g., 91 for India)."
+            phone:
+              type: integer
+              description: "Phone number without the country code."
           required:
             - email
             - first_name
