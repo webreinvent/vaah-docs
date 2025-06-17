@@ -170,6 +170,12 @@ paths:
                       name:
                         type: string
                         description: Customer's full name.
+                      display_name:
+                        type: string
+                        description: Customer's display name name.
+                      is_active:
+                        type: integer
+                        description: Indicates whether the customer is active or not.
                       created_ip:
                         type: string
                         nullable: true
@@ -194,6 +200,12 @@ paths:
                         type: string
                         format: uri
                         description: URL to the avatar image.
+                      cart_uuid:
+                        type: string
+                        description: Unique identifier for the cart session.
+                      cart_products_count:
+                        type: integer
+                        description: Total number of products currently in the cart.
                       api_token:
                         type: string
                         description: The API token for authenticating future requests.
@@ -411,6 +423,12 @@ paths:
                       name:
                         type: string
                         description: Customer's full name.
+                      display_name:
+                        type: string
+                        description: Customer's display name name.
+                      is_active:
+                        type: integer
+                        description: Indicates whether the customer is active or not.
                       created_ip:
                         type: string
                         nullable: true
@@ -435,6 +453,12 @@ paths:
                         type: string
                         format: uri
                         description: URL to the avatar image.
+                      cart_uuid:
+                        type: string
+                        description: Unique identifier for the cart session.
+                      cart_products_count:
+                        type: integer
+                        description: Total number of products currently in the cart.
                       api_token:
                         type: string
                         description: The API token for authenticating future requests.
