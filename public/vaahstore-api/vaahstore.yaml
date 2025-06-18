@@ -1516,9 +1516,6 @@ components:
             type: integer
           example: [ 1, 2 ]
           description: IDs of wishlists in which this product exists for the authenticated user.
-
-
-
         store:
           type: object
           properties:
@@ -1539,7 +1536,6 @@ components:
             name:
               type: string
               example: "Nike"
-
         product_categories:
           type: array
           items:
@@ -1567,7 +1563,6 @@ components:
                   vh_st_category_id:
                     type: integer
                     example: 42
-
         vendor_product_data:
           type: object
           properties:
@@ -1581,7 +1576,7 @@ components:
               example: 7
             selected_vendor:
               type: object
-              example: {"vendor data"}
+              example: { "vendor data" }
         status:
           type: object
           properties:
@@ -1595,6 +1590,127 @@ components:
           type: string
           format: date-time
           example: "2024-09-17T10:45:06Z"
+
+        media:
+          type: array
+          description: List of product media items, each containing title, default status, and images in multiple formats.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                example: "invictus-men-round-toe-formal-loafers.jpg"
+              is_default:
+                type: integer
+                example: 0
+              images:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    webp_url:
+                      type: string
+                      example: "storage/media/invictus-men-round-toe-formal-loafers.webp"
+                    url:
+                      type: string
+                      example: "storage/media/invictus-men-round-toe-formal-loafers.jpg"
+                    url_thumbnail:
+                      type: string
+                      example: "storage/app/public/media/invictus-men-round-toe-formal-loafers.jpg"
+                    type:
+                      type: string
+                      nullable: true
+                      example: null
+
+        grouped_attributes:
+          type: array
+          description: Attributes grouped by type, such as color or size, with available values and selected value.
+          items:
+            type: object
+            properties:
+              attribute_id:
+                type: integer
+                example: 1
+              attribute:
+                type: string
+                example: "Color"
+              values:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 9
+                    value:
+                      type: string
+                      example: "Orange"
+              selected:
+                type: integer
+                example: 9
+
+        product_variation:
+          type: object
+          description: The default variation for this product, including size, color, price, stock, and other variation-specific data.
+          properties:
+            id:
+              type: integer
+              example: 334
+            vh_st_product_id:
+              type: integer
+              example: 49
+            uuid:
+              type: string
+              example: "3ee0ba4a-1976-4178-9403-7794f64b4a7a"
+            name:
+              type: string
+              example: "INVICTUS Men Round Toe Formal Loafers - Orange/Small"
+            slug:
+              type: string
+              example: "invictus-men-round-toe-formal-loafers-orange-small"
+            wishlist_ids:
+              type: array
+              items:
+                type: integer
+              example: [ ]
+            is_default:
+              type: integer
+              example: 1
+            sku:
+              type: string
+              nullable: true
+              example: null
+            price:
+              type: string
+              example: "31.25"
+            sale_price:
+              type: string
+              example: "31.25"
+            attribute_query:
+              type: string
+              example: "?attribute[color]=orange&attribute[size]=small"
+            media:
+              type: array
+              items:
+                type: object
+              example: [ ]
+            quantity:
+              type: integer
+              example: 0
+            available_quantity:
+              type: integer
+              example: 0
+            is_stock_available:
+              type: integer
+              example: 0
+            type:
+              type: string
+              example: "fallback"
+            selected_vendor:
+              type: object
+              nullable: true
+              example: null
+
 
     Vendor:
       type: object
