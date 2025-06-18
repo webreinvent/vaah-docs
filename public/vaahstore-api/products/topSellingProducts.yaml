@@ -3,7 +3,7 @@ get:
     - Products
   summary: Top-selling products within a date range
   description: >
-    Retrieve a list of top 5 products based on the provided date range and optional filters.
+    Retrieve a list of top selling products based on the provided date range and optional filters.
 
     **Note:** This endpoint requires `start_date` and `end_date` to fetch data for the specified period.
     If these values are not provided, the API will return only top 10 products.
