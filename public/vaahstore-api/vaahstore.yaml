@@ -126,7 +126,7 @@ paths:
   '/api/store/products/action/{action}':
     $ref: './products/productListAction.yaml'  # Reference to the products list action file
 
-  '/api/store/products/top-sellings':
+  '/api/store/products/top-selling':
     $ref: './products/topSellingProducts.yaml'  # Reference to the product item file
   '/api/store/products/top-brands':
     $ref: './products/topSellingBrands.yaml'  # Reference to the product item file
@@ -467,10 +467,24 @@ components:
       name: selected_store
       in: query
       required: false
-      description: Load items related to  `selected store`. If not provided, items from the `default store` will be loaded.
+      description: >
+        Load items related to the `selected store`.
+        If not provided, items from the `default store` will be loaded.
+        The value should be the `id` of the store.
       schema:
         type: integer
       example: 20
+    currency:
+      name: currency
+      in: query
+      required: false
+      description: >
+          Apply a specific currency code (e.g., `USD`, `INR`, `EUR`) to return prices
+          converted according to the selected store's configured currency exchange rates ,Example `?selected_store=xx&currency=USD`.
+          If not provided, default currency for the store will be used.
+      schema:
+        type: string
+      example: "USD"
 
     filter_q:
       name: filter[q]

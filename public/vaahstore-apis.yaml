@@ -1735,6 +1735,7 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/rows'
         - $ref: '#/components/parameters/selected_store'
+        - $ref: '#/components/parameters/currency'
         - $ref: '#/components/parameters/ids_query'
         - $ref: '#/components/parameters/exclude'
         - $ref: '#/components/parameters/include'
@@ -2556,50 +2557,50 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/products/top-sellings:
+  /api/store/products/top-selling:
     get:
       tags:
         - Products
       summary: Top-selling products within a date range
-      description: Retrieve a list of top 5 products based on the provided date range and optional filters.
+      description: |
+        Retrieve a list of top 5 products based on the provided date range and optional filters.
+        **Note:** This endpoint requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return only top 10 products.
       operationId: getTopSellings
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/selected_store'
+        - $ref: '#/components/parameters/currency'
         - name: limit
           in: query
-          description: Number of top products to retrieve. Defaults to 5 if not provided.
+          description: Number of top products to retrieve. Defaults to 10 if not provided.
           required: false
           schema:
             type: integer
             example: 2
-      requestBody:
-        required: true
-        description: |
-          The request body requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return data for the current day by default.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                start_date:
-                  type: string
-                  format: date-time
-                  example: '2024-12-01T00:00:00.000Z'
-                  description: Start date of the period for fetching top-selling categories.
-                end_date:
-                  type: string
-                  format: date-time
-                  example: '2024-12-26T00:00:00.000Z'
-                  description: End date of the period for fetching top-selling categories.
-                filter_all:
-                  type: string
-                  nullable: true
-                  example: null
-                  description: Optional filter to apply to the category list (e.g., all, null, etc.).
-              required:
-                - start_date
-                - end_date
+        - name: start_date
+          in: query
+          description: Start date of the period for fetching top-selling products.
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2024-12-01T00:00:00.000Z'
+        - name: end_date
+          in: query
+          description: End date of the period for fetching top-selling products.
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2024-12-30T00:00:00.000Z'
+        - name: filter_all
+          in: query
+          required: false
+          description: Optional filter to apply to the list (e.g., "all", null, etc.).
+          schema:
+            type: string
+            nullable: true
+            example: null
       responses:
         '200':
           description: Products Retrieved
@@ -2618,30 +2619,170 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 889
+                          format: int64
+                          example: 1
+                        uuid:
+                          type: string
+                          example: 8952d982-4aca-462e-8e90-2f8340a22582
                         name:
                           type: string
-                          example: Tata Coffee
-                        slug:
-                          type: string
-                          example: tata-coffee
-                        total_sales:
-                          type: string
-                          example: '1000'
-                        image_urls:
+                          example: My Product
+                        price:
+                          type: object
+                          description: Price details including the amount and associated currency information.
+                          properties:
+                            amount:
+                              type: string
+                              description: The price amount as a string (to preserve formatting such as decimals).
+                              example: '10.00'
+                            currency:
+                              type: object
+                              description: Currency details for the given amount.
+                              properties:
+                                code:
+                                  type: string
+                                  description: The ISO currency code (e.g., USD, IRR).
+                                  example: USD
+                                symbol:
+                                  type: string
+                                  description: The currency symbol, may include HTML or Unicode representations.
+                                  example: '&#xFDFC;'
+                                rate:
+                                  type: number
+                                  description: The exchange rate or base rate for the currency.
+                                  example: 1
+                        wishlist_ids:
                           type: array
                           items:
-                            type: string
-                            example: ''
+                            type: integer
+                          example:
+                            - 1
+                            - 2
+                          description: IDs of wishlists in which this product exists for the authenticated user.
+                        store:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
                         brand:
                           type: object
                           properties:
                             id:
                               type: integer
-                              example: 3
+                              example: 1
                             name:
                               type: string
-                              example: Tata
+                              example: Nike
+                        vendor_product_data:
+                          type: object
+                          properties:
+                            price_range:
+                              type: array
+                              items:
+                                type: number
+                              example:
+                                - 0
+                                - 1
+                            quantity:
+                              type: integer
+                              example: 7
+                            selected_vendor:
+                              type: object
+                              example:
+                                vendor data: null
+                        media:
+                          type: array
+                          description: List of product media items, each containing title, default status, and images in multiple formats.
+                          items:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                                example: invictus-men-round-toe-formal-loafers.jpg
+                              is_default:
+                                type: integer
+                                example: 0
+                              images:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    webp_url:
+                                      type: string
+                                      example: storage/media/invictus-men-round-toe-formal-loafers.webp
+                                    url:
+                                      type: string
+                                      example: storage/media/invictus-men-round-toe-formal-loafers.jpg
+                                    url_thumbnail:
+                                      type: string
+                                      example: storage/app/public/media/invictus-men-round-toe-formal-loafers.jpg
+                                    type:
+                                      type: string
+                                      nullable: true
+                                      example: null
+                        product_variation:
+                          type: object
+                          description: The default variation for this product, including size, color, price, stock, and other variation-specific data.
+                          properties:
+                            id:
+                              type: integer
+                              example: 334
+                            vh_st_product_id:
+                              type: integer
+                              example: 49
+                            uuid:
+                              type: string
+                              example: 3ee0ba4a-1976-4178-9403-7794f64b4a7a
+                            name:
+                              type: string
+                              example: INVICTUS Men Round Toe Formal Loafers - Orange/Small
+                            slug:
+                              type: string
+                              example: invictus-men-round-toe-formal-loafers-orange-small
+                            wishlist_ids:
+                              type: array
+                              items:
+                                type: integer
+                              example: []
+                            is_default:
+                              type: integer
+                              example: 1
+                            sku:
+                              type: string
+                              nullable: true
+                              example: null
+                            price:
+                              type: string
+                              example: '31.25'
+                            sale_price:
+                              type: string
+                              example: '31.25'
+                            attribute_query:
+                              type: string
+                              example: '?attribute[color]=orange&attribute[size]=small'
+                            media:
+                              type: array
+                              items:
+                                type: object
+                              example: []
+                            quantity:
+                              type: integer
+                              example: 0
+                            available_quantity:
+                              type: integer
+                              example: 0
+                            is_stock_available:
+                              type: integer
+                              example: 0
+                            type:
+                              type: string
+                              example: fallback
+                            selected_vendor:
+                              type: object
+                              nullable: true
+                              example: null
         '500':
           description: Internal Server Error
           content:
@@ -21142,10 +21283,20 @@ components:
       name: selected_store
       in: query
       required: false
-      description: Load items related to  `selected store`. If not provided, items from the `default store` will be loaded.
+      description: |
+        Load items related to the `selected store`. If not provided, items from the `default store` will be loaded. The value should be the `id` of the store.
       schema:
         type: integer
       example: 20
+    currency:
+      name: currency
+      in: query
+      required: false
+      description: |
+        Apply a specific currency code (e.g., `USD`, `INR`, `EUR`) to return prices converted according to the selected store's configured currency exchange rates ,Example `?selected_store=xx&currency=USD`. If not provided, default currency for the store will be used.
+      schema:
+        type: string
+      example: USD
     filter_q:
       name: filter[q]
       in: query
