@@ -2563,7 +2563,7 @@ paths:
         - Products
       summary: Top-selling products within a date range
       description: |
-        Retrieve a list of top 5 products based on the provided date range and optional filters.
+        Retrieve a list of top selling products based on the provided date range and optional filters.
         **Note:** This endpoint requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return only top 10 products.
       operationId: getTopSellings
       parameters:
@@ -2793,40 +2793,44 @@ paths:
       tags:
         - Products
       summary: Top-selling brands within a date range
-      description: Retrieve a list of top 5 brands based on the provided date range and optional filters.
+      description: |
+        Retrieve a list of top brands based on the provided date range and optional filters.
+        **Note:** This endpoint requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return only top 10 brands.
       operationId: getTopSellingBrands
       parameters:
+        - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/selected_store'
         - name: limit
           in: query
-          description: Number of top brands to retrieve. Defaults to 5 if not provided.
+          description: Number of top brands to retrieve. Defaults to 10 if not provided.
           required: false
           schema:
             type: integer
             example: 2
-      requestBody:
-        required: true
-        description: |
-          The request body requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return data for the current day by default.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                start_date:
-                  type: string
-                  format: date-time
-                  example: '2024-12-01T00:00:00.000Z'
-                  description: Start date of the period for fetching top-selling brands.
-                end_date:
-                  type: string
-                  format: date-time
-                  example: '2024-12-26T00:00:00.000Z'
-                  description: End date of the period for fetching top-selling brands.
-                filter_all:
-                  type: string
-                  nullable: true
-                  example: null
-                  description: Optional filter to apply to the brand list (e.g., all, null, etc.).
+        - name: start_date
+          in: query
+          description: Start date of the period for fetching top-brands.
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2024-12-01T00:00:00.000Z'
+        - name: end_date
+          in: query
+          description: End date of the period for fetching top-brands.
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2024-12-30T00:00:00.000Z'
+        - name: filter_all
+          in: query
+          required: false
+          description: Optional filter to apply to the list (e.g., "all", null, etc.).
+          schema:
+            type: string
+            nullable: true
+            example: null
       responses:
         '200':
           description: Brands Retrieved
@@ -2852,6 +2856,12 @@ paths:
                         slug:
                           type: string
                           example: tata-coffee
+                        image_urls:
+                          type: array
+                          description: List of image URLs (usually web-optimized) associated with the brand.
+                          items:
+                            type: string
+                            example: storage/brands/house-of-pataudi.webp
                         total_sales:
                           type: string
                           example: '1000'
@@ -2865,43 +2875,44 @@ paths:
       tags:
         - Products
       summary: Top-selling categories within a date range
-      description: Retrieve a list of top 5 categories based on the provided date range and optional filters.
+      description: |
+        Retrieve a list of top categories based on the provided date range and optional filters.
+        **Note:** This endpoint requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return only top 10 categories.
       operationId: getTopSellingCategories
       parameters:
+        - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/selected_store'
         - name: limit
           in: query
-          description: Number of top categories to retrieve. Defaults to 5 if not provided.
+          description: Number of top brands to retrieve. Defaults to 10 if not provided.
           required: false
           schema:
             type: integer
             example: 2
-      requestBody:
-        required: true
-        description: |
-          The request body requires `start_date` and `end_date` to fetch data for the specified period. If these values are not provided, the API will return data for the current day by default.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                start_date:
-                  type: string
-                  format: date-time
-                  example: '2024-12-01T00:00:00.000Z'
-                  description: Start date of the period for fetching top-selling categories.
-                end_date:
-                  type: string
-                  format: date-time
-                  example: '2024-12-26T00:00:00.000Z'
-                  description: End date of the period for fetching top-selling categories.
-                filter_all:
-                  type: string
-                  nullable: true
-                  example: null
-                  description: Optional filter to apply to the category list (e.g., all, null, etc.).
-              required:
-                - start_date
-                - end_date
+        - name: start_date
+          in: query
+          description: Start date of the period for fetching top-selling categories.
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2024-12-01T00:00:00.000Z'
+        - name: end_date
+          in: query
+          description: End date of the period for fetching top-categories.
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2024-12-30T00:00:00.000Z'
+        - name: filter_all
+          in: query
+          required: false
+          description: Optional filter to apply to the list (e.g., "all", null, etc.).
+          schema:
+            type: string
+            nullable: true
+            example: null
       responses:
         '200':
           description: Categories Retrieved
@@ -2923,10 +2934,40 @@ paths:
                           example: 889
                         name:
                           type: string
-                          example: Tata Coffee
+                          example: Invictus
                         slug:
                           type: string
-                          example: tata-coffee
+                          example: invictus
+                        media:
+                          type: array
+                          description: List of product media items, each containing title, default status, and images in multiple formats.
+                          items:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                                example: invictus.jpg
+                              is_default:
+                                type: integer
+                                example: 0
+                              images:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    webp_url:
+                                      type: string
+                                      example: storage/media/invictus.webp
+                                    url:
+                                      type: string
+                                      example: storage/media/invictus.jpg
+                                    url_thumbnail:
+                                      type: string
+                                      example: storage/app/public/media/invictus.jpg
+                                    type:
+                                      type: string
+                                      nullable: true
+                                      example: null
         '500':
           description: Internal Server Error
           content:
