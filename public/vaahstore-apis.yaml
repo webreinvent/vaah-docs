@@ -2991,6 +2991,15 @@ paths:
           schema:
             type: integer
             example: 1
+        - $ref: '#/components/parameters/currency'
+        - name: variation_id
+          in: query
+          description: |
+            Pass this query parameter to retrieve vendors specifically for the given product variation. If provided, the response will include pricing and other details relevant to the selected variation.
+          required: false
+          schema:
+            type: integer
+            example: 2
       responses:
         '200':
           description: Successfully retrieved the list of vendors.
@@ -3009,31 +3018,74 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 109
+                          example: 10
+                          description: Unique identifier for the vendor.
                         name:
                           type: string
-                          example: Vendor 1
+                          example: Mrs. Pat Borer Sr.
+                          description: Name of the vendor.
                         slug:
                           type: string
-                          example: vendor-1
+                          example: default-vendor-9
+                          description: Slug for the vendor used in URLs or references.
                         is_default:
+                          type: boolean
+                          nullable: true
+                          example: null
+                          description: Indicates if this vendor is marked as default for the product.
+                        email:
+                          type: string
+                          nullable: true
+                          example: null
+                          description: Email address of the vendor, if available.
+                        phone_number:
+                          type: string
+                          nullable: true
+                          example: null
+                          description: Contact phone number of the vendor.
+                        years_in_business:
                           type: integer
-                          example: 1
+                          nullable: true
+                          example: null
+                          description: Number of years the vendor has been in business.
+                        services_offered:
+                          type: string
+                          nullable: true
+                          example: null
+                          description: Description of services offered by the vendor.
+                        status_notes:
+                          type: string
+                          example: Default Vendor Status
+                          description: Notes or remarks about the vendor's status.
                         quantity:
                           type: integer
                           example: 0
+                          description: Available quantity from the vendor.
+                        price:
+                          type: string
+                          example: '30.76'
+                          description: Final calculated or listed price of the product for this vendor.
                         product_price_range:
                           type: array
                           items:
                             type: number
-                          example: []
-                        pivot_id:
+                          example:
+                            - 20.16
+                            - 31.25
+                          description: Minimum and maximum price range of the product for this vendor.
+                        product_vendor_id:
                           type: integer
-                          example: 79
+                          example: 33
+                          description: ID of the vendor specific to this product relationship.
+                        vh_st_product_id:
+                          type: integer
+                          example: 49
+                          description: Product ID related to this vendor.
                         is_preferred:
                           type: boolean
                           nullable: true
                           example: null
+                          description: Indicates if the vendor is preferred for this product.
                   message:
                     type: boolean
                     example: false
