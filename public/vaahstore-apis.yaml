@@ -6902,6 +6902,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/rows'
+        - $ref: '#/components/parameters/exclude'
+        - $ref: '#/components/parameters/include'
         - $ref: '#/components/parameters/filter_q'
         - $ref: '#/components/parameters/filter_is_active'
         - $ref: '#/components/parameters/filter_trashed'
