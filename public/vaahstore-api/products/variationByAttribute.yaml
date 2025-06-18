@@ -6,10 +6,17 @@ get:
   operationId: getProductById
   parameters:
     - $ref: '../vaahstore.yaml#/components/parameters/id'
-    - name: attribute_value_id[]
+    - name: attribute[]
       in: query
       required: true
-      description: Selected attribute value IDs to find the matching variation, e.g `?attribute_value_id[]=1&attribute_value_id[]=20`
+      description: >
+        Selected attribute value IDs used to find the matching product variation.
+
+        These values represent selected attributes such as color, size, etc., which are grouped under product attributes.
+
+        For example: `?attribute[color]=orange&attribute[size]=small`.
+
+        The attribute values must match the ones available in the product's grouped attributes.
       schema:
         type: array
         items:
@@ -17,45 +24,127 @@ get:
       style: form
       explode: true
       example: [ 1, 20 ]
+    - '$ref': '../vaahstore.yaml#/components/parameters/currency'
 
   responses:
     '200':
       description: Matching variation found
       content:
         application/json:
-          example:
-            success: true
-            data:
-              variation_id: 636
-              name: INVICTUS Men Round Toe Formal Loafers-Blue/Polyester
-              price:
-                amount: "0.00"
-                currency:
-                  code: USD
-                  symbol: "&#36;"
-                  rate: 1
-              quantity: 0
-              wishlist_ids: [1,2 ]
-              selected_vendor_id: 5
-              media:
-                - title: qr-code.png
-                  images:
-                    - webp_url: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9.webp
-                      url: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9.png
-                      url_thumbnail: storage/media/vChI5nMKZ9MOlsQQ2Fn6VjhWhTlY5DDeb1NtSzO9-thumbnail.png
-                      type: image
-                  is_default: 0
-                - title: 4th-category.png
-                  images:
-                    - webp_url: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x.webp
-                      url: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x.png
-                      url_thumbnail: storage/media/uoc9I3u4iqtnCr9osyyW3GzadaUdoJNhf2RWEB9x-thumbnail.png
-                      type: image
-                    - webp_url: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN.webp
-                      url: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN.png
-                      url_thumbnail: storage/media/DcOJeJVTVoyBe1Rq5gjl06xwug8fPJsNX3u6kSHN-thumbnail.png
-                      type: image
-                  is_default: 0
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Unique ID of the product variation.
+                    example: XXX
+                  vh_st_product_id:
+                    type: integer
+                    description: ID of the associated product.
+                    example: XX
+                  uuid:
+                    type: string
+                    description: UUID of the product variation.
+                    example: "a703c6d4-c009-48a0-95c0-adc6997a9886"
+                  name:
+                    type: string
+                    description: Name of the product variation including attribute values like color and size.
+                    example: "House of Pataudi Men Round Toe Slip On Formal Loafers - White/XS"
+                  slug:
+                    type: string
+                    description: URL-friendly identifier of the product variation.
+                    example: "house-of-pataudi-men-round-toe-slip-on-formal-loafers-white-xs"
+                  wishlist_ids:
+                    type: array
+                    description: Array of wishlist IDs where this product variation is included.
+                    items:
+                      type: integer
+                    example: [ ]
+                  is_default:
+                    type: integer
+                    description: Flag indicating whether this is the default variation (1 for default).
+                    example: 1
+                  sku:
+                    type: string
+                    nullable: true
+                    description: Stock Keeping Unit for the variation (nullable).
+                    example: null
+                  price:
+                    type: string
+                    description: Base price of the product variation.
+                    example: "1756.88"
+                  sale_price:
+                    type: number
+                    description: >
+                      Sale price of the product variation, if applicable.
+                      This price is determined after the associated vendor decides to sell the product, potentially offering it at a discounted or competitive rate.
+                    example: 8633.31
+                  attribute_query:
+                    type: string
+                    description: Query string representing selected attribute values like color and size.
+                    example: "?attribute[color]=white&attribute[size]=xs"
+                  media:
+                    type: array
+                    description: Array of media objects related to the variation; same structure as product media.
+                    items:
+                      type: object
+                    example: [ ]
+                  quantity:
+                    type: integer
+                    description: Total quantity in stock for the variation.
+                    example: 98
+                  available_quantity:
+                    type: integer
+                    description: Currently available quantity (excluding reserved/held stock).
+                    example: 98
+                  is_stock_available:
+                    type: integer
+                    description: Flag indicating stock availability (1 for in-stock, 0 for out-of-stock).
+                    example: 1
+                  type:
+                    type: string
+                    description: Variation type (e.g., "fallback" for default variant).
+                    example: "fallback"
+                  selected_vendor:
+                    type: object
+                    description: Information about the vendor currently selected for this variation.
+                    properties:
+                      id:
+                        type: integer
+                        description: Unique ID of the vendor.
+                        example: XX
+                      name:
+                        type: string
+                        description: Name of the vendor.
+                        example: "Audrey Feest"
+                      slug:
+                        type: string
+                        description: Slug identifier of the vendor.
+                        example: "default-vendor-0"
+                      email:
+                        type: string
+                        nullable: true
+                        description: Email address of the vendor (nullable).
+                        example: null
+                      phone_number:
+                        type: string
+                        nullable: true
+                        description: Contact number of the vendor (nullable).
+                        example: null
+                      address:
+                        type: string
+                        nullable: true
+                        description: Physical address of the vendor (nullable).
+                        example: null
+
+
+
 
     '404':
       description: No matcing variation exist.
