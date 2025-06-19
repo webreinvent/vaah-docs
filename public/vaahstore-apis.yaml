@@ -7230,6 +7230,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/frontend_ui'
         - $ref: '#/components/parameters/selected_store'
+        - $ref: '#/components/parameters/currency'
         - name: uuid
           in: path
           required: true
@@ -7427,10 +7428,18 @@ paths:
                                   type: integer
                                 price:
                                   type: number
+                                cart_product_variation:
+                                  type: string
                                 is_stock_available:
                                   type: integer
                                 is_wishlisted:
                                   type: integer
+                                created_at:
+                                  type: string
+                                  example: '2024-12-09 05:56:09'
+                                updated_at:
+                                  type: string
+                                  example: '2024-12-09 05:56:09'
         '404':
           description: Record Not Found
           content:
