@@ -32,15 +32,19 @@ get:
                   id:
                     type: integer
                     description: "Unique identifier for the cart"
-                    example: 14
+                    example: XX
                   uuid:
                     type: string
                     description: "Universally unique identifier for the cart"
-                    example: "3e48cbb5-19f2-453f-afdd-21049ad5fc22"
+                    example: "XXX-XXX-XXX"
+                  cart_products_count:
+                    type: integer
+                    description: 'Describe the total product in the cart'
+                    example: 2
                   user_id:
                     type: integer
                     description: "Unique identifier for the user associated with the cart"
-                    example: 55126
+                    example: XX
                   total_amount:
                     type: number
                     format: float
