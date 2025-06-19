@@ -2317,17 +2317,35 @@ components:
           type: integer
           example: 121
           description: The ID of the user associated with the order.
+        vh_st_store_id:
+          type: integer
+          example: 1
+          description: The ID of the store to which this order belongs.
         order_status:
           type: string
           example: "Placed"
           description: The current status of the order.
-        taxonomy_id_payment_status:
-          type: integer
-          description: The id of the order payment status.
         order_shipment_status:
           type: string
           example: "Pending"
           description: The current shipment status of the order.
+        order_payment_status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 64
+              description: The ID of the payment status.
+            name:
+              type: string
+              example: "Pending"
+              description: The name of the payment status.
+            slug:
+              type: string
+              example: "pending"
+              description: A URL-friendly version of the payment status name.
+
+
         amount:
           type: number
           format: float
@@ -2376,21 +2394,25 @@ components:
           nullable: true
           example: null
           description: The payment method used for the order.
-        order_payment_status:
+        currency:
           type: object
+          description: |
+            The default currency of the selected store for this order.
+            Includes the currency code, display symbol, and conversion rate.
           properties:
-            id:
-              type: integer
-              example: 64
-              description: The ID of the payment status.
-            name:
+            code:
               type: string
-              example: "Pending"
-              description: The name of the payment status.
-            slug:
+              example: "USD"
+              description: "The currency code (e.g., USD, EUR)."
+            symbol:
               type: string
-              example: "pending"
-              description: A URL-friendly version of the payment status name.
+              example: "&#36;"
+              description: "The display symbol for the currency (HTML encoded)."
+            rate:
+              type: number
+              example: 1
+              description: "The conversion rate of this currency relative to the base currency."
+
         status:
           type: string
           nullable: true
@@ -2401,6 +2423,9 @@ components:
           nullable: true
           example: null
           description: Any notes related to the status of the order.
+        taxonomy_id_payment_status:
+          type: integer
+          description: The id of the order payment status.
         user:
           type: object
           properties:
