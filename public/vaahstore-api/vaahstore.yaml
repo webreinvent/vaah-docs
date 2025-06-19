@@ -740,9 +740,18 @@ components:
       required: false
       schema:
         type: string
-        example:  primevue/tailwind
+        example: primevue/tailwind
       description: |
-        If set to `?frontend_ui=primevue`,  the response will include only structured and optimized data suitable for PrimeVue UI components.
+        If set to `?frontend_ui=primevue`, the response will include only structured and optimized data
+        tailored for PrimeVue UI components — simplifying integration with frontend forms, tables, and other widgets.
+
+        This parameter helps refine the JSON response format by omitting unnecessary backend-specific structure
+        and returning clean, UI-friendly objects ready for consumption by the specified framework.
+
+         Example Values:
+          - `?frontend_ui=primevue`: Optimized for PrimeVue components
+          - `?frontend_ui=flowbite`: Optimized for Flowbite/Tailwind UI components
+          - ...more as per your frontend setup
 
     include:
       name: include
