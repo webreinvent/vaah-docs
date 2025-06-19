@@ -9526,6 +9526,286 @@ paths:
                             created_by_user:
                               type: object
                               nullable: true
+                      shipments:
+                        type: array
+                        description: List of shipment records associated with the order.
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 101
+                              description: Unique identifier of the shipment.
+                            created_at:
+                              type: string
+                              format: date-time
+                              example: '2025-06-19 06:23:55'
+                              description: Timestamp when the shipment was created.
+                            updated_at:
+                              type: string
+                              format: date-time
+                              example: '2025-06-19 06:25:35'
+                              description: Timestamp when the shipment was last updated.
+                            tracking_key:
+                              type: string
+                              example: toolstation
+                              description: Key or name of the tracking service.
+                            tracking_url:
+                              type: string
+                              example: https://www.delhivery.com/
+                              description: URL to track the shipment.
+                            tracking_value:
+                              type: string
+                              example: 951941-sfhkv-98dh-llko8
+                              description: Tracking number or reference value.
+                            status:
+                              type: object
+                              description: Current status of the shipment.
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 76
+                                  description: ID of the shipment status.
+                                name:
+                                  type: string
+                                  example: Delivered
+                                  description: Human-readable status name.
+                                slug:
+                                  type: string
+                                  example: delivered
+                                  description: Slug identifier for the status.
+                            items:
+                              type: array
+                              description: List of items included in this shipment.
+                              items:
+                                type: object
+                                properties:
+                                  order_item_id:
+                                    type: integer
+                                    example: 2125
+                                    description: ID of the order item linked to this shipment.
+                                  shipment_quantity:
+                                    type: integer
+                                    example: 1
+                                    description: Quantity of the item shipped in this shipment.
+                                  pending:
+                                    type: integer
+                                    example: 1
+                                    description: Quantity of the item still pending shipment.
+                                  ordered_product:
+                                    type: object
+                                    description: Detailed product information of the ordered item.
+                                    properties:
+                                      id:
+                                        type: integer
+                                        example: 44
+                                        description: Product ID.
+                                      name:
+                                        type: string
+                                        example: House of Pataudi Men Formal Loafers
+                                        description: Name of the product.
+                                      slug:
+                                        type: string
+                                        example: house-of-pataudi-men-formal-loafers
+                                        description: URL-friendly identifier for the product.
+                                      quantity:
+                                        type: integer
+                                        example: 2
+                                        description: Quantity of this product ordered.
+                                      media:
+                                        type: array
+                                        description: List of media (e.g. images) associated with the product.
+                                        items:
+                                          type: object
+                                          properties:
+                                            title:
+                                              type: string
+                                              example: house-of-pataudi-men-formal-loafers.jpg
+                                              description: Title or filename of the media.
+                                            is_default:
+                                              type: integer
+                                              example: 0
+                                              description: Indicates if this media is the default image.
+                                            images:
+                                              type: array
+                                              description: Different formats/versions of the image.
+                                              items:
+                                                type: object
+                                                properties:
+                                                  webp_url:
+                                                    type: string
+                                                    example: storage/media/house-of-pataudi-men-formal-loafers.webp
+                                                    description: URL of the WebP image.
+                                                  url:
+                                                    type: string
+                                                    example: storage/media/house-of-pataudi-men-formal-loafers.jpg
+                                                    description: URL of the standard image.
+                                                  url_thumbnail:
+                                                    type: string
+                                                    example: storage/app/public/media/house-of-pataudi-men-formal-loafers.jpg
+                                                    description: Thumbnail version of the image.
+                                                  type:
+                                                    type: string
+                                                    nullable: true
+                                                    example: null
+                                                    description: Optional media type.
+                                      grouped_attributes:
+                                        type: array
+                                        description: List of grouped attribute sets such as color and size with selected values.
+                                        items:
+                                          type: object
+                                          properties:
+                                            attribute_id:
+                                              type: integer
+                                              example: 1
+                                              description: ID of the attribute group.
+                                            attribute:
+                                              type: string
+                                              example: Color
+                                              description: Name of the attribute group.
+                                            selected:
+                                              type: integer
+                                              example: 2
+                                              description: ID of the selected value for this attribute.
+                                            values:
+                                              type: array
+                                              items:
+                                                type: object
+                                                properties:
+                                                  id:
+                                                    type: integer
+                                                    example: 2
+                                                    description: ID of the attribute value.
+                                                  value:
+                                                    type: string
+                                                    example: Black
+                                                    description: Display name of the attribute value.
+                                      product_variation:
+                                        type: object
+                                        description: The selected product variation details.
+                                        properties:
+                                          id:
+                                            type: integer
+                                            example: 296
+                                          vh_st_product_id:
+                                            type: integer
+                                            example: 44
+                                          uuid:
+                                            type: string
+                                            example: b52dd448-37c2-4ace-8e80-43c6e26e5b42
+                                          name:
+                                            type: string
+                                            example: House of Pataudi Men Formal Loafers - Black/XS
+                                          slug:
+                                            type: string
+                                            example: house-of-pataudi-men-formal-loafers-black-xs
+                                          wishlist_ids:
+                                            type: array
+                                            items:
+                                              type: integer
+                                            example: []
+                                          is_default:
+                                            type: integer
+                                            example: 1
+                                          sku:
+                                            type: string
+                                            nullable: true
+                                            example: null
+                                          price:
+                                            type: string
+                                            example: '34.40'
+                                          sale_price:
+                                            type: string
+                                            example: '34.40'
+                                          attribute_query:
+                                            type: string
+                                            example: '?attribute[color]=black&attribute[size]=xs'
+                                          media:
+                                            type: array
+                                            items:
+                                              type: object
+                                            example: []
+                                          quantity:
+                                            type: integer
+                                            example: 103
+                                          available_quantity:
+                                            type: integer
+                                            example: 103
+                                          is_stock_available:
+                                            type: integer
+                                            example: 1
+                                          type:
+                                            type: string
+                                            example: fallback
+                                          selected_vendor:
+                                            type: object
+                                            properties:
+                                              id:
+                                                type: integer
+                                                example: 36
+                                              name:
+                                                type: string
+                                                example: Mrs. Hailie Morissette PhD
+                                              slug:
+                                                type: string
+                                                example: default-vendor-35
+                                              email:
+                                                type: string
+                                                nullable: true
+                                                example: null
+                                              phone_number:
+                                                type: string
+                                                nullable: true
+                                                example: null
+                                              address:
+                                                type: string
+                                                nullable: true
+                                                example: null
+                                      vendor:
+                                        type: object
+                                        description: Vendor information for the product.
+                                        properties:
+                                          id:
+                                            type: integer
+                                            example: 36
+                                          name:
+                                            type: string
+                                            example: Mrs. Hailie Morissette PhD
+                                          slug:
+                                            type: string
+                                            example: default-vendor-35
+                                          email:
+                                            type: string
+                                            nullable: true
+                                            example: null
+                                          phone_number:
+                                            type: string
+                                            nullable: true
+                                            example: null
+                                          business_type:
+                                            type: string
+                                            nullable: true
+                                            example: null
+                                      brand:
+                                        type: object
+                                        description: Brand details of the product.
+                                        properties:
+                                          id:
+                                            type: integer
+                                            example: 57
+                                          name:
+                                            type: string
+                                            example: House of Pataudi
+                                          slug:
+                                            type: string
+                                            example: house-of-pataudi
+                                          media:
+                                            type: object
+                                            properties:
+                                              webp_url:
+                                                type: string
+                                                example: /storage/brands/house-of-pataudi.webp
+                                                description: URL to the brand's WebP logo or image.
         '404':
           description: Record Not Found
           content:
