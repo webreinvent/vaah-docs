@@ -7,6 +7,7 @@ get:
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
     - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
+    - '$ref': '../vaahstore.yaml#/components/parameters/currency'
     - name: uuid
       in: path
       required: true
@@ -204,10 +205,18 @@ get:
                               type: integer
                             price:
                               type: number
+                            cart_product_variation:
+                              type: string
                             is_stock_available:
                               type: integer
                             is_wishlisted:
                               type: integer
+                            created_at:
+                              type: string
+                              example: "2024-12-09 05:56:09"
+                            updated_at:
+                              type: string
+                              example: "2024-12-09 05:56:09"
 
 
 
