@@ -22,7 +22,7 @@
     "@pinia/nuxt": "^0.7.0",
     "medium-zoom": "^1.1.0",
     "nuxt": "^3.14.159",
-    "nuxt-og-image": "^3.0.8",
+    "nuxt-og-image": "^3.1.1",
     "pinia": "^2.2.6",
     "@vueuse/core": "^11.1.0",
     "apexcharts": "^3.54.1",
