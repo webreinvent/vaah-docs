@@ -5,9 +5,6 @@ get:
   description: Retrieve a cart items by its universal unique identifier.
   operationId: getCartById
   parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
-    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
-    - '$ref': '../vaahstore.yaml#/components/parameters/currency'
     - name: uuid
       in: path
       required: true
@@ -15,6 +12,9 @@ get:
       schema:
         type: string
         example: "abcd1234-abcd1234"
+    - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
+    - '$ref': '../vaahstore.yaml#/components/parameters/currency'
   responses:
     '200':
       description: Cart details retrieved successfully
