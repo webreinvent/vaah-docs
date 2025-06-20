@@ -50,20 +50,17 @@ post:
                   uuid:
                     type: string
                     example: "abcd1234-xyz"
+                  cart_products_count:
+                    type: integer
+                    description: 'Describe the total product in the cart'
+                    example: 2
                   vh_user_id:
                     type: integer
                     example: 123
                   products:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        product_id:
-                          type: integer
-                          example: 101
-                        quantity:
-                          type: integer
-                          example: 2
+                      '$ref': '../vaahstore.yaml#/components/schemas/Product'
     '400':
       description: Bad Request (e.g., Cart not found or user already attached)
       content:

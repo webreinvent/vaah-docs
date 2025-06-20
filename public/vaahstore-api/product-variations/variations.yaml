@@ -7,6 +7,8 @@ get:
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/page'
     - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
+    - '$ref': '../vaahstore.yaml#/components/parameters/currency'
     - '$ref': '../vaahstore.yaml#/components/parameters/ids_query'
     - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
     - '$ref': '../vaahstore.yaml#/components/parameters/include'

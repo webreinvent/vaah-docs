@@ -4,6 +4,7 @@ get:
   summary: Get List of all vendors
   operationId: getVendorsList
   parameters:
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
     - name: filter[q]
       in: query
       required: false
