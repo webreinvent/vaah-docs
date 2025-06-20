@@ -3500,30 +3500,67 @@ components:
                     in_stock:
                       type: boolean
                       nullable: true
-                    selected_variation:
+                    product_variation:
                       type: object
-                      description: "Selected variation of the product."
+                      description: The default variation for this product, including size, color, price, stock, and other variation-specific data.
                       properties:
                         id:
                           type: integer
-                        uuid:
-                          type: string
+                          example: 334
                         vh_st_product_id:
                           type: integer
-                        taxonomy_id_variation_status:
+                          example: 49
+                        uuid:
+                          type: string
+                          example: "3ee0ba4a-1976-4178-9403-7794f64b4a7a"
+                        name:
+                          type: string
+                          example: "INVICTUS Men Round Toe Formal Loafers - Orange/Small"
+                        slug:
+                          type: string
+                          example: "invictus-men-round-toe-formal-loafers-orange-small"
+                        wishlist_ids:
+                          type: array
+                          items:
+                            type: integer
+                          example: [ ]
+                        is_default:
                           type: integer
+                          example: 1
                         sku:
                           type: string
                           nullable: true
-                        name:
+                          example: null
+                        price:
                           type: string
-                        slug:
+                          example: "31.25"
+                        sale_price:
                           type: string
+                          example: "31.25"
+                        attribute_query:
+                          type: string
+                          example: "?attribute[color]=orange&attribute[size]=small"
+                        media:
+                          type: array
+                          items:
+                            type: object
+                          example: [ ]
                         quantity:
                           type: integer
-                        is_default:
-                          type: boolean
+                          example: 0
+                        available_quantity:
+                          type: integer
+                          example: 0
+                        is_stock_available:
+                          type: integer
+                          example: 0
+                        type:
+                          type: string
+                          example: "fallback"
+                        selected_vendor:
+                          type: object
                           nullable: true
+                          example: null
 
 
     Customer:
@@ -3546,6 +3583,12 @@ components:
         active_roles_count:
           type: integer
           description: "Number of active roles the customer has."
+        cart_uuid:
+          type: string
+          description: Unique identifier for the cart session.
+        cart_products_count:
+            type: integer
+            description: Total number of products currently in the cart.
         affiliate_code:
           type: string
           description: "Affiliate code of the customer."
