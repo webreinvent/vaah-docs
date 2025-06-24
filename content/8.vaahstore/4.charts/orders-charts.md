@@ -1,222 +1,196 @@
 ---
-customer_count_grouped: [
-{
-name: 'Created',
-data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20 ]
-},
+customer_count_grouped:
+  - name: 'Created'
+    data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20]
+  - name: 'Completed'
+    data: [20, 30, 15, 30, 35, 25, 30, 40, 50, 45, 35, 15]
 
-{
-name: 'Completed',
-data: [20, 30, 15, 30, 35, 25, 30, 40, 50, 45, 35, 15]
-}
+overall_sales:
+  - name: 'Total Sale'
+    data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20]
 
-]
+order_payment_chart_series:
+  - name: 'Payment'
+    data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20]
 
-overall_sales: [
-{
-name: 'Total Sale',
-data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20 ]
-}
-
-]
-
-order_payment_chart_series: [
-{
-name: 'Payment',
-data: [30, 40, 50, 45, 70, 80, 90, 60, 50, 70, 30, 20 ]
-}
-
-]
-
-xaxis: {
-categories: ['January', 'febraury', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
-}
+xaxis:
+  categories:
+    - 'January'
+    - 'febraury'
+    - 'March'
+    - 'April'
+    - 'May'
+    - 'June'
+    - 'July'
+    - 'August'
+    - 'September'
+    - 'October'
+    - 'November'
+    - 'December'
 
 data_pie: [30, 40, 45]
 
+data_labels:
+  labels: ['Placed', 'Shipped', 'Delivered']
 
+data_donut:
+  labels: ['COD', 'Credit Card', 'Paypal']
+  chart:
+    id: 'donut-chart'
+    type: 'donut'
+    background: '#fff'
+    toolbar:
+      show: true
+    zoom:
+      enabled: false
+  plotOptions:
+    donut:
+      size: '70%'
+      labels:
+        show: true
+        name:
+          show: true
+          fontSize: '14px'
+          fontWeight: 'bold'
+          color: '#263238'
+        value:
+          show: true
+          fontSize: '16px'
+          fontWeight: 'bold'
+          color: '#000'
+  dataLabels:
+    enabled: true
+    style:
+      fontSize: '14px'
+  stroke:
+    show: true
+    width: 2
+    colors: ['#fff']
+  legend:
+    position: 'bottom'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
 
-data_labels: {
-labels: [ 'Placed','Shipped', 'Delivered'],
-}
+chartOptions:
+  xaxis:
+    type: 'datetime'
+    categories:
+      - '2024-01-01'
+      - '2024-02-01'
+      - '2024-03-01'
+      - '2024-04-01'
+      - '2024-05-01'
+      - '2024-06-01'
+      - '2024-07-01'
+      - '2024-08-01'
+      - '2024-09-01'
+      - '2024-10-01'
+      - '2024-11-01'
+      - '2024-12-01'
+  stroke:
+    curve: 'smooth'
+    width: 4
+  title:
+    text: 'Orders Count'
+    align: 'center'
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
+  legend:
+    position: 'top'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
 
-data_donut: {
-labels: ['Placed', 'Shipped', 'Delivered'],
-chart: {
-id: 'donut-chart',
-type: 'donut',
-background: '#fff',
-toolbar: {
-show: true
-},
-zoom: {
-enabled: false
-}
-},
-plotOptions: {
-donut: {
-size: '70%',
-labels: {
-show: true,
-name: {
-show: true,
-fontSize: '14px',
-fontWeight: 'bold',
-color: '#263238'
-},
-value: {
-show: true,
-fontSize: '16px',
-fontWeight: 'bold',
-color: '#000'
-}
-}
-}
-},
-dataLabels: {
-enabled: true,
-style: {
-fontSize: '14px'
-}
-},
-stroke: {
-show: true,
-width: 2,
-colors: ['#fff']
-},
-legend: {
-position: 'bottom',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: {
-fontSize: '14px'
-}
-}
-}
+sales_chart_options:
+  xaxis:
+    type: 'datetime'
+    categories:
+      - '2024-01-01'
+      - '2024-02-01'
+      - '2024-03-01'
+      - '2024-04-01'
+      - '2024-05-01'
+      - '2024-06-01'
+      - '2024-07-01'
+      - '2024-08-01'
+      - '2024-09-01'
+      - '2024-10-01'
+      - '2024-11-01'
+      - '2024-12-01'
+  stroke:
+    curve: 'smooth'
+    width: 4
+  title:
+    text: 'Overall Sales'
+    align: 'center'
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  dataLabels:
+    enabled: false
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
+  legend:
+    position: 'top'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
 
-chartOptions: {
-xaxis: {
-type: 'datetime',
-categories: [
-'2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
-'2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
-'2024-11-01', '2024-12-01'
-],},
-stroke: {
-curve: 'smooth', 
-width: 4,
-},
-title: {
-text: 'Orders Count',
-align: 'center',
-style: {
-fontSize: '16px',
-fontWeight: 'bold',
-color: '#263238'
-}
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: {
-fontSize: '14px'
-}
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px',
-
-}
-}
-
-
-sales_chart_options: {
-xaxis: {
-type: 'datetime',
-categories: [
-'2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
-'2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
-'2024-11-01', '2024-12-01'
-],},
-stroke: {
-curve: 'smooth',
-width: 4,
-},
-title: {
-text: 'Overall Sales',
-align: 'center',
-style: {
-fontSize: '16px',
-fontWeight: 'bold',
-color: '#263238'
-}
-},
-dataLabels: {
-enabled: false,
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: {
-fontSize: '14px'
-}
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px',
-
-}
-}
-
-
-order_payment_chart_options: {
-xaxis: {
-type: 'datetime',
-categories: [
-'2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
-'2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
-'2024-11-01', '2024-12-01'
-],},
-stroke: {
-curve: 'smooth',
-width: 4,
-},
-title: {
-text: 'Payment Received',
-align: 'center',
-style: {
-fontSize: '16px',
-fontWeight: 'bold',
-color: '#263238'
-}
-},
-dataLabels: {
-enabled: false,
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: {
-fontSize: '14px'
-}
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px',
-
-}
-}
+order_payment_chart_options:
+  xaxis:
+    type: 'datetime'
+    categories:
+      - '2024-01-01'
+      - '2024-02-01'
+      - '2024-03-01'
+      - '2024-04-01'
+      - '2024-05-01'
+      - '2024-06-01'
+      - '2024-07-01'
+      - '2024-08-01'
+      - '2024-09-01'
+      - '2024-10-01'
+      - '2024-11-01'
+      - '2024-12-01'
+  stroke:
+    curve: 'smooth'
+    width: 4
+  title:
+    text: 'Payment Received'
+    align: 'center'
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  dataLabels:
+    enabled: false
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
+  legend:
+    position: 'top'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
 ---
 
 
@@ -734,6 +708,7 @@ public static function fetchOrdersCountChartData(Request $request)
     }
 
 ```
+
 
 ### Area Chart
 

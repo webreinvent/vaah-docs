@@ -2,13 +2,28 @@ get:
   tags:
     - Wishlists
   summary: Get list of wishlists
-  description: Retrieve list of all the wishlists.
+  description: >
+    Retrieve list of all the wishlists.
+    By default, `user_wishlist_products` is not included in the response.
+    To include it, use the query parameter `include[user_wishlist_products]=true`.
+
   operationId: getWishlists
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/page'
     - '$ref': '../vaahstore.yaml#/components/parameters/rows'
-    - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
-    - '$ref': '../vaahstore.yaml#/components/parameters/include'
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
+    - name: include
+      in: query
+      required: false
+      description: Comma-separated list of fields or relations to include in the response. Example`?include[user_wishlist_products]=true`
+      schema:
+        type: array
+    - name: exclude
+      in: query
+      required: false
+      description: Comma-separated list of fields or relations to include in the response. Example`?exclude[user_wishlist_products]=true&exclude[user_wishlist_products,user]=true`
+      schema:
+              type: array
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'

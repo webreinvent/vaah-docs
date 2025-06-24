@@ -3,64 +3,49 @@
 
 data_pie: [30, 40, 45]
 
-data_donut: {
-labels: [ 'COD','Credit Card', 'Paypal'],
-chart: {
-id: 'donut-chart',
-type: 'pie',
-background: '#fff',
-toolbar: {
-show: true
-},
-zoom: {
-enabled: false
-}
-},
-plotOptions: {
-donut: {
-size: '70%',
-labels: {
-show: true,
-name: {
-show: true,
-fontSize: '14px',
-fontWeight: 'bold',
-color: '#263238'
-},
-value: {
-show: true,
-fontSize: '16px',
-fontWeight: 'bold',
-color: '#000'
-}
-}
-}
-},
-dataLabels: {
-enabled: true,
-style: {
-fontSize: '14px'
-}
-},
-stroke: {
-show: true,
-width: 2,
-colors: ['#fff']
-},
-legend: {
-position: 'bottom',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: {
-fontSize: '14px'
-}
-}
-}
+data_donut:
+  labels: ['COD', 'Credit Card', 'Paypal']
+  chart:
+    id: 'donut-chart'
+    type: 'pie'
+    background: '#fff'
+    toolbar:
+      show: true
+    zoom:
+      enabled: false
+  plotOptions:
+    donut:
+      size: '70%'
+      labels:
+        show: true
+        name:
+          show: true
+          fontSize: '14px'
+          fontWeight: 'bold'
+          color: '#263238'
+        value:
+          show: true
+          fontSize: '16px'
+          fontWeight: 'bold'
+          color: '#000'
+  dataLabels:
+    enabled: true
+    style:
+      fontSize: '14px'
+  stroke:
+    show: true
+    width: 2
+    colors: ['#fff']
+  legend:
+    position: 'bottom'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
 ---
 
 

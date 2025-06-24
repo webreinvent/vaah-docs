@@ -5,8 +5,6 @@ get:
   description: Retrieve a cart items by its universal unique identifier.
   operationId: getCartById
   parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
-    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
     - name: uuid
       in: path
       required: true
@@ -14,6 +12,9 @@ get:
       schema:
         type: string
         example: "abcd1234-abcd1234"
+    - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
+    - '$ref': '../vaahstore.yaml#/components/parameters/currency'
   responses:
     '200':
       description: Cart details retrieved successfully
@@ -31,15 +32,19 @@ get:
                   id:
                     type: integer
                     description: "Unique identifier for the cart"
-                    example: 14
+                    example: XX
                   uuid:
                     type: string
                     description: "Universally unique identifier for the cart"
-                    example: "3e48cbb5-19f2-453f-afdd-21049ad5fc22"
+                    example: "XXX-XXX-XXX"
+                  cart_products_count:
+                    type: integer
+                    description: 'Describe the total product in the cart'
+                    example: 2
                   user_id:
                     type: integer
                     description: "Unique identifier for the user associated with the cart"
-                    example: 55126
+                    example: XX
                   total_amount:
                     type: number
                     format: float
@@ -204,10 +209,18 @@ get:
                               type: integer
                             price:
                               type: number
+                            cart_product_variation:
+                              type: string
                             is_stock_available:
                               type: integer
                             is_wishlisted:
                               type: integer
+                            created_at:
+                              type: string
+                              example: "2024-12-09 05:56:09"
+                            updated_at:
+                              type: string
+                              example: "2024-12-09 05:56:09"
 
 
 

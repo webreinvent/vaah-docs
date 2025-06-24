@@ -5,13 +5,10 @@ get:
   description: Fetches the items available for checkout based on the specified cart Uuis. Only items with available stock will be included.
   operationId: getItemsAtCheckOutById
   parameters:
-    - name: uuid
-      in: path
-      required: true
-      schema:
-        type: string
-        description: The uuid of the cart.
-        example: 1
+    - '$ref': '../vaahstore.yaml#/components/parameters/uuid'
+    - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
+    - '$ref': '../vaahstore.yaml#/components/parameters/currency'
   responses:
     '200':
       description: Cart items retrieved successfully at checkout
@@ -25,39 +22,292 @@ get:
               data:
                 type: object
                 properties:
-                  product_details:
+                  products:
                     type: array
                     items:
                       type: object
                       properties:
-                        product_id:
+                        id:
                           type: integer
+                          format: int64
+                          example: 1
+                        uuid:
+                          type: string
+                          example: "8952d982-4aca-462e-8e90-2f8340a22582"
                         name:
                           type: string
-                        description:
+                          example: "My Product"
+                        summary:
                           type: string
-                          nullable: true
-                        image_urls:
+                          example: "My Product Summary"
+                        details:
+                          type: string
+                          example: "My Product Details"
+                        price:
+                          type: object
+                          description: Price details including the amount and associated currency information.
+                          properties:
+                            amount:
+                              type: string
+                              description: The price amount as a string (to preserve formatting such as decimals).
+                              example: "10.00"
+                            currency:
+                              type: object
+                              description: Currency details for the given amount.
+                              properties:
+                                code:
+                                  type: string
+                                  description: The ISO currency code (e.g., USD, IRR).
+                                  example: "USD"
+                                symbol:
+                                  type: string
+                                  description: The currency symbol, may include HTML or Unicode representations.
+                                  example: "&#xFDFC;"
+                                rate:
+                                  type: number
+                                  description: The exchange rate or base rate for the currency.
+                                  example: 1
+                        wishlist_ids:
                           type: array
                           items:
-                            type: string
+                            type: integer
+                          example: [ 1, 2 ]
+                          description: IDs of wishlists in which this product exists for the authenticated user.
+                        store:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                        available_at:
+                          type: string
+                          format: date-time
+                          example: "2024-10-23T00:00:00Z"
+                        brand:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Nike"
+                        product_categories:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 42
+                              name:
+                                type: string
+                                example: "Footwear"
+                              slug:
+                                type: string
+                                example: "footwear"
+                              parent_id:
+                                type: integer
+                                nullable: true
+                                example: null
+                              pivot:
+                                type: object
+                                properties:
+                                  vh_st_product_id:
+                                    type: integer
+                                    example: 49
+                                  vh_st_category_id:
+                                    type: integer
+                                    example: 42
+                        vendor_product_data:
+                          type: object
+                          properties:
+                            price_range:
+                              type: array
+                              items:
+                                type: number
+                              example: [ 0, 1 ]
+                            quantity:
+                              type: integer
+                              example: 7
+                            selected_vendor:
+                              type: object
+                              example: { "vendor data" }
+                        status:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 17
+                            name:
+                              type: string
+                              example: "Approved"
+                        updated_at:
+                          type: string
+                          format: date-time
+                          example: "2024-09-17T10:45:06Z"
+
+                        media:
+                          type: array
+                          description: List of product media items, each containing title, default status, and images in multiple formats.
+                          items:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                                example: "invictus-men-round-toe-formal-loafers.jpg"
+                              is_default:
+                                type: integer
+                                example: 0
+                              images:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    webp_url:
+                                      type: string
+                                      example: "storage/media/invictus-men-round-toe-formal-loafers.webp"
+                                    url:
+                                      type: string
+                                      example: "storage/media/invictus-men-round-toe-formal-loafers.jpg"
+                                    url_thumbnail:
+                                      type: string
+                                      example: "storage/app/public/media/invictus-men-round-toe-formal-loafers.jpg"
+                                    type:
+                                      type: string
+                                      nullable: true
+                                      example: null
+
+                        grouped_attributes:
+                          type: array
+                          description: Attributes grouped by type, such as color or size, with available values and selected value.
+                          items:
+                            type: object
+                            properties:
+                              attribute_id:
+                                type: integer
+                                example: 1
+                              attribute:
+                                type: string
+                                example: "Color"
+                              values:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 9
+                                    value:
+                                      type: string
+                                      example: "Orange"
+                              selected:
+                                type: integer
+                                example: 9
+
+                        product_variation:
+                          type: object
+                          description: The default variation for this product, including size, color, price, stock, and other variation-specific data.
+                          properties:
+                            id:
+                              type: integer
+                              example: 334
+                            vh_st_product_id:
+                              type: integer
+                              example: 49
+                            uuid:
+                              type: string
+                              example: "3ee0ba4a-1976-4178-9403-7794f64b4a7a"
+                            name:
+                              type: string
+                              example: "INVICTUS Men Round Toe Formal Loafers - Orange/Small"
+                            slug:
+                              type: string
+                              example: "invictus-men-round-toe-formal-loafers-orange-small"
+                            wishlist_ids:
+                              type: array
+                              items:
+                                type: integer
+                              example: [ ]
+                            is_default:
+                              type: integer
+                              example: 1
+                            sku:
+                              type: string
+                              nullable: true
+                              example: null
+                            price:
+                              type: string
+                              example: "31.25"
+                            sale_price:
+                              type: string
+                              example: "31.25"
+                            attribute_query:
+                              type: string
+                              example: "?attribute[color]=orange&attribute[size]=small"
+                            media:
+                              type: array
+                              items:
+                                type: object
+                              example: [ ]
+                            quantity:
+                              type: integer
+                              example: 0
+                            available_quantity:
+                              type: integer
+                              example: 0
+                            is_stock_available:
+                              type: integer
+                              example: 0
+                            type:
+                              type: string
+                              example: "fallback"
+                            selected_vendor:
+                              type: object
+                              nullable: true
+                              example: null
                         pivot:
                           type: object
                           properties:
+                            id:
+                              type: integer
+                            vh_st_cart_id:
+                              type: integer
+                            vh_st_product_id:
+                              type: integer
+                            vh_st_product_variation_id:
+                              type: integer
+                            vh_st_vendor_id:
+                              type: integer
+                            is_stock_available:
+                              type: integer
+                            available_stock_quantity:
+                              type: integer
+                            is_wishlisted:
+                              type: integer
                             cart_product_variation:
                               type: string
-                            product_variation_id:
-                              type: integer
                             price:
                               type: number
                               format: float
+                            total_price:
+                              type: number
+                              format: float
+                              description: "Total price for the product (quantity * price)"
+                              example: 400.0
                             quantity:
                               type: integer
                             subtotal:
                               type: number
                               format: float
-                            selected_vendor_id:
-                              type: integer
+                            created_at:
+                              type: string
+                              example: "2024-12-09 05:56:09"
+                            updated_at:
+                                type: string
+                                example: "2024-12-09 05:56:09"
+
                   user_addresses:
                     type: array
                     items:
@@ -193,117 +443,10 @@ get:
                         type: string
                       display_name:
                         type: string
-                      title:
-                        type: string
-                      designation:
-                        type: string
-                      first_name:
-                        type: string
-                      middle_name:
-                        type: string
-                        nullable: true
-                      last_name:
-                        type: string
-                      gender:
-                        type: string
-                      country_calling_code:
-                        type: string
-                      phone:
-                        type: string
-                      bio:
-                        type: string
-                      website:
-                        type: string
-                      timezone:
-                        type: string
-                      alternate_email:
-                        type: string
-                        nullable: true
+
                       avatar_url:
                         type: string
-                      birth:
-                        type: string
-                        format: date
-                      country:
-                        type: string
-                      country_code:
-                        type: string
-                        nullable: true
-                      mfa_methods:
-                        type: string
-                        nullable: true
-                      last_login_at:
-                        type: string
-                        format: date-time
-                        nullable: true
-                      last_login_ip:
-                        type: string
-                        nullable: true
-                      is_active:
-                        type: integer
-                      activated_at:
-                        type: string
-                        format: date-time
-                        nullable: true
-                      status:
-                        type: string
-                      security_code:
-                        type: string
-                        nullable: true
-                      security_code_expired_at:
-                        type: string
-                        format: date-time
-                        nullable: true
-                      affiliate_code:
-                        type: string
-                        nullable: true
-                      affiliate_code_used_at:
-                        type: string
-                        format: date-time
-                        nullable: true
-                      reset_password_code_sent_at:
-                        type: string
-                        format: date-time
-                        nullable: true
-                      reset_password_code_used_at:
-                        type: string
-                        format: date-time
-                        nullable: true
-                      registration_id:
-                        type: integer
-                        nullable: true
-                      foreign_user_id:
-                        type: integer
-                      meta:
-                        type: object
-                        properties:
-                          0:
-                            type: string
-                          custom_fields:
-                            type: object
-                            properties:
-                              state:
-                                type: string
-                                nullable: true
-                      created_ip:
-                        type: string
-                      created_by:
-                        type: integer
-                      updated_by:
-                        type: integer
-                      deleted_by:
-                        type: integer
-                        nullable: true
-                      created_at:
-                        type: string
-                        format: date-time
-                      updated_at:
-                        type: string
-                        format: date-time
-                      deleted_at:
-                        type: string
-                        format: date-time
-                        nullable: true
+
                       avatar:
                         type: string
                       name:

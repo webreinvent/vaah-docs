@@ -1,51 +1,38 @@
 ---
 
-customer_count_grouped: [
-{
-name: 'Customers',
-data: [30, 40, 45, 50, 49, 60, 70,80,85,60,70,100]
-},
+customer_count_grouped:
+  - name: 'Customers'
+    data: [30, 40, 45, 50, 49, 60, 70, 80, 85, 60, 70, 100]
+  - name: 'Active Customers'
+    data: [10, 20, 15, 30, 35, 40, 45, 50, 55, 60, 65, 70]
 
-{
-name: 'Active Customers',
-data: [10, 20, 15, 30, 35, 40, 45,50,55,60,65,70]
-}
+customer_count_simple:
+  - name: 'Customers'
+    data: [30, 40, 45, 50, 49, 60, 70, 54, 25, 60, 45, 90]
 
-]
+data_labels:
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
 
-
-customer_count_simple: [
-{
-name: 'Customers',
-data: [30, 40, 45, 50, 49, 60, 70,54,25,60,45,90]
-}
-
-]
-
-
-
-
-data_labels: {
-labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-}
-
-
-chartOptions: {
-chart: {
-background: '#ffffff',
-toolbar: {
-show: false,
-},
-},
-xaxis: {
-type: 'datetime',
-categories: [
-'2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01',
-'2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01',
-'2024-11-01', '2024-12-01'
-],},
-
-}
+chartOptions:
+  chart:
+    background: '#ffffff'
+    toolbar:
+      show: false
+  xaxis:
+    type: 'datetime'
+    categories:
+      - '2024-01-01'
+      - '2024-02-01'
+      - '2024-03-01'
+      - '2024-04-01'
+      - '2024-05-01'
+      - '2024-06-01'
+      - '2024-07-01'
+      - '2024-08-01'
+      - '2024-09-01'
+      - '2024-10-01'
+      - '2024-11-01'
+      - '2024-12-01'
 ---
 
 ## Overview

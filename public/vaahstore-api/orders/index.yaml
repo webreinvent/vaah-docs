@@ -15,6 +15,14 @@ post:
               type: object
               description: Contains details of the order to be placed.
               properties:
+                vh_st_store_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the selected store.
+                vh_user_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the Auth user.
                 cart_id:
                   type: integer
                   example: 1
@@ -51,13 +59,8 @@ post:
                       type: integer
                       example: 101
                       description: The ID of the shipping address.
-                    vh_user_id:
-                      type: integer
-                      example: 1
-                      description: The ID of the user associated with the order.
                   required:
                     - id
-                    - vh_user_id
                 billing_address:
                   type: object
                   properties:
@@ -65,26 +68,18 @@ post:
                       type: integer
                       example: 102
                       description: The ID of the billing address.
-                    vh_user_id:
-                      type: integer
-                      example: 1
-                      description: The ID of the user associated with the order.
                   required:
                     - id
-                    - vh_user_id
                 payment_method:
                   type: string
                   example: "COD"
                   description: The payment method selected for the order.
-                order_items:
+                products:
                   type: array
                   items:
                     type: object
                     properties:
-                      product_id:
-                        type: integer
-                        example: 1
-                        description: The ID of the product.
+
                       name:
                         type: string
                         example: "product name"
@@ -92,15 +87,16 @@ post:
                       pivot:
                         type: object
                         properties:
-                          cart_product_variation:
-                            type: string
-                            example: "variation name"
-                            description: The name of the product variation.
-                          product_variation_id:
+
+                          vh_st_product_id:
+                            type: integer
+                            example: 1
+                            description: The ID of the product.
+                          vh_st_product_variation_id:
                             type: integer
                             example: 2
                             description: The ID of the product variation.
-                          selected_vendor_id:
+                          vh_st_vendor_id:
                             type: integer
                             example: 1
                             description: The ID of the selected vendor.
@@ -113,19 +109,13 @@ post:
                             format: float
                             example: 50.00
                             description: The price of the product.
-                          subtotal:
-                            type: number
-                            format: float
-                            example: 50.00
-                            description: The total as quantity * price for the item.
                         required:
-                          - cart_product_variation
-                          - product_variation_id
-                          - selected_vendor_id
+                          - vh_st_product_id
+                          - vh_st_product_variation_id
+                          - vh_st_vendor_id
                           - quantity
                           - price
                     required:
-                      - product_id
                       - name
                       - pivot
               required:
@@ -138,7 +128,7 @@ post:
                 - shipping_address
                 - billing_address
                 - payment_method
-                - order_items
+                - products
           required:
             - order_details
 
@@ -169,15 +159,114 @@ post:
                         type: integer
                         example: 1
                         description: The ID of the placed order.
-                      amount:
-                        type: number
-                        format: float
-                        example: 150.00
-                        description: The total amount for the order.
+                      vh_user_id:
+                        type: integer
+                        example: 121
+                        description: The ID of the user associated with the order.
+                      vh_st_store_id:
+                        type: integer
+                        example: 1
+                        description: The ID of the store to which this order belongs.
+                      cart_products_count:
+                        type: integer
+                        description: 'Describe the total product in the cart'
+                        example: 2
+                      cart_uuid:
+                        type: string
+                        description: |
+                          Universally unique identifier for the cart.
+                          If there are no products left in the cart after placing the order, this value will be null.
+                        example: "XXX-XXX-XXX"
                       order_status:
                         type: string
                         example: "Placed"
                         description: The current status of the order.
+                      order_shipment_status:
+                        type: string
+                        example: "Pending"
+                        description: The current shipment status of the order.
+                      order_payment_status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 64
+                            description: The ID of the payment status.
+                          name:
+                            type: string
+                            example: "Pending"
+                            description: The name of the payment status.
+                          slug:
+                            type: string
+                            example: "pending"
+                            description: A URL-friendly version of the payment status name.
+                      created_at:
+                        type: string
+                        example: "2024-12-09 05:56:09"
+                      updated_at:
+                          type: string
+                          example: "2024-12-09 05:56:09"
+                      created_by:
+                        type: integer
+                        example: 1
+                        description: The ID of the user who created the order.
+                      currency:
+                        type: object
+                        description: |
+                          The default currency of the selected store for this order.
+                          Includes the currency code, display symbol, and conversion rate.
+                        properties:
+                          code:
+                            type: string
+                            example: "USD"
+                            description: "The currency code (e.g., USD, EUR)."
+                          symbol:
+                            type: string
+                            example: "&#36;"
+                            description: "The display symbol for the currency (HTML encoded)."
+                          rate:
+                            type: number
+                            example: 1
+                            description: "The conversion rate of this currency relative to the base currency."
+                      amount:
+                        type: number
+                        format: float
+                        example: 25.00
+                        description: The total amount for the order.
+                      delivery_fee:
+                        type: number
+                        format: float
+                        example: 0.00
+                        description: The delivery fee associated with the order.
+
+                      taxes:
+                        type: number
+                        format: float
+                        example: 0.00
+                        description: The total taxes applied to the order.
+                      discount:
+                        type: number
+                        format: float
+                        example: 0.00
+                        description: The total discount applied to the order.
+                      payable:
+                        type: number
+                        format: float
+                        example: 25.00
+                        description: The total amount that needs to be paid for the order.
+                      paid:
+                        type: number
+                        format: float
+                        example: 0.00
+                        description: The amount that has been paid for the order.
+                      is_paid:
+                        type: integer
+                        nullable: true
+                        example: 1
+                        description: Indicates if the order has been paid for.
+                      taxonomy_id_payment_status:
+                        type: integer
+                        description: The id of the order payment status.
 
     '400':
       description: Bad Request
@@ -224,6 +313,10 @@ get:
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/page'
     - '$ref': '../vaahstore.yaml#/components/parameters/rows'
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
+    - '$ref': '../vaahstore.yaml#/components/parameters/currency'
+    - '$ref': '../vaahstore.yaml#/components/parameters/include'
+    - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_is_active'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_trashed'

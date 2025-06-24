@@ -10,6 +10,7 @@ post:
         type: string
       description: The search query to filter orders based on the user's display name, first name, or email.
       required: false
+    - '$ref': '../vaahstore.yaml#/components/parameters/selected_store'
   responses:
     '200':
       description: A list of orders matching the search criteria.
