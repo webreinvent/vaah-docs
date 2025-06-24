@@ -1,63 +1,59 @@
 ---
-customer_count_simple: [
-{
-name: 'Stock Available',
-data: [3033, 4033, 4533, 5033, 5523]
-}
+customer_count_simple:
+  - name: 'Stock Available'
+    data: [3033, 4033, 4533, 5033, 5523]
 
-]
+xaxis:
+  categories:
+    - 'Warehouse A'
+    - 'Warehouse B'
+    - 'Warehouse C'
+    - 'Warehouse D'
+    - 'May'
+    - 'June'
+    - 'July'
+    - 'August'
+    - 'September'
+    - 'October'
+    - 'November'
+    - 'December'
 
-xaxis: {
-categories: ['Warehouse A', 'Warehouse B', 'Warehouse C', 'Warehouse D', 'May', 'June', 'July','August','September','October','November','December'],
-}
-
-chartOptions: {
-xaxis: {
-categories: ['Warehouse A', 'Warehouse B', 'Warehouse C', 'Warehouse D', 'Warehouse E'],
-},
-
-title: {
-text: 'Stocks Available In Warehouse',
-align: 'center',
-offsetY: 12,
-style: {
-fontSize: '16px',
-fontWeight: 'bold',
-color: '#263238',
-},
-},
-dataLabels: {
-enabled: true,
-textAnchor: 'start',
-style: {
-colors: ['#000'],
-},
-offsetX: 0,
-dropShadow: {
-enabled: false,
-},
-},
-yaxis: {
-labels: {
-show: true,
-},
-},
-plotOptions: {
-bar: {
-barHeight: '80%',
-distributed: true,
-horizontal: true,
-dataLabels: {
-position: 'bottom',
-},
-},
-},
-legend: {
-show: false,
-}
-}
-
-
+chartOptions:
+  xaxis:
+    categories:
+      - 'Warehouse A'
+      - 'Warehouse B'
+      - 'Warehouse C'
+      - 'Warehouse D'
+      - 'Warehouse E'
+  title:
+    text: 'Stocks Available In Warehouse'
+    align: 'center'
+    offsetY: 12
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  dataLabels:
+    enabled: true
+    textAnchor: 'start'
+    style:
+      colors: ['#000']
+    offsetX: 0
+    dropShadow:
+      enabled: false
+  yaxis:
+    labels:
+      show: true
+  plotOptions:
+    bar:
+      barHeight: '80%'
+      distributed: true
+      horizontal: true
+      dataLabels:
+        position: 'bottom'
+  legend:
+    show: false
 ---
 
 

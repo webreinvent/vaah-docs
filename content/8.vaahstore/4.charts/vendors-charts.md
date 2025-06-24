@@ -1,114 +1,123 @@
 ---
+line_chart_options:
+  chart:
+    id: 'vendor-sales-line-chart'
+    type: 'line'
+    background: '#fff'
+    toolbar:
+      show: false
+    zoom:
+      enabled: true
+  xaxis:
+    type: 'datetime'
+    categories:
+      - '2024-11-04'
+      - '2024-11-05'
+      - '2024-11-06'
+      - '2024-11-07'
+  dataLabels:
+    enabled: false
+  stroke:
+    curve: 'smooth'
+    width: 4
+  title:
+    text: 'Vendor Sales Over Selected Date Range'
+    align: 'center'
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
+  legend:
+    position: 'top'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
 
-line_chart_options: {
-chart: {
-id: 'vendor-sales-line-chart',
-type: 'line',
-background: '#fff',
-toolbar: { show: false },
-zoom: { enabled: true }
-},
-xaxis: {
-type: 'datetime',
-categories: ['2024-11-04','2024-11-05', '2024-11-06', '2024-11-07']
-},
-dataLabels: {
-enabled: false,
-},
-stroke: { curve: 'smooth', width: 4 },
-title: {
-text: 'Vendor Sales Over Selected Date Range',
-align: 'center',
-style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' }
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: { fontSize: '14px' }
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-}
-}
+line_chart_options_with_labels:
+  chart:
+    id: 'vendor-sales-line-chart'
+    type: 'line'
+    background: '#fff'
+    toolbar:
+      show: false
+    zoom:
+      enabled: true
+  xaxis:
+    type: 'datetime'
+    categories:
+      - '2024-11-04'
+      - '2024-11-05'
+      - '2024-11-06'
+      - '2024-11-07'
+  dataLabels:
+    enabled: true
+  stroke:
+    curve: 'smooth'
+    width: 4
+  title:
+    text: 'Vendor Sales Over Selected Date Range'
+    align: 'center'
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
+  legend:
+    position: 'top'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
 
-line_chart_options_with_labels: {
-chart: {
-id: 'vendor-sales-line-chart',
-type: 'line',
-background: '#fff',
-toolbar: { show: false },
-zoom: { enabled: true }
-},
-xaxis: {
-type: 'datetime',
-categories: ['2024-11-04','2024-11-05', '2024-11-06', '2024-11-07']
-},
-dataLabels: {
-enabled: true,
-},
-stroke: { curve: 'smooth', width: 4 },
-title: {
-text: 'Vendor Sales Over Selected Date Range',
-align: 'center',
-style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' }
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: { fontSize: '14px' }
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-}
-}
-
-data_line_chart: [
-{
-name: 'Vendor 1',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 10 },
-{ x: '2024-11-06', y: 60 },
-{ x: '2024-11-07', y: 20 }
-]
-},
-{
-name: 'Vendor 2',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 20 },
-{ x: '2024-11-06', y: 70 },
-{ x: '2024-11-07', y: 30 }
-]
-},
-{
-name: 'Vendor 3',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 30 },
-{ x: '2024-11-06', y: 80 },
-{ x: '2024-11-07', y: 40 }
-]
-},
-{
-name: 'Vendor 4',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 40 },
-{ x: '2024-11-06', y: 90 },
-{ x: '2024-11-07', y: 50 }
-]
-}
-]
-
-
-
+data_line_chart:
+  - name: 'Vendor 1'
+    data:
+      - x: '2024-11-04'
+        y: 0
+      - x: '2024-11-05'
+        y: 10
+      - x: '2024-11-06'
+        y: 60
+      - x: '2024-11-07'
+        y: 20
+  - name: 'Vendor 2'
+    data:
+      - x: '2024-11-04'
+        y: 0
+      - x: '2024-11-05'
+        y: 20
+      - x: '2024-11-06'
+        y: 70
+      - x: '2024-11-07'
+        y: 30
+  - name: 'Vendor 3'
+    data:
+      - x: '2024-11-04'
+        y: 0
+      - x: '2024-11-05'
+        y: 30
+      - x: '2024-11-06'
+        y: 80
+      - x: '2024-11-07'
+        y: 40
+  - name: 'Vendor 4'
+    data:
+      - x: '2024-11-04'
+        y: 0
+      - x: '2024-11-05'
+        y: 40
+      - x: '2024-11-06'
+        y: 90
+      - x: '2024-11-07'
+        y: 50
 ---
 
 

@@ -1,152 +1,139 @@
 ---
 
-shipment_chart_options: {
-chart: {
-id: 'vendor-sales-line-chart',
-type: 'line',
-background: '#fff',
-toolbar: { show: false },
-zoom: { enabled: true }
-},
-xaxis: {
-type: 'datetime',
-categories: ['2024-11-04','2024-11-05', '2024-11-06', '2024-11-07']
-},
-dataLabels: {
-enabled: false,
-},
-stroke: { curve: 'smooth', width: 4 },
-title: {
-text: 'Orders Shipment Over Date Range',
-align: 'center',
-style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' }
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: { fontSize: '14px' }
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-}
-}
+shipment_chart_options:
+  chart:
+    id: 'vendor-sales-line-chart'
+    type: 'line'
+    background: '#fff'
+    toolbar:
+      show: false
+    zoom:
+      enabled: true
+  xaxis:
+    type: 'datetime'
+    categories:
+      - '2024-11-04'
+      - '2024-11-05'
+      - '2024-11-06'
+      - '2024-11-07'
+  dataLabels:
+    enabled: false
+  stroke:
+    curve: 'smooth'
+    width: 4
+  title:
+    text: 'Orders Shipment Over Date Range'
+    align: 'center'
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
+  legend:
+    position: 'top'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
 
-line_chart_options_with_labels: {
-chart: {
-id: 'vendor-sales-line-chart',
-type: 'line',
-background: '#fff',
-toolbar: { show: false },
-zoom: { enabled: true }
-},
-xaxis: {
-type: 'datetime',
-categories: ['2024-11-04','2024-11-05', '2024-11-06', '2024-11-07']
-},
-dataLabels: {
-enabled: true,
-},
-stroke: { curve: 'smooth', width: 4 },
-title: {
-text: 'Orders Shipment Over Date Range',
-align: 'center',
-style: { fontSize: '16px', fontWeight: 'bold', color: '#263238' }
-},
-tooltip: {
-enabled: true,
-shared: true,
-style: { fontSize: '14px' }
-},
-legend: {
-position: 'top',
-horizontalAlign: 'center',
-floating: false,
-fontSize: '14px'
-}
-}
+line_chart_options_with_labels:
+  chart:
+    id: 'vendor-sales-line-chart'
+    type: 'line'
+    background: '#fff'
+    toolbar:
+      show: false
+    zoom:
+      enabled: true
+  xaxis:
+    type: 'datetime'
+    categories:
+      - '2024-11-04'
+      - '2024-11-05'
+      - '2024-11-06'
+      - '2024-11-07'
+  dataLabels:
+    enabled: true
+  stroke:
+    curve: 'smooth'
+    width: 4
+  title:
+    text: 'Orders Shipment Over Date Range'
+    align: 'center'
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  tooltip:
+    enabled: true
+    shared: true
+    style:
+      fontSize: '14px'
+  legend:
+    position: 'top'
+    horizontalAlign: 'center'
+    floating: false
+    fontSize: '14px'
 
-shipment_data_chart: [
-{
-name: 'Pending Orders Shipment',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 20 },
-{ x: '2024-11-06', y: 70 },
-{ x: '2024-11-07', y: 30 }
-]
-},
-{
-name: 'Orders Shipped',
-data: [
-{ x: '2024-11-04', y: 0 },
-{ x: '2024-11-05', y: 10 },
-{ x: '2024-11-06', y: 60 },
-{ x: '2024-11-07', y: 20 }
-]
-}
-]
+shipment_data_chart:
+  - name: 'Pending Orders Shipment'
+    data:
+      - { x: '2024-11-04', y: 0 }
+      - { x: '2024-11-05', y: 20 }
+      - { x: '2024-11-06', y: 70 }
+      - { x: '2024-11-07', y: 30 }
+  - name: 'Orders Shipped'
+    data:
+      - { x: '2024-11-04', y: 0 }
+      - { x: '2024-11-05', y: 10 }
+      - { x: '2024-11-06', y: 60 }
+      - { x: '2024-11-07', y: 20 }
 
-shipped_quantity_status_data: [
-{
-name: 'Item Qty.',
-data: [3033, 4033, 4533, 5033, 5523]
-}
+shipped_quantity_status_data:
+  - name: 'Item Qty.'
+    data: [3033, 4033, 4533, 5033, 5523]
 
-]
-
-
-shipped_quantity_status_chart_options: {
-xaxis: {
-categories: ['Partially Shipped', 'Shipped', 'Delivered', 'Partially Delivered', 'In Transit'],
-},
-
-title: {
-text: 'Shipped Quantity Status',
-align: 'center',
-offsetY: 12,
-style: {
-fontSize: '16px',
-fontWeight: 'bold',
-color: '#263238',
-},
-},
-dataLabels: {
-enabled: true,
-textAnchor: 'start',
-style: {
-colors: ['#000'],
-},
-offsetX: 0,
-dropShadow: {
-enabled: false,
-},
-},
-yaxis: {
-labels: {
-show: true,
-},
-},
-plotOptions: {
-bar: {
-barHeight: '80%',
-distributed: true,
-horizontal: true,
-dataLabels: {
-position: 'bottom',
-},
-},
-},
-tooltip: {
-theme: 'dark',
-},
-legend: {
-show: false,
-}
-}
-
+shipped_quantity_status_chart_options:
+  xaxis:
+    categories:
+      - 'Partially Shipped'
+      - 'Shipped'
+      - 'Delivered'
+      - 'Partially Delivered'
+      - 'In Transit'
+  title:
+    text: 'Shipped Quantity Status'
+    align: 'center'
+    offsetY: 12
+    style:
+      fontSize: '16px'
+      fontWeight: 'bold'
+      color: '#263238'
+  dataLabels:
+    enabled: true
+    textAnchor: 'start'
+    style:
+      colors: ['#000']
+    offsetX: 0
+    dropShadow:
+      enabled: false
+  yaxis:
+    labels:
+      show: true
+  plotOptions:
+    bar:
+      barHeight: '80%'
+      distributed: true
+      horizontal: true
+      dataLabels:
+        position: 'bottom'
+  tooltip:
+    theme: 'dark'
+  legend:
+    show: false
 ---
 
 
