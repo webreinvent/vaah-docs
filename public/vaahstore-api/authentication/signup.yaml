@@ -12,32 +12,53 @@ post:
         schema:
           type: object
           properties:
+            first_name:
+              type: string
+              description: "The customer's first name."
+              minLength: 1
+              maxLength: 20
+              pattern: "^[A-Za-zÀ-ÿ' -]{1,20}$"
+            last_name:
+              type: string
+              description: "The customer's last name."
+              nullable: true
+              minLength: 1
+              maxLength: 20
+              pattern: "^[A-Za-zÀ-ÿ' -]{1,20}$"
+            username:
+              type: string
+              description: "Customer username; must start with a letter; letters, numbers, dots or underscores only."
+              minLength: 3
+              maxLength: 20
+              pattern: "^[A-Za-z][A-Za-z0-9._]{2,19}$"
             email:
               type: string
               format: email
               description: "The customer's email address."
-              maxLength: 150
-            first_name:
-              type: string
-              description: "The customer's first name."
-              maxLength: 150
-            username:
-              type: string
-              description: "Customer username"
+              maxLength: 50
             password:
               type: string
               description: "The customer's password."
+              minLength: 8
+              maxLength: 64
+              pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,64}$"
+            password_confirmation:
+              type: string
+              description: "Must match `password`."
             country_calling_code:
               type: integer
               description: "International dialing code (e.g., 91 for India)."
             phone:
-              type: integer
+              type: string
               description: "Phone number without the country code."
+              pattern: "^\\d{10,15}$"
           required:
-            - email
             - first_name
             - username
+            - email
             - password
+            - password_confirmation
+
 
   responses:
     '200':
