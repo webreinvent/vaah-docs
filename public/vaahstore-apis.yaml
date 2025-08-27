@@ -2218,6 +2218,137 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /api/store/products/search:
+    get:
+      tags:
+        - Products
+      summary: Search products, brands, and categories suggestions
+      description: |
+        This endpoint allows searching for products, brands, and categories by a query string. - Products include resolved variations. - Brands and categories are only returned if they have associated products. - Limits results to 5 per type.
+      operationId: searchProducts
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema:
+            type: string
+            example: shoes
+          description: The search keyword to filter products, brands, and categories.
+        - $ref: '#/components/parameters/selected_store'
+        - $ref: '#/components/parameters/currency'
+      responses:
+        '200':
+          description: Search results retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: array
+                        description: Matching products with variations
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              example: product
+                            id:
+                              type: integer
+                              example: 32
+                            name:
+                              type: string
+                              example: INVICTUS Men Textured Leather Formal Loafers
+                            slug:
+                              type: string
+                              example: invictus-men-textured-leather-formal-loafers
+                            attribute_query:
+                              type: string
+                              nullable: true
+                              example: '?attribute[color]=green&attribute[size]=xs'
+                      brands:
+                        type: array
+                        description: Matching brands with at least one product
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              example: brand
+                            id:
+                              type: integer
+                              example: 61
+                            name:
+                              type: string
+                              example: INVICTUS
+                            slug:
+                              type: string
+                              example: invictus
+                      categories:
+                        type: array
+                        description: Matching categories and their subcategories with products
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              example: category
+                            id:
+                              type: integer
+                              example: 8
+                            name:
+                              type: string
+                              example: Sports Shoes
+                            slug:
+                              type: string
+                              example: sports-shoes
+              examples:
+                success:
+                  summary: Example search response
+                  value:
+                    success: true
+                    data:
+                      products:
+                        - type: product
+                          id: 32
+                          name: INVICTUS Men Textured Leather Formal Loafers
+                          slug: invictus-men-textured-leather-formal-loafers
+                          attribute_query: '?attribute[color]=green&attribute[size]=xs'
+                        - type: product
+                          id: 33
+                          name: INVICTUS Men Formal Loafers
+                          slug: invictus-men-formal-loafers
+                          attribute_query: '?attribute[color]=brown&attribute[size]=xxl'
+                        - type: product
+                          id: 49
+                          name: INVICTUS Men Round Toe Formal Loafers
+                          slug: invictus-men-round-toe-formal-loafers
+                          attribute_query: '?attribute[color]=red&attribute[size]=extra-large'
+                      brands:
+                        - type: brand
+                          id: 61
+                          name: INVICTUS
+                          slug: invictus
+                      categories: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: An unexpected error occurred while searching products.
   /api/store/products/{id}:
     get:
       tags:
