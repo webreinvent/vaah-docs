@@ -41,7 +41,7 @@ get:
       description: Get the related product based on the product type search `?type[]=simple&type[]=digital`.
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_q'
     - '$ref': '../vaahstore.yaml#/components/parameters/sort_price'
-
+    - '$ref': '../vaahstore.yaml#/components/parameters/category'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_new_arrivals'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_from'
     - '$ref': '../vaahstore.yaml#/components/parameters/filter_to'

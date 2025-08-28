@@ -681,6 +681,87 @@ paths:
                       - The reset password code field is required.
                       - The password field must be at least 6 characters.
                       - The password confirmation does not match.
+  /api/refresh-token:
+    post:
+      summary: Refresh API Token
+      description: |
+        Refreshes the user's API token. - If the provided token is still valid, the same token is returned. - If expired, a new token is generated and returned. - Requires a valid Bearer token in the `Authorization` header.
+      operationId: refreshToken
+      security:
+        - bearerAuth: []
+      tags:
+        - Authentication
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                remember_me:
+                  type: boolean
+                  description: |
+                    Whether to extend the token validity for 7 days. Default is 2 days if not provided or false.
+                  example: true
+      responses:
+        '200':
+          description: Token refreshed successfully or still valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Token refreshed successfully.
+                  data:
+                    type: object
+                    properties:
+                      api_token:
+                        type: string
+                        example: 1|XyZAbc123NewTokenValue
+                      expires_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-03 15:30:00'
+        '400':
+          description: No token provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - No token provided.
+        '401':
+          description: Invalid or expired token or session exceed from the limit
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Your session has expired because you logged in on another device.
   /api/sign-out:
     post:
       summary: Sign out
@@ -1791,6 +1872,7 @@ paths:
           description: Get the related product based on the product type search `?type[]=simple&type[]=digital`.
         - $ref: '#/components/parameters/filter_q'
         - $ref: '#/components/parameters/sort_price'
+        - $ref: '#/components/parameters/category'
         - $ref: '#/components/parameters/filter_new_arrivals'
         - $ref: '#/components/parameters/filter_from'
         - $ref: '#/components/parameters/filter_to'
