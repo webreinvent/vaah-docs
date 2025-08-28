@@ -1,0 +1,92 @@
+post:
+  summary: Confirm Stripe Payment
+  description: >
+    Confirms a Stripe Payment Intent.
+    - Retrieves the intent by ID.
+    - Verifies that the payment succeeded.
+    - Places the order and records payment in the system.
+  operationId: confirmStripePayment
+  tags:
+    - Orders
+  security:
+    - bearerAuth: [ ]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - payment_intent_id
+          properties:
+            payment_intent_id:
+              type: string
+              description: The Stripe PaymentIntent ID
+              example: "pi_3NN4sRSEq5nCXXXX"
+  responses:
+    "200":
+      description: Payment confirmed and order placed successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "Order placed and payment recorded successfully." ]
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2001
+                  uuid:
+                    type: string
+                    example: "a12bcf34-5d67-89ef-1011-121314151617"
+                  cart_uuid:
+                    type: string
+                    example: "b56d78e9-10fa-11ef-8c99-0242ac120002"
+                  cart_products_count:
+                    type: integer
+                    example: 3
+                  stripe_response:
+                    type: object
+                    description: Raw Stripe PaymentIntent object
+    "400":
+      description: Missing or invalid payment_intent_id / payment not successful
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "Missing payment_intent_id", "Payment not successful." ]
+              status:
+                type: string
+                example: "requires_payment_method"
+    "404":
+      description: Order expired or not found in cache
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "Order expired or not found." ]

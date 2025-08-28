@@ -1,10 +1,10 @@
 post:
-  summary: Create paypal order intent
+  summary: Create Stripe Payment Intent
   description: >
-    Creates a new PayPal order using the provided cart/order details.
-    - Validates the order before sending it to PayPal.
-    - Returns the PayPal order ID and related links ` "payment_method": "paypal"`
-  operationId: createPaypalOrder
+    Creates a new Stripe Payment Intent for the given order details.
+    - Validates the order before sending it to Stripe.
+    - Returns a `clientSecret` to complete payment on the frontend ` "payment_method": "stripe"`
+  operationId: createStripePaymentIntent
   tags:
     - Orders
   security:
@@ -99,7 +99,7 @@ post:
                     - id
                 payment_method:
                   type: string
-                  example: "paypal"
+                  example: "Stripe"
                   description: The payment method selected for the order.
                 products:
                   type: array
@@ -160,7 +160,7 @@ post:
               - order_details
   responses:
     "200":
-      description: PayPal order created successfully
+      description: Payment intent created successfully
       content:
         application/json:
           schema:
@@ -171,30 +171,13 @@ post:
                 example: true
               data:
                 type: object
-                description: Raw PayPal order response
                 properties:
-                  id:
+                  clientSecret:
                     type: string
-                    example: "4WJ04564H3792105M"
-                  status:
-                    type: string
-                    example: "CREATED"
-                  links:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        href:
-                          type: string
-                          example: "https://www.sandbox.paypal.com/checkoutnow?token=4WJ04564H3792105M"
-                        rel:
-                          type: string
-                          example: "approve"
-                        method:
-                          type: string
-                          example: "GET"
+                    description: The client secret to confirm the payment on frontend
+                    example: "pi_3NN4sRSEq5nCXXXX_secret_xxx"
     "400":
-      description: Validation error or unable to create PayPal order
+      description: Invalid order data or amount too low
       content:
         application/json:
           schema:
@@ -203,8 +186,11 @@ post:
               success:
                 type: boolean
                 example: false
+              message:
+                type: string
+                example: "Amount must be at least 50 in smallest currency unit. Currently: 20 (USD)."
               errors:
                 type: array
                 items:
                   type: string
-                example: [ "Unable to create PayPal order." ]
+                example: [ "Invalid order data." ]

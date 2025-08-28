@@ -8830,6 +8830,28 @@ paths:
                   type: object
                   description: Contains details of the order to be placed.
                   properties:
+                    currency:
+                      type: object
+                      properties:
+                        vh_st_store_id:
+                          type: integer
+                          example: 51
+                        name:
+                          type: string
+                          example: US Dollar
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: '&#36;'
+                        is_default:
+                          type: integer
+                          example: 1
+                        rate:
+                          type: number
+                          format: float
+                          example: 1
                     vh_st_store_id:
                       type: integer
                       example: 1
@@ -9422,6 +9444,28 @@ paths:
                   type: object
                   description: Contains details of the order to be placed.
                   properties:
+                    currency:
+                      type: object
+                      properties:
+                        vh_st_store_id:
+                          type: integer
+                          example: 51
+                        name:
+                          type: string
+                          example: US Dollar
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: '&#36;'
+                        is_default:
+                          type: integer
+                          example: 1
+                        rate:
+                          type: number
+                          format: float
+                          example: 1
                     vh_st_store_id:
                       type: integer
                       example: 1
@@ -9672,6 +9716,294 @@ paths:
                       type: string
                     example:
                       - Order details not found or expired in cache.
+  /stripe/payment-intent:
+    post:
+      summary: Create Stripe Payment Intent
+      description: |
+        Creates a new Stripe Payment Intent for the given order details. - Validates the order before sending it to Stripe. - Returns a `clientSecret` to complete payment on the frontend ` "payment_method": "stripe"`
+      operationId: createStripePaymentIntent
+      tags:
+        - Orders
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_details:
+                  type: object
+                  description: Contains details of the order to be placed.
+                  properties:
+                    currency:
+                      type: object
+                      properties:
+                        vh_st_store_id:
+                          type: integer
+                          example: 51
+                        name:
+                          type: string
+                          example: US Dollar
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: '&#36;'
+                        is_default:
+                          type: integer
+                          example: 1
+                        rate:
+                          type: number
+                          format: float
+                          example: 1
+                    vh_st_store_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the selected store.
+                    vh_user_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the Auth user.
+                    cart_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the user's cart.
+                    total_amount:
+                      type: number
+                      format: float
+                      example: 150
+                      description: The total amount for the order.
+                    payable:
+                      type: number
+                      format: float
+                      example: 150
+                      description: The amount that needs to be paid.
+                    discounts:
+                      type: number
+                      format: float
+                      example: 10
+                      description: The total discount applied to the order.
+                    taxes:
+                      type: number
+                      format: float
+                      example: 5
+                      description: The total taxes applied to the order.
+                    delivery_fee:
+                      type: number
+                      format: float
+                      example: 5
+                      description: The delivery fee for the order.
+                    shipping_address:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 101
+                          description: The ID of the shipping address.
+                      required:
+                        - id
+                    billing_address:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 102
+                          description: The ID of the billing address.
+                      required:
+                        - id
+                    payment_method:
+                      type: string
+                      example: Stripe
+                      description: The payment method selected for the order.
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: product name
+                            description: The name of the product.
+                          pivot:
+                            type: object
+                            properties:
+                              vh_st_product_id:
+                                type: integer
+                                example: 1
+                                description: The ID of the product.
+                              vh_st_product_variation_id:
+                                type: integer
+                                example: 2
+                                description: The ID of the product variation.
+                              vh_st_vendor_id:
+                                type: integer
+                                example: 1
+                                description: The ID of the selected vendor.
+                              quantity:
+                                type: integer
+                                example: 1
+                                description: The quantity of the product ordered.
+                              price:
+                                type: number
+                                format: float
+                                example: 50
+                                description: The price of the product.
+                            required:
+                              - vh_st_product_id
+                              - vh_st_product_variation_id
+                              - vh_st_vendor_id
+                              - quantity
+                              - price
+                        required:
+                          - name
+                          - pivot
+                  required:
+                    - cart_id
+                    - total_amount
+                    - payable
+                    - discounts
+                    - taxes
+                    - delivery_fee
+                    - shipping_address
+                    - billing_address
+                    - payment_method
+                    - products
+                required:
+                  - order_details
+      responses:
+        '200':
+          description: Payment intent created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      clientSecret:
+                        type: string
+                        description: The client secret to confirm the payment on frontend
+                        example: pi_3NN4sRSEq5nCXXXX_secret_xxx
+        '400':
+          description: Invalid order data or amount too low
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Amount must be at least 50 in smallest currency unit. Currently: 20 (USD).'
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Invalid order data.
+  /stripe/confirm-payment:
+    post:
+      summary: Confirm Stripe Payment
+      description: |
+        Confirms a Stripe Payment Intent. - Retrieves the intent by ID. - Verifies that the payment succeeded. - Places the order and records payment in the system.
+      operationId: confirmStripePayment
+      tags:
+        - Orders
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - payment_intent_id
+              properties:
+                payment_intent_id:
+                  type: string
+                  description: The Stripe PaymentIntent ID
+                  example: pi_3NN4sRSEq5nCXXXX
+      responses:
+        '200':
+          description: Payment confirmed and order placed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Order placed and payment recorded successfully.
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 2001
+                      uuid:
+                        type: string
+                        example: a12bcf34-5d67-89ef-1011-121314151617
+                      cart_uuid:
+                        type: string
+                        example: b56d78e9-10fa-11ef-8c99-0242ac120002
+                      cart_products_count:
+                        type: integer
+                        example: 3
+                      stripe_response:
+                        type: object
+                        description: Raw Stripe PaymentIntent object
+        '400':
+          description: Missing or invalid payment_intent_id / payment not successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Missing payment_intent_id
+                      - Payment not successful.
+                  status:
+                    type: string
+                    example: requires_payment_method
+        '404':
+          description: Order expired or not found in cache
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Order expired or not found.
   /api/store/orders/{uuid}:
     get:
       tags:

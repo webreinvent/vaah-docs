@@ -224,6 +224,10 @@ paths:
     $ref: './orders/orderByPaypal.yaml'  # Reference to order file
   '/api/capture-paypal-order{id}':
     $ref: './orders/capturePaypalOrder.yaml'  # Reference to order file
+  '/stripe/payment-intent':
+    $ref: './orders/stripePaymentIntent.yaml'  # Reference to order file
+  '/stripe/confirm-payment':
+    $ref: './orders/stripePaymentConfirm.yaml'  # Reference to order file
   '/api/store/orders/{uuid}':
     $ref: './orders/update.yaml'  # Reference to order item file
   '/api/store/orders/{uuid}/items':
