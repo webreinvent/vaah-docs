@@ -1759,24 +1759,45 @@ paths:
         - $ref: '#/components/parameters/ids_query'
         - $ref: '#/components/parameters/exclude'
         - $ref: '#/components/parameters/include'
+        - in: query
+          name: brand
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - Invictus
+          description: Get the related product based on the brands search `?brand[]=invictus&brand[]=roadster`.
+        - in: query
+          name: category
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - Invictus
+          description: Get the related product based on the categories search `?category[]=mens-fashion&category[]=clothing`.
+        - in: query
+          name: type
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - Invictus
+          description: Get the related product based on the product type search `?type[]=simple&type[]=digital`.
         - $ref: '#/components/parameters/filter_q'
         - $ref: '#/components/parameters/sort_price'
-        - $ref: '#/components/parameters/filter_is_active'
         - $ref: '#/components/parameters/filter_new_arrivals'
         - $ref: '#/components/parameters/filter_from'
         - $ref: '#/components/parameters/filter_to'
         - $ref: '#/components/parameters/homepage_featured'
         - $ref: '#/components/parameters/categorypage_featured'
-        - $ref: '#/components/parameters/top_sellings_filter'
-        - $ref: '#/components/parameters/filter_trashed'
-        - $ref: '#/components/parameters/filter_date'
         - $ref: '#/components/parameters/min_price'
         - $ref: '#/components/parameters/max_price'
-        - $ref: '#/components/parameters/category'
-        - $ref: '#/components/parameters/product_variations'
-        - $ref: '#/components/parameters/stores'
-        - $ref: '#/components/parameters/brands'
-        - $ref: '#/components/parameters/vendors'
         - $ref: '#/components/parameters/min_quantity'
         - $ref: '#/components/parameters/max_quantity'
       responses:
@@ -1806,6 +1827,105 @@ paths:
                       from:
                         type: integer
                         example: 1
+                      filters:
+                        type: object
+                        properties:
+                          brands:
+                            type: array
+                            description: List of available brands for filtering
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 61
+                                name:
+                                  type: string
+                                  example: INVICTUS
+                                slug:
+                                  type: string
+                                  example: invictus
+                                image:
+                                  type: string
+                                  nullable: true
+                                  example: invictus.webp
+                                count:
+                                  type: integer
+                                  example: 3
+                                selected:
+                                  type: boolean
+                                  example: false
+                          categories:
+                            type: array
+                            description: List of available categories for filtering
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 42
+                                name:
+                                  type: string
+                                  example: Footwear
+                                slug:
+                                  type: string
+                                  example: footwear
+                                count:
+                                  type: integer
+                                  example: 33
+                                selected:
+                                  type: boolean
+                                  example: false
+                          types:
+                            type: array
+                            description: List of product types for filtering
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 79
+                                name:
+                                  type: string
+                                  example: Formal-Shoes
+                                slug:
+                                  type: string
+                                  example: formal-shoes
+                                count:
+                                  type: integer
+                                  example: 34
+                                selected:
+                                  type: boolean
+                                  example: false
+                          attributes:
+                            type: array
+                            description: Attribute filters with their values
+                            items:
+                              type: object
+                              properties:
+                                attribute_id:
+                                  type: integer
+                                  example: 1
+                                attribute:
+                                  type: string
+                                  example: Color
+                                values:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: integer
+                                        example: 1
+                                      value:
+                                        type: string
+                                        example: Blue
+                                      count:
+                                        type: integer
+                                        example: 23
+                                      selected:
+                                        type: boolean
+                                        example: false
                       last_page:
                         type: integer
                         example: 1
@@ -2235,7 +2355,6 @@ paths:
             example: shoes
           description: The search keyword to filter products, brands, and categories.
         - $ref: '#/components/parameters/selected_store'
-        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Search results retrieved successfully

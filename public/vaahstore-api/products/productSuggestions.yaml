@@ -18,7 +18,6 @@ get:
         example: "shoes"
       description: The search keyword to filter products, brands, and categories.
     - $ref: '../vaahstore.yaml#/components/parameters/selected_store'
-    - $ref: '../vaahstore.yaml#/components/parameters/currency'
 
   responses:
     '200':
