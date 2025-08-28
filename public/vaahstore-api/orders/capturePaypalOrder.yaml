@@ -1,0 +1,84 @@
+get:
+  summary: Capture PayPal Order
+  description: >
+    Captures a previously created PayPal order by its ID.
+    - Validates payment completion.
+    - Places the order in the system.
+    - Records the payment.
+  operationId: capturePaypalOrder
+  tags:
+    - Orders
+  security:
+    - bearerAuth: [ ]
+  parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: string
+      description: The PayPal order ID
+      example: "4WJ04564H3792105M"
+  responses:
+    "200":
+      description: Payment captured and order placed successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              messages:
+                type: array
+                items:
+                  type: string
+                example: [ "Order placed and payment recorded successfully." ]
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 101
+                  uuid:
+                    type: string
+                    example: "c12f4d30-6c7e-11ee-8c99-0242ac120002"
+                  cart_uuid:
+                    type: string
+                    example: "a34d8f10-6c7e-11ee-8c99-0242ac120002"
+                  cart_products_count:
+                    type: integer
+                    example: 2
+                  paypal_response:
+                    type: object
+                    description: Raw PayPal capture response
+    "400":
+      description: Payment not completed or order placement failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "Payment not completed." ]
+    "404":
+      description: Order details not found in cache
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "Order details not found or expired in cache." ]

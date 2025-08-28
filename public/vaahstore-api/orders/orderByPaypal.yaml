@@ -1,5 +1,5 @@
 post:
-  summary: Create PayPal Order
+  summary: Create paypal order intent
   description: >
     Creates a new PayPal order using the provided cart/order details.
     - Validates the order before sending it to PayPal.
