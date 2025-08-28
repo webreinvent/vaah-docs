@@ -220,6 +220,8 @@ paths:
 
   '/api/store/orders':
     $ref: './orders/index.yaml'  # Reference to order file
+  '/api/create-paypal-order':
+    $ref: './orders/orderByPaypal.yaml'  # Reference to order file
   '/api/store/orders/{uuid}':
     $ref: './orders/update.yaml'  # Reference to order item file
   '/api/store/orders/{uuid}/items':
