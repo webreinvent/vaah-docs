@@ -328,6 +328,8 @@ paths:
     $ref: './wishlists/update.yaml'  # Reference to wishlists item file
   '/api/store/wishlists/{id}/products':
     $ref: './wishlists/addProduct.yaml'  # Reference to wishlists item file
+  '/api/store/wishlists/{id}/move-to-cart':
+    $ref: './wishlists/moveToCart.yaml'  # Reference to wishlists item file
   '/api/store/wishlists/{id}/action/{action}':
     $ref: './wishlists/itemAction.yaml'  # Reference to wishlists item actions file
   '/api/store/wishlists/{action/{action}':

@@ -35,9 +35,14 @@ post:
                     example: 432
             action:
               type: string
-              description: The type of action to perform ("add" to add the product, "delete" to remove it)
-              enum: [ add, delete ]
+              description: >
+                The type of action to perform on the wishlist or cart:
+                - `"add"`: Add the product to the wishlist
+                - `"delete"`: Remove the product from the wishlist
+                - `"move"`: Move the product to **save for later** (i.e., from cart to wishlist)
+              enum: [ add, delete, move ]
               example: add
+
           required:
             - vh_user_id
             - products
