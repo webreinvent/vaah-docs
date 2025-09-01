@@ -11305,6 +11305,45 @@ paths:
           content:
             application/json:
               schema: null
+  /api/store/orders/{uuid}/invoice:
+    get:
+      tags:
+        - Orders
+      summary: Download order invoice
+      description: |
+        Downloads the invoice for a specific order in **PDF format**. - Requires the `order ID` in the path. - The response is a binary PDF file that can be saved or opened in the browser. - The filename is automatically generated using the order's user first name and UUID
+          (e.g., `john_order_573fe889.pdf`).
+      operationId: downloadOrderInvoice
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/selected_store'
+        - $ref: '#/components/parameters/currency'
+      responses:
+        '200':
+          description: Invoice PDF downloaded successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+              example: '%PDF-1.4 ... (binary content)'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Order not found.
   /api/store/orders/{uuid}/items:
     get:
       summary: Get order details after placing an order

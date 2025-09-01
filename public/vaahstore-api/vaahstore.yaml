@@ -232,6 +232,8 @@ paths:
     $ref: './orders/stripePaymentConfirm.yaml'  # Reference to order file
   '/api/store/orders/{uuid}':
     $ref: './orders/update.yaml'  # Reference to order item file
+  '/api/store/orders/{uuid}/invoice':
+    $ref: './orders/downloadInvoice.yaml'  # Reference to order item file
   '/api/store/orders/{uuid}/items':
     $ref: './carts/getOrder.yaml'  # Reference to order item file
   '/api/store/orders/{uuid}/action/{action}':
