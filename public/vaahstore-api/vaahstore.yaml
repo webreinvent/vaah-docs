@@ -100,6 +100,8 @@ paths:
     $ref: './authentication/paswordResetCode.yaml'  # Reference to the stores file
   '/api/password-reset':
     $ref: './authentication/resetPassword.yaml'  # Reference to the stores file
+  '/api/refresh-token':
+    $ref: './authentication/refreshToken.yaml'  # Reference to the stores file
   '/api/sign-out':
     $ref: './authentication/signOut.yaml'  # Reference to the stores file
 
@@ -119,6 +121,8 @@ paths:
 
   '/api/store/products':
     $ref: './products/products.yaml'  # Reference to the create products file
+  '/api/store/products/search':
+    $ref: './products/productSuggestions.yaml'  # Reference to the create products file
   '/api/store/products/{id}':
     $ref: './products/productUpdate.yaml'  # Reference to the product item file
   '/api/store/products/{id}/action/{action}':
@@ -206,6 +210,8 @@ paths:
     $ref: './carts/updateQuantity.yaml'  # Reference to the update cart items quantity file
   '/api/store/carts/{uuid}/checkout':
     $ref: './carts/itemsAtCheckout.yaml'  # Reference to the item at checkout file
+  /api/store/carts/checkout/buy-now':
+    $ref: './carts/buyNow.yaml'  # Reference to the cart details file
   '/api/store/carts/{uuid}/item/{action}':
     $ref: './carts/deleteItem.yaml'  # Reference to  delete cart item  file
 
@@ -216,8 +222,18 @@ paths:
 
   '/api/store/orders':
     $ref: './orders/index.yaml'  # Reference to order file
+  '/api/create-paypal-order':
+    $ref: './orders/orderByPaypal.yaml'  # Reference to order file
+  '/api/capture-paypal-order{id}':
+    $ref: './orders/capturePaypalOrder.yaml'  # Reference to order file
+  '/stripe/payment-intent':
+    $ref: './orders/stripePaymentIntent.yaml'  # Reference to order file
+  '/stripe/confirm-payment':
+    $ref: './orders/stripePaymentConfirm.yaml'  # Reference to order file
   '/api/store/orders/{uuid}':
     $ref: './orders/update.yaml'  # Reference to order item file
+  '/api/store/orders/{uuid}/invoice':
+    $ref: './orders/downloadInvoice.yaml'  # Reference to order item file
   '/api/store/orders/{uuid}/items':
     $ref: './carts/getOrder.yaml'  # Reference to order item file
   '/api/store/orders/{uuid}/action/{action}':
@@ -272,7 +288,7 @@ paths:
 
   '/api/store/categories':
     $ref: './categories/index.yaml'  # Reference to the categories file
-  '/api/store/categories/{id}':
+  '/api/store/categories/{identifier}':
     $ref: './categories/update.yaml'  # Reference to the category item file
   '/api/store/categories/{id}/action/{action}':
     $ref: './categories/itemAction.yaml'  # Reference to the category item actions file
@@ -281,7 +297,7 @@ paths:
 
   '/api/store/brands':
     $ref: './brands/index.yaml'  # Reference to brands  file
-  '/api/store/brands/{id}':
+  '/api/store/brands/{identifier}':
     $ref: './brands/update.yaml'  # Reference to brand item  file
   '/api/store/brands/{id}/action/{action}':
     $ref: './brands/itemAction.yaml'  # Reference to brand item action file
@@ -316,6 +332,8 @@ paths:
     $ref: './wishlists/update.yaml'  # Reference to wishlists item file
   '/api/store/wishlists/{id}/products':
     $ref: './wishlists/addProduct.yaml'  # Reference to wishlists item file
+  '/api/store/wishlists/{id}/move-to-cart':
+    $ref: './wishlists/moveToCart.yaml'  # Reference to wishlists item file
   '/api/store/wishlists/{id}/action/{action}':
     $ref: './wishlists/itemAction.yaml'  # Reference to wishlists item actions file
   '/api/store/wishlists/{action/{action}':
@@ -752,6 +770,23 @@ components:
           - `?frontend_ui=primevue`: Optimized for PrimeVue components
           - `?frontend_ui=flowbite`: Optimized for Flowbite/Tailwind UI components
           - ...more as per your frontend setup
+
+    attribute_query:
+      name: attribute_query
+      in: query
+      required: false
+      schema:
+        type: string
+        example: attribute[color]=purple&attribute[size]=medium
+      description: |
+        Query parameters to filter product variations by attributes.
+              Example: `?attribute[color]=purple&attribute[size]=medium`
+
+              - This will return only the currently selected variation of the product.
+              - Sometimes, the request may also include a vendor filter, e.g., `&vendor=35`,
+                especially when the request comes from the **cart**, **checkout**, or **order** page.
+              - The `attribute_query` structure shown is just an example. Actual keys and values depend on product attributes.
+              - Note: if the atributes are not available than on PDP get the selected variation by just pass `?variation={variation_id/uuid}`
 
     include:
       name: include
@@ -1674,23 +1709,25 @@ components:
 
         product_variation:
           type: object
-          description: The default variation for this product, including size, color, price, stock, and other variation-specific data.
+          description: >
+            The selected/default variation for this product, including attributes like
+            size, color, price, stock, vendor, and available combinations.
           properties:
             id:
               type: integer
-              example: 334
+              example: 287
             vh_st_product_id:
               type: integer
-              example: 49
+              example: 41
             uuid:
               type: string
-              example: "3ee0ba4a-1976-4178-9403-7794f64b4a7a"
+              example: "ace00dcd-0cfb-49bf-9f40-242774c97c27"
             name:
               type: string
-              example: "INVICTUS Men Round Toe Formal Loafers - Orange/Small"
+              example: "House Of Pataudi Men Black Faux Leather Formal Slip On Monks - Purple/Medium"
             slug:
               type: string
-              example: "invictus-men-round-toe-formal-loafers-orange-small"
+              example: "house-of-pataudi-men-black-faux-leather-formal-slip-on-monks-purple-medium"
             wishlist_ids:
               type: array
               items:
@@ -1705,13 +1742,75 @@ components:
               example: null
             price:
               type: string
-              example: "31.25"
+              example: "24.14"
             sale_price:
               type: string
-              example: "31.25"
+              example: "24.14"
             attribute_query:
               type: string
-              example: "?attribute[color]=orange&attribute[size]=small"
+              description: >
+                Query string representing the currently selected attributes for this variation.
+                Example: `?attribute[color]=purple&attribute[size]=medium`.
+              example: "?attribute[color]=purple&attribute[size]=medium"
+            attributes_combinations:
+              type: array
+              description: >
+                Available attribute combinations for this product variation.
+                Shows selected attribute values and other valid options.
+              items:
+                type: object
+                properties:
+                  attribute_id:
+                    type: integer
+                    example: 1
+                  attribute:
+                    type: string
+                    example: "Color"
+                  selected:
+                    type: integer
+                    description: ID of the selected attribute value
+                    example: 8
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 8
+                        value:
+                          type: string
+                          example: "Purple"
+                        valid_for_selection:
+                          type: boolean
+                          example: true
+            grouped_attributes:
+              type: array
+              description: >
+                Grouped attribute details for the variation (e.g., Color, Size).
+              items:
+                type: object
+                properties:
+                  attribute_id:
+                    type: integer
+                    example: 2
+                  attribute:
+                    type: string
+                    example: "Size"
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 13
+                        value:
+                          type: string
+                          example: "Medium"
+                        valid_for_selection:
+                          type: boolean
+                          example: true
             media:
               type: array
               items:
@@ -1719,20 +1818,41 @@ components:
               example: [ ]
             quantity:
               type: integer
-              example: 0
+              description: Number of items allocated in this variation
+              example: 309
             available_quantity:
               type: integer
-              example: 0
+              description: Number of items available in stock for this variation
+              example: 126
             is_stock_available:
               type: integer
-              example: 0
+              example: 1
             type:
               type: string
-              example: "fallback"
+              example: "attribute"
             selected_vendor:
               type: object
               nullable: true
-              example: null
+              description: Vendor information for this variation
+              properties:
+                id:
+                  type: integer
+                  example: 35
+                name:
+                  type: string
+                  example: "Oleta Reichel"
+                slug:
+                  type: string
+                  example: "default-vendor-34"
+                email:
+                  type: string
+                  nullable: true
+                  example: null
+                phone_number:
+                  type: string
+                  nullable: true
+                  example: null
+
 
 
     Vendor:
@@ -2792,6 +2912,35 @@ components:
         is_active:
           type: integer
           description: Indicates if the category is active (1 = active, 0 = inactive)
+        image_path:
+          type: string
+          nullable: true
+          description: Path to the category image
+          example: "storage/categories/1754642706.webp"
+        media:
+          type: object
+          nullable: true
+          description: Media details related to the category (e.g., webp_url)
+          properties:
+            webp_url:
+              type: string
+              example: "storage/categories/1754642706.webp"
+        meta_title:
+          type: string
+          nullable: true
+          description: Meta title for SEO
+          example: "Apparel"
+        meta_description:
+          type: string
+          nullable: true
+          description: Meta description for SEO
+          example: "Test Description"
+        meta_keywords:
+          type: array
+          items:
+            type: string
+          description: Meta keywords for SEO
+          example: [ "Test" ]
         meta:
           type: object
           nullable: true
@@ -2825,29 +2974,72 @@ components:
               type: object
               nullable: true
               description: Meta information about the parent category (nullable)
+        parent_category_name:
+          type: string
+          nullable: true
+          description: Name of the parent category (shortcut field)
         created_at:
           type: string
           format: date-time
           description: Timestamp of when the category was created
+          example: "2025-07-08 07:05:03"
         updated_at:
           type: string
           format: date-time
           description: Timestamp of when the category was last updated
+          example: "2025-08-08 08:45:12"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of when the category was deleted (nullable)
         created_by:
           type: integer
           description: ID of the user who created the category
         updated_by:
           type: integer
           description: ID of the user who last updated the category
-        deleted_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Timestamp of when the category was deleted (nullable)
         deleted_by:
           type: integer
           nullable: true
           description: ID of the user who deleted the category (nullable)
+        created_by_user:
+          type: object
+          description: User details of the creator
+          properties:
+            id:
+              type: integer
+              example: 1
+            uuid:
+              type: string
+              example: "85bfd3e7-9994-4ede-a6fd-98934dd465b8"
+            first_name:
+              type: string
+              example: "Web"
+            last_name:
+              type: string
+              example: "Webreinvent"
+        updated_by_user:
+          type: object
+          description: User details of the last updater
+          properties:
+            id:
+              type: integer
+              example: 1
+            uuid:
+              type: string
+              example: "85bfd3e7-9994-4ede-a6fd-98934dd465b8"
+            first_name:
+              type: string
+              example: "Web"
+            last_name:
+              type: string
+              example: "Webreinvent"
+        deleted_by_user:
+          type: object
+          nullable: true
+          description: User details of the deleter (nullable)
+
     Warehouse:
       type: object
       properties:

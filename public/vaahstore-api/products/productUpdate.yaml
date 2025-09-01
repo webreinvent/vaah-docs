@@ -5,10 +5,11 @@ get:
   description: Retrieve a product by its unique identifier.
   operationId: getProductById
   parameters:
-    - '$ref': '../vaahstore.yaml#/components/parameters/id'
-    - '$ref': '../vaahstore.yaml#/components/parameters/frontend_ui'
-    - '$ref': '../vaahstore.yaml#/components/parameters/exclude'
-    - '$ref': '../vaahstore.yaml#/components/parameters/include'
+    - $ref: '../vaahstore.yaml#/components/parameters/id'
+    - $ref: '../vaahstore.yaml#/components/parameters/frontend_ui'
+    - $ref: '../vaahstore.yaml#/components/parameters/attribute_query'
+    - $ref: '../vaahstore.yaml#/components/parameters/exclude'
+    - $ref: '../vaahstore.yaml#/components/parameters/include'
   responses:
     '200':
       description: Product Retrieved

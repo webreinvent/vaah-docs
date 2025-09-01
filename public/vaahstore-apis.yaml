@@ -681,6 +681,87 @@ paths:
                       - The reset password code field is required.
                       - The password field must be at least 6 characters.
                       - The password confirmation does not match.
+  /api/refresh-token:
+    post:
+      summary: Refresh API Token
+      description: |
+        Refreshes the user's API token. - If the provided token is still valid, the same token is returned. - If expired, a new token is generated and returned. - Requires a valid Bearer token in the `Authorization` header.
+      operationId: refreshToken
+      security:
+        - bearerAuth: []
+      tags:
+        - Authentication
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                remember_me:
+                  type: boolean
+                  description: |
+                    Whether to extend the token validity for 7 days. Default is 2 days if not provided or false.
+                  example: true
+      responses:
+        '200':
+          description: Token refreshed successfully or still valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Token refreshed successfully.
+                  data:
+                    type: object
+                    properties:
+                      api_token:
+                        type: string
+                        example: 1|XyZAbc123NewTokenValue
+                      expires_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-03 15:30:00'
+        '400':
+          description: No token provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - No token provided.
+        '401':
+          description: Invalid or expired token or session exceed from the limit
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Your session has expired because you logged in on another device.
   /api/sign-out:
     post:
       summary: Sign out
@@ -1759,24 +1840,46 @@ paths:
         - $ref: '#/components/parameters/ids_query'
         - $ref: '#/components/parameters/exclude'
         - $ref: '#/components/parameters/include'
+        - in: query
+          name: brand
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - Invictus
+          description: Get the related product based on the brands search `?brand[]=invictus&brand[]=roadster`.
+        - in: query
+          name: category
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - Invictus
+          description: Get the related product based on the categories search `?category[]=mens-fashion&category[]=clothing`.
+        - in: query
+          name: type
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - Invictus
+          description: Get the related product based on the product type search `?type[]=simple&type[]=digital`.
         - $ref: '#/components/parameters/filter_q'
         - $ref: '#/components/parameters/sort_price'
-        - $ref: '#/components/parameters/filter_is_active'
+        - $ref: '#/components/parameters/category'
         - $ref: '#/components/parameters/filter_new_arrivals'
         - $ref: '#/components/parameters/filter_from'
         - $ref: '#/components/parameters/filter_to'
         - $ref: '#/components/parameters/homepage_featured'
         - $ref: '#/components/parameters/categorypage_featured'
-        - $ref: '#/components/parameters/top_sellings_filter'
-        - $ref: '#/components/parameters/filter_trashed'
-        - $ref: '#/components/parameters/filter_date'
         - $ref: '#/components/parameters/min_price'
         - $ref: '#/components/parameters/max_price'
-        - $ref: '#/components/parameters/category'
-        - $ref: '#/components/parameters/product_variations'
-        - $ref: '#/components/parameters/stores'
-        - $ref: '#/components/parameters/brands'
-        - $ref: '#/components/parameters/vendors'
         - $ref: '#/components/parameters/min_quantity'
         - $ref: '#/components/parameters/max_quantity'
       responses:
@@ -1806,6 +1909,105 @@ paths:
                       from:
                         type: integer
                         example: 1
+                      filters:
+                        type: object
+                        properties:
+                          brands:
+                            type: array
+                            description: List of available brands for filtering
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 61
+                                name:
+                                  type: string
+                                  example: INVICTUS
+                                slug:
+                                  type: string
+                                  example: invictus
+                                image:
+                                  type: string
+                                  nullable: true
+                                  example: invictus.webp
+                                count:
+                                  type: integer
+                                  example: 3
+                                selected:
+                                  type: boolean
+                                  example: false
+                          categories:
+                            type: array
+                            description: List of available categories for filtering
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 42
+                                name:
+                                  type: string
+                                  example: Footwear
+                                slug:
+                                  type: string
+                                  example: footwear
+                                count:
+                                  type: integer
+                                  example: 33
+                                selected:
+                                  type: boolean
+                                  example: false
+                          types:
+                            type: array
+                            description: List of product types for filtering
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 79
+                                name:
+                                  type: string
+                                  example: Formal-Shoes
+                                slug:
+                                  type: string
+                                  example: formal-shoes
+                                count:
+                                  type: integer
+                                  example: 34
+                                selected:
+                                  type: boolean
+                                  example: false
+                          attributes:
+                            type: array
+                            description: Attribute filters with their values
+                            items:
+                              type: object
+                              properties:
+                                attribute_id:
+                                  type: integer
+                                  example: 1
+                                attribute:
+                                  type: string
+                                  example: Color
+                                values:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: integer
+                                        example: 1
+                                      value:
+                                        type: string
+                                        example: Blue
+                                      count:
+                                        type: integer
+                                        example: 23
+                                      selected:
+                                        type: boolean
+                                        example: false
                       last_page:
                         type: integer
                         example: 1
@@ -2218,6 +2420,136 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /api/store/products/search:
+    get:
+      tags:
+        - Products
+      summary: Search products, brands, and categories suggestions
+      description: |
+        This endpoint allows searching for products, brands, and categories by a query string. - Products include resolved variations. - Brands and categories are only returned if they have associated products. - Limits results to 5 per type.
+      operationId: searchProducts
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema:
+            type: string
+            example: shoes
+          description: The search keyword to filter products, brands, and categories.
+        - $ref: '#/components/parameters/selected_store'
+      responses:
+        '200':
+          description: Search results retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: array
+                        description: Matching products with variations
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              example: product
+                            id:
+                              type: integer
+                              example: 32
+                            name:
+                              type: string
+                              example: INVICTUS Men Textured Leather Formal Loafers
+                            slug:
+                              type: string
+                              example: invictus-men-textured-leather-formal-loafers
+                            attribute_query:
+                              type: string
+                              nullable: true
+                              example: '?attribute[color]=green&attribute[size]=xs'
+                      brands:
+                        type: array
+                        description: Matching brands with at least one product
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              example: brand
+                            id:
+                              type: integer
+                              example: 61
+                            name:
+                              type: string
+                              example: INVICTUS
+                            slug:
+                              type: string
+                              example: invictus
+                      categories:
+                        type: array
+                        description: Matching categories and their subcategories with products
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              example: category
+                            id:
+                              type: integer
+                              example: 8
+                            name:
+                              type: string
+                              example: Sports Shoes
+                            slug:
+                              type: string
+                              example: sports-shoes
+              examples:
+                success:
+                  summary: Example search response
+                  value:
+                    success: true
+                    data:
+                      products:
+                        - type: product
+                          id: 32
+                          name: INVICTUS Men Textured Leather Formal Loafers
+                          slug: invictus-men-textured-leather-formal-loafers
+                          attribute_query: '?attribute[color]=green&attribute[size]=xs'
+                        - type: product
+                          id: 33
+                          name: INVICTUS Men Formal Loafers
+                          slug: invictus-men-formal-loafers
+                          attribute_query: '?attribute[color]=brown&attribute[size]=xxl'
+                        - type: product
+                          id: 49
+                          name: INVICTUS Men Round Toe Formal Loafers
+                          slug: invictus-men-round-toe-formal-loafers
+                          attribute_query: '?attribute[color]=red&attribute[size]=extra-large'
+                      brands:
+                        - type: brand
+                          id: 61
+                          name: INVICTUS
+                          slug: invictus
+                      categories: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: An unexpected error occurred while searching products.
   /api/store/products/{id}:
     get:
       tags:
@@ -2228,6 +2560,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/id'
         - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/attribute_query'
         - $ref: '#/components/parameters/exclude'
         - $ref: '#/components/parameters/include'
       responses:
@@ -8242,6 +8575,408 @@ paths:
           content:
             application/json:
               schema: null
+  /api/store/carts/checkout/buy-now':
+    post:
+      tags:
+        - Carts
+      summary: Preview Buy Now at Checkout
+      description: |
+        Creates or updates a cart for a "Buy Now" action and returns enriched checkout preview details. - If `buy_now` is true, the product(s) provided will be directly prepared for checkout. - Works with authenticated users (`user.id`) or anonymous users using `uuid`.
+      operationId: previewBuyNowAtCheckout
+      parameters:
+        - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/selected_store'
+        - $ref: '#/components/parameters/currency'
+      requestBody:
+        description: Request payload for buy-now checkout preview.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - buy_now
+                - user
+                - products
+                - uuid
+              properties:
+                buy_now:
+                  type: boolean
+                  description: Whether to trigger buy-now mode
+                  example: true
+                uuid:
+                  type: string
+                  format: uuid
+                  description: Cart UUID (used for auth cart)
+                  example: 573fe889-ec05-40a9-a849-732522baf268
+                user:
+                  type: object
+                  description: Authenticated user details
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                      description: User ID
+                      example: 330
+                products:
+                  type: array
+                  description: List of products to buy now
+                  items:
+                    type: object
+                    required:
+                      - id
+                      - variation_id
+                      - vendor_id
+                      - quantity
+                    properties:
+                      id:
+                        type: integer
+                        description: Product ID
+                        example: 52
+                      variation_id:
+                        type: integer
+                        description: Product variation ID
+                        example: 349
+                      vendor_id:
+                        type: integer
+                        description: Vendor ID
+                        example: 1
+                      quantity:
+                        type: integer
+                        description: Quantity to purchase
+                        example: 1
+            example:
+              buy_now: true
+              uuid: 573fe889-ec05-40a9-a849-732522baf268
+              user:
+                id: 330
+              products:
+                - id: 52
+                  variation_id: 349
+                  vendor_id: 1
+                  quantity: 1
+      responses:
+        '200':
+          description: Enriched checkout preview returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int64
+                              example: 1
+                            uuid:
+                              type: string
+                              example: 8952d982-4aca-462e-8e90-2f8340a22582
+                            name:
+                              type: string
+                              example: My Product
+                            summary:
+                              type: string
+                              example: My Product Summary
+                            details:
+                              type: string
+                              example: My Product Details
+                            price:
+                              type: object
+                              description: Price details including the amount and associated currency information.
+                              properties:
+                                amount:
+                                  type: string
+                                  description: The price amount as a string (to preserve formatting such as decimals).
+                                  example: '10.00'
+                                currency:
+                                  type: object
+                                  description: Currency details for the given amount.
+                                  properties:
+                                    code:
+                                      type: string
+                                      description: The ISO currency code (e.g., USD, IRR).
+                                      example: USD
+                                    symbol:
+                                      type: string
+                                      description: The currency symbol, may include HTML or Unicode representations.
+                                      example: '&#xFDFC;'
+                                    rate:
+                                      type: number
+                                      description: The exchange rate or base rate for the currency.
+                                      example: 1
+                            wishlist_ids:
+                              type: array
+                              items:
+                                type: integer
+                              example:
+                                - 1
+                                - 2
+                              description: IDs of wishlists in which this product exists for the authenticated user.
+                            store:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+                            available_at:
+                              type: string
+                              format: date-time
+                              example: '2024-10-23T00:00:00Z'
+                            brand:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: Nike
+                            product_categories:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 42
+                                  name:
+                                    type: string
+                                    example: Footwear
+                                  slug:
+                                    type: string
+                                    example: footwear
+                                  parent_id:
+                                    type: integer
+                                    nullable: true
+                                    example: null
+                                  pivot:
+                                    type: object
+                                    properties:
+                                      vh_st_product_id:
+                                        type: integer
+                                        example: 49
+                                      vh_st_category_id:
+                                        type: integer
+                                        example: 42
+                            vendor_product_data:
+                              type: object
+                              properties:
+                                price_range:
+                                  type: array
+                                  items:
+                                    type: number
+                                  example:
+                                    - 0
+                                    - 1
+                                quantity:
+                                  type: integer
+                                  example: 7
+                                selected_vendor:
+                                  type: object
+                                  example:
+                                    vendor data: null
+                            status:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 17
+                                name:
+                                  type: string
+                                  example: Approved
+                            updated_at:
+                              type: string
+                              format: date-time
+                              example: '2024-09-17T10:45:06Z'
+                            media:
+                              type: array
+                              description: List of product media items, each containing title, default status, and images in multiple formats.
+                              items:
+                                type: object
+                                properties:
+                                  title:
+                                    type: string
+                                    example: invictus-men-round-toe-formal-loafers.jpg
+                                  is_default:
+                                    type: integer
+                                    example: 0
+                                  images:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        webp_url:
+                                          type: string
+                                          example: storage/media/invictus-men-round-toe-formal-loafers.webp
+                                        url:
+                                          type: string
+                                          example: storage/media/invictus-men-round-toe-formal-loafers.jpg
+                                        url_thumbnail:
+                                          type: string
+                                          example: storage/app/public/media/invictus-men-round-toe-formal-loafers.jpg
+                                        type:
+                                          type: string
+                                          nullable: true
+                                          example: null
+                            grouped_attributes:
+                              type: array
+                              description: Attributes grouped by type, such as color or size, with available values and selected value.
+                              items:
+                                type: object
+                                properties:
+                                  attribute_id:
+                                    type: integer
+                                    example: 1
+                                  attribute:
+                                    type: string
+                                    example: Color
+                                  values:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: integer
+                                          example: 9
+                                        value:
+                                          type: string
+                                          example: Orange
+                                  selected:
+                                    type: integer
+                                    example: 9
+                            product_variation:
+                              type: object
+                              description: The default variation for this product, including size, color, price, stock, and other variation-specific data.
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 334
+                                vh_st_product_id:
+                                  type: integer
+                                  example: 49
+                                uuid:
+                                  type: string
+                                  example: 3ee0ba4a-1976-4178-9403-7794f64b4a7a
+                                name:
+                                  type: string
+                                  example: INVICTUS Men Round Toe Formal Loafers - Orange/Small
+                                slug:
+                                  type: string
+                                  example: invictus-men-round-toe-formal-loafers-orange-small
+                                wishlist_ids:
+                                  type: array
+                                  items:
+                                    type: integer
+                                  example: []
+                                is_default:
+                                  type: integer
+                                  example: 1
+                                sku:
+                                  type: string
+                                  nullable: true
+                                  example: null
+                                price:
+                                  type: string
+                                  example: '31.25'
+                                sale_price:
+                                  type: string
+                                  example: '31.25'
+                                attribute_query:
+                                  type: string
+                                  example: '?attribute[color]=orange&attribute[size]=small'
+                                media:
+                                  type: array
+                                  items:
+                                    type: object
+                                  example: []
+                                quantity:
+                                  type: integer
+                                  example: 0
+                                available_quantity:
+                                  type: integer
+                                  example: 0
+                                is_stock_available:
+                                  type: integer
+                                  example: 0
+                                type:
+                                  type: string
+                                  example: fallback
+                                selected_vendor:
+                                  type: object
+                                  nullable: true
+                                  example: null
+                            pivot:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                vh_st_cart_id:
+                                  type: integer
+                                vh_st_product_id:
+                                  type: integer
+                                vh_st_product_variation_id:
+                                  type: integer
+                                vh_st_vendor_id:
+                                  type: integer
+                                is_stock_available:
+                                  type: integer
+                                available_stock_quantity:
+                                  type: integer
+                                is_wishlisted:
+                                  type: integer
+                                cart_product_variation:
+                                  type: string
+                                price:
+                                  type: number
+                                  format: float
+                                total_price:
+                                  type: number
+                                  format: float
+                                  description: Total price for the product (quantity * price)
+                                  example: 400
+                                quantity:
+                                  type: integer
+                                subtotal:
+                                  type: number
+                                  format: float
+                                created_at:
+                                  type: string
+                                  example: '2024-12-09 05:56:09'
+                                updated_at:
+                                  type: string
+                                  example: '2024-12-09 05:56:09'
+                      total_mrp:
+                        type: number
+                        format: float
+        '400':
+          description: Invalid input or cart could not be created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Invalid product variation
+                      - Cart could not be generated
   /api/store/carts/{uuid}/item/{action}:
     delete:
       tags:
@@ -8498,6 +9233,28 @@ paths:
                   type: object
                   description: Contains details of the order to be placed.
                   properties:
+                    currency:
+                      type: object
+                      properties:
+                        vh_st_store_id:
+                          type: integer
+                          example: 51
+                        name:
+                          type: string
+                          example: US Dollar
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: '&#36;'
+                        is_default:
+                          type: integer
+                          example: 1
+                        rate:
+                          type: number
+                          format: float
+                          example: 1
                     vh_st_store_id:
                       type: integer
                       example: 1
@@ -9069,6 +9826,587 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
+  /api/create-paypal-order:
+    post:
+      summary: Create paypal order intent
+      description: |
+        Creates a new PayPal order using the provided cart/order details. - Validates the order before sending it to PayPal. - Returns the PayPal order ID and related links ` "payment_method": "paypal"`
+      operationId: createPaypalOrder
+      tags:
+        - Orders
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_details:
+                  type: object
+                  description: Contains details of the order to be placed.
+                  properties:
+                    currency:
+                      type: object
+                      properties:
+                        vh_st_store_id:
+                          type: integer
+                          example: 51
+                        name:
+                          type: string
+                          example: US Dollar
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: '&#36;'
+                        is_default:
+                          type: integer
+                          example: 1
+                        rate:
+                          type: number
+                          format: float
+                          example: 1
+                    vh_st_store_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the selected store.
+                    vh_user_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the Auth user.
+                    cart_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the user's cart.
+                    total_amount:
+                      type: number
+                      format: float
+                      example: 150
+                      description: The total amount for the order.
+                    payable:
+                      type: number
+                      format: float
+                      example: 150
+                      description: The amount that needs to be paid.
+                    discounts:
+                      type: number
+                      format: float
+                      example: 10
+                      description: The total discount applied to the order.
+                    taxes:
+                      type: number
+                      format: float
+                      example: 5
+                      description: The total taxes applied to the order.
+                    delivery_fee:
+                      type: number
+                      format: float
+                      example: 5
+                      description: The delivery fee for the order.
+                    shipping_address:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 101
+                          description: The ID of the shipping address.
+                      required:
+                        - id
+                    billing_address:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 102
+                          description: The ID of the billing address.
+                      required:
+                        - id
+                    payment_method:
+                      type: string
+                      example: paypal
+                      description: The payment method selected for the order.
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: product name
+                            description: The name of the product.
+                          pivot:
+                            type: object
+                            properties:
+                              vh_st_product_id:
+                                type: integer
+                                example: 1
+                                description: The ID of the product.
+                              vh_st_product_variation_id:
+                                type: integer
+                                example: 2
+                                description: The ID of the product variation.
+                              vh_st_vendor_id:
+                                type: integer
+                                example: 1
+                                description: The ID of the selected vendor.
+                              quantity:
+                                type: integer
+                                example: 1
+                                description: The quantity of the product ordered.
+                              price:
+                                type: number
+                                format: float
+                                example: 50
+                                description: The price of the product.
+                            required:
+                              - vh_st_product_id
+                              - vh_st_product_variation_id
+                              - vh_st_vendor_id
+                              - quantity
+                              - price
+                        required:
+                          - name
+                          - pivot
+                  required:
+                    - cart_id
+                    - total_amount
+                    - payable
+                    - discounts
+                    - taxes
+                    - delivery_fee
+                    - shipping_address
+                    - billing_address
+                    - payment_method
+                    - products
+                required:
+                  - order_details
+      responses:
+        '200':
+          description: PayPal order created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    description: Raw PayPal order response
+                    properties:
+                      id:
+                        type: string
+                        example: 4WJ04564H3792105M
+                      status:
+                        type: string
+                        example: CREATED
+                      links:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            href:
+                              type: string
+                              example: https://www.sandbox.paypal.com/checkoutnow?token=4WJ04564H3792105M
+                            rel:
+                              type: string
+                              example: approve
+                            method:
+                              type: string
+                              example: GET
+        '400':
+          description: Validation error or unable to create PayPal order
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Unable to create PayPal order.
+  /api/capture-paypal-order{id}:
+    get:
+      summary: Capture PayPal Order
+      description: |
+        Captures a previously created PayPal order by its ID. - Validates payment completion. - Places the order in the system. - Records the payment.
+      operationId: capturePaypalOrder
+      tags:
+        - Orders
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The PayPal order ID
+          example: 4WJ04564H3792105M
+      responses:
+        '200':
+          description: Payment captured and order placed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Order placed and payment recorded successfully.
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 101
+                      uuid:
+                        type: string
+                        example: c12f4d30-6c7e-11ee-8c99-0242ac120002
+                      cart_uuid:
+                        type: string
+                        example: a34d8f10-6c7e-11ee-8c99-0242ac120002
+                      cart_products_count:
+                        type: integer
+                        example: 2
+                      paypal_response:
+                        type: object
+                        description: Raw PayPal capture response
+        '400':
+          description: Payment not completed or order placement failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Payment not completed.
+        '404':
+          description: Order details not found in cache
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Order details not found or expired in cache.
+  /stripe/payment-intent:
+    post:
+      summary: Create Stripe Payment Intent
+      description: |
+        Creates a new Stripe Payment Intent for the given order details. - Validates the order before sending it to Stripe. - Returns a `clientSecret` to complete payment on the frontend ` "payment_method": "stripe"`
+      operationId: createStripePaymentIntent
+      tags:
+        - Orders
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_details:
+                  type: object
+                  description: Contains details of the order to be placed.
+                  properties:
+                    currency:
+                      type: object
+                      properties:
+                        vh_st_store_id:
+                          type: integer
+                          example: 51
+                        name:
+                          type: string
+                          example: US Dollar
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: '&#36;'
+                        is_default:
+                          type: integer
+                          example: 1
+                        rate:
+                          type: number
+                          format: float
+                          example: 1
+                    vh_st_store_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the selected store.
+                    vh_user_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the Auth user.
+                    cart_id:
+                      type: integer
+                      example: 1
+                      description: The ID of the user's cart.
+                    total_amount:
+                      type: number
+                      format: float
+                      example: 150
+                      description: The total amount for the order.
+                    payable:
+                      type: number
+                      format: float
+                      example: 150
+                      description: The amount that needs to be paid.
+                    discounts:
+                      type: number
+                      format: float
+                      example: 10
+                      description: The total discount applied to the order.
+                    taxes:
+                      type: number
+                      format: float
+                      example: 5
+                      description: The total taxes applied to the order.
+                    delivery_fee:
+                      type: number
+                      format: float
+                      example: 5
+                      description: The delivery fee for the order.
+                    shipping_address:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 101
+                          description: The ID of the shipping address.
+                      required:
+                        - id
+                    billing_address:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 102
+                          description: The ID of the billing address.
+                      required:
+                        - id
+                    payment_method:
+                      type: string
+                      example: Stripe
+                      description: The payment method selected for the order.
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: product name
+                            description: The name of the product.
+                          pivot:
+                            type: object
+                            properties:
+                              vh_st_product_id:
+                                type: integer
+                                example: 1
+                                description: The ID of the product.
+                              vh_st_product_variation_id:
+                                type: integer
+                                example: 2
+                                description: The ID of the product variation.
+                              vh_st_vendor_id:
+                                type: integer
+                                example: 1
+                                description: The ID of the selected vendor.
+                              quantity:
+                                type: integer
+                                example: 1
+                                description: The quantity of the product ordered.
+                              price:
+                                type: number
+                                format: float
+                                example: 50
+                                description: The price of the product.
+                            required:
+                              - vh_st_product_id
+                              - vh_st_product_variation_id
+                              - vh_st_vendor_id
+                              - quantity
+                              - price
+                        required:
+                          - name
+                          - pivot
+                  required:
+                    - cart_id
+                    - total_amount
+                    - payable
+                    - discounts
+                    - taxes
+                    - delivery_fee
+                    - shipping_address
+                    - billing_address
+                    - payment_method
+                    - products
+                required:
+                  - order_details
+      responses:
+        '200':
+          description: Payment intent created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      clientSecret:
+                        type: string
+                        description: The client secret to confirm the payment on frontend
+                        example: pi_3NN4sRSEq5nCXXXX_secret_xxx
+        '400':
+          description: Invalid order data or amount too low
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Amount must be at least 50 in smallest currency unit. Currently: 20 (USD).'
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Invalid order data.
+  /stripe/confirm-payment:
+    post:
+      summary: Confirm Stripe Payment
+      description: |
+        Confirms a Stripe Payment Intent. - Retrieves the intent by ID. - Verifies that the payment succeeded. - Places the order and records payment in the system.
+      operationId: confirmStripePayment
+      tags:
+        - Orders
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - payment_intent_id
+              properties:
+                payment_intent_id:
+                  type: string
+                  description: The Stripe PaymentIntent ID
+                  example: pi_3NN4sRSEq5nCXXXX
+      responses:
+        '200':
+          description: Payment confirmed and order placed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Order placed and payment recorded successfully.
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 2001
+                      uuid:
+                        type: string
+                        example: a12bcf34-5d67-89ef-1011-121314151617
+                      cart_uuid:
+                        type: string
+                        example: b56d78e9-10fa-11ef-8c99-0242ac120002
+                      cart_products_count:
+                        type: integer
+                        example: 3
+                      stripe_response:
+                        type: object
+                        description: Raw Stripe PaymentIntent object
+        '400':
+          description: Missing or invalid payment_intent_id / payment not successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Missing payment_intent_id
+                      - Payment not successful.
+                  status:
+                    type: string
+                    example: requires_payment_method
+        '404':
+          description: Order expired or not found in cache
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Order expired or not found.
   /api/store/orders/{uuid}:
     get:
       tags:
@@ -9968,6 +11306,45 @@ paths:
           content:
             application/json:
               schema: null
+  /api/store/orders/{uuid}/invoice:
+    get:
+      tags:
+        - Orders
+      summary: Download order invoice
+      description: |
+        Downloads the invoice for a specific order in **PDF format**. - Requires the `order ID` in the path. - The response is a binary PDF file that can be saved or opened in the browser. - The filename is automatically generated using the order's user first name and UUID
+          (e.g., `john_order_573fe889.pdf`).
+      operationId: downloadOrderInvoice
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/frontend_ui'
+        - $ref: '#/components/parameters/selected_store'
+        - $ref: '#/components/parameters/currency'
+      responses:
+        '200':
+          description: Invoice PDF downloaded successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+              example: '%PDF-1.4 ... (binary content)'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Order not found.
   /api/store/orders/{uuid}/items:
     get:
       summary: Get order details after placing an order
@@ -14591,12 +15968,16 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/categories/{id}:
+  /api/store/categories/{identifier}:
     get:
       tags:
         - Categories
-      summary: Get record by category ID
-      description: Retrieve a category by its unique identifier.
+      summary: Get record by category identifier
+      description: |
+        Retrieve a brand by its unique identifier (**id** or **slug**).
+
+        - Use **slug** when fetching the category for SEO purposes (typically for web pages).
+        - Use **id** in all other cases where a direct reference to the category is sufficient.
       operationId: getCategoryById
       parameters:
         - $ref: '#/components/parameters/id'
@@ -15247,12 +16628,16 @@ paths:
                     items:
                       type: string
                       example: An unexpected error occurred.
-  /api/store/brands/{id}:
+  /api/store/brands/{identifier}:
     get:
       tags:
         - Brands
-      summary: Get record by brand ID
-      description: Retrieve a brand by its unique identifier.
+      summary: Get record by brand identifies
+      description: |
+        Retrieve a brand by its unique identifier (**id** or **slug**).
+
+        - Use **slug** when fetching the brand for SEO purposes (typically for web pages).
+        - Use **id** in all other cases where a direct reference to the brand is sufficient.
       operationId: getBrandById
       parameters:
         - $ref: '#/components/parameters/id'
@@ -17717,10 +19102,12 @@ paths:
                         example: 432
                 action:
                   type: string
-                  description: The type of action to perform ("add" to add the product, "delete" to remove it)
+                  description: |
+                    The type of action to perform on the wishlist or cart: - `"add"`: Add the product to the wishlist - `"delete"`: Remove the product from the wishlist - `"move"`: Move the product to **save for later** (i.e., from cart to wishlist)
                   enum:
                     - add
                     - delete
+                    - move
                   example: add
               required:
                 - vh_user_id
@@ -17766,6 +19153,99 @@ paths:
           content:
             application/json:
               schema: null
+  /api/store/wishlists/{id}/move-to-cart:
+    post:
+      tags:
+        - Wishlists
+      summary: Move wishlist products to cart
+      description: |
+        Moves one or more products from a user's wishlist to their shopping cart. - Works for **all wishlists** by specifying the wishlist ID in the path. - If the wishlist is **"save-for-later"**, then the selected items will be
+          moved to the cart and **removed from that wishlist** (emptied).
+        Requires providing product details (vendor, variation, and quantity) in the request body.
+      operationId: moveWishlistToCart
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Products to be moved from wishlist to cart.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the user
+                      example: 330
+                products:
+                  type: array
+                  description: List of products to move
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: Product ID
+                        example: 46
+                      variation_id:
+                        type: integer
+                        description: Product variation ID
+                        example: 324
+                      vendor_id:
+                        type: integer
+                        description: Vendor ID
+                        example: 16
+                      quantity:
+                        type: integer
+                        description: Quantity to move
+                        example: 1
+            example:
+              user:
+                id: 330
+              products:
+                - id: 46
+                  variation_id: 324
+                  vendor_id: 16
+                  quantity: 1
+      responses:
+        '200':
+          description: Wishlist items moved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Wishlist'
+                  messages:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Wishlist items moved to cart successfully.
+        '400':
+          description: Invalid input or no valid products found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - User ID is required
+                      - No valid items to move
   /api/store/wishlists/{id}/action/{action}:
     patch:
       tags:
@@ -22306,6 +23786,22 @@ components:
           - `?frontend_ui=primevue`: Optimized for PrimeVue components
           - `?frontend_ui=flowbite`: Optimized for Flowbite/Tailwind UI components
           - ...more as per your frontend setup
+    attribute_query:
+      name: attribute_query
+      in: query
+      required: false
+      schema:
+        type: string
+        example: attribute[color]=purple&attribute[size]=medium
+      description: |
+        Query parameters to filter product variations by attributes.
+              Example: `?attribute[color]=purple&attribute[size]=medium`
+
+              - This will return only the currently selected variation of the product.
+              - Sometimes, the request may also include a vendor filter, e.g., `&vendor=35`,
+                especially when the request comes from the **cart**, **checkout**, or **order** page.
+              - The `attribute_query` structure shown is just an example. Actual keys and values depend on product attributes.
+              - Note: if the atributes are not available than on PDP get the selected variation by just pass `?variation={variation_id/uuid}`
     include:
       name: include
       in: query
@@ -23211,23 +24707,24 @@ components:
                 example: 9
         product_variation:
           type: object
-          description: The default variation for this product, including size, color, price, stock, and other variation-specific data.
+          description: |
+            The selected/default variation for this product, including attributes like size, color, price, stock, vendor, and available combinations.
           properties:
             id:
               type: integer
-              example: 334
+              example: 287
             vh_st_product_id:
               type: integer
-              example: 49
+              example: 41
             uuid:
               type: string
-              example: 3ee0ba4a-1976-4178-9403-7794f64b4a7a
+              example: ace00dcd-0cfb-49bf-9f40-242774c97c27
             name:
               type: string
-              example: INVICTUS Men Round Toe Formal Loafers - Orange/Small
+              example: House Of Pataudi Men Black Faux Leather Formal Slip On Monks - Purple/Medium
             slug:
               type: string
-              example: invictus-men-round-toe-formal-loafers-orange-small
+              example: house-of-pataudi-men-black-faux-leather-formal-slip-on-monks-purple-medium
             wishlist_ids:
               type: array
               items:
@@ -23242,13 +24739,73 @@ components:
               example: null
             price:
               type: string
-              example: '31.25'
+              example: '24.14'
             sale_price:
               type: string
-              example: '31.25'
+              example: '24.14'
             attribute_query:
               type: string
-              example: '?attribute[color]=orange&attribute[size]=small'
+              description: |
+                Query string representing the currently selected attributes for this variation. Example: `?attribute[color]=purple&attribute[size]=medium`.
+              example: '?attribute[color]=purple&attribute[size]=medium'
+            attributes_combinations:
+              type: array
+              description: |
+                Available attribute combinations for this product variation. Shows selected attribute values and other valid options.
+              items:
+                type: object
+                properties:
+                  attribute_id:
+                    type: integer
+                    example: 1
+                  attribute:
+                    type: string
+                    example: Color
+                  selected:
+                    type: integer
+                    description: ID of the selected attribute value
+                    example: 8
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 8
+                        value:
+                          type: string
+                          example: Purple
+                        valid_for_selection:
+                          type: boolean
+                          example: true
+            grouped_attributes:
+              type: array
+              description: |
+                Grouped attribute details for the variation (e.g., Color, Size).
+              items:
+                type: object
+                properties:
+                  attribute_id:
+                    type: integer
+                    example: 2
+                  attribute:
+                    type: string
+                    example: Size
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 13
+                        value:
+                          type: string
+                          example: Medium
+                        valid_for_selection:
+                          type: boolean
+                          example: true
             media:
               type: array
               items:
@@ -23256,20 +24813,40 @@ components:
               example: []
             quantity:
               type: integer
-              example: 0
+              description: Number of items allocated in this variation
+              example: 309
             available_quantity:
               type: integer
-              example: 0
+              description: Number of items available in stock for this variation
+              example: 126
             is_stock_available:
               type: integer
-              example: 0
+              example: 1
             type:
               type: string
-              example: fallback
+              example: attribute
             selected_vendor:
               type: object
               nullable: true
-              example: null
+              description: Vendor information for this variation
+              properties:
+                id:
+                  type: integer
+                  example: 35
+                name:
+                  type: string
+                  example: Oleta Reichel
+                slug:
+                  type: string
+                  example: default-vendor-34
+                email:
+                  type: string
+                  nullable: true
+                  example: null
+                phone_number:
+                  type: string
+                  nullable: true
+                  example: null
     Vendor:
       type: object
       required:
@@ -24311,6 +25888,36 @@ components:
         is_active:
           type: integer
           description: Indicates if the category is active (1 = active, 0 = inactive)
+        image_path:
+          type: string
+          nullable: true
+          description: Path to the category image
+          example: storage/categories/1754642706.webp
+        media:
+          type: object
+          nullable: true
+          description: Media details related to the category (e.g., webp_url)
+          properties:
+            webp_url:
+              type: string
+              example: storage/categories/1754642706.webp
+        meta_title:
+          type: string
+          nullable: true
+          description: Meta title for SEO
+          example: Apparel
+        meta_description:
+          type: string
+          nullable: true
+          description: Meta description for SEO
+          example: Test Description
+        meta_keywords:
+          type: array
+          items:
+            type: string
+          description: Meta keywords for SEO
+          example:
+            - Test
         meta:
           type: object
           nullable: true
@@ -24344,29 +25951,71 @@ components:
               type: object
               nullable: true
               description: Meta information about the parent category (nullable)
+        parent_category_name:
+          type: string
+          nullable: true
+          description: Name of the parent category (shortcut field)
         created_at:
           type: string
           format: date-time
           description: Timestamp of when the category was created
+          example: '2025-07-08 07:05:03'
         updated_at:
           type: string
           format: date-time
           description: Timestamp of when the category was last updated
+          example: '2025-08-08 08:45:12'
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of when the category was deleted (nullable)
         created_by:
           type: integer
           description: ID of the user who created the category
         updated_by:
           type: integer
           description: ID of the user who last updated the category
-        deleted_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Timestamp of when the category was deleted (nullable)
         deleted_by:
           type: integer
           nullable: true
           description: ID of the user who deleted the category (nullable)
+        created_by_user:
+          type: object
+          description: User details of the creator
+          properties:
+            id:
+              type: integer
+              example: 1
+            uuid:
+              type: string
+              example: 85bfd3e7-9994-4ede-a6fd-98934dd465b8
+            first_name:
+              type: string
+              example: Web
+            last_name:
+              type: string
+              example: Webreinvent
+        updated_by_user:
+          type: object
+          description: User details of the last updater
+          properties:
+            id:
+              type: integer
+              example: 1
+            uuid:
+              type: string
+              example: 85bfd3e7-9994-4ede-a6fd-98934dd465b8
+            first_name:
+              type: string
+              example: Web
+            last_name:
+              type: string
+              example: Webreinvent
+        deleted_by_user:
+          type: object
+          nullable: true
+          description: User details of the deleter (nullable)
     Warehouse:
       type: object
       properties:

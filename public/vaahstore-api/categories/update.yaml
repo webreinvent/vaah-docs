@@ -1,8 +1,12 @@
 get:
   tags:
     - Categories
-  summary: Get record by category ID
-  description: Retrieve a category by its unique identifier.
+  summary: Get record by category identifier
+  description: |
+    Retrieve a brand by its unique identifier (**id** or **slug**).
+
+    - Use **slug** when fetching the category for SEO purposes (typically for web pages).
+    - Use **id** in all other cases where a direct reference to the category is sufficient.
   operationId: getCategoryById
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/id'
