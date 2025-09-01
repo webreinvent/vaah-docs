@@ -3,10 +3,11 @@ post:
     - Wishlists
   summary: Move wishlist products to cart
   description: >
-    Moves one or more products from a user's wishlist (e.g., "save-for-later")
-    to their shopping cart.
-    Requires specifying the wishlist ID in the path and providing product details
-    (with vendor, variation, and quantity) in the request body.
+    Moves one or more products from a user's wishlist to their shopping cart.
+    - Works for **all wishlists** by specifying the wishlist ID in the path.
+    - If the wishlist is **"save-for-later"**, then the selected items will be
+      moved to the cart and **removed from that wishlist** (emptied).
+    Requires providing product details (vendor, variation, and quantity) in the request body.
   operationId: moveWishlistToCart
   parameters:
     - $ref: '../vaahstore.yaml#/components/parameters/id'
