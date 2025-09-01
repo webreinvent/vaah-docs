@@ -1,8 +1,12 @@
 get:
   tags:
     - Brands
-  summary: Get record by brand ID
-  description: Retrieve a brand by its unique identifier.
+  summary: Get record by brand identifies
+  description: |
+    Retrieve a brand by its unique identifier (**id** or **slug**).
+
+    - Use **slug** when fetching the brand for SEO purposes (typically for web pages).
+    - Use **id** in all other cases where a direct reference to the brand is sufficient.
   operationId: getBrandById
   parameters:
     - '$ref': '../vaahstore.yaml#/components/parameters/id'
