@@ -1,0 +1,210 @@
+post:
+  summary: Create paypal order intent
+  description: >
+    Creates a new PayPal order using the provided cart/order details.
+    - Validates the order before sending it to PayPal.
+    - Returns the PayPal order ID and related links ` "payment_method": "paypal"`
+  operationId: createPaypalOrder
+  tags:
+    - Orders
+  security:
+    - bearerAuth: [ ]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            order_details:
+              type: object
+              description: Contains details of the order to be placed.
+              properties:
+                currency:
+                  type: object
+                  properties:
+                    vh_st_store_id:
+                      type: integer
+                      example: 51
+                    name:
+                      type: string
+                      example: "US Dollar"
+                    code:
+                      type: string
+                      example: "USD"
+                    symbol:
+                      type: string
+                      example: "&#36;"
+                    is_default:
+                      type: integer
+                      example: 1
+                    rate:
+                      type: number
+                      format: float
+                      example: 1
+                vh_st_store_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the selected store.
+                vh_user_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the Auth user.
+                cart_id:
+                  type: integer
+                  example: 1
+                  description: The ID of the user's cart.
+                total_amount:
+                  type: number
+                  format: float
+                  example: 150.00
+                  description: The total amount for the order.
+                payable:
+                  type: number
+                  format: float
+                  example: 150.00
+                  description: The amount that needs to be paid.
+                discounts:
+                  type: number
+                  format: float
+                  example: 10.00
+                  description: The total discount applied to the order.
+                taxes:
+                  type: number
+                  format: float
+                  example: 5.00
+                  description: The total taxes applied to the order.
+                delivery_fee:
+                  type: number
+                  format: float
+                  example: 5.00
+                  description: The delivery fee for the order.
+                shipping_address:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 101
+                      description: The ID of the shipping address.
+                  required:
+                    - id
+                billing_address:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 102
+                      description: The ID of the billing address.
+                  required:
+                    - id
+                payment_method:
+                  type: string
+                  example: "paypal"
+                  description: The payment method selected for the order.
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+
+                      name:
+                        type: string
+                        example: "product name"
+                        description: The name of the product.
+                      pivot:
+                        type: object
+                        properties:
+
+                          vh_st_product_id:
+                            type: integer
+                            example: 1
+                            description: The ID of the product.
+                          vh_st_product_variation_id:
+                            type: integer
+                            example: 2
+                            description: The ID of the product variation.
+                          vh_st_vendor_id:
+                            type: integer
+                            example: 1
+                            description: The ID of the selected vendor.
+                          quantity:
+                            type: integer
+                            example: 1
+                            description: The quantity of the product ordered.
+                          price:
+                            type: number
+                            format: float
+                            example: 50.00
+                            description: The price of the product.
+                        required:
+                          - vh_st_product_id
+                          - vh_st_product_variation_id
+                          - vh_st_vendor_id
+                          - quantity
+                          - price
+                    required:
+                      - name
+                      - pivot
+              required:
+                - cart_id
+                - total_amount
+                - payable
+                - discounts
+                - taxes
+                - delivery_fee
+                - shipping_address
+                - billing_address
+                - payment_method
+                - products
+            required:
+              - order_details
+  responses:
+    "200":
+      description: PayPal order created successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: object
+                description: Raw PayPal order response
+                properties:
+                  id:
+                    type: string
+                    example: "4WJ04564H3792105M"
+                  status:
+                    type: string
+                    example: "CREATED"
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        href:
+                          type: string
+                          example: "https://www.sandbox.paypal.com/checkoutnow?token=4WJ04564H3792105M"
+                        rel:
+                          type: string
+                          example: "approve"
+                        method:
+                          type: string
+                          example: "GET"
+    "400":
+      description: Validation error or unable to create PayPal order
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: array
+                items:
+                  type: string
+                example: [ "Unable to create PayPal order." ]
