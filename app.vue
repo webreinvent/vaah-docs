@@ -118,7 +118,7 @@ provide('navigation', navigation)
     <Footer/>
 
     <ClientOnly>
-      <LazyUDocsSearch :files="files" :navigation="navigation"/>
+      <LazyUContentSearch :files="files" :navigation="navigation"/>
     </ClientOnly>
 
     <UNotifications/>
