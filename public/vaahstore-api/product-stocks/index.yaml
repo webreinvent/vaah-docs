@@ -120,9 +120,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/ProductStock'
     '400':
@@ -139,9 +138,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Product Stock already exists for this variation."
-                ]
+                example:
+                  - "Product Stock already exists for this variation."
     '409':
       description: "Conflict error if product stock already exists"
       content:
@@ -156,9 +154,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Product Stock already exists for this variation."
-                ]
+                example:
+                  - "Product Stock already exists for this variation."
 put:
   tags:
     - Product Stocks

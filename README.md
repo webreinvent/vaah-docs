@@ -1,24 +1,50 @@
-![nuxt-ui-pro-docs-template](https://github.com/nuxt-ui-pro/docs/assets/904724/67fc15a7-92f6-4566-95b9-fe099012473c)
+# Vaah Docs
 
-# Nuxt UI Pro - Docs template
+[![Made with Nuxt UI Pro](https://img.shields.io/badge/Made%20with-Nuxt%20UI%20Pro-00DC82?logo=nuxt.js&labelColor=020420)](https://ui.nuxt.com/pro)
+[![Nuxt](https://img.shields.io/badge/Nuxt-3.17-00DC82?logo=nuxt.js)](https://nuxt.com)
+[![Content](https://img.shields.io/badge/@nuxt/content-2.x-00DC82)](https://content.nuxt.com)
 
-[![Nuxt UI Pro](https://img.shields.io/badge/Made%20with-Nuxt%20UI%20Pro-00DC82?logo=nuxt.js&labelColor=020420)](https://ui.nuxt.com/pro)
-[![Nuxt Studio](https://img.shields.io/badge/Open%20in%20Nuxt%20Studio-18181B?&logo=nuxt.js&logoColor=3BB5EC)](https://nuxt.studio/themes/docs)
+Documentation site for the Vaah product family — [VaahCMS](https://vaah.dev), VaahCLI, VaahFlutter, VaahStore, VaahNuxt and VaahShare — maintained by [WebReinvent](https://github.com/webreinvent).
 
-- [Live demo](https://nuxt-ui-pro-template-docs.vercel.app/)
-- [Play on Stackblitz](https://stackblitz.com/github/nuxt-ui-pro/docs)
-- [Documentation](https://ui.nuxt.com/pro/guide)
-- [Clone on Nuxt Studio](https://nuxt.studio/themes/docs)
+Live site: [https://vaah.dev](https://vaah.dev)
 
-## Quick Start
+## Stack
 
-```bash [Terminal]
-npx nuxi init -t github:nuxt-ui-pro/docs
+- [Nuxt 3](https://nuxt.com) (SSR + hybrid rendering via `routeRules`)
+- [Nuxt UI Pro](https://ui.nuxt.com/pro) — extended in `nuxt.config.ts`
+- [@nuxt/content](https://content.nuxt.com) — Markdown/YAML docs in `content/`
+- [@scalar/api-reference](https://github.com/scalar/scalar) — API reference renderer for VaahStore OpenAPI
+- [Pinia](https://pinia.vuejs.org) — client state
+- `nuxt-og-image` — social cards
+- `apexcharts` / `flowbite` — charts and UI helpers
+
+## Project Structure
+
+```
+.
+├── content/              Markdown/YAML sources rendered by @nuxt/content
+│   ├── 1.getting-started
+│   ├── 2.vaahcms-2x
+│   ├── 3.vaahcms-1x
+│   ├── 4.guide
+│   ├── 5.vaahcli
+│   ├── 6.laravel
+│   ├── 7.vaahflutter
+│   ├── 8.vaahstore
+│   ├── 9.testing
+│   ├── 10.vaahshare
+│   └── 11.vaahnuxt
+├── pages/                File-based routes (e.g. pages/vaahstore/api.vue)
+├── public/               Static assets, including the OpenAPI sources/specs
+│   ├── vaahstore-api/    VaahStore OpenAPI fragments (one folder per module)
+│   └── vaahstore-apis.yaml   Bundled single-file output (generated)
+├── json/
+│   └── routeRules.json   Per-route rendering rules consumed by nuxt.config.ts
+├── nuxt.config.ts
+└── package.json
 ```
 
 ## Setup
-
-Make sure to install the dependencies:
 
 ```bash
 # npm
@@ -34,132 +60,92 @@ yarn install
 bun install
 ```
 
-## Vaahstore API Bundling
+## Development
 
-**Install the Package:** If you haven't already installed the `@redocly/cli`, you can do so with the
-following command:
-
+Start the dev server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm install --save-dev @redocly/cli
-
-# pnpm
-pnpm add -D @redocly/cli
-
-# yarn
-yarn add -D @redocly/cli
-
-# bun
-bun add -d @redocly/cli
-
-```
-
-**Run the Bundling Script:** Once you have the script set up in your package.json, you can run it using your package manager:
-
-```bash
-# npm
-npm run vaahstore:api
-
-# pnpm
-pnpm run vaahstore:api
-
-# yarn
-yarn vaahstore:api
-
-# bun
-bun run vaahstore:api
-
-```
-
-**Output:** This command will take the VaahStore OpenAPI specification files located at public/vaahstore-api/vaahstore.yaml and bundle it into a single file named vaahstore-apis.yaml, which will be output to the public directory.
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Other useful scripts:
+
+```bash
+npm run lint          # ESLint
+npm run typecheck     # vue-tsc
+npm run build         # Production build
+npm run preview       # Preview the production build
+npm run generate      # Static site generation
+```
+
+## VaahStore API Bundling
+
+The VaahStore docs page at [`/vaahstore/api`](pages/vaahstore/api.vue) renders the OpenAPI spec via `@scalar/api-reference`. The spec is bundled from the multi-file source in `public/vaahstore-api/` into a single file at `public/vaahstore-apis.yaml`.
+
+Install the bundler (already declared in `devDependencies` of a typical setup, or install directly):
+
+```bash
+npm install --save-dev @redocly/cli
+```
+
+Bundle the spec:
+
+```bash
+npm run vaahstore:api
+```
+
+This runs:
+
+```bash
+npx @redocly/cli bundle public/vaahstore-api/vaahstore.yaml --output public/vaahstore-apis.yaml
+```
+
+The Scalar component on `pages/vaahstore/api.vue` loads the bundled file at runtime. The route is rendered client-only via a `routeRules` entry in `json/routeRules.json` (`{ "ssr": false }`).
+
+## Routing rules
+
+Per-route behavior (prerender, SSR, redirects) lives in [json/routeRules.json](json/routeRules.json) and is loaded into `nuxt.config.ts`:
+
+```ts
+const routeRules = require('./json/routeRules.json')
+
+export default defineNuxtConfig({
+  // ...
+  routeRules,
+})
+```
+
+To add a new redirect or change SSR/prerender behavior for a path, append an entry to that JSON file — do not hard-code route rules in individual pages.
+
+## Nuxt Studio
+
+Content can be edited from the browser via [Nuxt Studio](https://nuxt.studio). The `@nuxthq/studio` module is already in `devDependencies`; add it to `modules` in `nuxt.config.ts` if you want to enable it:
+
+```ts
+export default defineNuxtConfig({
+  modules: [
+    // ...
+    '@nuxthq/studio',
+  ],
+})
+```
+
+## Deployment
 
 Build the application for production:
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+Locally preview the production build:
 
 ```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+See the [Nuxt deployment documentation](https://nuxt.com/docs/getting-started/deployment) for guidance on hosting providers.
 
-## Nuxt Studio integration
+## Contributing
 
-Add `@nuxthq/studio` dependency to your package.json:
-
-```bash
-# npm
-npm install --save-dev @nuxthq/studio
-
-# pnpm
-pnpm add -D @nuxthq/studio
-
-# yarn
-yarn add -D @nuxthq/studio
-
-# bun
-bun add -d @nuxthq/studio
-```
-
-Add this module to your `nuxt.config.ts`:
-
-```ts
-export default defineNuxtConfig({
-  ...
-  modules: [
-    ...
-    '@nuxthq/studio'
-  ]
-})
-```
-
-Read more on [Nuxt Studio docs](https://nuxt.studio/docs/projects/setup).
-
-## Renovate integration
-
-Install [Renovate GitHub app](https://github.com/apps/renovate/installations/select_target) on your repository and you are good to go.
+Open issues and pull requests on GitHub: [webreinvent/vaah-docs](https://github.com/webreinvent/vaah-docs).

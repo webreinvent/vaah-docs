@@ -115,9 +115,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/Brand'
     '400':
@@ -134,9 +133,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Brand already exists for this variation."
-                ]
+                example:
+                  - "Brand already exists for this variation."
     '409':
       description: "Conflict error if brand already exists"
       content:
@@ -151,9 +149,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Brand already exists for this variation."
-                ]
+                example:
+                  - "Brand already exists for this variation."
 put:
   tags:
     - Brands

@@ -166,9 +166,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/AttributeGroup'
     '400':
@@ -185,12 +184,11 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The Name field is required.",
-                    "The Slug field is required.",
-                    "The Attributes field is required.",
-
-                ]
+                example:
+                  - "The Name field is required."
+                  - "The Slug field is required."
+                  - "The Attributes field is required."
+                  - 
 
 put:
   tags:

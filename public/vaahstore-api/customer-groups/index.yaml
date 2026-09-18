@@ -132,13 +132,12 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The name field is required.",
-                    "The slug field is required.",
-                    "The customers field is required.",
-                    "The taxonomy_id_customer_groups_status field is required.",
-                    "The status_notes field is required when status.slug is rejected."
-                ]
+                example:
+                  - "The name field is required."
+                  - "The slug field is required."
+                  - "The customers field is required."
+                  - "The taxonomy_id_customer_groups_status field is required."
+                  - "The status_notes field is required when status.slug is rejected."
     '500':
       description: Internal Server Error
       content:

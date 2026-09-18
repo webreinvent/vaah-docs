@@ -118,9 +118,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/Warehouse'
     '400':
@@ -137,9 +136,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "warehouse already exists for this vendor."
-                ]
+                example:
+                  - "warehouse already exists for this vendor."
     '409':
       description: "Conflict error if warehouse already exists"
       content:
@@ -154,9 +152,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "warehouse exists for this vendor."
-                ]
+                example:
+                  - "warehouse exists for this vendor."
 put:
   tags:
     - Warehouses
