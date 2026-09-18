@@ -11,8 +11,6 @@ if (process.client) {
     url: `${baseUrl}/vaahstore-apis.yaml`, // Path to your OpenAPI spec file
     documentDownloadType: 'none',
     hideDarkModeToggle: true,
-    generateOperationSlug: ({ method, path }) =>
-      `${method}${path.replace(/[^A-Za-z0-9]+/g, '-')}`.replace(/^-|-$/g, '')
   };
 }
 </script>
