@@ -21,5 +21,5 @@ if (process.client) {
 
 <template>
   <!-- Only render the ApiReference if apiConfig is defined -->
-<!--  <ApiReference v-if="apiConfig" :configuration="apiConfig" />-->
+  <ApiReference v-if="apiConfig" :configuration="apiConfig" />
 </template>
