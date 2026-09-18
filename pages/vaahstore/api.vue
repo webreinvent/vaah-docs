@@ -12,7 +12,6 @@ if (process.client) {
   const baseUrl = window.location.origin; // Get the current origin
 
   apiConfig = {
-    url: `${baseUrl}/vaahstore-apis.yaml`, // Path to your OpenAPI spec file
     documentDownloadType: 'none',
     hideDarkModeToggle: true,
   };
