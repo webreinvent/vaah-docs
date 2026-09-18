@@ -2,6 +2,10 @@
 import { ApiReference } from '@scalar/api-reference'
 import '@scalar/api-reference/style.css'
 
+definePageMeta({
+  ssr: false
+})
+
 let apiConfig;
 
 if (process.client) {
