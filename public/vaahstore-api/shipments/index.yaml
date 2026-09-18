@@ -179,9 +179,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/Shipment'
     '400':
@@ -198,12 +197,11 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The name field is required.",
-                    "The orders field is required.",
-                    "The status field is required.",
-                    "To be shipped quantity should not exceed pending quantity for item: Product Variation Name"
-                ]
+                example:
+                  - "The name field is required."
+                  - "The orders field is required."
+                  - "The status field is required."
+                  - "To be shipped quantity should not exceed pending quantity for item: Product Variation Name"
 
 put:
   tags:

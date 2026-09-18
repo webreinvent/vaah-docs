@@ -145,9 +145,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
     '400':
       description: Validation error
       content:

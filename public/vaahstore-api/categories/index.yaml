@@ -151,9 +151,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/Category'
     '400':
@@ -170,9 +169,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The Name field is required."
-                ]
+                example:
+                  - "The Name field is required."
     '409':
       description: "Conflict error if Name already exists"
       content:
@@ -187,9 +185,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Name already exists for this category."
-                ]
+                example:
+                  - "Name already exists for this category."
 put:
   tags:
     - Categories

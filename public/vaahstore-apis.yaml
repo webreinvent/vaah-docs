@@ -2472,7 +2472,7 @@ paths:
                             attribute_query:
                               type: string
                               nullable: true
-                              example: '?attribute[color]=green&attribute[size]=xs'
+                              example: ?attribute[color]=green&attribute[size]=xs
                       brands:
                         type: array
                         description: Matching brands with at least one product
@@ -2520,17 +2520,17 @@ paths:
                           id: 32
                           name: INVICTUS Men Textured Leather Formal Loafers
                           slug: invictus-men-textured-leather-formal-loafers
-                          attribute_query: '?attribute[color]=green&attribute[size]=xs'
+                          attribute_query: ?attribute[color]=green&attribute[size]=xs
                         - type: product
                           id: 33
                           name: INVICTUS Men Formal Loafers
                           slug: invictus-men-formal-loafers
-                          attribute_query: '?attribute[color]=brown&attribute[size]=xxl'
+                          attribute_query: ?attribute[color]=brown&attribute[size]=xxl
                         - type: product
                           id: 49
                           name: INVICTUS Men Round Toe Formal Loafers
                           slug: invictus-men-round-toe-formal-loafers
-                          attribute_query: '?attribute[color]=red&attribute[size]=extra-large'
+                          attribute_query: ?attribute[color]=red&attribute[size]=extra-large
                       brands:
                         - type: brand
                           id: 61
@@ -3114,7 +3114,7 @@ paths:
                               example: '31.25'
                             attribute_query:
                               type: string
-                              example: '?attribute[color]=orange&attribute[size]=small'
+                              example: ?attribute[color]=orange&attribute[size]=small
                             media:
                               type: array
                               items:
@@ -3617,8 +3617,12 @@ paths:
           required: true
           description: The action to perform.
           examples:
-            preferred: Mark as preferred.
-            not-preferred: Mark as not preferred.
+            preferred:
+              summary: Mark as preferred.
+              value: preferred
+            not-preferred:
+              summary: Mark as not preferred.
+              value: not-preferred
           schema:
             type: string
             enum:
@@ -3804,7 +3808,7 @@ paths:
                       attribute_query:
                         type: string
                         description: Query string representing selected attribute values like color and size.
-                        example: '?attribute[color]=white&attribute[size]=xs'
+                        example: ?attribute[color]=white&attribute[size]=xs
                       media:
                         type: array
                         description: Array of media objects related to the variation; same structure as product media.
@@ -8350,7 +8354,7 @@ paths:
                                   example: '31.25'
                                 attribute_query:
                                   type: string
-                                  example: '?attribute[color]=orange&attribute[size]=small'
+                                  example: ?attribute[color]=orange&attribute[size]=small
                                 media:
                                   type: array
                                   items:
@@ -8895,7 +8899,7 @@ paths:
                                   example: '31.25'
                                 attribute_query:
                                   type: string
-                                  example: '?attribute[color]=orange&attribute[size]=small'
+                                  example: ?attribute[color]=orange&attribute[size]=small
                                 media:
                                   type: array
                                   items:
@@ -10729,7 +10733,7 @@ paths:
                                       example: '34.40'
                                     attribute_query:
                                       type: string
-                                      example: '?attribute[color]=black&attribute[size]=xs'
+                                      example: ?attribute[color]=black&attribute[size]=xs
                                     media:
                                       type: array
                                       items:
@@ -11083,7 +11087,7 @@ paths:
                                             example: '34.40'
                                           attribute_query:
                                             type: string
-                                            example: '?attribute[color]=black&attribute[size]=xs'
+                                            example: ?attribute[color]=black&attribute[size]=xs
                                           media:
                                             type: array
                                             items:
@@ -17859,6 +17863,7 @@ paths:
                       - The Address Line 1 field is required
                       - The Type field is required
                       - The Status field is required
+                      - null
     put:
       tags:
         - Addresses
@@ -18212,6 +18217,7 @@ paths:
                       - The Address Line 1 field is required
                       - The Type field is required
                       - The Status field is required
+                      - null
         '500':
           description: Internal Server Error
           content:
@@ -18699,6 +18705,7 @@ paths:
                       - The Name field is required.
                       - The Slug field is required.
                       - The Status field is required.
+                      - null
     put:
       tags:
         - Wishlists
@@ -19012,6 +19019,7 @@ paths:
                       - The Address Line 1 field is required
                       - The Type field is required
                       - The Status field is required
+                      - null
         '500':
           description: Internal Server Error
           content:
@@ -19148,6 +19156,7 @@ paths:
                       - The Address Line 1 field is required
                       - The Type field is required
                       - The Status field is required
+                      - null
         '500':
           description: Internal Server Error
           content:
@@ -20388,6 +20397,7 @@ paths:
                       - The Name field is required.
                       - The Slug field is required.
                       - The Attributes field is required.
+                      - null
     put:
       tags:
         - Attribute Groups
@@ -21311,6 +21321,7 @@ paths:
                       - The email field is required.
                       - The email must be a valid email address.
                       - The first name field is required.
+                      - The username field is required.
                       - The password field is required.
                       - The status field is required.
         '409':
@@ -24747,7 +24758,7 @@ components:
               type: string
               description: |
                 Query string representing the currently selected attributes for this variation. Example: `?attribute[color]=purple&attribute[size]=medium`.
-              example: '?attribute[color]=purple&attribute[size]=medium'
+              example: ?attribute[color]=purple&attribute[size]=medium
             attributes_combinations:
               type: array
               description: |
@@ -26702,7 +26713,7 @@ components:
                           example: '31.25'
                         attribute_query:
                           type: string
-                          example: '?attribute[color]=orange&attribute[size]=small'
+                          example: ?attribute[color]=orange&attribute[size]=small
                         media:
                           type: array
                           items:

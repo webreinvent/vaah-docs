@@ -225,9 +225,8 @@ get:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Record not found with ID: {id}"
-                ]
+                example:
+                  - "Record not found with ID: {id}"
             required:
               - errors  # Make errors a required field
 
@@ -551,12 +550,11 @@ put:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The name field is required.",
-                    "The orders field is required.",
-                    "The status field is required.",
-                    "To be shipped quantity should not exceed pending quantity for item: Product Variation Name"
-                ]
+                example:
+                  - "The name field is required."
+                  - "The orders field is required."
+                  - "The status field is required."
+                  - "To be shipped quantity should not exceed pending quantity for item: Product Variation Name"
     '500':
       description: Internal Server Error
       content:

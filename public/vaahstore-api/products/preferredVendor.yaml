@@ -26,8 +26,12 @@ patch:
       required: true
       description: The action to perform.
       examples:
-        preferred: Mark as preferred.
-        not-preferred: Mark as not preferred.
+        preferred:
+          summary: Mark as preferred.
+          value: preferred
+        not-preferred:
+          summary: Mark as not preferred.
+          value: not-preferred
       schema:
         type: string
         enum: [preferred, not-preferred]
