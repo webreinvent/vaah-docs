@@ -6,12 +6,12 @@ const route = useRoute();
 const nav = inject<Ref<NavItem[]>>("navigation");
 
 const navigation = computed(() => {
-  const n = nav.value.filter((item) => {
-    return item._path.startsWith("/" + route.path.split("/")[1]);
-  })[0]["children"];
+  const segment = "/" + route.path.split("/")[1];
+  const match = nav.value.find((item) => item._path?.startsWith(segment));
+  const n = match?.children ?? [];
 
   if (n.at(0)?.children) {
-    return n.at(0)?.children.map((item) => {
+    return n.at(0).children.map((item) => {
       if (item._path === "/vaahstore/api") {
         return { ...item, _path: "/vaahstore/api" };
       }
