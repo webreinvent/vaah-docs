@@ -2,12 +2,7 @@
 import { ApiReference } from '@scalar/api-reference'
 import '@scalar/api-reference/style.css'
 
-definePageMeta({
-  ssr: false
-})
-
 let apiConfig;
-
 
 if (process.client) {
   const baseUrl = window.location.origin; // Get the current origin
@@ -15,7 +10,9 @@ if (process.client) {
   apiConfig = {
     url: `${baseUrl}/vaahstore-apis.yaml`, // Path to your OpenAPI spec file
     documentDownloadType: 'none',
-    hideDarkModeToggle: true
+    hideDarkModeToggle: true,
+    generateOperationSlug: ({ method, path }) =>
+      `${method}${path.replace(/[^A-Za-z0-9]+/g, '-')}`.replace(/^-|-$/g, '')
   };
 }
 </script>
