@@ -390,6 +390,9 @@
       "statusCode": 301
     }
   },
+  "/vaahstore/api": {
+    "ssr": false
+  },
   "/vaahcms/module/add-to-aside": {
     "redirect": {
       "to": "/vaahcms-1x/module/add-to-aside",
