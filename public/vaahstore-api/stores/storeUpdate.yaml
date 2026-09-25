@@ -36,9 +36,8 @@ get:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Record not found with ID: {id}"
-                ]
+                example:
+                  - "Record not found with ID: {id}"
             required:
               - errors  # Make errors a required field
     '500':
@@ -196,9 +195,8 @@ delete:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Record not found with ID: {id}"
-                ]
+                example:
+                  - "Record not found with ID: {id}"
             required:
               - errors  # Make errors a required field
     '500':

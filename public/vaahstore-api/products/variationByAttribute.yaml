@@ -160,9 +160,8 @@ get:
                 type: array
                 items:
                   type: string
-                example: [
-                    "No matching variation found for selected attributes."
-                ]
+                example:
+                  - "No matching variation found for selected attributes."
             required:
               - errors  # Make errors a required field
 

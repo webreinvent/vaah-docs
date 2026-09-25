@@ -80,13 +80,12 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "User ID is required",
-                    "The Address Line 1 field is required",
-                    "The Type field is required",
-                    "The Status field is required",
-
-                ]
+                example:
+                  - "User ID is required"
+                  - "The Address Line 1 field is required"
+                  - "The Type field is required"
+                  - "The Status field is required"
+                  - 
     '500':
       description: Internal Server Error
       content:

@@ -54,9 +54,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/Customer'
     '400':
@@ -73,12 +72,13 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The email field is required.",
-                    "The email must be a valid email address.",
-                    "The first name field is required.", "The password field is required.",
-                    "The status field is required."
-                ]
+                example:
+                  - "The email field is required."
+                  - "The email must be a valid email address."
+                  - "The first name field is required."
+                  - "The username field is required."
+                  - "The password field is required."
+                  - "The status field is required."
     '409':
       description: "Conflict error if user/customer already exists"
       content:
@@ -93,10 +93,9 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Email is already registered.. ",
-                    "Username is already registered.. ",
-                ]
+                example:
+                  - "Email is already registered.. "
+                  - "Username is already registered.. "
 
 get:
   tags:

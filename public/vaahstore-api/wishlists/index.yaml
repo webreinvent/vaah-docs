@@ -173,9 +173,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/Wishlist'
     '400':
@@ -192,13 +191,12 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The User field is required.",
-                    "The Name field is required.",
-                    "The Slug field is required.",
-                    "The Status field is required.",
-
-                ]
+                example:
+                  - "The User field is required."
+                  - "The Name field is required."
+                  - "The Slug field is required."
+                  - "The Status field is required."
+                  - 
 
 put:
   tags:

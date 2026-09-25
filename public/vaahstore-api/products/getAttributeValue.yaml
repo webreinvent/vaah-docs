@@ -82,15 +82,5 @@ post:
                               example: 1  # Example for the ID
             example: # Add an example response
               data:
-                structured_variation: [
-                  {
-                    variation_name: "Sony-Blue",
-                    is_selected: false,
-                    Color: {
-                      value: "Blue",
-                      vh_st_attribute_id: 1,
-                      id: 1
-                    }
-                  }
-                ]
+                structured_variation: [{ variation_name: "Sony-Blue", is_selected: false, Color: { value: "Blue", vh_st_attribute_id: 1, id: 1 } }]
                 all_attribute_name: [ "Color" ]

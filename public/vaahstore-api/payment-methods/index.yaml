@@ -114,9 +114,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Saved successfully"
-                ]
+                example:
+                  - "Saved successfully"
               data:
                 $ref: '../vaahstore.yaml#/components/schemas/PaymentMethod'
     '400':
@@ -133,10 +132,9 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The name field is required.",
-                    "The slug field is required.",
-                ]
+                example:
+                  - "The name field is required."
+                  - "The slug field is required."
 
 put:
   tags:

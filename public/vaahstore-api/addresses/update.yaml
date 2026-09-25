@@ -38,9 +38,8 @@ get:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Record not found with ID: {id}"
-                ]
+                example:
+                  - "Record not found with ID: {id}"
             required:
               - errors  # Make errors a required field
 
@@ -149,13 +148,12 @@ put:
                 type: array
                 items:
                   type: string
-                example: [
-                    "The User field is required",
-                    "The Address Line 1 field is required",
-                    "The Type field is required",
-                    "The Status field is required",
-
-                ]
+                example:
+                  - "The User field is required"
+                  - "The Address Line 1 field is required"
+                  - "The Type field is required"
+                  - "The Status field is required"
+                  - 
     '500':
       description: Internal Server Error
       content:

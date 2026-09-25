@@ -21,9 +21,8 @@ post:
                 type: array
                 items:
                   type: string
-                example: [
-                    "Logout successfully"
-                ]
+                example:
+                  - "Logout successfully"
               data:
                 type: object
                 example: null
