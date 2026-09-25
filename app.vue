@@ -2,14 +2,15 @@
 import type {ParsedContent} from '@nuxt/content/dist/runtime/types'
 import {useRootStore} from '@/stores/root'
 
-const searchRef = ref()
-
 const route = useRoute()
 const colorMode = useColorMode()
 const {branch} = useContentSource()
+const url = useRequestURL();
 
 const {seo} = useAppConfig()
-
+const baseUrl = computed(() => url.origin);
+const currentPath = computed(() => route.fullPath);
+const canonicalUrl = computed(() => `${baseUrl.value}${currentPath.value}`);
 const {data: navigation} = await useAsyncData('navigation', () => fetchContentNavigation())
 const {data: files} = useLazyFetch<ParsedContent[]>('/api/search.json', {
   default: () => [],
@@ -21,8 +22,13 @@ useHead({
     {name: 'viewport', content: 'width=device-width, initial-scale=1'}
   ],
   link: [
-    {rel: 'icon', href: '/favicon.ico'}
+    {rel: 'icon', href: '/favicon.ico'},
+    {
+      rel: "canonical",
+      href: canonicalUrl,
+    },
   ],
+  
   htmlAttrs: {
     lang: 'en'
   }
